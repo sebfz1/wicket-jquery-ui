@@ -20,6 +20,8 @@ import java.io.Serializable;
 import java.util.Map.Entry;
 
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.ajax.json.JSONException;
+import org.apache.wicket.ajax.json.JSONObject;
 
 /**
  * Provides a default implementation of {@link JQueryAbstractBehavior}.
@@ -52,7 +54,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	{
 		this(selector, method, new Options());
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param selector the html selector (ie: "#myId")
@@ -73,6 +75,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * @param key the option key
 	 * @param value the option value
 	 * @return the {@link JQueryBehavior} (this)
+	 * @throws JSONException 
 	 */
 	public JQueryBehavior setOption(String key, Serializable value)
 	{
@@ -85,25 +88,31 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 		return this;
 	}
-
-	/**
-	 * Adds or replace behavior options
-	 * @param options
-	 */
+	
 	public void setOptions(Options options)
 	{
-		for (Entry<String, Serializable> option : options.entries())
+		for (Entry<String, Serializable> entry : options.entries())
 		{
-			this.setOption(option.getKey(), option.getValue());
+			this.setOption(entry.getKey(), entry.getValue());
 		}
 	}
-
 	
 	// Statements //
 	@Override
 	protected String $()
 	{
 		return this.$(this.selector, this.method, this.options.toString());
+	}
+
+	/**
+	 * Gets the jQuery statement.<br/>
+	 * <b>Warning:</b> If {@link #$()} is overridden to handle a different statement, this method could be inefficient.
+	 * @param options the options to be applied
+	 * @return String like '$(function() { ... })'
+	 */
+	public String $(JSONObject options)
+	{
+		return this.$(options.toString());
 	}
 
 	/**

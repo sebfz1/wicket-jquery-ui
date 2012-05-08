@@ -128,7 +128,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 			else
 			{
 				ValidationError error = new ValidationError();
-				error.addMessageKey("RangeSlider.ConversionError");
+				error.addKey("RangeSlider.ConversionError");
 				error.setVariable("lower", value.getLower());
 				error.setVariable("upper", value.getUpper());
 

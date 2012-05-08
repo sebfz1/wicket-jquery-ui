@@ -177,7 +177,7 @@ public abstract class SecuredAjaxButton extends AjaxButton implements IJQueryWid
 		return new JQueryBehavior(selector, "button") {
 
 			private static final long serialVersionUID = 1L;
-
+			
 			@Override
 			public void onConfigure(Component component)
 			{
@@ -206,5 +206,5 @@ public abstract class SecuredAjaxButton extends AjaxButton implements IJQueryWid
 	@Override
 	protected void onError(AjaxRequestTarget target, Form<?> form)
 	{
-	}	
+	}
 }

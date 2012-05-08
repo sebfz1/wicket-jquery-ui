@@ -54,7 +54,7 @@ public class Calendar extends JQueryContainer
 	
 	/**
 	 * 
-	 * @param id the markyp id
+	 * @param id the markup id
 	 * @param model the {@link CalendarModel}
 	 * @param options {@link Options}
 	 */
@@ -109,14 +109,11 @@ public class Calendar extends JQueryContainer
 		this.add(this.eventBehavior = new JQueryAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
-
-			/**
-			 * TODO: wicket 6, to be changed using the new call (jQuery)
-			 */
+			
 			@Override
-			public CharSequence getCallbackScript()
+			protected CharSequence getCallbackFunctionBody(String... extraParameters)
 			{
-				return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() + "&eventId=' + calEvent.id");
+				return super.getCallbackFunctionBody("eventId", "calEvent.id");
 			}
 
 			@Override
@@ -188,8 +185,8 @@ public class Calendar extends JQueryContainer
 
 				this.setOption("eventSources", String.format("[%s]", sourceBuilder.toString()));
 
-				// behaviors //
-				this.setOption("eventClick", "function(calEvent, jsEvent, view) { " + eventBehavior.getCallbackScript() + "}");
+				// events/behaviors //
+				this.setOption("eventClick", eventBehavior.getCallbackFunction("calEvent", "jsEvent", "view"));
 			}
 		};
 	}

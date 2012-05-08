@@ -22,11 +22,13 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
-import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.resource.JQueryPluginResourceReference;
 
 /**
  * Provides the base class for every jQuery behavior.
@@ -37,8 +39,8 @@ import org.apache.wicket.request.resource.ResourceReference;
 public abstract class JQueryAbstractBehavior extends Behavior
 {
 	private static final long serialVersionUID = 1L;
-	private static final PackageResourceReference CORE_JS = new JavaScriptResourceReference(JQueryBehavior.class, "jquery-1.7.2.min.js"); 
-	private static final PackageResourceReference CORE_UI = new JavaScriptResourceReference(JQueryBehavior.class, "jquery-ui-1.8.19.min.js");
+//	private static final JavaScriptResourceReference CORE_JS = new JavaScriptResourceReference(JQueryBehavior.class, "jquery-1.7.2.min.js"); 
+	private static final JavaScriptResourceReference CORE_UI = new JQueryPluginResourceReference(JQueryBehavior.class, "jquery-ui-1.8.19.min.js");
 
 	/**
 	 * Behavior name
@@ -63,7 +65,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	
 	/**
 	 * Adds a reference to be added at {@link #renderHead(Component, IHeaderResponse)} time.
-	 * @param reference
+	 * @param reference a {@link CssResourceReference}, a {@link JavaScriptResourceReference} or a {@link JQueryPluginResourceReference}
 	 * @return true (as specified by Collection.add(E)) 
 	 */
 	protected boolean add(ResourceReference reference)
@@ -74,23 +76,33 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)
 	{
-		response.renderJavaScriptReference(JQueryAbstractBehavior.CORE_JS);
-		response.renderJavaScriptReference(JQueryAbstractBehavior.CORE_UI);
+//		response.render(JavaScriptHeaderItem.forReference(JQueryAbstractBehavior.CORE_JS));
+		response.render(JavaScriptHeaderItem.forReference(JQueryAbstractBehavior.CORE_UI));
 		
 		for(ResourceReference reference : this.references)
 		{
-			if (reference instanceof JavaScriptResourceReference)
-			{
-				response.renderJavaScriptReference(reference);
-			}
-			
 			if (reference instanceof CssResourceReference)
 			{
-				response.renderCSSReference(reference);
+				response.render(CssHeaderItem.forReference(reference));
+			}
+
+			if (reference instanceof JavaScriptResourceReference)
+			{
+				response.render(JavaScriptHeaderItem.forReference(reference));
 			}
 		}
+		
+		// Adds the statement //
+		AjaxRequestTarget target = component.getRequestCycle().find(AjaxRequestTarget.class);
 
-		response.renderJavaScript(this.$(), this.getToken());
+		if (target != null)
+		{
+			target.appendJavaScript(this.$());
+		}
+		else
+		{
+			response.render(JavaScriptHeaderItem.forScript(this.$(), this.getToken()));
+		}
 	}
 	
 	/**
@@ -102,42 +114,12 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		return String.format("jquery-%s-%d", this.name, this.hashCode());
 	}
 	
-
-	/**
-	 * <code>
-	 * http://blog.nemikor.com/2009/04/08/basic-usage-of-the-jquery-ui-dialog/
-	 * </code>
-	 */
-	@Override
-	public void beforeRender(Component component)
-	{
-		this.onBeforeRender();
-		
-		AjaxRequestTarget target = AjaxRequestTarget.get();
-		
-		if (target != null)
-		{
-			target.appendJavaScript(this.toString());
-		}
-	}
-	
 	/**
 	 * Gets the jQuery statement.
 	 * @return String like '$(function() { ... })'
 	 */
 	protected abstract String $();
 	
-	
-	// Events //
-	/**
-	 * Triggered before render
-	 */
-	protected void onBeforeRender()
-	{
-		
-	}
-
-
 	@Override
 	public final String toString()
 	{

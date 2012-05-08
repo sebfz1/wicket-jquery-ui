@@ -18,7 +18,8 @@ package com.googlecode.wicket.jquery.ui.calendar;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
@@ -54,12 +55,12 @@ class CalendarBehavior extends JQueryBehavior
 		IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
 
 		/* adds and configure the busy indicator */
-		response.renderJavaScript("$(function(){"
+		response.render(JavaScriptHeaderItem.forScript("$(function(){"
 				+ "$('<img />')"
 				+ ".attr('src', '" + RequestCycle.get().urlFor(handler).toString() + "')"
 				+ ".ajaxStart(function() { $(this).show(); })"
 				+ ".ajaxStop(function() { $(this).hide(); })"
 				+ ".appendTo('.fc-header-center')"
-				+ "});", this.getClass().getName());
+				+ "});", this.getClass().getName()));
 	}
 }

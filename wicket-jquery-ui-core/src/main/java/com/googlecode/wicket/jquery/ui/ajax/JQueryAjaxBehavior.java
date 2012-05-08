@@ -19,8 +19,8 @@ package com.googlecode.wicket.jquery.ui.ajax;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.IAjaxCallDecorator;
-import org.apache.wicket.ajax.calldecorator.AjaxCallThrottlingDecorator;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.attributes.ThrottlingSettings;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.event.IEventSink;
 import org.apache.wicket.util.time.Duration;
@@ -31,69 +31,25 @@ import com.googlecode.wicket.jquery.ui.JQueryEvent;
  * Base class for implementing AJAX GET calls on JQuery components<br />
  * The 'source' constructor argument is the {@link Component} to which the event returned by {@link #newEvent(AjaxRequestTarget)} will be broadcasted.<br/>
  * <pre>
-public class MyJQueryLabel extends Label implements IJQueryWidget
+public class MyLabel extends Label implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 
-	// Mainly used to cast to the exact type
-	class MyEvent extends JQueryEvent
-	{
-		public MyEvent(AjaxRequestTarget target)
-		{
-			super(target);
-		}
-	}
-
-	private JQueryAjaxBehavior ajaxBehavior;
-
-	public MyJQueryLabel(String id)
+	public MyLabel(String id)
 	{
 		super(id);
-		this.init();
 	}
 
-	private void init()
-	{
-		this.ajaxBehavior = new JQueryAjaxBehavior(this) {
-
-			private static final long serialVersionUID = 1L;
-
-			protected JQueryEvent newEvent(AjaxRequestTarget target)
-			{
-				return new MyEvent(target);
-			}
-		};
-	}
-
-	public void onEvent(IEvent<?> event)
-	{
-		if (event.getPayload() instanceof MyEvent)
-		{
-			JQueryEvent payload = (JQueryEvent) event.getPayload();
-			AjaxRequestTarget target = payload.getTarget();
-			//do something with the target
-		}
-	}
-	
 	protected void onInitialize()
 	{
 		super.onInitialize();
 		
-		this.add(this.ajaxBehavior);
 		this.add(JQueryWidget.newWidgetBehavior(this));
-	}	
+	}
 
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new JQueryBehavior(selector, "jquerymethod") {
-
-			private static final long serialVersionUID = 1L;
-
-			public void onConfigure(Component component)
-			{
-				this.setOption("jqueryevent", "function( event, ui ) { " + ajaxBehavior.getCallbackScript() + " }");
-			}
-		};
+		return new JQueryBehavior(selector, "method");
 	}
 }
  * </pre>
@@ -152,25 +108,69 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	{
 		return this.source;
 	}
-
+	
+	//promote visibility
 	/**
-	 * Promotes visibility
+	 * @deprecated the visibility has changed to public
 	 */
 	@Override
-	public CharSequence getCallbackScript()
+	public String getCallbackFunction(String... extraParameters)
 	{
-		return super.getCallbackScript();
+		return super.getCallbackFunction(extraParameters).toString();
+	}
+	
+	/**
+	 * Special implementation where supplied extraParameters are of the form { 'param1': param2, 'param3': param4 }
+	 * @deprecated use the new built-in implementation
+	 */
+	@Override
+	protected CharSequence getCallbackFunctionBody(String... extraParameters)
+	{
+		AjaxRequestAttributes attributes = getAttributes();
+		CharSequence attrsJson = renderAjaxAttributes(getComponent(), attributes);
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("var attrs = ").append(attrsJson).append(";\n");
+
+		builder.append("var params = {");
+		
+		if (extraParameters.length % 2 == 0)
+		{
+			for (int i = 0; i < extraParameters.length - 1; i += 2)
+			{
+				if (i > 0)
+				{
+					builder.append(", ");
+				}
+				
+				builder.append("'").append(extraParameters[i]).append("': ").append(extraParameters[i + 1]);
+			}
+		}
+
+		builder.append("};\n");
+		
+		if (attributes.getExtraParameters().isEmpty())
+		{
+			builder.append("attrs.ep = params;\n");
+		}
+		else
+		{
+			builder.append("attrs.ep = jQuery.extend({}, attrs.ep, params);\n");
+		}
+		
+		builder.append("Wicket.Ajax.ajax(attrs);\n");
+		return builder;
 	}
 	
 	@Override
-	protected IAjaxCallDecorator getAjaxCallDecorator()
+	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 	{
+		super.updateAjaxAttributes(attributes);
+		
 		if (this.duration != Duration.NONE)
 		{
-			return new AjaxCallThrottlingDecorator("throttle", this.duration);
+			attributes.setThrottlingSettings(new ThrottlingSettings("jquery-throttle", this.duration));
 		}
-		
-		return super.getAjaxCallDecorator();
 	}
 
 	/**

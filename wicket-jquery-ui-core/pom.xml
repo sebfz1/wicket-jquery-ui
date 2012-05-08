@@ -18,7 +18,7 @@
 
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>jquery-ui-core</artifactId>
-	<version>1.2-SNAPSHOT</version>
+	<version>6.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<licenses>
@@ -38,13 +38,13 @@
 	</developers>
 
 	<scm>
-		<url>git@github.com:sebfz1/wicket-jquery-ui.git</url>
-		<connection>scm:git:git@github.com:sebfz1/wicket-jquery-ui.git</connection>
-		<developerConnection>scm:git:git@github.com:sebfz1/wicket-jquery-ui.git</developerConnection>
+		<url>git@github.com:sebfz1/wicket-jquery-ui-core.git</url>
+		<connection>scm:git:git@github.com:sebfz1/wicket-jquery-ui-core.git</connection>
+		<developerConnection>scm:git:git@github.com:sebfz1/wicket-jquery-ui-core.git</developerConnection>
 	</scm>
 
 	<properties>
-		<wicket.version>1.5.6</wicket.version>
+		<wicket.version>6.0.0-beta1</wicket.version>
 		<junit.version>4.8.1</junit.version>
 	</properties>
 

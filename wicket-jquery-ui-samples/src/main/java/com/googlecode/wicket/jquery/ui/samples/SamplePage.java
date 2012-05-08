@@ -3,13 +3,13 @@ package com.googlecode.wicket.jquery.ui.samples;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.resource.ResourceUtil;
+import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.template.PackageTextTemplate;
 
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;

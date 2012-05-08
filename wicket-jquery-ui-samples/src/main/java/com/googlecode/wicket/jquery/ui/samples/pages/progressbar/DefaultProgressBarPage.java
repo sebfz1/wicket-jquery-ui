@@ -58,7 +58,7 @@ public class DefaultProgressBarPage extends AbstractProgressBarPage implements I
 			@Override
 			protected void onComplete(AjaxRequestTarget target)
 			{
-				timer.stop();
+				timer.stop(target);
 
 				info("completed!");
 				target.add(feedbackPanel);

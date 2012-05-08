@@ -19,6 +19,7 @@ package com.googlecode.wicket.jquery.ui.dialog;
 import java.io.Serializable;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IFormSubmitter;
@@ -84,7 +85,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	 * The callback script of {@link FormButtonAjaxBehavior} will differ depending on this.
 	 * 
 	 * @param button the dialog's button
-	 * @return the {@link Form}
+	 * @return the {@link Form} or <code>null</code>
 	 */
 	private Form<?> getForm(String button)
 	{
@@ -191,22 +192,15 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 			this.form = form;
 		}
 
-		/**
-		 * The formId may intentionally be null
-		 * 
-		 * TODO: wicket 6, to be changed using the new call (jQuery)
-		 */
 		@Override
-		public CharSequence getCallbackScript()
+		protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 		{
+			super.updateAjaxAttributes(attributes);
+			
 			if (this.form != null)
 			{
-				final CharSequence script = String.format("wicketSubmitFormById('%s', '%s', null", this.form.getMarkupId(), this.getCallbackUrl()); 
-
-				return this.generateCallbackScript(script) + ";return false";
+				attributes.setFormId(this.form.getMarkupId());
 			}
-
-			return super.getCallbackScript();
 		}
 	}
 }

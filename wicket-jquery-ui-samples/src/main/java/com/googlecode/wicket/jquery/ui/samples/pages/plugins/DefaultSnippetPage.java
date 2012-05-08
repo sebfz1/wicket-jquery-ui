@@ -10,7 +10,8 @@ public class DefaultSnippetPage extends AbstractSnippetPage
 	public DefaultSnippetPage()
 	{
 		Options options = new Options();
-		options.set("style", Options.asString("ide-eclipse")); //Options.asString() converts a string or an object to its javascript representation. ie: "myvalue" (including the double quote)
+
+		options.set("style", Options.asString("ide-eclipse"));
 		
 		this.add(new SnippetBehavior("#code", "java", options));
 	}

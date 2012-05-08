@@ -16,7 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.form.slider;
 
-import org.apache.wicket.IClusterable;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Provides the value type to be used as model object for {@link RangeSlider}

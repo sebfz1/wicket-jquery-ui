@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.ui.ajax;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 
@@ -45,19 +46,12 @@ public abstract class JQueryAjaxFormBehavior extends JQueryAjaxBehavior
 
 		this.form = form;
 	}
-
-	/**
-	 * TODO: wicket 6, to be changed using the new call (jQuery)
-	 */
+	
 	@Override
-	public CharSequence getCallbackScript()
+	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 	{
-		if (this.form != null)
-		{
-			final CharSequence script = String.format("wicketSubmitFormById('%s', '%s', null", this.form.getMarkupId(), this.getCallbackUrl()); 
-			return this.generateCallbackScript(script) + "return false;";
-		}
-
-		return super.getCallbackScript();
+		super.updateAjaxAttributes(attributes);
+		
+		attributes.setFormId(this.form.getMarkupId());
 	}
 }

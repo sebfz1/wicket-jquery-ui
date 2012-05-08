@@ -21,8 +21,8 @@ import java.util.List;
 import org.apache.wicket.Application;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.IAjaxCallDecorator;
-import org.apache.wicket.ajax.calldecorator.AjaxCallThrottlingDecorator;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.attributes.ThrottlingSettings;
 import org.apache.wicket.request.IRequestCycle;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -54,9 +54,11 @@ abstract class AutoCompleteBehavior<T> extends AbstractDefaultAjaxBehavior
 	}
 
 	@Override
-	protected IAjaxCallDecorator getAjaxCallDecorator()
+	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 	{
-		return new AjaxCallThrottlingDecorator("throttle", Duration.ONE_SECOND);
+		super.updateAjaxAttributes(attributes);
+		
+		attributes.setThrottlingSettings(new ThrottlingSettings("jquery-autocomplete-throttle", Duration.ONE_SECOND));
 	}
 	
 	/**

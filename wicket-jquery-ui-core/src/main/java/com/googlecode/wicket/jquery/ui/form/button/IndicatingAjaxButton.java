@@ -16,22 +16,35 @@
  */
 package com.googlecode.wicket.jquery.ui.form.button;
 
-import org.apache.wicket.ajax.IAjaxIndicatorAware;
-import org.apache.wicket.extensions.ajax.markup.html.AjaxIndicatorAppender;
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
+
+import com.googlecode.wicket.jquery.ui.IJQueryWidget;
+import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 
 /**
  * Provides a jQuery button based on the built-in AjaxButton, with an ajax indicator the time the {@link #onSubmit()} process.
  * 
+ * @since 6.0 
  * @author Sebastien Briquet - sebastien@7thweb.net
- * 
- * TODO: wicket 6, to be refactored to use jquery icons (ajax-start & ajax-stop will be automatically handled)
  */
-public abstract class IndicatingAjaxButton extends AjaxButton implements IAjaxIndicatorAware
+public abstract class IndicatingAjaxButton extends AjaxButton implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
-	private final AjaxIndicatorAppender indicatorAppender = new AjaxIndicatorAppender();
+
+	public enum Position { LEFT, RIGHT }
+
+	private Position position = Position.LEFT;
 
 	/**
 	 * Constructor
@@ -40,7 +53,6 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IAjaxIn
 	public IndicatingAjaxButton(String id)
 	{
 		super(id);
-		this.init();
 	}
 
 	/**
@@ -51,7 +63,6 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IAjaxIn
 	public IndicatingAjaxButton(String id, Form<?> form)
 	{
 		super(id, form);
-		this.init();
 	}
 
 	/**
@@ -62,7 +73,6 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IAjaxIn
 	public IndicatingAjaxButton(String id, IModel<String> model)
 	{
 		super(id, model);
-		this.init();
 	}
 
 	/**
@@ -74,25 +84,55 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IAjaxIn
 	public IndicatingAjaxButton(String id, IModel<String> model, Form<?> form)
 	{
 		super(id, model, form);
-		this.init();
 	}
 	
-	
-	/**
-	 * Initialization
-	 */
-	private void init()
+	public IndicatingAjaxButton setPosition(Position position)
 	{
-		this.add(this.indicatorAppender);
+		this.position = position;
+		return this;
 	}
 	
-	/**
-	 * @see IAjaxIndicatorAware#getAjaxIndicatorMarkupId()
-	 * @return the markup id of the ajax indicator
-	 * 
-	 */
-	public String getAjaxIndicatorMarkupId()
+	// IJQueryWidget //
+	@Override
+	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return this.indicatorAppender.getMarkupId();
+		return new JQueryBehavior(selector, "button") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void renderHead(Component component, IHeaderResponse response)
+			{
+				super.renderHead(component, response);
+				
+				IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
+
+				/* adds and configure the busy indicator */
+				response.render(CssHeaderItem.forCSS(".ui-icon.ui-icon-indicator { background-image: url(" + RequestCycle.get().urlFor(handler).toString() + ") !important; }", "jquery-ui-icon-indicator"));
+
+				/* adds and configure the busy indicator */
+				StringBuilder script = new StringBuilder("$(function() {");
+				script.append("$('").append(selector).append("')");
+				script.append(".click(function() { $(this).button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": 'ui-icon-indicator' }); })");
+				script.append(".ajaxStop(function() { $(this).button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": null }); })");
+				script.append("});");
+
+				response.render(JavaScriptHeaderItem.forScript(script, this.getClass().getName() + "-" + selector));
+			}
+		};
+	}
+
+	// Events //
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+		
+		this.add(JQueryWidget.newWidgetBehavior(this));
+	}
+
+	@Override
+	protected void onError(AjaxRequestTarget target, Form<?> form)
+	{
 	}	
 }

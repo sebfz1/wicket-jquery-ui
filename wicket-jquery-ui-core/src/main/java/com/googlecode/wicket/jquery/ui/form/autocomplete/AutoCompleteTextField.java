@@ -180,13 +180,12 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 		return new JQueryBehavior(selector, METHOD) {
 
 			private static final long serialVersionUID = 1L;
-
+			
 			@Override
 			public void onConfigure(Component component) 
 			{
 				this.setOption("source", Options.asString(sourceBehavior.getCallbackUrl()));
-				this.setOption("select", "function( event, ui ) { " + selectBehavior.getCallbackScript() + " }");
-//				minLength: 2,
+				this.setOption("select", selectBehavior.getCallbackFunction("event", "ui"));
 			}
 		};
 	}
@@ -222,17 +221,13 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 		return new JQueryAjaxBehavior(source) {
 			
 			private static final long serialVersionUID = 1L;
-
-			/**
-			 * TODO: wicket 6, to be changed using the new call (jQuery)
-			 */
+			
 			@Override
-			public CharSequence getCallbackScript()
+			protected CharSequence getCallbackFunctionBody(String... extraParameters)
 			{
-				return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() + "&index=' + ui.item.id");
+				return super.getCallbackFunctionBody("index", "ui.item.id");
 			}
 
-			
 			@Override
 			protected JQueryEvent newEvent(AjaxRequestTarget target)
 			{

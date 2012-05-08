@@ -16,8 +16,12 @@
  */
 package com.googlecode.wicket.jquery.ui.ajax;
 
+import java.util.List;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes.Method;
 import org.apache.wicket.markup.html.form.FormComponent;
 
 /**
@@ -55,32 +59,26 @@ public abstract class JQueryAjaxPostBehavior extends JQueryAjaxBehavior
 		this.components = components;
 	}
 
-	/**
-	 * TODO: wicket 6, to be changed using the new call (jQuery) 
-	 */
 	@Override
-	public CharSequence getCallbackScript()
+	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 	{
+		super.updateAjaxAttributes(attributes);
+		
+		attributes.setMethod(Method.POST);
+		
 		if (this.components.length > 0)
 		{
-			StringBuilder serialize = new StringBuilder();
+			StringBuilder serialize = new StringBuilder("var result = [];");
 			
-			for (int i = 0; i < this.components.length; i++)
+			for (FormComponent<?> component: this.components)
 			{
-				if (i > 0)
-				{
-					serialize.append("+");
-				}
-				
-				serialize.append("Wicket.Form.serializeElement(Wicket.$('").append(this.components[i].getMarkupId()).append("'))");
+				serialize.append("result = result.concat(Wicket.Form.serializeElement(Wicket.$('").append(component.getMarkupId()).append("')));");
 			}
 
-			//old: wicketSerialize(Wicket.$('%s'))
-			final CharSequence script = String.format("wicketAjaxPost('%s', %s", this.getCallbackUrl(), serialize);
-
-			return this.generateCallbackScript(script) + "return false;";
+			serialize.append("return result;");
+		
+			List<CharSequence> dynamicParameters = attributes.getDynamicExtraParameters();
+			dynamicParameters.add(serialize);
 		}
-
-		return super.getCallbackScript();
 	}
 }
