@@ -38,9 +38,9 @@
 	</developers>
 
 	<scm>
-		<url>git@github.com:sebfz1/wicket-jquery-ui-core.git</url>
-		<connection>scm:git:git@github.com:sebfz1/wicket-jquery-ui-core.git</connection>
-		<developerConnection>scm:git:git@github.com:sebfz1/wicket-jquery-ui-core.git</developerConnection>
+		<url>git@github.com:sebfz1/wicket-jquery-ui.git</url>
+		<connection>scm:git:git@github.com:sebfz1/wicket-jquery-ui.git</connection>
+		<developerConnection>scm:git:git@github.com:sebfz1/wicket-jquery-ui.git</developerConnection>
 	</scm>
 
 	<properties>
