@@ -31,6 +31,10 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryEvent;
 import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.ui.renderer.ITextRenderer;
+import com.googlecode.wicket.jquery.ui.renderer.TextRenderer;
+import com.googlecode.wicket.jquery.ui.template.IJQueryTemplate;
+import com.googlecode.wicket.jquery.ui.template.JQueryTemplateBehavior;
 import com.googlecode.wicket.jquery.ui.utils.RequestCycleUtils;
 
 /**

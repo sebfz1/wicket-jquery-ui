@@ -31,25 +31,69 @@ import com.googlecode.wicket.jquery.ui.JQueryEvent;
  * Base class for implementing AJAX GET calls on JQuery components<br />
  * The 'source' constructor argument is the {@link Component} to which the event returned by {@link #newEvent(AjaxRequestTarget)} will be broadcasted.<br/>
  * <pre>
-public class MyLabel extends Label implements IJQueryWidget
+public class MyJQueryLabel extends Label implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 
-	public MyLabel(String id)
+	// Mainly used to cast to the exact type
+	class MyEvent extends JQueryEvent
 	{
-		super(id);
+		public MyEvent(AjaxRequestTarget target)
+		{
+			super(target);
+		}
 	}
 
+	private JQueryAjaxBehavior ajaxBehavior;
+
+	public MyJQueryLabel(String id)
+	{
+		super(id);
+		this.init();
+	}
+
+	private void init()
+	{
+		this.ajaxBehavior = new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			{
+				return new MyEvent(target);
+			}
+		};
+	}
+
+	public void onEvent(IEvent<?> event)
+	{
+		if (event.getPayload() instanceof MyEvent)
+		{
+			JQueryEvent payload = (JQueryEvent) event.getPayload();
+			AjaxRequestTarget target = payload.getTarget();
+			//do something with the target
+		}
+	}
+	
 	protected void onInitialize()
 	{
 		super.onInitialize();
 		
+		this.add(this.ajaxBehavior);
 		this.add(JQueryWidget.newWidgetBehavior(this));
-	}
+	}	
 
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new JQueryBehavior(selector, "method");
+		return new JQueryBehavior(selector, "jquerymethod") {
+
+			private static final long serialVersionUID = 1L;
+
+			public void onConfigure(Component component)
+			{
+				this.setOption("jqueryevent", "function( event, ui ) { " + ajaxBehavior.getCallbackScript() + " }");
+			}
+		};
 	}
 }
  * </pre>

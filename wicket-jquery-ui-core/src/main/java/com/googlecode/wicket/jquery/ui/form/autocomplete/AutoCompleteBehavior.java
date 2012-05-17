@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.form.autocomplete;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.Application;

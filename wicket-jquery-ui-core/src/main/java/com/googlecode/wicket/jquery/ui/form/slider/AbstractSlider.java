@@ -17,7 +17,6 @@
 package com.googlecode.wicket.jquery.ui.form.slider;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
@@ -173,7 +172,6 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	 * Sets the min value
 	 * @param min
 	 * @return this
-	 * @throws JSONException 
 	 */
 	@SuppressWarnings("unchecked")
 	public <W extends AbstractSlider<T>> W setMin(Integer min)
@@ -186,7 +184,6 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	 * Sets the max value
 	 * @param max
 	 * @return this
-	 * @throws JSONException 
 	 */
 	@SuppressWarnings("unchecked")
 	public <W extends AbstractSlider<T>> W setMax(Integer max)
@@ -199,7 +196,6 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	 * Sets the step value
 	 * @param step
 	 * @return this
-	 * @throws JSONException 
 	 */
 	@SuppressWarnings("unchecked")
 	public <W extends AbstractSlider<T>> W setStep(Integer step)
