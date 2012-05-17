@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.image.ContextImage;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -29,15 +30,19 @@ public class CustomAutoCompletePage extends AbstractAutoCompletePage
 		// Model //
 		final IModel<Genre> model = new Model<Genre>(Genre.emptyGenre());
 
-		// Container for selected genre (name & sample cover) //
+		// Form //
+		final Form<String> form = new Form<String>("form");
+		this.add(form);
+
+		// Container for selected genre (name & cover) //
 		final WebMarkupContainer container = new WebMarkupContainer("container");
-		this.add(container.setOutputMarkupId(true));
+		form.add(container.setOutputMarkupId(true));
 		
 		container.add(new ContextImage("cover", new PropertyModel<String>(model, "cover")));
 		container.add(new Label("name", new PropertyModel<String>(model, "name")));
 
 		// Auto-complete //
-		this.add(new AutoCompleteTextField<Genre>("autocomplete", model) {
+		form.add(new AutoCompleteTextField<Genre>("autocomplete", model) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -54,9 +59,9 @@ public class CustomAutoCompletePage extends AbstractAutoCompletePage
 			}
 		});
 	}
-	
+
 	// List of Genre(s) //
-	private static final List<Genre> GENRES = Arrays.asList(
+	static final List<Genre> GENRES = Arrays.asList(
 			new Genre("Black Metal", "cover-black-metal.png"),
 			new Genre("Death Metal", "cover-death-metal.png"),
 			new Genre("Doom Metal", "cover-doom-metal.png"),
@@ -99,8 +104,8 @@ public class CustomAutoCompletePage extends AbstractAutoCompletePage
 		}
 		
 		/**
-		 * toString needs to be overridden: it is used by the suggestion display
-		 * and by {@link AutoCompleteUtils#contains(List, String)} method
+		 * #toString() needs to be overridden if no renderer is provided.
+		 * #toString() is also used by {@link AutoCompleteUtils#contains(List, String)} method.
 		 */
 		@Override
 		public String toString()

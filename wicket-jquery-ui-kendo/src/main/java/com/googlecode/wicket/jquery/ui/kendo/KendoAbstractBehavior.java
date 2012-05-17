@@ -28,8 +28,6 @@ public class KendoAbstractBehavior extends JQueryBehavior
 	{
 		super(selector, method);
 		
-		this.add(new JavaScriptResourceReference(KendoAbstractBehavior.class, "jquery.tmpl.min.js"));
-//		this.add(new JavaScriptResourceReference(KendoAbstractBehavior.class, "kendo.all.min.js"));
 		this.add(new JavaScriptResourceReference(KendoAbstractBehavior.class, "kendo.web.min.js"));
 	}
 

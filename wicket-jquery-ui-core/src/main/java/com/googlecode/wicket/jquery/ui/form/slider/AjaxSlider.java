@@ -29,6 +29,9 @@ import org.apache.wicket.model.Model;
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxPostBehavior;
+import com.googlecode.wicket.jquery.ui.event.IValueChangedListener;
+import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior;
+import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEvent;
 
 /**
  * Provides a jQuery range slider based on a {@link FormComponentPanel}
@@ -36,7 +39,7 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxPostBehavior;
  * 
  * @author Sebastien Briquet - sebastien@7thweb.net
  */
-public class AjaxSlider extends Slider implements IAjaxSlider
+public class AjaxSlider extends Slider implements IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -72,6 +75,12 @@ public class AjaxSlider extends Slider implements IAjaxSlider
 		super(id, model, label);
 	}
 
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param input the {@link TextField} that will host the value
+	 */
 	public AjaxSlider(String id, Model<Integer> model, TextField<Integer> input)
 	{
 		super(id, model, input);
@@ -83,7 +92,7 @@ public class AjaxSlider extends Slider implements IAjaxSlider
 	{
 		super.onInitialize();  
 
-		this.add(this.changeBehavior = new ChangeBehavior(this, this.input));
+		this.add(this.changeBehavior = new JQueryAjaxChangeBehavior(this, this.input));
 	}
 
 	@Override
