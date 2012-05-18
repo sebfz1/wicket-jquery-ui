@@ -92,6 +92,20 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 		return this;
 	}
 	
+	// Events //
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+		
+		this.add(JQueryWidget.newWidgetBehavior(this));
+	}
+
+	@Override
+	protected void onError(AjaxRequestTarget target, Form<?> form)
+	{
+	}	
+
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
@@ -121,18 +135,4 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 			}
 		};
 	}
-
-	// Events //
-	@Override
-	protected void onInitialize()
-	{
-		super.onInitialize();
-		
-		this.add(JQueryWidget.newWidgetBehavior(this));
-	}
-
-	@Override
-	protected void onError(AjaxRequestTarget target, Form<?> form)
-	{
-	}	
 }
