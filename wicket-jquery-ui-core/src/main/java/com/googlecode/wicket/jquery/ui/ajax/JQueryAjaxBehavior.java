@@ -134,6 +134,17 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 		this.source.send(this.getSink(), this.getBroadcast(), this.newEvent(target));
 	}
 
+	@Override
+	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
+	{
+		super.updateAjaxAttributes(attributes);
+		
+		if (this.duration != Duration.NONE)
+		{
+			attributes.setThrottlingSettings(new ThrottlingSettings("jquery-throttle", this.duration));
+		}
+	}
+
 	/**
 	 * Gets the broadcast to be used in {@link #respond(AjaxRequestTarget)}
 	 * @return {@link Broadcast#EXACT} by default
@@ -153,70 +164,6 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 		return this.source;
 	}
 	
-	//promote visibility
-	/**
-	 * @deprecated the visibility has changed to public
-	 */
-	@Override
-	public String getCallbackFunction(String... extraParameters)
-	{
-		return super.getCallbackFunction(extraParameters).toString();
-	}
-	
-	/**
-	 * Special implementation where supplied extraParameters are of the form { 'param1': param2, 'param3': param4 }
-	 * @deprecated use the new built-in implementation
-	 */
-	@Override
-	protected CharSequence getCallbackFunctionBody(String... extraParameters)
-	{
-		AjaxRequestAttributes attributes = getAttributes();
-		CharSequence attrsJson = renderAjaxAttributes(getComponent(), attributes);
-		
-		StringBuilder builder = new StringBuilder();
-		builder.append("var attrs = ").append(attrsJson).append(";\n");
-
-		builder.append("var params = {");
-		
-		if (extraParameters.length % 2 == 0)
-		{
-			for (int i = 0; i < extraParameters.length - 1; i += 2)
-			{
-				if (i > 0)
-				{
-					builder.append(", ");
-				}
-				
-				builder.append("'").append(extraParameters[i]).append("': ").append(extraParameters[i + 1]);
-			}
-		}
-
-		builder.append("};\n");
-		
-		if (attributes.getExtraParameters().isEmpty())
-		{
-			builder.append("attrs.ep = params;\n");
-		}
-		else
-		{
-			builder.append("attrs.ep = jQuery.extend({}, attrs.ep, params);\n");
-		}
-		
-		builder.append("Wicket.Ajax.ajax(attrs);\n");
-		return builder;
-	}
-	
-	@Override
-	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
-	{
-		super.updateAjaxAttributes(attributes);
-		
-		if (this.duration != Duration.NONE)
-		{
-			attributes.setThrottlingSettings(new ThrottlingSettings("jquery-throttle", this.duration));
-		}
-	}
-
 	/**
 	 * @param target the {@link AjaxRequestTarget}
 	 * @return the {@link JQueryEvent} to be broadcasted to the source when the behavior will respond

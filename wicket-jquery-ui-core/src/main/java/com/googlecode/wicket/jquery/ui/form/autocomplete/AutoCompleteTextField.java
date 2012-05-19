@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.TextField;
@@ -228,7 +229,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 			public void onConfigure(Component component) 
 			{
 				this.setOption("source", Options.asString(sourceBehavior.getCallbackUrl()));
-				this.setOption("select", selectBehavior.getCallbackFunction("event", "ui"));
+				this.setOption("select", selectBehavior.getCallbackFunction(CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("index", "ui.item.id")).toString());
 			}
 
 			@Override
@@ -299,12 +300,6 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 		return new JQueryAjaxBehavior(source) {
 			
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CharSequence getCallbackFunctionBody(String... extraParameters)
-			{
-				return super.getCallbackFunctionBody("index", "ui.item.id");
-			}
 
 			@Override
 			protected JQueryEvent newEvent(AjaxRequestTarget target)

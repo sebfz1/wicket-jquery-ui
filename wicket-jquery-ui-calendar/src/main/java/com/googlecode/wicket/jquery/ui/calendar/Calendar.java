@@ -23,6 +23,7 @@ import java.util.Map.Entry;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.event.IEvent;
 
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
@@ -111,12 +112,6 @@ public class Calendar extends JQueryContainer
 			private static final long serialVersionUID = 1L;
 			
 			@Override
-			protected CharSequence getCallbackFunctionBody(String... extraParameters)
-			{
-				return super.getCallbackFunctionBody("eventId", "calEvent.id");
-			}
-
-			@Override
 			protected JQueryEvent newEvent(AjaxRequestTarget target)
 			{
 				return new ClickEvent(target);
@@ -186,7 +181,7 @@ public class Calendar extends JQueryContainer
 				this.setOption("eventSources", String.format("[%s]", sourceBuilder.toString()));
 
 				// events/behaviors //
-				this.setOption("eventClick", eventBehavior.getCallbackFunction("calEvent", "jsEvent", "view"));
+				this.setOption("eventClick", eventBehavior.getCallbackFunction(CallbackParameter.context("calEvent"), CallbackParameter.context("jsEvent"), CallbackParameter.context("view"), CallbackParameter.resolved("eventId", "calEvent.id")).toString());
 			}
 		};
 	}
