@@ -18,8 +18,10 @@ package com.googlecode.wicket.jquery.ui.kendo.dropdown;
 
 import java.util.List;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.event.IEvent;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
@@ -30,6 +32,14 @@ import com.googlecode.wicket.jquery.ui.event.ISelectionChangedListener;
 import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior;
 import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEvent;
 
+/**
+ * Provides a Kendo UI DropDownList widget. It extends built-in {@link DropDownChoice}<br/>
+ * This ajax version will post the {@link Component}, using a {@link JQueryAjaxChangeBehavior}, when the 'change' javascript method is called.
+ * 
+ * @author Sebastien Briquet - sebastien@7thweb.net
+ *
+ * @param <T>
+ */
 public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionChangedListener
 {
 	private static final long serialVersionUID = 1L;
@@ -37,7 +47,8 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	private JQueryAjaxBehavior changeBehavior;
 
 	/**
-	 * @param id
+	 * Constructor
+	 * @param id the markup id
 	 */
 	public AjaxDropDownList(String id)
 	{
@@ -45,8 +56,9 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	}
 
 	/**
-	 * @param id
-	 * @param choices
+	 * Constructor
+	 * @param id the markup id
+	 * @param choices the collection of choices in the dropdown
 	 */
 	public AjaxDropDownList(String id, List<? extends T> choices)
 	{
@@ -54,9 +66,10 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	}
 
 	/**
-	 * @param id
-	 * @param choices
-	 * @param renderer
+	 * Constructor
+	 * @param id the markup id
+	 * @param choices the collection of choices in the dropdown
+	 * @param renderer the rendering engine
 	 */
 	public AjaxDropDownList(String id, List<? extends T> choices, IChoiceRenderer<? super T> renderer)
 	{
@@ -64,9 +77,10 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	}
 
 	/**
-	 * @param id
-	 * @param model
-	 * @param choices
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param choices the collection of choices in the dropdown
 	 */
 	public AjaxDropDownList(String id, IModel<T> model, List<? extends T> choices)
 	{
@@ -74,10 +88,11 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	}
 
 	/**
-	 * @param id
-	 * @param model
-	 * @param choices
-	 * @param renderer
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param choices the collection of choices in the dropdown
+	 * @param renderer the rendering engine
 	 */
 	public AjaxDropDownList(String id, IModel<T> model, List<? extends T> choices, IChoiceRenderer<? super T> renderer)
 	{
@@ -85,8 +100,9 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	}
 
 	/**
-	 * @param id
-	 * @param choices
+	 * Constructor
+	 * @param id the markup id
+	 * @param choices the collection of choices in the dropdown
 	 */
 	public AjaxDropDownList(String id, IModel<? extends List<? extends T>> choices)
 	{
@@ -94,9 +110,10 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	}
 
 	/**
-	 * @param id
-	 * @param model
-	 * @param choices
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param choices the collection of choices in the dropdown
 	 */
 	public AjaxDropDownList(String id, IModel<T> model, IModel<? extends List<? extends T>> choices)
 	{
@@ -104,9 +121,10 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	}
 
 	/**
-	 * @param id
-	 * @param choices
-	 * @param renderer
+	 * Constructor
+	 * @param id the markup id
+	 * @param choices the collection of choices in the dropdown
+	 * @param renderer the rendering engine
 	 */
 	public AjaxDropDownList(String id, IModel<? extends List<? extends T>> choices, IChoiceRenderer<? super T> renderer)
 	{
@@ -114,10 +132,11 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	}
 
 	/**
-	 * @param id
-	 * @param model
-	 * @param choices
-	 * @param renderer
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param choices the collection of choices in the dropdown
+	 * @param renderer the rendering engine
 	 */
 	public AjaxDropDownList(String id, IModel<T> model, IModel<? extends List<? extends T>> choices, IChoiceRenderer<? super T> renderer)
 	{
