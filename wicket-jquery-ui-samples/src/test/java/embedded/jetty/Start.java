@@ -51,10 +51,8 @@ public class Start {
 
 		WebAppContext bb = new WebAppContext();
 		bb.setServer(server);
-		bb.setContextPath("/");
+		bb.setContextPath("/jquery-ui-samples");
 		bb.setWar("src/main/webapp");
-
-		((AbstractSessionManager)bb.getSessionHandler().getSessionManager()).setUsingCookies(false);
 
 		// START JMX SERVER
 		// MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();

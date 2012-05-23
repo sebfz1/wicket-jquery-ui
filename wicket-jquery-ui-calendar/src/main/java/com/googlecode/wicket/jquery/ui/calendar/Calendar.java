@@ -17,13 +17,10 @@
 package com.googlecode.wicket.jquery.ui.calendar;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.event.IEvent;
 
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryContainer;
@@ -31,6 +28,9 @@ import com.googlecode.wicket.jquery.ui.JQueryEvent;
 import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.ui.utils.RequestCycleUtils;
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.event.IEvent;
 
 /**
  * 
@@ -46,6 +46,7 @@ public class Calendar extends JQueryContainer
 	
 	private CalendarModelBehavior modelBehavior; // events load
 	private JQueryAjaxBehavior eventBehavior; // event click
+	private JQueryAjaxBehavior dayClickBehavior; // day click
  
 	public Calendar(String id, CalendarModel model)
 	{
@@ -123,6 +124,24 @@ public class Calendar extends JQueryContainer
 			}
 			
 		});
+
+		this.add(this.dayClickBehavior = new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public CharSequence getCallbackScript()
+			{
+				return generateCallbackScript("console.log(arguments); wicketAjaxGet('" + getCallbackUrl() + "&date=' + date.getTime()");
+			}
+
+			@Override
+			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			{
+				return new DayClickEvent(target);
+			}
+
+		});
 	}
 
 	/**
@@ -139,15 +158,25 @@ public class Calendar extends JQueryContainer
 	@Override
 	public void onEvent(IEvent<?> event)
 	{
-		if (event.getPayload() instanceof ClickEvent)
+		Object payload = event.getPayload();
+		if (payload instanceof ClickEvent)
 		{
-			ClickEvent payload = (ClickEvent) event.getPayload();
+			ClickEvent clickEvent = (ClickEvent) payload;
 
-			this.onClick(payload.getTarget(), payload.getEventId());
+			this.onClick(clickEvent.getTarget(), clickEvent.getEventId());
+		}
+		else if (payload instanceof DayClickEvent)
+		{
+			DayClickEvent dayClickEvent = (DayClickEvent) payload;
+			this.onDayClick(dayClickEvent.getTarget(), dayClickEvent.getDate());
 		}
 	}
-	
-	
+
+	protected void onDayClick(AjaxRequestTarget target, Date date)
+	{
+	}
+
+
 	protected void onClick(AjaxRequestTarget target, int eventId)
 	{
 
@@ -187,6 +216,8 @@ public class Calendar extends JQueryContainer
 
 				// behaviors //
 				this.setOption("eventClick", "function(calEvent, jsEvent, view) { " + eventBehavior.getCallbackScript() + "}");
+
+				this.setOption("dayClick", "function(date, allDay, jsEvent, view) { " + dayClickBehavior.getCallbackScript() + "}");
 			}
 		};
 	}
@@ -206,7 +237,7 @@ public class Calendar extends JQueryContainer
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'change' callback
 	 */
-	class ClickEvent extends JQueryEvent
+	private static class ClickEvent extends JQueryEvent
 	{
 		private int eventId;
 
@@ -220,6 +251,27 @@ public class Calendar extends JQueryContainer
 		public int getEventId()
 		{
 			return this.eventId;
+		}
+	}
+
+	/**
+	 * An event object that will be broadcasted when the user clicks on a day cell
+	 */
+	private static class DayClickEvent extends JQueryEvent
+	{
+		private final Date day;
+
+		public DayClickEvent(AjaxRequestTarget target)
+		{
+			super(target);
+
+			long date = RequestCycleUtils.getQueryParameterValue("date").toLong();
+			this.day = new Date(date);
+		}
+
+		public Date getDate()
+		{
+			return this.day;
 		}
 	}
 }
