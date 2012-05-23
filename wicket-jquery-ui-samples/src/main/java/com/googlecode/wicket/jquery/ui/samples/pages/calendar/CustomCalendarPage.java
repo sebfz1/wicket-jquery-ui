@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -35,7 +36,7 @@ public class CustomCalendarPage extends AbstractCalendarPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedback = new FeedbackPanel("feedback");
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
 		form.add(feedback.setOutputMarkupId(true));
 		
 		// Dialog //
@@ -58,6 +59,19 @@ public class CustomCalendarPage extends AbstractCalendarPage
 		Calendar calendar = new Calendar("calendar", this.newCalendarModel()) {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onDayClick(AjaxRequestTarget target, Date date)
+			{
+				super.onDayClick(target, date);
+
+				info("Selected date: " + date);
+				target.add(feedback);
+				
+				CalendarEvent calendarEvent = new CalendarEvent(-1, "", date);
+				dialog.setModelObject(calendarEvent);
+				dialog.open(target);
+			}
 
 			@Override
 			protected void onClick(AjaxRequestTarget target, int eventId)
