@@ -89,8 +89,14 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	protected abstract String getSubmitButton();
 
 	
-	/* IFormSubmitter */
-	
+	/**
+	 * Returns whether form should be processed the default way. When false (default is true), all
+	 * validation and form updating is bypassed and the onSubmit method of that button is called
+	 * directly, and the onSubmit method of the parent form is not called. A common use for this is
+	 * to create a cancel button.
+	 * 
+	 * @return defaultFormProcessing
+	 */
 	public boolean getDefaultFormProcessing()
 	{
 		return true; //default

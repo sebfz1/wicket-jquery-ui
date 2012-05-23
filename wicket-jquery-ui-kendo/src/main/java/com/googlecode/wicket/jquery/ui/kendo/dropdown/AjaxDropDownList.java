@@ -18,10 +18,8 @@ package com.googlecode.wicket.jquery.ui.kendo.dropdown;
 
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.event.IEvent;
-import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
@@ -33,8 +31,8 @@ import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior;
 import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEvent;
 
 /**
- * Provides a Kendo UI DropDownList widget. It extends built-in {@link DropDownChoice}<br/>
- * This ajax version will post the {@link Component}, using a {@link JQueryAjaxChangeBehavior}, when the 'change' javascript method is called.
+ * Provides a Kendo UI DropDownList widget.<br/>
+ * This ajax version will post the component, using a {@link JQueryAjaxChangeBehavior}, when the 'change' javascript method is called.
  * 
  * @author Sebastien Briquet - sebastien@7thweb.net
  *

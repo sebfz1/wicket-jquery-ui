@@ -180,7 +180,7 @@ public class Calendar extends JQueryContainer
 
 				this.setOption("eventSources", String.format("[%s]", sourceBuilder.toString()));
 
-				// events/behaviors //
+				// behaviors //
 				this.setOption("eventClick", eventBehavior.getCallbackFunction(CallbackParameter.context("calEvent"), CallbackParameter.context("jsEvent"), CallbackParameter.context("view"), CallbackParameter.resolved("eventId", "calEvent.id")).toString());
 			}
 		};
