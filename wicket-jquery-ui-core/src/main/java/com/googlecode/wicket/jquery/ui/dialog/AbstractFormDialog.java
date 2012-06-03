@@ -222,6 +222,9 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 			this.form = form;
 		}
 
+		/**
+		 * The formId may intentionally be null
+		 */
 		@Override
 		protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 		{

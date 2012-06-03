@@ -46,7 +46,7 @@ public abstract class JQueryAjaxFormBehavior extends JQueryAjaxBehavior
 
 		this.form = form;
 	}
-	
+
 	@Override
 	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 	{

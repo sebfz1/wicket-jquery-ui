@@ -19,17 +19,15 @@ package com.googlecode.wicket.jquery.ui.event;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 
-import com.googlecode.wicket.jquery.ui.form.slider.AbstractSlider;
-
 /**
- * Specifies that an {@link AbstractSlider} has ajax capabilities
+ * Specifies that a widget handle a selection-change AJAX behavior
  *
  * @author Sebastien Briquet - sebastien@7thweb.net
  */
 public interface ISelectionChangedListener
 {
 	/**
-	 * Triggers when the value has changed
+	 * Triggers when the selection has changed
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param form the {@link Form}
 	 */

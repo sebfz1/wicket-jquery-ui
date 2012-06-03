@@ -16,12 +16,14 @@ import com.googlecode.wicket.jquery.ui.samples.pages.draggable.DefaultDraggableP
 import com.googlecode.wicket.jquery.ui.samples.pages.droppable.DefaultDroppablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.effect.DefaultEffectPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.combobox.DefaultComboBoxPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.KendoDatePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.dropdown.DefaultDropDownPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.editor.DefaultEditorPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter.DefaultSplitterPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.FontSizePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.progressbar.ButtonProgressBarPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.resizable.ResizablePage;
+import com.googlecode.wicket.jquery.ui.samples.pages.selectable.DefaultSelectablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.slider.DefaultSliderPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.tabs.DefaultTabsPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.test.MyPage;
@@ -53,6 +55,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/draggable", DefaultDraggablePage.class);
 		this.mountPackage("/droppable", DefaultDroppablePage.class);
 		this.mountPackage("/resizable", ResizablePage.class);
+		this.mountPackage("/selectable", DefaultSelectablePage.class);
 		
 		// Effects //
 		this.mountPackage("/effect", DefaultEffectPage.class);
@@ -61,6 +64,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/kendo/editor", DefaultEditorPage.class);
 		this.mountPackage("/kendo/dropdown", DefaultDropDownPage.class);
 		this.mountPackage("/kendo/combobox", DefaultComboBoxPage.class);
+		this.mountPackage("/kendo/datetimepicker", KendoDatePickerPage.class);
 		this.mountPackage("/kendo/splitter", DefaultSplitterPage.class);
 
 		// Calendar //

@@ -25,6 +25,7 @@ import org.apache.wicket.WicketRuntimeException;
  * Provides a default implementation of {@link JQueryAbstractBehavior}.
  * 
  * @author Sebastien Briquet - sebastien@7thweb.net
+ * @since 1.0
  */
 public class JQueryBehavior extends JQueryAbstractBehavior
 {
@@ -57,7 +58,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * Constructor
 	 * @param selector the html selector (ie: "#myId")
 	 * @param method the jquery method
-	 * @param options the options to be applied
+	 * @param options the {@link Options}
 	 */
 	public JQueryBehavior(String selector, String method, Options options)
 	{
@@ -88,7 +89,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Adds or replace behavior options
-	 * @param options
+	 * @param options the {@link Options}
 	 */
 	public void setOptions(Options options)
 	{
@@ -126,6 +127,6 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */	
 	private String $(String selector, String method, String options)
 	{
-		return String.format("$(function() { $('%s').%s(%s) });", selector, method, options);
+		return String.format("$(function() { $('%s').%s(%s); });", selector, method, options);
 	}
 }

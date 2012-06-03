@@ -20,6 +20,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.ajax.attributes.ThrottlingSettings;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.event.IEventSink;
@@ -110,7 +111,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	
 	/**
 	 * Constructor
-	 * @param source {@link Component} to which the event returned by {@link #newEvent(AjaxRequestTarget)} will be broadcasted.
+	 * @param source {@link Component} to which the event - returned by {@link #newEvent(AjaxRequestTarget)} - will be broadcasted.
 	 */
 	public JQueryAjaxBehavior(Component source)
 	{
@@ -119,8 +120,8 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 
 	/**
 	 * Constructor
-	 * @param source {@link Component} to which the event returned by {@link #newEvent(AjaxRequestTarget)} will be broadcasted.
-	 * @param duration {@link Duration}. If different than {@link Duration#NONE}, an {@link AjaxCallThrottlingDecorator} will be added with the specified {@link Duration}.
+	 * @param source {@link Component} to which the event - returned by {@link #newEvent(AjaxRequestTarget)} - will be broadcasted.
+	 * @param duration {@link Duration}. If different than {@link Duration#NONE}, an {@link ThrottlingSettings} will be added with the specified {@link Duration}.
 	 */
 	public JQueryAjaxBehavior(Component source, Duration duration)
 	{
@@ -164,9 +165,44 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 		return this.source;
 	}
 	
+
 	/**
 	 * @param target the {@link AjaxRequestTarget}
 	 * @return the {@link JQueryEvent} to be broadcasted to the source when the behavior will respond
 	 */
 	protected abstract JQueryEvent newEvent(AjaxRequestTarget target);	
+
+	
+	// wicket 6.x specific //
+	/**
+	 * Gets the {@link CallbackParameter}<code>s</code> that *may* be passed to {@link #getCallbackFunction(CallbackParameter...)}<br/>
+	 * This is a convenience method that allows to define {@link CallbackParameter}<code>s</code> before the invocation of {@link #getCallbackFunction(CallbackParameter...)}.
+	 *  
+	 * @return an array of {@link CallbackParameter}
+	 * @see #getCallbackFunction()
+	 */
+	protected CallbackParameter[] getCallbackParameters()
+	{
+		return new CallbackParameter[] {};
+	}
+
+	/**
+	 * Calls {@link #getCallbackFunction(CallbackParameter...)} by passing {@link CallbackParameter}<code>s</code> from {@link #getCallbackParameters()}
+	 * 
+	 * @return the javascript function.
+	 */
+	public String getCallbackFunction()
+	{
+		return super.getCallbackFunction(this.getCallbackParameters()).toString();
+	}
+	
+	/**
+	 * Calls {@link #getCallbackFunctionBody(CallbackParameter...)} by passing {@link CallbackParameter}<code>s</code> from {@link #getCallbackParameters()}
+	 * 
+	 * @return the javascript function.
+	 */
+	public String getCallbackFunctionBody()
+	{
+		return super.getCallbackFunctionBody(this.getCallbackParameters()).toString();
+	}
 }

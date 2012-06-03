@@ -61,6 +61,14 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 		return null;
 	}
 	
+	// Events //
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+
+		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
+	}
 	
 	// IJQueryWidget //
 	@Override
@@ -82,15 +90,5 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 				}
 			}
 		};
-	}
-	
-	
-	// Events //
-	@Override
-	protected void onInitialize()
-	{
-		super.onInitialize();
-
-		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
 	}
 }

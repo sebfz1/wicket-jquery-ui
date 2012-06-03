@@ -27,7 +27,7 @@ public class DefaultComboBoxPage extends AbstractComboBoxPage
 		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
 		form.add(feedbackPanel.setOutputMarkupId(true));
 
-		// ComboBox (Kendo-UI widget) //
+		// ComboBox //
 		final ComboBox<String> dropdown = new ComboBox<String>("combobox", new Model<String>(), GENRES); // new WildcardListModel(GENRES) can be used (but not ListModel)
 		form.add(dropdown);
 
