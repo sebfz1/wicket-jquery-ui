@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.ui.form.autocomplete;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -26,6 +27,7 @@ import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.convert.IConverter;
 
 import com.googlecode.wicket.jquery.ui.IJQueryWidget;
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
@@ -61,6 +63,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	private AutoCompleteBehavior<T> sourceBehavior;
 
 	private final ITextRenderer<? super T> renderer;
+	private IConverter<T> converter = null;
 
 	private final IJQueryTemplate template;
 	private JQueryTemplateBehavior templateBehavior = null;
@@ -76,7 +79,17 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 */
 	public AutoCompleteTextField(String id)
 	{
-		this(id, new TextRenderer<T>());
+		this(id, new TextRenderer<T>(), null);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param type the type of the bean. This parameter should be supplied for the internal converter ({@link #getConverter(Class)}) to be used.
+	 */
+	public AutoCompleteTextField(String id, Class<T> type)
+	{
+		this(id, new TextRenderer<T>(), type);
 	}
 
 	/**
@@ -86,11 +99,23 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 */
 	public AutoCompleteTextField(String id, ITextRenderer<? super T> renderer)
 	{
-		super(id);
-		
+		this(id, renderer, null);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param renderer the {@link ITextRenderer}
+	 * @param type the type of the bean. This parameter should be supplied for the internal converter ({@link #getConverter(Class)}) to be used.
+	 */
+	public AutoCompleteTextField(String id, ITextRenderer<? super T> renderer, Class<T> type)
+	{
+		super(id, type);
+
 		this.renderer = renderer;
 		this.template = this.newTemplate();
-		
+		this.converter = this.newConverter();
+
 		this.init();
 	}
 
@@ -101,7 +126,18 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 */
 	public AutoCompleteTextField(String id, IModel<T> model)
 	{
-		this(id, model, new TextRenderer<T>());
+		this(id, model, new TextRenderer<T>(), null);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param type the type of the bean. This parameter should be supplied for the internal converter ({@link #getConverter(Class)}) to be used.
+	 */
+	public AutoCompleteTextField(String id, IModel<T> model, Class<T> type)
+	{
+		this(id, model, new TextRenderer<T>(), type);
 	}
 
 	/**
@@ -112,10 +148,23 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 */
 	public AutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super T> renderer)
 	{
-		super(id, model); //maybe to replace by a 'new RendererModel(model)' which wrap the model to provide the #toString(), if needed.
+		this(id, model, renderer, null);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param renderer the {@link ITextRenderer}
+	 * @param type the type of the bean. This parameter should be supplied for the internal converter ({@link #getConverter(Class)}) to be used.
+	 */
+	public AutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super T> renderer, Class<T> type)
+	{
+		super(id, model, type);
 
 		this.renderer = renderer;
 		this.template = this.newTemplate();
+		this.converter = this.newConverter();
 
 		this.init();
 	}
@@ -167,6 +216,13 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 //		
 //		return this;
 //	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public <C> IConverter<C> getConverter(Class<C> type)
+	{
+		return (IConverter<C>) this.converter;
+	}
 	
 	
 	// Events //
@@ -267,6 +323,36 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	}
 
 	/**
+	 * Gets a new {@link IConverter}.
+	 * Used when/if the bean type has been supplied to the constructor.
+	 * @return the {@link IConverter}
+	 */
+	private IConverter<T> newConverter()
+	{
+		return new IConverter<T>() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public T convertToObject(String value, Locale locale)
+			{
+				if (value != null && value.equals(AutoCompleteTextField.this.getModelValue()))
+				{
+					return AutoCompleteTextField.this.getModelObject();
+				}
+
+				return null; //if the TextField value (string) does not corresponds to the current object model (ie: user specific value), returns null.
+			}
+
+			@Override
+			public String convertToString(T value, Locale locale)
+			{
+				return AutoCompleteTextField.this.renderer.getText(value);
+			}
+		};
+	}
+
+	/**
 	 * Gets a new {@link AutoCompleteBehavior}
 	 * @return the {@link AutoCompleteBehavior}
 	 */
@@ -299,7 +385,6 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'select' javascript method
 	 * @param source {@link Component} to which the event returned by {@link #newEvent(AjaxRequestTarget)} will be broadcasted.
 	 * @return the {@link JQueryAjaxBehavior}
-	 * 
 	 */
 	private JQueryAjaxBehavior newSelectBehavior(Component source)
 	{
