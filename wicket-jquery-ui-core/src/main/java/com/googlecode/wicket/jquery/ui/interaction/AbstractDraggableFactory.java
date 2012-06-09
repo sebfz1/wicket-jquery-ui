@@ -16,10 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.interaction;
 
-import java.io.Serializable;
-
 import org.apache.wicket.util.io.IClusterable;
-
 
 /**
  * Provides the ability to create a {@link Draggable} that is related to another component (defined by its selector).<br/>
@@ -29,9 +26,8 @@ import org.apache.wicket.util.io.IClusterable;
  * 
  * @author Sebastien Briquet - sebastien@7thweb.net
  *
- * @param <T> the model object type
  */
-public abstract class AbstractDraggableFactory<T extends Serializable> implements IClusterable
+public abstract class AbstractDraggableFactory implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -47,7 +43,7 @@ public abstract class AbstractDraggableFactory<T extends Serializable> implement
 	 * @param selector the related component's selector
 	 * @return the {@link Draggable} object
 	 */
-	public final Draggable<String> create(String id, String selector)
+	public final Draggable<?> create(String id, String selector)
 	{
 		return this.create(id, selector, this.getHelper(selector));
 	}
@@ -74,5 +70,5 @@ public abstract class AbstractDraggableFactory<T extends Serializable> implement
 	 * 
 	 * @return the {@link Draggable} object
 	 */
-	protected abstract Draggable<String> create(String id, String selector, final String helper);
+	protected abstract Draggable<?> create(String id, String selector, final String helper);
 }

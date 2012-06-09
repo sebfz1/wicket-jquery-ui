@@ -122,14 +122,14 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	}
 
 	/**
-	 * Gets the selector that identify a selectable item within a {@link Selectable} component<br/>
-	 * The selector should be the path from the {@link Selectable} to the item (for instance '#myUL LI', where '#myUL' is the {@link Selectable} selector)
+	 * Gets the selector that identifies the selectable item within a {@link Selectable}<br/>
+	 * The selector should be the path from the {@link Selectable} to the item (for instance '#myUL LI', where '#myUL' is the {@link Selectable}'s selector)
 	 * 
-	 * @return by default: JQueryWidget.getSelector(this) + " li" 
+	 * @return "li" by default 
 	 */
-	protected String getCallbackSelector()
+	protected String getItemSelector()
 	{
-		return JQueryWidget.getSelector(this) + " li";
+		return "li";
 	}
 
 
@@ -150,7 +150,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
-		//sets options here
+		behavior.setOption("filter", Options.asString(this.getItemSelector()));
 	}
 
 	@Override
@@ -160,13 +160,14 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 		if (event.getPayload() instanceof Selectable.StopEvent)
 		{
 			StopEvent payload = (StopEvent) event.getPayload();
-			
+
 			this.items = new ArrayList<T>();
 			List<T> list = this.getModelObject();
 
 			for (int index : payload.getIndexes())
 			{
-				if (index >= 0 && index <= list.size())
+				// defensive, if the item-selector is miss-configured, this can result in an OutOfBoundException 
+				if (index < list.size())
 				{
 					this.items.add(list.get(index));
 				}
@@ -203,8 +204,8 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 			}
 		};
 	}
-	
-	
+
+
 	// Behavior factory //
 	/**
 	 * Gets the ajax behavior that will be triggered when the user has selected items
@@ -216,7 +217,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 		return new JQueryAjaxBehavior(this) {
 					
 			private static final long serialVersionUID = 1L;
-			
+	
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
@@ -227,7 +228,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 			public CharSequence getCallbackFunctionBody(CallbackParameter... extraParameters)
 			{
 				//build indexes array, ie: 'indexes=[1,2,3]'
-				String selector = Selectable.this.getCallbackSelector(); 
+				String selector = String.format("%s %s", JQueryWidget.getSelector(Selectable.this), Selectable.this.getItemSelector()); 
 				String indexes = "var indexes=[]; $('.ui-selected', this).each( function() { indexes.push($('" + selector + "').index(this)); } ); ";
 
 				return indexes + super.getCallbackFunctionBody(extraParameters);
@@ -249,7 +250,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	 * @param id the markup id
 	 * @return the {@link Draggable}
 	 */
-	public Draggable<String> createDraggable(String id)
+	public Draggable<?> createDraggable(String id)
 	{
 		return this.createDraggable(id, new DefaultDraggableFactory());
 	}
@@ -258,10 +259,10 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	 * Creates a {@link Draggable} object that is related to this {@link Selectable}
 	 * 
 	 * @param id the markup id
-	 * @param factory usually a {@link SelectableDraggableFactory} instance
+	 * @param factory the {@link SelectableDraggableFactory} instance
 	 * @return the {@link Draggable}
 	 */
-	public Draggable<String> createDraggable(String id, AbstractDraggableFactory<T> factory)
+	public Draggable<?> createDraggable(String id, SelectableDraggableFactory factory)
 	{
 		return factory.create(id, JQueryWidget.getSelector(this)); //let throw a NPE if no factory is defined
 	}
@@ -271,7 +272,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'stop' callback
 	 */
-	public class StopEvent extends JQueryEvent
+	class StopEvent extends JQueryEvent
 	{
 		private final List<Integer> indexes;
 
@@ -320,20 +321,18 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	// Default Draggable Factory //
 	/**
 	 * Default {@link SelectableDraggableFactory} implementation which will create a {@link Draggable} with a <code>ui-icon-arrow-4-diag</code> icon 
-	 * 
-	 * @author Sebastien Briquet - sebastien@7thweb.net
 	 */
-	class DefaultDraggableFactory extends SelectableDraggableFactory<T>
+	class DefaultDraggableFactory extends SelectableDraggableFactory
 	{
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		protected Draggable<String> create(String id, String selector, final String helper)
+		protected Draggable<?> create(String id, String selector, final String helper)
 		{
-			Draggable<String> draggable = new Draggable<String>(id) {
+			Draggable<T> draggable = new Draggable<T>(id) {
 
 				private static final long serialVersionUID = 1L;
-				
+
 				@Override
 				protected void onConfigure(JQueryBehavior behavior)
 				{
