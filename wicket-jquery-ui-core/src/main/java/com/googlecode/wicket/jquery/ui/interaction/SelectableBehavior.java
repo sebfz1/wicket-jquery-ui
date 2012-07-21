@@ -20,10 +20,9 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.Options;
 
 /**
- * Gets the jQuery 'selectable' behavior
+ * Provides a jQuery selectable behavior
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
- *
+ * @author Sebastien Briquet - sebfz1
  */
 public class SelectableBehavior extends JQueryBehavior
 {

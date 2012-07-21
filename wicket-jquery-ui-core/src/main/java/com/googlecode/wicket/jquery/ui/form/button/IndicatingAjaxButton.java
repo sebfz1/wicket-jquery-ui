@@ -36,7 +36,7 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
  * Provides a jQuery button based on the built-in AjaxButton, with an ajax indicator the time the {@link #onSubmit()} process.
  * 
  * @since 6.0 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public abstract class IndicatingAjaxButton extends AjaxButton implements IJQueryWidget
 {

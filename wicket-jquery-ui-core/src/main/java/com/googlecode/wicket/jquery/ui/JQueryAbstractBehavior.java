@@ -33,14 +33,14 @@ import org.apache.wicket.resource.JQueryPluginResourceReference;
 /**
  * Provides the base class for every jQuery behavior.
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public abstract class JQueryAbstractBehavior extends Behavior
 {
 	private static final long serialVersionUID = 1L;
 //	private static final JavaScriptResourceReference CORE_JS = new JavaScriptResourceReference(JQueryBehavior.class, "jquery-1.7.2.min.js"); 
-	private static final JavaScriptResourceReference CORE_UI = new JQueryPluginResourceReference(JQueryBehavior.class, "jquery-ui-1.8.19.min.js");
+	private static final JavaScriptResourceReference CORE_UI = new JQueryPluginResourceReference(JQueryBehavior.class, "jquery-ui-1.8.21.min.js");
 
 	/**
 	 * Behavior name

@@ -37,7 +37,7 @@ import com.googlecode.wicket.jquery.ui.utils.RequestCycleUtils;
 /**
  * Provides calendar widget, based on the jQuery fullcalendar plugin.
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  * @author Martin Grigorov - martin-g
  *
  */
@@ -342,6 +342,7 @@ public class Calendar extends JQueryContainer
 				this.setOption("eventSources", String.format("[%s]", sourceBuilder.toString()));
 
 				// behaviors //
+
 				if (Calendar.this.isEditable())
 				{
 					this.setOption("dayClick", dayClickBehavior.getCallbackFunction());
@@ -627,7 +628,7 @@ public class Calendar extends JQueryContainer
 	private abstract class DeltaEvent extends JQueryEvent
 	{
 		private final int eventId;
-		private final long delta;
+		private long delta;
 
 		public DeltaEvent(AjaxRequestTarget target)
 		{
@@ -636,8 +637,8 @@ public class Calendar extends JQueryContainer
 			this.eventId = RequestCycleUtils.getQueryParameterValue("eventId").toInt();
 
 			int dayDelta = RequestCycleUtils.getQueryParameterValue("dayDelta").toInt();
-			int minDelta = RequestCycleUtils.getQueryParameterValue("minuteDelta").toInt();
-			this.delta = (dayDelta * Duration.ONE_DAY.getMilliseconds()) + (minDelta * Duration.ONE_MINUTE.getMilliseconds());
+			int minuteDelta = RequestCycleUtils.getQueryParameterValue("minuteDelta").toInt();
+			this.delta = (dayDelta * Duration.ONE_DAY.getMilliseconds()) + (minuteDelta * Duration.ONE_MINUTE.getMilliseconds());
 		}
 
 		public int getEventId()

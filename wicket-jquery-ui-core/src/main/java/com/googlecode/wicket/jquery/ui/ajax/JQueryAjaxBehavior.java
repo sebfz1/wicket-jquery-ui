@@ -99,7 +99,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 }
  * </pre>
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
@@ -164,7 +164,6 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	{
 		return this.source;
 	}
-	
 
 	/**
 	 * @param target the {@link AjaxRequestTarget}
