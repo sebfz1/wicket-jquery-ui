@@ -170,6 +170,12 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 					{
 						AbstractFormDialog.this.onSubmit(payload.getTarget());
 					}
+					
+					@Override
+					public void onAfterSubmit()
+					{
+						// not handled
+					}
 
 					public void onError()
 					{
