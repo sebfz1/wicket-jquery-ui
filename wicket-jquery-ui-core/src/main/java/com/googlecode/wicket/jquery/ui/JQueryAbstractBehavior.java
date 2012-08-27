@@ -32,15 +32,15 @@ import org.apache.wicket.resource.JQueryPluginResourceReference;
 
 /**
  * Provides the base class for every jQuery behavior.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
 public abstract class JQueryAbstractBehavior extends Behavior
 {
 	private static final long serialVersionUID = 1L;
-//	private static final JavaScriptResourceReference CORE_JS = new JavaScriptResourceReference(JQueryBehavior.class, "jquery-1.7.2.min.js"); 
-	private static final JavaScriptResourceReference CORE_UI = new JQueryPluginResourceReference(JQueryBehavior.class, "jquery-ui-1.8.21.min.js");
+//	private static final JavaScriptResourceReference CORE_JS = new JavaScriptResourceReference(JQueryBehavior.class, "jquery-1.7.2.min.js");
+	private static final JavaScriptResourceReference CORE_UI = new JQueryPluginResourceReference(JQueryBehavior.class, "jquery-ui-1.8.22.min.js");
 
 	/**
 	 * Behavior name
@@ -51,7 +51,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 * Additional references
 	 */
 	private final List<ResourceReference> references;
-	
+
 	/**
 	 * Constructor.
 	 * @param name the name of the behavior. It is used in the token so the behavior can be identified in the generated page.
@@ -62,23 +62,23 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		this.references = new ArrayList<ResourceReference>();
 	}
 
-	
+
 	/**
 	 * Adds a reference to be added at {@link #renderHead(Component, IHeaderResponse)} time.
 	 * @param reference a {@link CssResourceReference}, a {@link JavaScriptResourceReference} or a {@link JQueryPluginResourceReference}
-	 * @return true (as specified by Collection.add(E)) 
+	 * @return true (as specified by Collection.add(E))
 	 */
 	protected boolean add(ResourceReference reference)
 	{
 		return this.references.add(reference);
-	}	
-	
+	}
+
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 //		response.render(JavaScriptHeaderItem.forReference(JQueryAbstractBehavior.CORE_JS));
 		response.render(JavaScriptHeaderItem.forReference(JQueryAbstractBehavior.CORE_UI));
-		
+
 		for(ResourceReference reference : this.references)
 		{
 			if (reference instanceof CssResourceReference)
@@ -91,7 +91,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 				response.render(JavaScriptHeaderItem.forReference(reference));
 			}
 		}
-		
+
 		// Adds the statement //
 		AjaxRequestTarget target = component.getRequestCycle().find(AjaxRequestTarget.class);
 
@@ -104,7 +104,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 			response.render(JavaScriptHeaderItem.forScript(this.$(), this.getToken()));
 		}
 	}
-	
+
 	/**
 	 * Get the unique behavior token that act as the script id.
 	 * @return the token
@@ -113,13 +113,13 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	{
 		return String.format("jquery-%s-%d", this.name, this.hashCode());
 	}
-	
+
 	/**
 	 * Gets the jQuery statement.
 	 * @return String like '$(function() { ... })'
 	 */
 	protected abstract String $();
-	
+
 	@Override
 	public final String toString()
 	{

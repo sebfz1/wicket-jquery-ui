@@ -26,15 +26,15 @@ import org.apache.wicket.markup.html.form.IFormSubmitter;
 import org.apache.wicket.model.IModel;
 
 /**
- * Base class for form-based dialogs
- * @author Sebastien Briquet - sebfz1
+ * Provides the base class for form-based dialogs
  *
+ * @author Sebastien Briquet - sebfz1
  * @param <T> the model object type
  */
 public abstract class AbstractFormDialog<T extends Serializable> extends AbstractDialog<T> // implements IFormSubmitter
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -55,7 +55,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	{
 		super(id, title, model, true);
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -79,22 +79,22 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 		super(id, title, model, modal);
 	}
 
-	
+
 	/* Properties */
 	/**
-	 * Identifies the button that submit the form.<br/>
+	 * Gets the button that is in charge to submit the form.<br/>
 	 * It should be in the list of buttons returned by {@link #getButtons()}
 	 * @return the submit button
 	 */
-	protected abstract String getSubmitButton();
+	protected abstract DialogButton getSubmitButton();
 
-	
+
 	/**
 	 * Returns whether form should be processed the default way. When false (default is true), all
 	 * validation and form updating is bypassed and the onSubmit method of that button is called
 	 * directly, and the onSubmit method of the parent form is not called. A common use for this is
 	 * to create a cancel button.
-	 * 
+	 *
 	 * @return defaultFormProcessing
 	 */
 	public boolean getDefaultFormProcessing()
@@ -108,16 +108,16 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	 * @return the form
 	 */
 	public abstract Form<?> getForm();
-	
+
 	/**
 	 * Returns the form associated to the button.<br/>
 	 * It means that it will return the form if the button is the submit button and null otherwise.
-	 * The callback script of {@link FormButtonAjaxBehavior} will differ depending on this.
-	 * 
+	 * The callback script will differ depending on this.
+	 *
 	 * @param button the dialog's button
 	 * @return the {@link Form} or <code>null</code>
 	 */
-	private Form<?> getForm(String button)
+	protected Form<?> getForm(DialogButton button)
 	{
 		if (button.equals(this.getSubmitButton()))
 		{
@@ -132,12 +132,12 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	 * Gets the FormButtonAjaxBehavior associated to the specified button.<br/>
 	 */
 	@Override
-	protected ButtonAjaxBehavior newButtonAjaxBehavior(String button)
+	protected ButtonAjaxBehavior newButtonAjaxBehavior(DialogButton button)
 	{
 		return new FormButtonAjaxBehavior(this, button, this.getForm(button));
 	}
-	
-	
+
+
 	/* Events */
 	/**
 	 * DO NOT OVERRIDE UNLESS A VERY GOOD REASON
@@ -145,56 +145,27 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	@Override
 	public void onEvent(IEvent<?> event)
 	{
-		Form<?> form = this.getForm(); //null form not handled ; should not go until here if it's the case.
-
 		if (event.getPayload() instanceof DialogEvent)
 		{
 			final DialogEvent payload = (DialogEvent) event.getPayload();
-		
-			if (payload.isClicked(this.getSubmitButton()))
+			final Form<?> form = this.getForm(payload.getButton());
+
+			if (form != null)
 			{
-				// same technique as AjaxButton class //
-				form.process(new IFormSubmitter()
-				{
-					public Form<?> getForm()
-					{
-						return AbstractFormDialog.this.getForm();
-					}
+				form.process(new DialogFormSubmitter(payload.getTarget()));
 
-					public boolean getDefaultFormProcessing()
-					{
-						return AbstractFormDialog.this.getDefaultFormProcessing();
-					}
-
-					public void onSubmit()
-					{
-						AbstractFormDialog.this.onSubmit(payload.getTarget());
-					}
-					
-					@Override
-					public void onAfterSubmit()
-					{
-						// not handled
-					}
-
-					public void onError()
-					{
-						AbstractFormDialog.this.onError(payload.getTarget());
-					}
-				});
-	
 				if (!form.hasError())
 				{
-					super.onEvent(event); //close the dialog
+					this.onClick(payload); //fires onClick (& closes the dialog by default)
 				}
 			}
 			else
 			{
-				super.onEvent(event); //close the dialog
+				this.onClick(payload); //fires onClick (& closes the dialog by default)
 			}
 		}
 	}
-	
+
 	/**
 	 * Triggered after {@link Form#onError()} (when of form processing has error)
 	 * @param target
@@ -206,22 +177,77 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	 * @param target
 	 */
 	protected abstract void onSubmit(AjaxRequestTarget target);
-	
+
 	@Override
-	protected void onClose(AjaxRequestTarget target, String button)
+	protected void onClose(AjaxRequestTarget target, DialogButton button)
 	{
 		//not mandatory to override
 	}
 
-	
-	/* Ajax behavior */
+	/**
+	 * Provides the form-dialog {@link IFormSubmitter}<br/>
+	 * This is basically the same technic used in {@link AjaxButton} class.
+	 */
+	protected class DialogFormSubmitter implements IFormSubmitter
+	{
+		private final AjaxRequestTarget target;
+
+		/**
+		 * Constructor
+		 * @param target the {@link AjaxRequestTarget}
+		 */
+		public DialogFormSubmitter(AjaxRequestTarget target)
+		{
+			this.target = target;
+		}
+
+		@Override
+		public Form<?> getForm()
+		{
+			return AbstractFormDialog.this.getForm();
+		}
+
+		@Override
+		public boolean getDefaultFormProcessing()
+		{
+			return AbstractFormDialog.this.getDefaultFormProcessing();
+		}
+
+		@Override
+		public void onSubmit()
+		{
+			AbstractFormDialog.this.onSubmit(this.target);
+		}
+
+		@Override
+		public void onError()
+		{
+			AbstractFormDialog.this.onError(this.target);
+		}
+
+		@Override
+		public void onAfterSubmit()
+		{
+			// not handled
+		}
+	}
+
+	/**
+	 * Provides the button's form-submit behavior
+	 */
 	class FormButtonAjaxBehavior extends AbstractDialog<T>.ButtonAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
 		private final Form<?> form;
 
-		public FormButtonAjaxBehavior(AbstractFormDialog<T> dialog, String button, Form<?> form)
+		/**
+		 * Constructor
+		 * @param dialog the {@link AbstractFormDialog}
+		 * @param button the {@link DialogButton}
+		 * @param form the {@link Form}
+		 */
+		public FormButtonAjaxBehavior(AbstractFormDialog<T> dialog, DialogButton button, Form<?> form)
 		{
 			super(dialog, button);
 
@@ -235,7 +261,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 		protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 		{
 			super.updateAjaxAttributes(attributes);
-			
+
 			if (this.form != null)
 			{
 				attributes.setFormId(this.form.getMarkupId());

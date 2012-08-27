@@ -1,7 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
@@ -11,20 +10,22 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.dialog.AbstractDialog;
+import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
+import com.googlecode.wicket.jquery.ui.dialog.DialogButtons;
 import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
 import com.googlecode.wicket.jquery.ui.widget.tabs.TabbedPanel;
 
 public abstract class TabDialog extends AbstractDialog<String>
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public TabDialog(String id, String title, Model<String> model)
 	{
 		super(id, title, model, true);
-		
+
 		this.add(new TabbedPanel("tabs", this.newTabList()));
 	}
-	
+
 	@Override
 	public boolean isResizable()
 	{
@@ -32,11 +33,11 @@ public abstract class TabDialog extends AbstractDialog<String>
 	}
 
 	@Override
-	protected List<String> getButtons()
+	protected List<DialogButton> getButtons()
 	{
-		return Arrays.asList(BTN_OK, BTN_CANCEL);
+		return DialogButtons.OK_CANCEL.toList();
 	}
-	
+
 
 	private List<ITab> newTabList()
 	{
@@ -53,7 +54,7 @@ public abstract class TabDialog extends AbstractDialog<String>
 				return new Fragment(panelId, "panel-1", TabDialog.this);
 			}
 		});
-		
+
 //		// tab #2 //
 //		tabs.add(new AbstractTab(new Model<String>("My Tab 2")) {
 //
@@ -87,8 +88,7 @@ public abstract class TabDialog extends AbstractDialog<String>
 				return new Fragment(panelId, "panel-2", TabDialog.this);
 			}
 		});
-		
+
 		return tabs;
 	}
-	
 }

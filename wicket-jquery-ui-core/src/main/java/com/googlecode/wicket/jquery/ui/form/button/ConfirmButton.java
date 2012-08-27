@@ -24,6 +24,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
+import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
 import com.googlecode.wicket.jquery.ui.dialog.DialogButtons;
 import com.googlecode.wicket.jquery.ui.dialog.DialogIcon;
 import com.googlecode.wicket.jquery.ui.dialog.MessageDialog;
@@ -69,11 +70,11 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 		final MessageDialog dialog = new MessageDialog("dialog", title, this.getModel(), DialogButtons.OK_CANCEL, DialogIcon.WARN) {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
-			protected void onClose(AjaxRequestTarget target, String button)
+			protected void onClose(AjaxRequestTarget target, DialogButton button)
 			{
-				if (BTN_OK.equals(button))
+				if (button != null && button.equals(LBL_OK))
 				{
 					ConfirmButton.this.submit(target);
 				}
@@ -85,22 +86,22 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 		final AjaxButton button = new AjaxButton("button") {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			protected JQueryIcon getIcon()
 			{
 				return JQueryIcon.Alert;
 			}
-			
+
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				dialog.open(target);
 			}
 		};
-		
+
 		this.add(button.setDefaultFormProcessing(false)); //does not validate the form before the dialog is being displayed
-		
+
 		button.add(new Label("label", new Model<String>(label)).setRenderBodyOnly(true));
 	}
 }

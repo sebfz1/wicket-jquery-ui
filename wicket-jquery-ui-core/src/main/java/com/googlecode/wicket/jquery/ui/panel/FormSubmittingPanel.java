@@ -72,7 +72,7 @@ public abstract class FormSubmittingPanel<T> extends ModelPanel<T> implements IF
 	private void init()
 	{
 		//As the Form is posted, Form#findSubmittingButton() expect to retrieve this component by the request parameter 'name'.
-		//But, as this component is not an input, it does not have a 'name' attribute. Thus, it should match the #getInputName() path
+		//But as this component is not an input, it does not have a name attribute. Thus, it should match the #getInputName() path
 		this.add(new HiddenField<Serializable>("submitter", new Model<Serializable>()).add(AttributeModifier.replace("name", this.getId())));
 	}
 	
