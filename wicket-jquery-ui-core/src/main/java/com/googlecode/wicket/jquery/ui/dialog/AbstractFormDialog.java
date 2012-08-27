@@ -186,7 +186,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 
 	/**
 	 * Provides the form-dialog {@link IFormSubmitter}<br/>
-	 * This is basically the same technic used in {@link AjaxButton} class.
+	 * This is basically the same technics used in AjaxButton class.
 	 */
 	protected class DialogFormSubmitter implements IFormSubmitter
 	{
