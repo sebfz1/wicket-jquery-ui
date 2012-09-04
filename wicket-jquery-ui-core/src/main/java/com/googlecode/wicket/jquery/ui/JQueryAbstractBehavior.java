@@ -19,6 +19,7 @@ package com.googlecode.wicket.jquery.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
@@ -29,6 +30,10 @@ import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
+import org.apache.wicket.settings.IJavaScriptLibrarySettings;
+
+import com.googlecode.wicket.jquery.ui.resource.JQueryUIResourceReference;
+import com.googlecode.wicket.jquery.ui.settings.IJQueryLibrarySettings;
 
 /**
  * Provides the base class for every jQuery behavior.
@@ -39,8 +44,6 @@ import org.apache.wicket.resource.JQueryPluginResourceReference;
 public abstract class JQueryAbstractBehavior extends Behavior
 {
 	private static final long serialVersionUID = 1L;
-//	private static final JavaScriptResourceReference CORE_JS = new JavaScriptResourceReference(JQueryBehavior.class, "jquery-1.7.2.min.js");
-	private static final JavaScriptResourceReference CORE_UI = new JQueryPluginResourceReference(JQueryBehavior.class, "jquery-ui-1.8.22.min.js");
 
 	/**
 	 * Behavior name
@@ -76,9 +79,27 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)
 	{
-//		response.render(JavaScriptHeaderItem.forReference(JQueryAbstractBehavior.CORE_JS));
-		response.render(JavaScriptHeaderItem.forReference(JQueryAbstractBehavior.CORE_UI));
+		// Adds jQuery UI javascript resource reference //
+		ResourceReference jQueryUIreference = null;
 
+		if (Application.exists())
+		{
+			IJavaScriptLibrarySettings settings = Application.get().getJavaScriptLibrarySettings();
+
+			if (settings instanceof IJQueryLibrarySettings)
+			{
+				jQueryUIreference = ((IJQueryLibrarySettings) settings).getJQueryUIReference();
+			}
+		}
+
+		if (jQueryUIreference == null)
+		{
+			jQueryUIreference = JQueryUIResourceReference.get();
+		}
+
+		response.render(JavaScriptHeaderItem.forReference(jQueryUIreference));
+
+		// Adds additional resource references //
 		for(ResourceReference reference : this.references)
 		{
 			if (reference instanceof CssResourceReference)
