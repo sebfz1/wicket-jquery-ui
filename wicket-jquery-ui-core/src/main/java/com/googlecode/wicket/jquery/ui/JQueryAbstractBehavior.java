@@ -30,10 +30,9 @@ import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
-import com.googlecode.wicket.jquery.ui.resource.JQueryUIResourceReference;
 import com.googlecode.wicket.jquery.ui.settings.IJQueryLibrarySettings;
+import com.googlecode.wicket.jquery.ui.settings.JQueryLibrarySettings;
 
 /**
  * Provides the base class for every jQuery behavior.
@@ -79,25 +78,25 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)
 	{
+		// Gets the library settings //
+		IJQueryLibrarySettings settings;
+
+		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IJQueryLibrarySettings))
+		{
+			settings = (IJQueryLibrarySettings) Application.get().getJavaScriptLibrarySettings();
+		}
+		else
+		{
+			settings = new JQueryLibrarySettings();
+		}
+
 		// Adds jQuery UI javascript resource reference //
-		ResourceReference jQueryUIreference = null;
+		final ResourceReference jQueryUIReference = settings.getJQueryUIReference();
 
-		if (Application.exists())
+		if (jQueryUIReference != null)
 		{
-			IJavaScriptLibrarySettings settings = Application.get().getJavaScriptLibrarySettings();
-
-			if (settings instanceof IJQueryLibrarySettings)
-			{
-				jQueryUIreference = ((IJQueryLibrarySettings) settings).getJQueryUIReference();
-			}
+			response.render(JavaScriptHeaderItem.forReference(jQueryUIReference));
 		}
-
-		if (jQueryUIreference == null)
-		{
-			jQueryUIreference = JQueryUIResourceReference.get();
-		}
-
-		response.render(JavaScriptHeaderItem.forReference(jQueryUIreference));
 
 		// Adds additional resource references //
 		for(ResourceReference reference : this.references)

@@ -39,6 +39,8 @@ import com.googlecode.wicket.jquery.ui.resource.JQueryUIResourceReference;
  * }
  * <pre></code>
  *
+ * <b>Note:</b> The reference given as parameter can be null.
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
