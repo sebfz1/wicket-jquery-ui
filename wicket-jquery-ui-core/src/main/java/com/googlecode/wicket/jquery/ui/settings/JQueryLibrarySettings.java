@@ -44,17 +44,17 @@ import com.googlecode.wicket.jquery.ui.resource.JQueryUIResourceReference;
  */
 public class JQueryLibrarySettings extends JavaScriptLibrarySettings implements IJQueryLibrarySettings
 {
-	private ResourceReference jQueryUIreference = JQueryUIResourceReference.get();
+	private ResourceReference jQueryUIReference = JQueryUIResourceReference.get();
 
 	@Override
 	public ResourceReference getJQueryUIReference()
 	{
-		return this.jQueryUIreference;
+		return this.jQueryUIReference;
 	}
 
 	@Override
 	public void setJQueryUIReference(ResourceReference reference)
 	{
-		this.jQueryUIreference = reference;
+		this.jQueryUIReference = reference;
 	}
 }
