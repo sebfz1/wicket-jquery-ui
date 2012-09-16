@@ -208,9 +208,14 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <C> IConverter<C> getConverter(Class<C> type)
+	public <C> IConverter<C> getConverter(Class<C> type)
 	{
-		return (IConverter<C>) this.converter;
+		if (type != null && type.isAssignableFrom(this.getType()))
+		{
+			return (IConverter<C>) this.converter;
+		}
+
+		return super.getConverter(type);
 	}
 
 
@@ -230,6 +235,16 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 		}
 	}
 
+
+	/**
+	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
+	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
+	 *
+	 * @param behavior the {@link JQueryBehavior}
+	 */
+	protected void onConfigure(JQueryBehavior behavior)
+	{
+	}
 
 	@Override
 	protected void onComponentTag(final ComponentTag tag)
@@ -278,8 +293,11 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 			@Override
 			public void onConfigure(Component component)
 			{
+//				this.setOption("delay", Duration.ONE_SECOND.getMilliseconds());
 				this.setOption("source", Options.asString(sourceBehavior.getCallbackUrl()));
 				this.setOption("select", selectBehavior.getCallbackFunction(CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("index", "ui.item.id")).toString());
+
+				AutoCompleteTextField.this.onConfigure(this);
 			}
 
 			@Override
