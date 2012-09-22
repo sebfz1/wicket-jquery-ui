@@ -20,6 +20,7 @@ import java.util.Date;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -33,15 +34,15 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxPostBehavior;
 /**
  * Provides a jQuery date-picker based on a {@link DateTextField}<br/>
  * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'onSelect' javascript method is called.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class AjaxDatePicker extends DatePicker
 {
 	private static final long serialVersionUID = 1L;
-	
-	private JQueryAjaxBehavior selectBehavior;
-	
+
+	private JQueryAjaxBehavior onSelectBehavior;
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -62,33 +63,33 @@ public class AjaxDatePicker extends DatePicker
 		super(id, model);
 		this.init();
 	}
-	
+
 	/**
 	 * Initialization
 	 */
 	private void init()
 	{
-		this.selectBehavior = this.newSelectBehavior(this);
+		this.onSelectBehavior = this.newOnSelectBehavior(this);
 	}
 
-	
+
 	// Events //
 	@Override
 	protected void onInitialize()
 	{
-		super.onInitialize();  
+		super.onInitialize();
 
-		this.add(this.selectBehavior);
+		this.add(this.onSelectBehavior);
 	}
-	
+
 	@Override
 	protected void onConfigure(JQueryBehavior behavior)
 	{
 		super.onConfigure(behavior);
-		
-		behavior.setOption("onSelect", "function( dateText, inst ) { " + this.selectBehavior.getCallbackScript() + "}");
+
+		behavior.setOption("onSelect", this.onSelectBehavior);
 	}
-	
+
 	@Override
 	public void onEvent(IEvent<?> event)
 	{
@@ -100,7 +101,7 @@ public class AjaxDatePicker extends DatePicker
 			this.onValueChanged(payload.getTarget());
 		}
 	}
-	
+
 	/**
 	 * Triggers when the value has changed
 	 * @param target the {@link AjaxRequestTarget}
@@ -109,18 +110,28 @@ public class AjaxDatePicker extends DatePicker
 	{
 	}
 
-	
+
 	// Factories (Ajax behavior) //
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'onSelect' javascript method
 	 * @param component the {@link FormComponent}
 	 * @return the {@link JQueryAjaxPostBehavior}
 	 */
-	private JQueryAjaxPostBehavior newSelectBehavior(FormComponent<?> component)
+	private JQueryAjaxPostBehavior newOnSelectBehavior(FormComponent<?> component)
 	{
 		return new JQueryAjaxPostBehavior(component) {
-			
+
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				//function( dateText, inst ) {  .. }
+				return new CallbackParameter[] {
+						CallbackParameter.context("dateText"),
+						CallbackParameter.context("inst"),
+				};
+			}
 
 			@Override
 			protected JQueryEvent newEvent(AjaxRequestTarget target)
@@ -129,17 +140,17 @@ public class AjaxDatePicker extends DatePicker
 			}
 		};
 	}
-	
-	
+
+
 	// Event class //
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxPostBehavior} 'select' callback
 	 */
-	public class SelectEvent extends JQueryEvent
+	class SelectEvent extends JQueryEvent
 	{
 		public SelectEvent(AjaxRequestTarget target)
 		{
 			super(target);
 		}
-	}	
+	}
 }

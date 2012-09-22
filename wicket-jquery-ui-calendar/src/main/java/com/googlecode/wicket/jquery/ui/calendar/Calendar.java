@@ -346,8 +346,8 @@ public class Calendar extends JQueryContainer
 
 				if (Calendar.this.isEditable())
 				{
-					this.setOption("dayClick", dayClickBehavior.getCallbackFunction());
-					this.setOption("eventClick", eventClickBehavior.getCallbackFunction());
+					this.setOption("dayClick", dayClickBehavior);
+					this.setOption("eventClick", eventClickBehavior);
 				}
 
 				if (Calendar.this.isSelectable())
@@ -357,31 +357,31 @@ public class Calendar extends JQueryContainer
 
 				if (Calendar.this.isEventDropEnabled())
 				{
-					this.setOption("eventDrop", eventDropBehavior.getCallbackFunction());
+					this.setOption("eventDrop", eventDropBehavior);
 				}
 
 				if (Calendar.this.isEventResizeEnabled())
 				{
-					this.setOption("eventResize", eventResizeBehavior.getCallbackFunction());
+					this.setOption("eventResize", eventResizeBehavior);
 				}
 			}
 		};
 	}
 
-	
+
 	// Behavior factories //
 
 	/**
 	 * Gets the ajax behavior that will be triggered when the user clicks on a day cell
-	 * 
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newDayClickBehavior()
 	{
 		return new JQueryAjaxBehavior(this) {
-	
+
 			private static final long serialVersionUID = 1L;
-	
+
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
@@ -406,7 +406,7 @@ public class Calendar extends JQueryContainer
 	/**
 	 * Gets the ajax behavior that will be triggered when the user select a cell range
 	 * <b>warning: </b> marked as private; should not be overridden (see {@link #newWidgetBehavior(String)} usage)
-	 * 
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	private JQueryAjaxBehavior newSelectBehavior()
@@ -414,7 +414,7 @@ public class Calendar extends JQueryContainer
 		return new JQueryAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
-	
+
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
@@ -424,7 +424,7 @@ public class Calendar extends JQueryContainer
 						CallbackParameter.converted("start", "start.getTime()"),
 						CallbackParameter.converted("end", "end.getTime()"),
 						CallbackParameter.explicit("allDay"),
-						CallbackParameter.context("jsEvent"),	//not used in this class (getCallbackFunctionBody is called rather than getCallbackFunction) 
+						CallbackParameter.context("jsEvent"),	//not used in this class (getCallbackFunctionBody is called rather than getCallbackFunction)
 						CallbackParameter.context("view")		//not used in this class (getCallbackFunctionBody is called rather than getCallbackFunction)
 				};
 			}
@@ -439,7 +439,7 @@ public class Calendar extends JQueryContainer
 
 	/**
 	 * Gets the ajax behavior that will be triggered when the user clicks on an event
-	 * 
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newEventClickBehavior()
@@ -447,7 +447,7 @@ public class Calendar extends JQueryContainer
 		return new JQueryAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
@@ -460,7 +460,7 @@ public class Calendar extends JQueryContainer
 						CallbackParameter.resolved("eventId", "event.id")
 				};
 			}
-	
+
 			@Override
 			protected JQueryEvent newEvent(AjaxRequestTarget target)
 			{
@@ -471,13 +471,13 @@ public class Calendar extends JQueryContainer
 
 	/**
 	 * Gets the ajax behavior that will be triggered when the user moves (drag & drop) an event
-	 * 
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newEventDropBehavior()
 	{
 		return new JQueryAjaxBehavior(this) {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -485,7 +485,7 @@ public class Calendar extends JQueryContainer
 			{
 				//http://arshaw.com/fullcalendar/docs/event_ui/eventDrop/
 				//function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {  }
-				return new CallbackParameter[] { 
+				return new CallbackParameter[] {
 						CallbackParameter.context("event"),
 						CallbackParameter.explicit("dayDelta"), //retrieved
 						CallbackParameter.explicit("minuteDelta"), //retrieved
@@ -497,7 +497,7 @@ public class Calendar extends JQueryContainer
 						CallbackParameter.resolved("eventId", "event.id") //retrieved
 				};
 			}
-	
+
 			@Override
 			protected JQueryEvent newEvent(AjaxRequestTarget target)
 			{
@@ -508,7 +508,7 @@ public class Calendar extends JQueryContainer
 
 	/**
 	 * Gets the ajax behavior that will be triggered when the user resizes an event
-	 * 
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newEventResizeBehavior()
@@ -522,7 +522,7 @@ public class Calendar extends JQueryContainer
 			{
 				//http://arshaw.com/fullcalendar/docs/event_ui/eventResize/
 				//function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {  }
-				return new CallbackParameter[] { 
+				return new CallbackParameter[] {
 						CallbackParameter.context("event"),
 						CallbackParameter.explicit("dayDelta"), //retrieved
 						CallbackParameter.explicit("minuteDelta"), //retrieved
@@ -542,7 +542,7 @@ public class Calendar extends JQueryContainer
 		};
 	}
 
-	
+
 	// Event classes //
 	/**
 	 * An event object that will be broadcasted when the user clicks on a day cell
