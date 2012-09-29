@@ -73,7 +73,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 {
 	private static final long serialVersionUID = 1L;
 
-	private JQueryAjaxBehavior stopBehavior;
+	private JQueryAjaxBehavior onStopBehavior;
 	private List<T> items; //selected items
 
 	/**
@@ -94,16 +94,6 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	public Selectable(String id, IModel<List<T>> model)
 	{
 		super(id, model);
-
-		this.init();
-	}
-
-	/**
-	 * Initialization
-	 */
-	private void init()
-	{
-		this.stopBehavior = this.newStopBehavior();
 	}
 
 	// Getters //
@@ -140,7 +130,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	{
 		super.onInitialize();
 
-		this.add(this.stopBehavior);
+		this.add(this.onStopBehavior = this.newOnStopBehavior());
 	}
 
 	/**
@@ -201,7 +191,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 			{
 				Selectable.this.onConfigure(this);
 
-				this.setOption("stop", stopBehavior);
+				this.setOption("stop", Selectable.this.onStopBehavior.getCallbackFunction());
 			}
 		};
 	}
@@ -213,7 +203,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newStopBehavior()
+	protected JQueryAjaxBehavior newOnStopBehavior()
 	{
 		return new JQueryAjaxBehavior(this) {
 
@@ -226,13 +216,13 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 			}
 
 			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... extraParameters)
+			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
 			{
 				//build indexes array, ie: 'indexes=[1,2,3]'
 				String selector = String.format("%s %s", JQueryWidget.getSelector(Selectable.this), Selectable.this.getItemSelector());
 				String indexes = "var indexes=[]; $('.ui-selected', this).each( function() { indexes.push($('" + selector + "').index(this)); } ); ";
 
-				return indexes + super.getCallbackFunctionBody(extraParameters);
+				return indexes + super.getCallbackFunctionBody(parameters);
 			}
 
 			@Override
@@ -294,23 +284,6 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 					this.indexes.add(Integer.valueOf(matcher.group()));
 				}
 			}
-
-//			if (values != null)
-//			{
-//				try
-//				{
-//					JSONArray array = new JSONArray(values)); //the value here does not have square brackets and is therefore not a json array
-//
-//					for (int i = 0; i < array.length(); i++)
-//					{
-//						this.indexes.add(array.getInt(i));
-//					}
-//				}
-//				catch (JSONException e)
-//				{
-//					LOG.error(e.getMessage());
-//				}
-//			}
 		}
 
 		public List<Integer> getIndexes()

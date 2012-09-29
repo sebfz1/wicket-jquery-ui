@@ -175,7 +175,7 @@ public class RangeDatePicker extends JQueryContainer
 				// set options
 				this.setOption("date", builder.toString());
 				this.setOption("mode", Options.asString("range")); //immutable
-				this.setOption("onChange", RangeDatePicker.this.onChangeBehavior);
+				this.setOption("onChange", RangeDatePicker.this.onChangeBehavior.getCallbackFunction());
 			}
 		};
 	}

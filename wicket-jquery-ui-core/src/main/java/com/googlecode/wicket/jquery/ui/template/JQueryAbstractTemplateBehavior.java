@@ -46,7 +46,7 @@ public abstract class JQueryAbstractTemplateBehavior extends Behavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
-		
+
 		response.render(JavaScriptHeaderItem.forReference(JQueryAbstractTemplateBehavior.TMPL_JS));
 		response.render(StringHeaderItem.forString(this.newResourceStream().getString()));
 	}

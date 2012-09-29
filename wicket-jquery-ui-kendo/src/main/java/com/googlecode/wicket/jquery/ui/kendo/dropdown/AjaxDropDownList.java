@@ -19,6 +19,7 @@ package com.googlecode.wicket.jquery.ui.kendo.dropdown;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
@@ -33,7 +34,7 @@ import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEven
 /**
  * Provides a Kendo UI DropDownList widget.<br/>
  * This ajax version will post the component, using a {@link JQueryAjaxChangeBehavior}, when the 'change' javascript method is called.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  * @param <T>
@@ -41,8 +42,8 @@ import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEven
 public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionChangedListener
 {
 	private static final long serialVersionUID = 1L;
-	
-	private JQueryAjaxBehavior changeBehavior;
+
+	private JQueryAjaxBehavior onChangeBehavior;
 
 	/**
 	 * Constructor
@@ -140,14 +141,14 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	{
 		super(id, model, choices, renderer);
 	}
-	
+
 	// Events //
 	@Override
 	protected void onInitialize()
 	{
-		super.onInitialize();  
+		super.onInitialize();
 
-		this.add(this.changeBehavior = new JQueryAjaxChangeBehavior(this));
+		this.add(this.onChangeBehavior = this.newOnChangeBehavior());
 	}
 
 	@Override
@@ -155,7 +156,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	{
 		super.onConfigure(behavior);
 
-		behavior.setOption("change", "function( event, ui ) { " + this.changeBehavior.getCallbackScript() + "}");
+		behavior.setOption("change", this.onChangeBehavior.getCallbackFunction());
 	}
 
 	@Override
@@ -166,12 +167,31 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 			ChangeEvent payload = (ChangeEvent) event.getPayload();
 
 			this.onSelectionChanged();
-			this.onSelectionChanged(payload.getTarget(), this.getForm()); 
+			this.onSelectionChanged(payload.getTarget(), this.getForm());
 		}
 	}
 
 	@Override
 	public void onSelectionChanged(AjaxRequestTarget target, Form<?> form)
 	{
+	}
+
+	// Factories //
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'change' javascript event
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	private JQueryAjaxChangeBehavior newOnChangeBehavior()
+	{
+		return new JQueryAjaxChangeBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
+			}
+		};
 	}
 }

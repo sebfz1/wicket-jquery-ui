@@ -87,7 +87,7 @@ public class AjaxDatePicker extends DatePicker
 	{
 		super.onConfigure(behavior);
 
-		behavior.setOption("onSelect", this.onSelectBehavior);
+		behavior.setOption("onSelect", this.onSelectBehavior.getCallbackFunction());
 	}
 
 	@Override
@@ -127,10 +127,7 @@ public class AjaxDatePicker extends DatePicker
 			protected CallbackParameter[] getCallbackParameters()
 			{
 				//function( dateText, inst ) {  .. }
-				return new CallbackParameter[] {
-						CallbackParameter.context("dateText"),
-						CallbackParameter.context("inst"),
-				};
+				return new CallbackParameter[] { CallbackParameter.context("dateText"), CallbackParameter.context("inst") };
 			}
 
 			@Override

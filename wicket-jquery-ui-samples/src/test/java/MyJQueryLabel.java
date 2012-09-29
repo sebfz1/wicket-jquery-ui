@@ -1,5 +1,6 @@
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.basic.Label;
 
@@ -21,7 +22,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 		}
 	}
 
-	private JQueryAjaxBehavior ajaxBehavior;
+	private JQueryAjaxBehavior onJQueryEventBehavior;
 
 	public MyJQueryLabel(String id)
 	{
@@ -31,9 +32,15 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 
 	private void init()
 	{
-		this.ajaxBehavior = new JQueryAjaxBehavior(this) {
+		this.onJQueryEventBehavior = new JQueryAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
+			}
 
 			@Override
 			protected JQueryEvent newEvent(AjaxRequestTarget target)
@@ -53,15 +60,15 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 			// do something with the target
 		}
 	}
-	
+
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
-		
-		this.add(this.ajaxBehavior);
+
+		this.add(this.onJQueryEventBehavior);
 		this.add(JQueryWidget.newWidgetBehavior(this));
-	}	
+	}
 
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
@@ -73,7 +80,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 			@Override
 			public void onConfigure(Component component)
 			{
-				this.setOption("jqueryevent", "function( event, ui ) { " + ajaxBehavior.getCallbackScript() + " }");
+				this.setOption("jqueryevent", onJQueryEventBehavior.getCallbackFunction());
 			}
 		};
 	}

@@ -59,6 +59,11 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 
 			private static final long serialVersionUID = 1L;
 
+			public String getCallbackFunction()
+			{
+				return "function(event, ui) { " + this.getCallbackScript() + " }";
+			}
+
 			protected JQueryEvent newEvent(AjaxRequestTarget target)
 			{
 				return new MyEvent(target);
@@ -92,7 +97,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 
 			public void onConfigure(Component component)
 			{
-				this.setOption("jqueryevent", "function( event, ui ) { " + ajaxBehavior.getCallbackScript() + " }");
+				this.setOption("jqueryevent", ajaxBehavior.getCallbackFunction());
 			}
 		};
 	}
@@ -135,17 +140,6 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 		this.source.send(this.getSink(), this.getBroadcast(), this.newEvent(target));
 	}
 
-	@Override
-	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
-	{
-		super.updateAjaxAttributes(attributes);
-
-		if (this.duration != Duration.NONE)
-		{
-			attributes.setThrottlingSettings(new ThrottlingSettings("jquery-throttle", this.duration));
-		}
-	}
-
 	/**
 	 * Gets the broadcast to be used in {@link #respond(AjaxRequestTarget)}
 	 * @return {@link Broadcast#EXACT} by default
@@ -173,6 +167,17 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 
 
 	// wicket 6.x specific //
+	@Override
+	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
+	{
+		super.updateAjaxAttributes(attributes);
+
+		if (this.duration != Duration.NONE)
+		{
+			attributes.setThrottlingSettings(new ThrottlingSettings("jquery-throttle", this.duration));
+		}
+	}
+
 	/**
 	 * Gets the {@link CallbackParameter}<code>s</code> that *may* be passed to {@link #getCallbackFunction(CallbackParameter...)}<br/>
 	 * This is a convenience method that allows to define {@link CallbackParameter}<code>s</code> before the invocation of {@link #getCallbackFunction(CallbackParameter...)}.
@@ -195,19 +200,13 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 		return super.getCallbackFunction(this.getCallbackParameters()).toString();
 	}
 
-	/**
-	 * Calls {@link #getCallbackFunctionBody(CallbackParameter...)} by passing {@link CallbackParameter}<code>s</code> from {@link #getCallbackParameters()}
-	 *
-	 * @return the javascript function.
-	 */
-	public String getCallbackFunctionBody()
-	{
-		return super.getCallbackFunctionBody(this.getCallbackParameters()).toString();
-	}
-
-	@Override
-	public String toString()
-	{
-		return this.getCallbackFunction();
-	}
+//	/**
+//	 * Calls {@link #getCallbackFunctionBody(CallbackParameter...)} by passing {@link CallbackParameter}<code>s</code> from {@link #getCallbackParameters()}
+//	 *
+//	 * @return the javascript function.
+//	 */
+//	public String getCallbackFunctionBody()
+//	{
+//		return super.getCallbackFunctionBody(this.getCallbackParameters()).toString();
+//	}
 }

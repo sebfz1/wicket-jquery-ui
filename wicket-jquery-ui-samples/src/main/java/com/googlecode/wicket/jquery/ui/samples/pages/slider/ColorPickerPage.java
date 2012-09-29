@@ -18,7 +18,7 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class ColorPickerPage extends AbstractSliderPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	// Models //
 	private final Model<String> model;
 
@@ -27,7 +27,7 @@ public class ColorPickerPage extends AbstractSliderPage
 		this.model = new Model<String>("#336699");
 		this.init();
 	}
-	
+
 	private void init()
 	{
 		final Form<Void> form = new Form<Void>("form");
@@ -44,7 +44,7 @@ public class ColorPickerPage extends AbstractSliderPage
 
 		// Color Slider(s) //
 		form.add(new ColorPicker("picker", this.model) {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -70,8 +70,8 @@ public class ColorPickerPage extends AbstractSliderPage
 		this.info(component.getMarkupId() + " has been clicked");
 		this.info("The model object is: " + this.model.getObject());
 	}
-	
-	
+
+
 	/**
 	 * A FormComponentFragment would have been perfect here, but... it does not exists :s
 	 *
@@ -82,7 +82,7 @@ public class ColorPickerPage extends AbstractSliderPage
 		private static final int INDEX_R = 1;	//#RRxxxx
 		private static final int INDEX_G = 3;	//#xxGGxx
 		private static final int INDEX_B = 5;	//#xxxxBB
-		
+
 		private final IModel<Integer> modelR;
 		private final IModel<Integer> modelG;
 		private final IModel<Integer> modelB;
@@ -90,59 +90,20 @@ public class ColorPickerPage extends AbstractSliderPage
 		public ColorPicker(String id, IModel<String> model)
 		{
 			super(id, "color-picker", ColorPickerPage.this, model);
-			
+
 			this.modelR = this.newColorModel(INDEX_R);
 			this.modelG = this.newColorModel(INDEX_G);
 			this.modelB = this.newColorModel(INDEX_B);
-			
+
 			this.init();
 		}
-		
+
 		private void init()
 		{
-			/* Slider: Red */
-			this.add(new AjaxSlider("r", this.modelR) {
-
-				private static final long serialVersionUID = 1L;
-				
-				public void onValueChanged(AjaxRequestTarget target, Form<?> form) {
-					
-					ColorPicker.this.changeColor(target, form);
-				};
-				
-			}.setRange(Range.MIN).setMax(255));
-
-			/* Slider: Green */
-			this.add(new AjaxSlider("g", this.modelG) {
-
-				private static final long serialVersionUID = 1L;
-				
-				public void onValueChanged(AjaxRequestTarget target, Form<?> form) {
-					
-					ColorPicker.this.changeColor(target, form);
-				};
-				
-			}.setRange(Range.MIN).setMax(255));
-			
-			/* Slider: Blue */
-			this.add(new AjaxSlider("b", this.modelB) {
-
-				private static final long serialVersionUID = 1L;
-				
-				public void onValueChanged(AjaxRequestTarget target, Form<?> form) {
-					
-					ColorPicker.this.changeColor(target, form);
-				};
-				
-			}.setRange(Range.MIN).setMax(255));
+			this.add(this.newAjaxSlider("r", this.modelR)); // Slider: Red
+			this.add(this.newAjaxSlider("g", this.modelG)); // Slider: Green
+			this.add(this.newAjaxSlider("b", this.modelB)); // Slider: Blue
 		}
-		
-		/**
-		 * Event which will be fired when the color has been changed.
-		 * @param target
-		 * @param form
-		 */
-		protected abstract void onColorChanged(AjaxRequestTarget target, Form<?> form);
 
 		/**
 		 * Updates the model with the new color.
@@ -157,6 +118,37 @@ public class ColorPickerPage extends AbstractSliderPage
 
 			this.setDefaultModelObject(String.format("#%02x%02x%02x", r, g, b));
 			this.onColorChanged(target, form);
+		}
+
+		// Events //
+		/**
+		 * Event which will be fired when the color has been changed.
+		 * @param target
+		 * @param form
+		 */
+		protected abstract void onColorChanged(AjaxRequestTarget target, Form<?> form);
+
+		// Factories //
+		/**
+		 * Gets a new {@link AjaxSlider} for the specified color model
+		 * @param id the markup id
+		 * @param model the (R|G|B) color model
+		 * @return the {@link AjaxSlider}
+		 */
+		private AjaxSlider newAjaxSlider(String id, IModel<Integer> model)
+		{
+			AjaxSlider slider = new AjaxSlider(id, model) {
+
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onValueChanged(AjaxRequestTarget target, Form<?> form)
+				{
+					ColorPicker.this.changeColor(target, form);
+				}
+			};
+
+			return slider.setRange(Range.MIN).setMax(255);
 		}
 
 		/**
