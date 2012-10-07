@@ -306,7 +306,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 				// lazy options //
 				AbstractDialog.this.onConfigure(this);
 
-				// immutable options //
+				// class options //
 				this.setOption("autoOpen", false);
 				this.setOption("title", Options.asString(AbstractDialog.this.title));
 				this.setOption("modal", AbstractDialog.this.modal);

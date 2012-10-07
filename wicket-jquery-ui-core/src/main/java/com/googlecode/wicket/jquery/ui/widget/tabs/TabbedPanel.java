@@ -20,9 +20,10 @@ import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -30,8 +31,11 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
+import com.googlecode.wicket.jquery.ui.JQueryEvent;
 import com.googlecode.wicket.jquery.ui.JQueryPanel;
 import com.googlecode.wicket.jquery.ui.Options;
+import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.ui.utils.RequestCycleUtils;
 
 /**
  * Provides jQuery tabs based on a {@link JQueryPanel}
@@ -44,6 +48,8 @@ public class TabbedPanel extends JQueryPanel
 
 	private final Options options;
 	private final List<ITab> tabs;
+
+	private JQueryAjaxBehavior onShowBehavior;
 
 	/**
 	 * Constructor
@@ -105,30 +111,13 @@ public class TabbedPanel extends JQueryPanel
 					final String newId = panels.newChildId();
 
 					// link (tab) //
-					WebMarkupContainer link = this.newLink("link", tab);
+					Label link = new Label("link", tab.getTitle());
 					link.add(AttributeModifier.replace("href", "#" + newId));
-					link.add(new Label("title", tab.getTitle()).setRenderBodyOnly(true));
 					item.add(link);
 
 					// panel //
 					panels.add(tab.getPanel(newId).setMarkupId(newId).setOutputMarkupId(true));
 				}
-			}
-
-			/**
-			 * Provides the tab's link
-			 *
-			 * @param tab the ITab
-			 * @return a WebMarkupContainer that represent the tab link
-			 */
-			private WebMarkupContainer newLink(String id, ITab tab)
-			{
-				if (tab instanceof AjaxTab)
-				{
-					return ((AjaxTab)tab).newLink(id);
-				}
-
-				return new WebMarkupContainer(id);
 			}
 		});
 	}
@@ -140,6 +129,7 @@ public class TabbedPanel extends JQueryPanel
 	{
 		super.onInitialize();
 
+		this.add(this.onShowBehavior = this.newOnShowBehavior());
 		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
@@ -156,12 +146,21 @@ public class TabbedPanel extends JQueryPanel
 	@Override
 	public void onEvent(IEvent<?> event)
 	{
-		//TODO: implement this
-//		if (tab instanceof AjaxTab)
-//		{
-//			((AjaxTab)tab).load(target);
-//		}
+		if (event.getPayload() instanceof ShowEvent)
+		{
+			ShowEvent payload = (ShowEvent) event.getPayload();
+
+			AjaxRequestTarget target = payload.getTarget();
+			int index = payload.getIndex();
+			ITab tab = tabs.get(index);
+
+			if (tab instanceof AjaxTab)
+			{
+				((AjaxTab)tab).load(target);
+			}
+		}
 	}
+
 
 	// IJQueryWidget //
 	@Override
@@ -175,7 +174,70 @@ public class TabbedPanel extends JQueryPanel
 			public void onConfigure(Component component)
 			{
 				TabbedPanel.this.onConfigure(this);
+
+				this.setOption("show", TabbedPanel.this.onShowBehavior.getCallbackFunction()); //'show' is used instead of 'select' for an AjaxTab to be loaded event if it is the first tab
 			}
 		};
+	}
+
+
+	// Factories //
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'show' javascript callback
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	private JQueryAjaxBehavior newOnShowBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				return new CallbackParameter[] {
+						CallbackParameter.context("event"),
+						CallbackParameter.context("ui"),
+						CallbackParameter.resolved("index", "ui.index")
+				};
+			}
+
+			@Override
+			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			{
+				return new ShowEvent(target);
+			}
+		};
+	}
+
+
+	// Event objects //
+	/**
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'show' callback
+	 */
+	static class ShowEvent extends JQueryEvent
+	{
+		private final int index;
+
+		/**
+		 * Constructor
+		 * @param target the {@link AjaxRequestTarget}
+		 * @param step the {@link Step} (Start or Stop)
+		 */
+		public ShowEvent(AjaxRequestTarget target)
+		{
+			super(target);
+
+			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt();
+		}
+
+		/**
+		 * Gets the tab's index
+		 * @return the index
+		 */
+		public int getIndex()
+		{
+			return this.index;
+		}
 	}
 }

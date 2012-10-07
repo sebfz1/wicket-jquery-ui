@@ -18,12 +18,10 @@ package com.googlecode.wicket.jquery.ui.widget.tabs;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
-
 import com.googlecode.wicket.jquery.ui.panel.LoadingPanel;
 
 /**
@@ -111,31 +109,9 @@ public abstract class AjaxTab extends AbstractTab
 		{
 			target.add(this.replaceComponent());
 			this.state = STATE_LOADED;
+			//this.getPage().dirty();
 		}
 
 		return load;
-	}
-
-	/**
-	 * Gets the {@link AjaxLink} for this {@link ITab}, which will load the lazy-panel on click.
-	 *
-	 * @param id the markup id
-	 * @return the {@link AjaxLink}
-	 */
-	public AjaxLink<Void> newLink(String id)
-	{
-		return new AjaxLink<Void>(id) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onClick(AjaxRequestTarget target)
-			{
-				if (AjaxTab.this.load(target))
-				{
-					this.getPage().dirty();
-				}
-			}
-		};
 	}
 }

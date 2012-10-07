@@ -265,12 +265,10 @@ public class AccordionPanel extends JQueryPanel
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			//http://arshaw.com/fullcalendar/docs/selection/select_callback/
-			//function(startDate, endDate, allDay, jsEvent, view) { }
 			return new CallbackParameter[] {
 					CallbackParameter.context("event"),
 					CallbackParameter.context("ui"),
-					CallbackParameter.converted("index", "ui.options.active")
+					CallbackParameter.resolved("index", "ui.options.active")
 					//+ '&title=' + $(ui.newHeader.context).text()");
 			};
 		}
