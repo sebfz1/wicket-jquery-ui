@@ -27,8 +27,8 @@ import org.apache.wicket.model.IModel;
 import com.googlecode.wicket.jquery.ui.panel.LoadingPanel;
 
 /**
- * Provides an {@link AbstractTab} which loads the panel when the {@link ITab} is clicked. 
- * 
+ * Provides an {@link AbstractTab} which loads the panel when the {@link ITab} is clicked.
+ *
  * @author Sebastien Briquet - sebfz1
  * @since 1.2.1
  */
@@ -38,15 +38,14 @@ public abstract class AjaxTab extends AbstractTab
 
 	private static final byte STATE_INIT = 0;
 	private static final byte STATE_LOAD = 1;
-	private static final byte STATE_ADDED = 2;
+	private static final byte STATE_LOADED = 2;
 
-	private LoadingPanel panel;
-	private WebMarkupContainer container;
+	private LoadingPanel panel = null;
 	private byte state = STATE_INIT;
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param title IModel used to represent the title of the tab.
 	 */
 	public AjaxTab(IModel<String> title)
@@ -57,28 +56,22 @@ public abstract class AjaxTab extends AbstractTab
 	/**
 	 * Gets the default panel (loading indicator)
 	 */
+	@Override
 	public final WebMarkupContainer getPanel(String panelId)
 	{
-		this.panel = new LoadingPanel(panelId);
-
 		if (this.state == STATE_INIT)
 		{
+			this.panel = new LoadingPanel(panelId);
 			this.state = STATE_LOAD;
-		}
-
-		// the component is already loaded //
-		else if (this.state == STATE_ADDED) 
-		{
-			this.replaceComponent();
 		}
 
 		return this.panel;
 	}
 
 	/**
-	 * Get the {@link Component} that will be lazy loaded
-	 * 
-	 * @return the {@link Component}
+	 * Get the {@link WebMarkupContainer} that will be lazy loaded
+	 *
+	 * @return the {@link WebMarkupContainer}
 	 */
 	protected final WebMarkupContainer getLazyPanel()
 	{
@@ -87,7 +80,7 @@ public abstract class AjaxTab extends AbstractTab
 
 	/**
 	 * Gets the {@link WebMarkupContainer} that will be lazy loaded
-	 * 
+	 *
 	 * @param panelId the markup id to use
 	 * @return the {@link WebMarkupContainer}
 	 */
@@ -95,17 +88,37 @@ public abstract class AjaxTab extends AbstractTab
 
 	/**
 	 * Replaces the loading panel's placeholder component by the lazy-loaded component.
-	 * 
+	 * Warning, should be called only once!
+	 *
 	 * @return the lazy-loaded component
 	 */
 	private Component replaceComponent()
 	{
-		return this.panel.getPlaceholderComponent().replaceWith(this.container); //warning, inner panel is detached here.
+		return this.panel.getPlaceholderComponent().replaceWith(this.getLazyPanel()); //warning, inner panel is detached here.
 	}
 
 	/**
-	 * Gets the {@link AjaxLink} for this {@link ITab}, which will handle the lazy-panel load.
-	 *  
+	 * Loads the lazy component, if not already loaded.
+	 * @param target the {@link AjaxRequestTarget}
+	 *
+	 * @return True if the component has just been loaded. Otherwise false if the component has already been loaded
+	 */
+	public boolean load(AjaxRequestTarget target)
+	{
+		boolean load = (this.state == STATE_LOAD);
+
+		if (load)
+		{
+			target.add(this.replaceComponent());
+			this.state = STATE_LOADED;
+		}
+
+		return load;
+	}
+
+	/**
+	 * Gets the {@link AjaxLink} for this {@link ITab}, which will load the lazy-panel on click.
+	 *
 	 * @param id the markup id
 	 * @return the {@link AjaxLink}
 	 */
@@ -118,16 +131,9 @@ public abstract class AjaxTab extends AbstractTab
 			@Override
 			public void onClick(AjaxRequestTarget target)
 			{
-				if (AjaxTab.this.state == STATE_LOAD)
+				if (AjaxTab.this.load(target))
 				{
-					AjaxTab.this.container = AjaxTab.this.getLazyPanel();
-					target.add(AjaxTab.this.replaceComponent());
-
-					AjaxTab.this.state = STATE_ADDED;
 					this.getPage().dirty();
-
-					//this.unregisterHandler(); //to implement, unregister the click handler (wicket 1.5.x & wicket 6.x)
-					//note: or not, handler could be used to store/remember the selected tab
 				}
 			}
 		};

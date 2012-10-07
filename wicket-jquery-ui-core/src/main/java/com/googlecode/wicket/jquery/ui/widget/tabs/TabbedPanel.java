@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
+import org.apache.wicket.event.IEvent;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -150,6 +151,16 @@ public class TabbedPanel extends JQueryPanel
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
+	}
+
+	@Override
+	public void onEvent(IEvent<?> event)
+	{
+		//TODO: implement this
+//		if (tab instanceof AjaxTab)
+//		{
+//			((AjaxTab)tab).load(target);
+//		}
 	}
 
 	// IJQueryWidget //

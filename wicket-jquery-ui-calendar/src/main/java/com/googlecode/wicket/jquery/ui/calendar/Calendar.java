@@ -142,7 +142,7 @@ public class Calendar extends JQueryContainer
 	 * Indicated whether a cell can be selected.<br />
 	 * If true, the {@link #onSelect(AjaxRequestTarget, Date, Date, boolean)} event will be triggered
 	 *
-	 * @return true or false
+	 * @return false by default
 	 */
 	protected boolean isSelectable()
 	{
@@ -154,7 +154,7 @@ public class Calendar extends JQueryContainer
 	 * IIF true, an event can override this global setting to false by using CalendarEvent#setEditable(boolean);<br/>
 	 * If true, the {@link #onEventClick(AjaxRequestTarget, int)} event and {@link #onDayClick(AjaxRequestTarget, Date)} event will be triggered<br/>
 	 *
-	 * @return true or false
+	 * @return false by default
 	 */
 	protected boolean isEditable()
 	{
@@ -165,7 +165,7 @@ public class Calendar extends JQueryContainer
 	 * Indicates whether the event can be dragged &#38; dropped.
 	 * If true, the {@link #onEventDrop(AjaxRequestTarget, int, long, boolean)} event will be triggered
 	 *
-	 * @return true or false
+	 * @return false by default
 	 */
 	protected boolean isEventDropEnabled()
 	{
@@ -176,7 +176,7 @@ public class Calendar extends JQueryContainer
 	 * Indicates whether the event can be resized.
 	 * If true, the {@link #onEventResize(AjaxRequestTarget, int, long)} event will be triggered
 	 *
-	 * @return true or false
+	 * @return false by default
 	 */
 	protected boolean isEventResizeEnabled()
 	{
