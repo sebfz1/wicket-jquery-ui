@@ -200,13 +200,4 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 		return super.getCallbackFunction(this.getCallbackParameters()).toString();
 	}
 
-//	/**
-//	 * Calls {@link #getCallbackFunctionBody(CallbackParameter...)} by passing {@link CallbackParameter}<code>s</code> from {@link #getCallbackParameters()}
-//	 *
-//	 * @return the javascript function.
-//	 */
-//	public String getCallbackFunctionBody()
-//	{
-//		return super.getCallbackFunctionBody(this.getCallbackParameters()).toString();
-//	}
 }
