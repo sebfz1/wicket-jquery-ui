@@ -43,18 +43,22 @@
 	</scm>
 
 	<properties>
-		<wicket.version>6.1.0</wicket.version>
+		<wicket.version>6.2.0</wicket.version>
 		<junit.version>4.8.2</junit.version>
 		<jetty.version>7.6.3.v20120416</jetty.version>
 	</properties>
 
 	<repositories>
 		<repository>
-			<id>Apache Nexus</id>
+			<id>Apache Nexus Snapshot</id>
 			<url>https://repository.apache.org/content/repositories/snapshots/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
+		</repository>
+		<repository>
+			<id>Apache Nexus Staging</id>
+			<url>https://repository.apache.org/content/repositories/orgapachewicket-143/</url>
 		</repository>
 	</repositories>
 
