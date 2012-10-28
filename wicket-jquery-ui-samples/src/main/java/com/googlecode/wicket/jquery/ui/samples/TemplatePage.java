@@ -12,7 +12,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.Url;
-import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.resource.TextTemplateResourceReference;
 
 public abstract class TemplatePage extends WebPage
@@ -31,8 +31,7 @@ public abstract class TemplatePage extends WebPage
 	{
 		super.onInitialize();
 
-		CharSequence url = this.urlFor(this.getClass(), null);
-		this.add(new GoogleAnalyticsBehavior(url));
+		this.add(new GoogleAnalyticsBehavior(this));
 	}
 }
 
@@ -42,9 +41,32 @@ class GoogleAnalyticsBehavior extends Behavior
 
 	private final String url;
 
-	public GoogleAnalyticsBehavior(final CharSequence url)
+	public GoogleAnalyticsBehavior(final WebPage page)
 	{
-		this.url = url.toString();
+		this.url = this.getUrl(page);
+	}
+
+	private String getUrl(WebPage page)
+	{
+		Url pageUrl = Url.parse(page.urlFor(page.getClass(), null).toString());
+		Url baseUrl = new Url(page.getRequestCycle().getUrlRenderer().getBaseUrl());
+
+		baseUrl.resolveRelative(pageUrl);
+
+		return String.format("%s/%s", page.getRequest().getContextPath(), baseUrl);
+	}
+
+	private IModel<Map<String, Object>> newResourceModel()
+	{
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("url", this.url);
+
+		return Model.ofMap(map);
+	}
+
+	private ResourceReference newResourceReference()
+	{
+		return new TextTemplateResourceReference(GoogleAnalyticsBehavior.class, "gaq.js", this.newResourceModel());
 	}
 
 	@Override
@@ -52,14 +74,6 @@ class GoogleAnalyticsBehavior extends Behavior
 	{
 		super.renderHead(component, response);
 
-		response.render(JavaScriptHeaderItem.forReference(new TextTemplateResourceReference(GoogleAnalyticsBehavior.class, "gaq.js", this.getResourceModel()), "gaq"));
-	}
-
-	private IModel<Map<String, Object>> getResourceModel()
-	{
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("url", RequestCycle.get().getUrlRenderer().renderFullUrl(Url.parse(this.url)));
-
-		return Model.ofMap(map);
+		response.render(JavaScriptHeaderItem.forReference(this.newResourceReference(), "gaq"));
 	}
 }
