@@ -427,12 +427,6 @@ public class Calendar extends JQueryContainer
 			}
 
 			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
-			{
-				return super.getCallbackFunctionBody(parameters) + " $.fullCalendar('unselect');";
-			}
-
-			@Override
 			protected JQueryEvent newEvent(AjaxRequestTarget target)
 			{
 				return new SelectEvent(target);
