@@ -87,17 +87,17 @@ public class TabbedPanel extends JQueryPanel
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			public String newChildId()
+			{
+				return String.format("tab-%s-%s", this.getMarkupId(), super.newChildId()); //fixes issue #14
+			}
+
+			@Override
 			protected void onConfigure()
 			{
 				super.onConfigure();
 
 				this.removeAll(); //fixes issue #7
-			}
-
-			@Override
-			public String newChildId()
-			{
-				return String.format("tab-%s-%s", this.getMarkupId(), super.newChildId()); //fixes issue #14
 			}
 		};
 

@@ -18,7 +18,6 @@ package com.googlecode.wicket.jquery.ui.form.slider;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -142,20 +141,11 @@ public class AjaxRangeSlider extends RangeSlider implements IValueChangedListene
 
 	// Factories //
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'change' javascript event
-	 * @return the {@link JQueryAjaxBehavior}
+	 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript event
+	 * @return the {@link JQueryAjaxPostBehavior}
 	 */
-	protected JQueryAjaxChangeBehavior newOnChangeBehavior()
+	protected JQueryAjaxPostBehavior newOnChangeBehavior()
 	{
-		return new JQueryAjaxChangeBehavior(this, this.lower, this.upper) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
-			}
-		};
+		return new JQueryAjaxChangeBehavior(this, this.lower, this.upper);
 	}
 }

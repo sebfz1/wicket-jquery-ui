@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.ui.event;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.markup.html.form.FormComponent;
 
 import com.googlecode.wicket.jquery.ui.JQueryEvent;
@@ -50,11 +51,20 @@ public class JQueryAjaxChangeBehavior extends JQueryAjaxPostBehavior
 	}
 
 	@Override
+	protected CallbackParameter[] getCallbackParameters()
+	{
+		return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
+	}
+
+
+	// Factories //
+	@Override
 	protected JQueryEvent newEvent(AjaxRequestTarget target)
 	{
 		return new ChangeEvent(target);
 	}
 
+	// Event Object //
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxChangeBehavior}
 	 */

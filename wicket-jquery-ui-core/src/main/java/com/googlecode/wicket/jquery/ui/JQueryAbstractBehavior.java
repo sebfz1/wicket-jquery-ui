@@ -117,11 +117,11 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 		if (target != null)
 		{
-			target.appendJavaScript(this.$());
+			target.appendJavaScript(this.toString());
 		}
 		else
 		{
-			response.render(JavaScriptHeaderItem.forScript(this.$(), this.getToken()));
+			response.render(JavaScriptHeaderItem.forScript(this.toString(), this.getToken()));
 		}
 	}
 

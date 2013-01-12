@@ -18,7 +18,6 @@ package com.googlecode.wicket.jquery.ui.form.slider;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -29,6 +28,7 @@ import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.ui.event.IValueChangedListener;
 import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior;
 import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEvent;
@@ -140,20 +140,11 @@ public class AjaxSlider extends Slider implements IValueChangedListener
 
 	// Factories //
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'change' javascript event
-	 * @return the {@link JQueryAjaxBehavior}
+	 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript event
+	 * @return the {@link JQueryAjaxPostBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnChangeBehavior()
+	protected JQueryAjaxPostBehavior newOnChangeBehavior()
 	{
-		return new JQueryAjaxChangeBehavior(this, this.input) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
-			}
-		};
+		return new JQueryAjaxChangeBehavior(this, this.input);
 	}
 }

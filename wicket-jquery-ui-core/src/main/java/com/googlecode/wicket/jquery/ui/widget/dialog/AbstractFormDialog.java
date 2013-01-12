@@ -234,7 +234,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 		@Override
 		public void onAfterSubmit()
 		{
-			// not handled
+			//wicket6
 		}
 	}
 

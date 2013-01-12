@@ -122,5 +122,6 @@ public abstract class FormSubmittingPanel<T> extends GenericPanel<T> implements 
 	@Override
 	public void onAfterSubmit()
 	{
+		//wicket6
 	}
 }
