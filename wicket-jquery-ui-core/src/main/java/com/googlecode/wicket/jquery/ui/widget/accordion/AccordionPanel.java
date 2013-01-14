@@ -268,7 +268,7 @@ public class AccordionPanel extends JQueryPanel
 					CallbackParameter.context("event"),
 					CallbackParameter.context("ui"),
 					CallbackParameter.resolved("index", "ui.options.active")
-					//+ '&title=' + $(ui.newHeader.context).text()");
+					//+ '&title=' + jQuery(ui.newHeader.context).text()");
 			};
 		}
 	}
@@ -279,7 +279,7 @@ public class AccordionPanel extends JQueryPanel
 	 */
 	static class ChangeEvent extends JQueryEvent
 	{
-		enum Step { Start, Stop };
+		enum Step { Start, Stop }
 
 		private final Step step;
 		private final int index;

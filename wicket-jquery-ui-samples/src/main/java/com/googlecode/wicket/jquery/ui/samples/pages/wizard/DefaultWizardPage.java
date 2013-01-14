@@ -99,6 +99,7 @@ public class DefaultWizardPage extends AbstractWizardPage
 			this.init(wizardModel);
 		}
 
+		@Override
 		public void setModelObject(User user)
 		{
 			this.setDefaultModel(new CompoundPropertyModel<User>(user));

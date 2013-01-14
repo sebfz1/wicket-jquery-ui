@@ -34,8 +34,8 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 
 /**
  * Provides a jQuery button based on the built-in AjaxButton, with an ajax indicator the time the {@link #onSubmit()} process.
- * 
- * @since 6.0 
+ *
+ * @since 6.0
  * @author Sebastien Briquet - sebfz1
  */
 public abstract class IndicatingAjaxButton extends AjaxButton implements IJQueryWidget
@@ -85,26 +85,26 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 	{
 		super(id, model, form);
 	}
-	
+
 	public IndicatingAjaxButton setPosition(Position position)
 	{
 		this.position = position;
 		return this;
 	}
-	
+
 	// Events //
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
-		
+
 		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override
 	protected void onError(AjaxRequestTarget target, Form<?> form)
 	{
-	}	
+	}
 
 	// IJQueryWidget //
 	@Override
@@ -118,17 +118,17 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 			public void renderHead(Component component, IHeaderResponse response)
 			{
 				super.renderHead(component, response);
-				
+
 				IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
 
 				/* adds and configure the busy indicator */
 				response.render(CssHeaderItem.forCSS(".ui-icon.ui-icon-indicator { background-image: url(" + RequestCycle.get().urlFor(handler).toString() + ") !important; }", "jquery-ui-icon-indicator"));
 
 				/* adds and configure the busy indicator */
-				StringBuilder script = new StringBuilder("$(function() {");
-				script.append("$('").append(selector).append("')");
-				script.append(".click(function() { $(this).button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": 'ui-icon-indicator' }); })");
-				script.append(".ajaxStop(function() { $(this).button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": null }); })");
+				StringBuilder script = new StringBuilder("jQuery(function() {");
+				script.append("jQuery('").append(selector).append("')");
+				script.append(".click(function() { jQuery(this).button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": 'ui-icon-indicator' }); })");
+				script.append(".ajaxStop(function() { jQuery(this).button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": null }); })");
 				script.append("});");
 
 				response.render(JavaScriptHeaderItem.forScript(script, this.getClass().getName() + "-" + selector));

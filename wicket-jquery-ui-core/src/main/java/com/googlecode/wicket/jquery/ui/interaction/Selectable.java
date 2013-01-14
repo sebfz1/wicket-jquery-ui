@@ -220,7 +220,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 			{
 				//build indexes array, ie: 'indexes=[1,2,3]'
 				String selector = String.format("%s %s", JQueryWidget.getSelector(Selectable.this), Selectable.this.getItemSelector());
-				String indexes = "var indexes=[]; $('.ui-selected', this).each( function() { indexes.push($('" + selector + "').index(this)); } ); ";
+				String indexes = "var indexes=[]; jQuery('.ui-selected', this).each( function() { indexes.push(jQuery('" + selector + "').index(this)); } ); ";
 
 				return indexes + super.getCallbackFunctionBody(parameters);
 			}
