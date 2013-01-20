@@ -34,6 +34,9 @@ import com.googlecode.wicket.jquery.ui.resource.JQueryUIResourceReference;
  *         IJQueryLibrarySettings librarySettings = new JQueryLibrarySettings();
  *         librarySettings.setJQueryUIReference(new JQueryPluginResourceReference(MyApplication.class, "jquery-ui-x.x.x.min.js"));
  *
+ *         //to enable globalization:
+ *         librarySettings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get());
+ *
  *         this.setJavaScriptLibrarySettings(librarySettings);
  *     }
  * }
@@ -47,6 +50,9 @@ import com.googlecode.wicket.jquery.ui.resource.JQueryUIResourceReference;
 public class JQueryLibrarySettings extends JavaScriptLibrarySettings implements IJQueryLibrarySettings
 {
 	private ResourceReference jQueryUIReference = JQueryUIResourceReference.get();
+	private ResourceReference jQueryGlobalizeReference = null; //null by default, meaning the user has to set it explicitly
+
+	// jQuery UI //
 
 	@Override
 	public ResourceReference getJQueryUIReference()
@@ -59,4 +65,19 @@ public class JQueryLibrarySettings extends JavaScriptLibrarySettings implements 
 	{
 		this.jQueryUIReference = reference;
 	}
+
+	// jQuery Globalize //
+
+	@Override
+	public ResourceReference getJQueryGlobalizeReference()
+	{
+		return this.jQueryGlobalizeReference;
+	}
+
+	@Override
+	public void setJQueryGlobalizeReference(ResourceReference reference)
+	{
+		this.jQueryGlobalizeReference = reference;
+	}
+
 }

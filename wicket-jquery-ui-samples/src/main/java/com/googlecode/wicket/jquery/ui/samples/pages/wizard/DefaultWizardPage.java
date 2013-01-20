@@ -66,7 +66,7 @@ public class DefaultWizardPage extends AbstractWizardPage
 			@Override
 			protected JQueryIcon getIcon()
 			{
-				return JQueryIcon.Gear;
+				return JQueryIcon.GEAR;
 			}
 
 			@Override

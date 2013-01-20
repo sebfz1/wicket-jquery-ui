@@ -53,14 +53,14 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	private static final String METHOD = "autocomplete";
 
 	/**
-	 * Behavior that will called when the user selects a value from results
-	 */
-	private JQueryAjaxBehavior onSelectBehavior;
-
-	/**
 	 * Behavior that will be called when the user enters an input
 	 */
 	private AutoCompleteBehavior<T> sourceBehavior;
+
+	/**
+	 * Behavior that will called when the user selects a value from results
+	 */
+	private JQueryAjaxBehavior onSelectBehavior;
 
 	private final ITextRenderer<? super T> renderer;
 	private final IConverter<T> converter;

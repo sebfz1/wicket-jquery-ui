@@ -40,4 +40,18 @@ public interface IJQueryLibrarySettings extends IJavaScriptLibrarySettings
 	 * @param reference the {@link ResourceReference}
 	 */
 	void setJQueryUIReference(ResourceReference reference);
+
+	/**
+	 * Gets the JQuery globalize library resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	ResourceReference getJQueryGlobalizeReference();
+
+	/**
+	 * Sets the JQuery globalize library resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	void setJQueryGlobalizeReference(ResourceReference reference);
 }

@@ -5,7 +5,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
-
+import com.googlecode.wicket.jquery.ui.resource.JQueryGlobalizeResourceReference;
 import com.googlecode.wicket.jquery.ui.samples.pages.accordion.DefaultAccordionPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.autocomplete.DefaultAutoCompletePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.button.DefaultButtonPage;
@@ -26,9 +26,12 @@ import com.googlecode.wicket.jquery.ui.samples.pages.progressbar.ButtonProgressB
 import com.googlecode.wicket.jquery.ui.samples.pages.resizable.ResizablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.selectable.DefaultSelectablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.slider.DefaultSliderPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.spinner.DefaultSpinnerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.tabs.DefaultTabsPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.test.TestPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.wizard.DefaultWizardPage;
+import com.googlecode.wicket.jquery.ui.settings.IJQueryLibrarySettings;
+import com.googlecode.wicket.jquery.ui.settings.JQueryLibrarySettings;
 
 public class SampleApplication extends WebApplication
 {
@@ -43,6 +46,11 @@ public class SampleApplication extends WebApplication
 		this.getMarkupSettings().setStripWicketTags(true); //IMPORTANT!
 		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
 
+		// jQuery Globalize Resource References //
+		IJQueryLibrarySettings librarySettings = new JQueryLibrarySettings();
+		librarySettings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get());
+		this.setJavaScriptLibrarySettings(librarySettings);
+
 		// SiteMap //
 		this.mountPage("/sitemap.xml", SiteMapPage.class);
 
@@ -52,9 +60,12 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/button", DefaultButtonPage.class);
 		this.mountPackage("/datepicker", DefaultDatePickerPage.class);
 		this.mountPackage("/dialog", MessageDialogPage.class);
+//		this.mountPackage("/menu", DefaultMenuPage.class);
 		this.mountPackage("/progressbar", ButtonProgressBarPage.class);
 		this.mountPackage("/slider", DefaultSliderPage.class);
+		this.mountPackage("/spinner", DefaultSpinnerPage.class);
 		this.mountPackage("/tabs", DefaultTabsPage.class);
+//		this.mountPackage("/tooltip",
 		this.mountPackage("/wizard", DefaultWizardPage.class);
 
 		// interactions //

@@ -70,7 +70,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 * @param reference a {@link CssResourceReference}, a {@link JavaScriptResourceReference} or a {@link JQueryPluginResourceReference}
 	 * @return true (as specified by Collection.add(E))
 	 */
-	protected boolean add(ResourceReference reference)
+	public boolean add(ResourceReference reference)
 	{
 		return this.references.add(reference);
 	}
@@ -91,12 +91,17 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		}
 
 		// Adds jQuery UI javascript resource reference //
-		final ResourceReference jQueryUIReference = settings.getJQueryUIReference();
-
-		if (jQueryUIReference != null)
+		if (settings.getJQueryUIReference() != null)
 		{
-			response.render(JavaScriptHeaderItem.forReference(jQueryUIReference));
+			response.render(JavaScriptHeaderItem.forReference(settings.getJQueryUIReference()));
 		}
+
+		// Adds jQuery Globalize javascript resource reference //
+		if (settings.getJQueryGlobalizeReference() != null)
+		{
+			response.render(JavaScriptHeaderItem.forReference(settings.getJQueryGlobalizeReference()));
+		}
+
 
 		// Adds additional resource references //
 		for(ResourceReference reference : this.references)

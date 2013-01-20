@@ -105,10 +105,6 @@ public class ProgressBar extends JQueryContainer
 		}
 
 		this.setDefaultModelObject(value);
-
-//		else if (MIN <= value && value <= MAX)
-//		{
-//		}
 	}
 
 

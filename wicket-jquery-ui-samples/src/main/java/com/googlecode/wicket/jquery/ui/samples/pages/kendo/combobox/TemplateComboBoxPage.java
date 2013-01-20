@@ -27,8 +27,8 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// ComboBox //
 		final ComboBox<Genre> combobox = new ComboBox<Genre>("combobox", new Model<String>(), GENRES) {
@@ -51,7 +51,7 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 							"   <img src='${ data.coverUrl }' width='50px' />\n" +
 							"  </td>\n" +
 							"  <td>\n" +
-							"   ${ data.name }</span>\n" +
+							"   ${ data.name }\n" +
 							"  </td>\n" +
 							" </tr>\n" +
 							"</table>\n";
@@ -89,7 +89,7 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				TemplateComboBoxPage.this.info(combobox);
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		});
 	}
