@@ -46,7 +46,6 @@ public class TabbedPanel extends JQueryPanel
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Options options;
 	private final List<ITab> tabs;
 
 	private TabsBehavior widgetBehavior;
@@ -73,8 +72,6 @@ public class TabbedPanel extends JQueryPanel
 		super(id);
 
 		this.tabs = tabs;
-		this.options = options;
-
 		this.init();
 	}
 

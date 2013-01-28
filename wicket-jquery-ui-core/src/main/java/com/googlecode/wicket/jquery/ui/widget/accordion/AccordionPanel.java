@@ -48,7 +48,7 @@ public class AccordionPanel extends JQueryPanel
 	private static final long serialVersionUID = 1L;
 
 	private final List<ITab> tabs;
-	private final Options options;
+
 	private AccordionBehavior widgetBehavior;
 	private JQueryAjaxBehavior activateEventBehavior;
 
@@ -72,11 +72,9 @@ public class AccordionPanel extends JQueryPanel
 	 */
 	public AccordionPanel(String id, List<ITab> tabs, Options options)
 	{
-		super(id);
+		super(id, options);
 
 		this.tabs = tabs;
-		this.options = options;
-
 		this.init();
 	}
 
