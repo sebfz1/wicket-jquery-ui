@@ -102,7 +102,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 			response.render(JavaScriptHeaderItem.forReference(settings.getJQueryGlobalizeReference()));
 		}
 
-
 		// Adds additional resource references //
 		for(ResourceReference reference : this.references)
 		{

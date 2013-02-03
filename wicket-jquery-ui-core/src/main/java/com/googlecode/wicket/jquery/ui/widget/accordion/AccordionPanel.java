@@ -118,9 +118,7 @@ public class AccordionPanel extends JQueryPanel
 
 	/**
 	 * Activates the selected tab<br/>
-	 * <b>Warning: </b> invoking this method results to a dual client-server round-trip. Use this method if you cannot use {@link #setActiveTab(int)} followed
-	 * by <code>target.add(myTabbedPannel)</code>
-	 *
+	 * <b>Warning: </b> invoking this method results to a dual client-server round-trip. Use this method if you cannot use {@link #setActiveTab(int)} followed by <code>target.add(myTabbedPannel)</code>
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index to activate
 	 */

@@ -69,7 +69,7 @@ public class TabbedPanel extends JQueryPanel
 	 */
 	public TabbedPanel(String id, List<ITab> tabs, Options options)
 	{
-		super(id);
+		super(id, options);
 
 		this.tabs = tabs;
 		this.init();
