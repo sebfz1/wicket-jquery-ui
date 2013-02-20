@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes.Method;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IFormSubmitter;
@@ -270,6 +271,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 
 			if (this.form != null)
 			{
+				attributes.setMethod(Method.POST);
 				attributes.setFormId(this.form.getMarkupId());
 			}
 		}

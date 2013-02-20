@@ -19,6 +19,7 @@ package com.googlecode.wicket.jquery.ui.ajax;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes.Method;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 
@@ -53,6 +54,7 @@ public abstract class JQueryAjaxFormBehavior extends JQueryAjaxBehavior
 	{
 		super.updateAjaxAttributes(attributes);
 
+		attributes.setMethod(Method.POST);
 		attributes.setFormId(this.form.getMarkupId());
 	}
 }
