@@ -122,7 +122,7 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 				IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
 
 				/* adds and configure the busy indicator */
-				response.render(CssHeaderItem.forCSS(".ui-icon.ui-icon-indicator { background-image: url(" + RequestCycle.get().urlFor(handler).toString() + ") !important; }", "jquery-ui-icon-indicator"));
+				response.render(CssHeaderItem.forCSS(".ui-icon.ui-icon-indicator { background-image: url(" + RequestCycle.get().urlFor(handler).toString() + ") !important; background-position: 0 0; }", "jquery-ui-icon-indicator"));
 
 				/* adds and configure the busy indicator */
 				StringBuilder script = new StringBuilder("jQuery(function() {");
