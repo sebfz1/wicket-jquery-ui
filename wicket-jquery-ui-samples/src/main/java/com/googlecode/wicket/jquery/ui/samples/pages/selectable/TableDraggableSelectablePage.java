@@ -3,7 +3,7 @@ package com.googlecode.wicket.jquery.ui.samples.pages.selectable;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.wicket.IClusterable;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.ContextImage;
@@ -12,25 +12,25 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 
-import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteUtils;
-import com.googlecode.wicket.jquery.ui.interaction.Draggable;
-import com.googlecode.wicket.jquery.ui.interaction.Droppable;
-import com.googlecode.wicket.jquery.ui.interaction.Selectable;
-import com.googlecode.wicket.jquery.ui.interaction.SelectableDraggableFactory;
+import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
+import com.googlecode.wicket.jquery.ui.interaction.droppable.Droppable;
+import com.googlecode.wicket.jquery.ui.interaction.selectable.Selectable;
+import com.googlecode.wicket.jquery.ui.interaction.selectable.SelectableDraggableFactory;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 
 public class TableDraggableSelectablePage extends AbstractSelectablePage
 {
 	private static final long serialVersionUID = 1L;
 	private final FeedbackPanel feedback;
 	private final Selectable<Genre> selectable;
-	
+
 	public TableDraggableSelectablePage()
 	{
 		// FeedbackPanel //
 		this.feedback = new JQueryFeedbackPanel("feedback");
 		this.add(this.feedback.setOutputMarkupId(true));
-		
+
 		// Selectable //
 		this.selectable = new Selectable<Genre>("selectable", GENRES) {
 
@@ -51,11 +51,11 @@ public class TableDraggableSelectablePage extends AbstractSelectablePage
 		};
 
 		this.add(this.selectable);
-		
-		
+
+
 		// Selectable ListView, with the default "empty" (ie: with no default icon) selectable-draggable factory //
 		final SelectableDraggableFactory factory = new SelectableDraggableFactory();
-		
+
 		this.selectable.add(new ListView<Genre>("items", GENRES) {
 
 			private static final long serialVersionUID = 1L;
@@ -99,11 +99,11 @@ public class TableDraggableSelectablePage extends AbstractSelectablePage
 	private Droppable<Genre> newDroppable(String id)
 	{
 		return new Droppable<Genre>(id) {
-	
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onDrop(AjaxRequestTarget target, Draggable<?> draggable)
+			public void onDrop(AjaxRequestTarget target, Component component)
 			{
 				info(String.format("Dropped %s", selectable.getSelectedItems()));
 
@@ -113,7 +113,7 @@ public class TableDraggableSelectablePage extends AbstractSelectablePage
 		};
 	}
 
-	
+
 	// List of Genre(s) //
 	static final List<Genre> GENRES = Arrays.asList(
 			new Genre("Black Metal", "cover-black-metal.png"),
@@ -125,46 +125,5 @@ public class TableDraggableSelectablePage extends AbstractSelectablePage
 			new Genre("Power Metal", "cover-power-metal.png"),
 			new Genre("Symphonic Metal", "cover-symphonic-metal.png"),
 			new Genre("Trash Metal", "cover-trash-metal.png"),
-			new Genre("Vicking Metal", "cover-vicking-metal.png")); 
-
-	
-	// Bean //
-	static class Genre implements IClusterable
-	{
-		private static final long serialVersionUID = 1L;
-
-		public static Genre emptyGenre()
-		{
-			return new Genre("", "cover-empty.png");
-		}
-
-		private final String name;
-		private final String cover;
-		
-		public Genre(final String name, final String cover)
-		{
-			this.name = name;
-			this.cover = cover;
-		}
-		
-		public String getName()
-		{
-			return this.name;
-		}
-		
-		public String getCover()
-		{
-			return "images/" + this.cover;
-		}
-		
-		/**
-		 * #toString() needs to be overridden if no renderer is provided.
-		 * #toString() is also used by {@link AutoCompleteUtils#contains(List, String)} method.
-		 */
-		@Override
-		public String toString()
-		{
-			return this.name;
-		}
-	}	
+			new Genre("Vicking Metal", "cover-vicking-metal.png"));
 }

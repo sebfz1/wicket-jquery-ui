@@ -9,8 +9,8 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.JQueryBehavior;
-import com.googlecode.wicket.jquery.ui.Options;
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.kendo.button.Button;
 import com.googlecode.wicket.jquery.ui.kendo.datetime.DatePicker;
@@ -47,7 +47,7 @@ public class PatternDateTimePickerPage extends AbstractTimePickerPage
 			@Override
 			protected DatePicker newDatePicker(String id, IModel<Date> model, String datePattern)
 			{
-				//Specified datePattern is not the default kendo-ui date pattern, but is compatible with both java & kendo-ui
+				//Specified date pattern is not the default kendo-ui date pattern, but is compatible with both java & kendo-ui
 				//It can therefore be transmitted as-is to the DatePicker widget
 				return new DatePicker(id, model, datePattern, new Options("format", Options.asString(datePattern)));
 			}
@@ -67,7 +67,7 @@ public class PatternDateTimePickerPage extends AbstractTimePickerPage
 					{
 						super.onConfigure(behavior);
 
-						//Specified timePattern is not the default kendo-ui date pattern, but is compatible with both java & kendo-ui
+						//Specified time pattern is not the default kendo-ui date pattern, but is compatible with both java & kendo-ui
 						//It can therefore be transmitted as-is to the TimePicker widget
 						behavior.setOption("format", Options.asString(timePattern));
 					}
