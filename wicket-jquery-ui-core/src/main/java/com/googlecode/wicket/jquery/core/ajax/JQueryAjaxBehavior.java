@@ -177,6 +177,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	 */
 	protected abstract JQueryEvent newEvent();
 
+
 	// wicket 1.5.x //
 	/**
 	 * Gets the jQuery callback function<br/>

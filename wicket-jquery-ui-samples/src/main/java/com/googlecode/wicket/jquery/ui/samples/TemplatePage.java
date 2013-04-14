@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
@@ -58,7 +59,7 @@ class GoogleAnalyticsBehavior extends Behavior
 	}
 
 	@Override
-	public void renderHead(Component component, org.apache.wicket.markup.html.IHeaderResponse response)
+	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
 
