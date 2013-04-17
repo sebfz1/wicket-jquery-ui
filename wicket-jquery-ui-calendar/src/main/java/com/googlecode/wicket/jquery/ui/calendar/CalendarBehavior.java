@@ -229,13 +229,13 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			@Override
 			public String getCallbackFunction()
 			{
-				return "function(start, end, allDay) { " + this.getCallbackScript() + " }";
+				return "function(startDate, endDate, allDay, jsEvent, view) { " + this.getCallbackScript() + " }";
 			}
 
 			@Override
 			public CharSequence getCallbackScript()
 			{
-				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&start=' + start.getTime() + '&end=' + end.getTime() + '&allDay=' + allDay + '&viewName=' + view.name");
+				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&start=' + startDate.getTime() + '&end=' + endDate.getTime() + '&allDay=' + allDay + '&viewName=' + view.name");
 			}
 
 			@Override
@@ -284,9 +284,21 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	 */
 	protected JQueryAjaxBehavior newOnEventDropBehavior()
 	{
-		return new EventDeltaBehavior(this) {
+		return new JQueryAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) { " + this.getCallbackScript() + " }";
+			}
+
+			@Override
+			public CharSequence getCallbackScript()
+			{
+				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&eventId=' + event.id + '&dayDelta=' + dayDelta + '&minuteDelta=' + minuteDelta + '&allDay=' + allDay");
+			}
 
 			@Override
 			protected JQueryEvent newEvent()
@@ -303,9 +315,21 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	 */
 	protected JQueryAjaxBehavior newOnEventResizeBehavior()
 	{
-		return new EventDeltaBehavior(this) {
+		return new JQueryAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) { " + this.getCallbackScript() + " }";
+			}
+
+			@Override
+			public CharSequence getCallbackScript()
+			{
+				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&eventId=' + event.id + '&dayDelta=' + dayDelta + '&minuteDelta=' + minuteDelta");
+			}
 
 			@Override
 			protected JQueryEvent newEvent()
@@ -313,33 +337,6 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 				return new ResizeEvent();
 			}
 		};
-	}
-
-
-	// Behavior classes //
-	/**
-	 * Base class for {@link JQueryAjaxBehavior} that will broadcast delta-based events
-	 */
-	protected abstract class EventDeltaBehavior extends JQueryAjaxBehavior
-	{
-		private static final long serialVersionUID = 1L;
-
-		public EventDeltaBehavior(IJQueryAjaxAware source)
-		{
-			super(source);
-		}
-
-		@Override
-		public String getCallbackFunction()
-		{
-			return "function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) { " + this.getCallbackScript() + " }";
-		}
-
-		@Override
-		public CharSequence getCallbackScript()
-		{
-			return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&eventId=' + event.id + '&dayDelta=' + dayDelta + '&minuteDelta=' + minuteDelta + '&allDay=' + allDay");
-		}
 	}
 
 
