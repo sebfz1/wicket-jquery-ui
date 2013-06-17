@@ -25,7 +25,6 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 
@@ -174,22 +173,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 			@Override
 			protected JQueryAjaxPostBehavior newOnSelectBehavior()
 			{
-				return new JQueryAjaxPostBehavior(this, DatePicker.this) {
-
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public String getCallbackFunction()
-					{
-						return "function(dateText, inst) { " + this.getCallbackScript() + " }";
-					}
-
-					@Override
-					protected JQueryEvent newEvent()
-					{
-						return new SelectEvent();
-					}
-				};
+				return new OnSelectBehavior(this, DatePicker.this);
 			}
 		};
 	}

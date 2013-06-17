@@ -19,6 +19,7 @@ package com.googlecode.wicket.jquery.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
@@ -26,9 +27,14 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.googlecode.wicket.jquery.core.resource.JQueryResourceReference;
+import com.googlecode.wicket.jquery.core.resource.JQueryUIResourceReference;
+import com.googlecode.wicket.jquery.core.settings.ApplicationJavaScriptLibrarySettings;
 import com.googlecode.wicket.jquery.core.settings.IJQueryLibrarySettings;
-import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
+import com.googlecode.wicket.jquery.core.settings.IJavaScriptLibrarySettings;
 
 /**
  * Provides the base class for every jQuery behavior.
@@ -39,6 +45,22 @@ import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
 public abstract class JQueryAbstractBehavior extends Behavior
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(JQueryAbstractBehavior.class);
+
+	/**
+	 * Gets the {@link IJQueryLibrarySettings}
+	 * @return the {@link IJQueryLibrarySettings}
+	 */
+	private static IJQueryLibrarySettings getLibrarySettings()
+	{
+		if (ApplicationJavaScriptLibrarySettings.get() instanceof IJQueryLibrarySettings)
+		{
+			return ApplicationJavaScriptLibrarySettings.get();
+		}
+
+		return null;
+	}
+
 
 	/**
 	 * Behavior name
@@ -75,25 +97,32 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		// Gets the library settings //
-		IJQueryLibrarySettings settings = JQueryLibrarySettings.get();
-//XXX: report as changed: new JQueryLibrarySettings() -> JQueryLibrarySettings.get()
+		IJQueryLibrarySettings settings = getLibrarySettings();
 
 		// Adds jQuery Core javascript resource reference //
-		if (settings.getJQueryReference() != null)
+		if (settings != null && settings.getJQueryReference() != null)
 		{
 			response.renderJavaScriptReference(settings.getJQueryReference());
 		}
-
-		// Adds jQuery UI javascript resource reference //
-		if (settings.getJQueryUIReference() != null)
+		else
 		{
-			response.renderJavaScriptReference(settings.getJQueryUIReference());
+			response.renderJavaScriptReference(JQueryResourceReference.get());
 		}
 
 		// Adds jQuery Globalize javascript resource reference //
-		if (settings.getJQueryGlobalizeReference() != null)
+		if (settings != null && settings.getJQueryGlobalizeReference() != null)
 		{
 			response.renderJavaScriptReference(settings.getJQueryGlobalizeReference());
+		}
+
+		// Adds jQuery UI javascript resource reference //
+		if (settings instanceof IJQueryLibrarySettings && ((IJQueryLibrarySettings) settings).getJQueryUIReference() != null)
+		{
+			response.renderJavaScriptReference(settings.getJQueryUIReference());
+		}
+		else
+		{
+			response.renderJavaScriptReference(JQueryUIResourceReference.get());
 		}
 
 		// Adds additional resource references //
@@ -113,6 +142,15 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		// Adds the statement //
 		response.renderJavaScript(this.toString(), this.getToken());
 	}
+
+	/**
+	 * Gets the jQuery statement.
+	 * @return Statement like 'jQuery(function() { ... })'
+	 */
+	protected abstract String $();
+
+
+	// Properties //
 
 	/**
 	 * Get the unique behavior token that act as the script id.
@@ -139,11 +177,20 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		}
 	}
 
-	/**
-	 * Gets the jQuery statement.
-	 * @return Statement like 'jQuery(function() { ... })'
-	 */
-	protected abstract String $();
+	// Events //
+	@Override
+	public void onConfigure(Component component)
+	{
+		super.onConfigure(component);
+
+		if (Application.exists() && Application.get().usesDevelopmentConfig())
+		{
+			if (!Application.get().getMarkupSettings().getStripWicketTags())
+			{
+				LOG.warn("Application>MarkupSettings>StripWicketTags setting is currently set to false. It is highly recommended to set it to true to prevent widget misbehaviors.");
+			}
+		}
+	}
 
 	@Override
 	public final String toString()

@@ -19,27 +19,13 @@ package com.googlecode.wicket.jquery.core.settings;
 import org.apache.wicket.request.resource.ResourceReference;
 
 /**
- * Provides the definition to the JQuery/jQuery UI backing library resource reference.
+ * Provides the definition to the jQuery UI backing library resource reference.
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IJQueryLibrarySettings
+public interface IJQueryLibrarySettings extends IJavaScriptLibrarySettings
 {
-	/**
-	 * Gets the JQuery backing library resource reference
-	 *
-	 * @return the {@link ResourceReference}
-	 */
-	ResourceReference getJQueryReference();
-
-	/**
-	 * Sets the JQuery backing library resource reference
-	 *
-	 * @param reference the {@link ResourceReference}
-	 */
-	void setJQueryReference(ResourceReference reference);
-
 	/**
 	 * Gets the JQuery UI backing library resource reference
 	 *
@@ -53,18 +39,4 @@ public interface IJQueryLibrarySettings
 	 * @param reference the {@link ResourceReference}
 	 */
 	void setJQueryUIReference(ResourceReference reference);
-
-	/**
-	 * Gets the JQuery globalize library resource reference
-	 *
-	 * @return the {@link ResourceReference}
-	 */
-	ResourceReference getJQueryGlobalizeReference();
-
-	/**
-	 * Sets the JQuery globalize library resource reference
-	 *
-	 * @param reference the {@link ResourceReference}
-	 */
-	void setJQueryGlobalizeReference(ResourceReference reference);
 }

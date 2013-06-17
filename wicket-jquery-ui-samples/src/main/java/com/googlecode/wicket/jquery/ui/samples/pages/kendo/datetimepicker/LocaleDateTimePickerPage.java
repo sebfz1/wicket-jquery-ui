@@ -37,7 +37,7 @@ public class LocaleDateTimePickerPage extends AbstractTimePickerPage
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(2012, 05, 27, 02, 00);
 
-		final DateTimePicker datetimepicker = new DateTimePicker("datetimepicker", new Model<Date>(calendar.getTime())) {
+		final DateTimePicker datetimepicker = new DateTimePicker("datetimepicker", Model.of(calendar.getTime())) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -88,7 +88,7 @@ public class LocaleDateTimePickerPage extends AbstractTimePickerPage
 	}
 
 	/**
-	 * renderHead could be overridden directly in DatePicker if using wicket6+ (javascript dependencies priority are handled)
+	 * renderHead could be overridden directly in DatePicker if using wicket6+ (javascript dependencies priority)
 	 */
 	@Override
 	public void renderHead(IHeaderResponse response)

@@ -16,10 +16,12 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo;
 
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
-
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.settings.IJavaScriptLibrarySettings;
+import com.googlecode.wicket.jquery.ui.kendo.resource.KendoUIJavaScriptResourceReference;
+import com.googlecode.wicket.jquery.ui.kendo.settings.IKendoUILibrarySettings;
+import com.googlecode.wicket.jquery.ui.kendo.settings.KendoUILibrarySettings;
 
 /**
  * Provides the base class for Kendo UI behavior implementations
@@ -29,6 +31,17 @@ import com.googlecode.wicket.jquery.core.Options;
 public class KendoAbstractBehavior extends JQueryBehavior
 {
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Gets the {@link IKendoUILibrarySettings}
+	 *
+	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link IKendoUILibrarySettings}
+	 */
+	private static IKendoUILibrarySettings getLibrarySettings()
+	{
+		return KendoUILibrarySettings.get();
+	}
+
 
 	/**
 	 * Constructor
@@ -49,8 +62,37 @@ public class KendoAbstractBehavior extends JQueryBehavior
 	public KendoAbstractBehavior(String selector, String method, Options options)
 	{
 		super(selector, method, options);
-//TODO: KendoUIResourceReference.get()
-		this.add(new JavaScriptResourceReference(KendoAbstractBehavior.class, "kendo.web.min.js"));
+
+		this.initReferences();
 	}
 
+	/**
+	 * Initializes CSS & JavaScript resource references
+	 */
+	private void initReferences()
+	{
+		IKendoUILibrarySettings settings = getLibrarySettings();
+
+		// kendo.common.min.css //
+		if (settings != null && settings.getKendoUICommonStyleSheetReference() != null)
+		{
+			this.add(settings.getKendoUICommonStyleSheetReference());
+		}
+
+		// kendo.<theme>.min.css //
+		if (settings != null && settings.getKendoUIThemeStyleSheetReference() != null)
+		{
+			this.add(settings.getKendoUIThemeStyleSheetReference());
+		}
+
+		// kendo.web.min.js //
+		if (settings != null && settings.getKendoUIJavaScriptReference() != null)
+		{
+			this.add(settings.getKendoUIJavaScriptReference());
+		}
+		else
+		{
+			this.add(KendoUIJavaScriptResourceReference.get());
+		}
+	}
 }

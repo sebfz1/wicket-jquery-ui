@@ -6,6 +6,7 @@ import java.util.Locale;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
@@ -25,10 +26,11 @@ public class LocaleDatePickerPage extends AbstractTimePickerPage
 		this.add(form);
 
 		// FeedbackPanel //
-		form.add(new JQueryFeedbackPanel("feedback"));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// Date Picker //
-		final DatePicker datepicker = new DatePicker("datepicker", new Model<Date>(new Date()), Locale.FRENCH);
+		final DatePicker datepicker = new DatePicker("datepicker", Model.of(new Date()), Locale.FRANCE);
 		form.add(datepicker);
 
 		// Buttons //
@@ -53,11 +55,17 @@ public class LocaleDatePickerPage extends AbstractTimePickerPage
 				this.info(datepicker.getModelObjectAsString());
 				target.add(form);
 			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form)
+			{
+				target.add(feedback);
+			}
 		});
 	}
 
 	/**
-	 * renderHead could be overridden directly in DatePicker if using wicket6+ (javascript dependencies priority are handled)
+	 * renderHead could be overridden directly in DatePicker if using wicket6+ (javascript dependencies priority)
 	 */
 	@Override
 	public void renderHead(IHeaderResponse response)

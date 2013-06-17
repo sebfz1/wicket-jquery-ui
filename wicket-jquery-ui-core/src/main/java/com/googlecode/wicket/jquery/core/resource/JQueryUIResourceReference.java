@@ -21,7 +21,7 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
 
 /**
- * The resource reference for the jQuery UI javascript library.<br/>
+ * Provides the resource reference for the jQuery UI javascript library.<br/>
  * To add a jQuery UI resource reference to a component, do not use this reference, but use
  * {@link JQueryLibrarySettings#getJQueryUIReference()} to prevent version conflicts.
  *
@@ -50,6 +50,6 @@ public class JQueryUIResourceReference extends JavaScriptResourceReference
 	 */
 	private JQueryUIResourceReference()
 	{
-		super(JQueryUIResourceReference.class, "jquery-ui-1.10.2.custom.min.js");
+		super(JQueryUIResourceReference.class, "jquery-ui-1.10.3.custom.js");
 	}
 }

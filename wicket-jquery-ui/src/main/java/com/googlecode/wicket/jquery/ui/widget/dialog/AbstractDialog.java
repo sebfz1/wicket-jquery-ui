@@ -183,7 +183,6 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	 */
 	protected void onOpen(AjaxRequestTarget target)
 	{
-
 	}
 
 	/**
@@ -384,15 +383,15 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 			{
 				super.onConfigure(component);
 
-				// lazy options //
-				AbstractDialog.this.onConfigure(this);
-
 				// class options //
 				this.setOption("autoOpen", false);
 				this.setOption("title", Options.asString(AbstractDialog.this.title.getObject()));
 				this.setOption("modal", AbstractDialog.this.modal);
 				this.setOption("resizable", AbstractDialog.this.isResizable());
 				this.setOption("width", AbstractDialog.this.getWidth());
+
+				// lazy options //
+				AbstractDialog.this.onConfigure(this);
 			}
 
 			@Override
@@ -420,7 +419,9 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.<br/>
 	 * This method mays be overridden internally to provide another behavior
 	 *
+	 * @param source the {@link IJQueryAjaxAware} source
 	 * @param button the button that is passed to the behavior so it can be retrieved via the <code>DialogBehavior#ClickEvent</code>
+	 * @return the {@link ButtonAjaxBehavior}
 	 */
 	protected ButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, DialogButton button)
 	{

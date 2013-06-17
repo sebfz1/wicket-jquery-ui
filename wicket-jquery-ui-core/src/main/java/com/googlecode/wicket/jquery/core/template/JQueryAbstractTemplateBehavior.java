@@ -22,7 +22,8 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
 
-import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
+import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
+import com.googlecode.wicket.jquery.core.settings.IJQueryLibrarySettings;
 
 /**
  * Provides the base class for jQuery template behavior.<br/>
@@ -47,7 +48,7 @@ public abstract class JQueryAbstractTemplateBehavior extends Behavior
 	{
 		super.renderHead(component, response);
 
-		JQueryLibrarySettings settings = JQueryLibrarySettings.get();
+		IJQueryLibrarySettings settings = JQueryAbstractBehavior.getLibrarySettings();
 
 		if (settings.getJQueryReference() != null)
 		{

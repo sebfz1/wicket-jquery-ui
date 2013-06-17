@@ -25,8 +25,6 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
-import org.apache.wicket.request.resource.CssResourceReference;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.util.time.Duration;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -34,7 +32,13 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.settings.ApplicationJavaScriptLibrarySettings;
+import com.googlecode.wicket.jquery.core.settings.IJavaScriptLibrarySettings;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.jquery.ui.calendar.resource.CalendarJavaScriptResourceReference;
+import com.googlecode.wicket.jquery.ui.calendar.resource.CalendarStyleSheetResourceReference;
+import com.googlecode.wicket.jquery.ui.calendar.resource.GCalJavaScriptResourceReference;
+import com.googlecode.wicket.jquery.ui.calendar.settings.ICalendarLibrarySettings;
 
 /**
  * Provides the jQuery fullCalendar behavior
@@ -47,6 +51,22 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "fullCalendar";
 
+	/**
+	 * Gets the {@link ICalendarLibrarySettings}
+	 *
+	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link ICalendarLibrarySettings}
+	 */
+	public static ICalendarLibrarySettings getLibrarySettings()
+	{
+		if (ApplicationJavaScriptLibrarySettings.get() instanceof ICalendarLibrarySettings)
+		{
+			return (ICalendarLibrarySettings) ApplicationJavaScriptLibrarySettings.get();
+		}
+
+		return null;
+	}
+
+
 	private JQueryAjaxBehavior onDayClickBehavior; // day click
 	private JQueryAjaxBehavior onSelectBehavior = null; // date range-select behavior;
 
@@ -54,19 +74,66 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	private JQueryAjaxBehavior onEventDropBehavior = null; // event drop
 	private JQueryAjaxBehavior onEventResizeBehavior = null; // event resize
 
+	private JQueryAjaxBehavior onViewDisplayBehavior = null; // view displays
 
+
+	/**
+	 * Constructor
+	 * @param selector the html selector (ie: "#myId")
+	 */
 	public CalendarBehavior(final String selector)
 	{
 		this(selector, new Options());
 	}
 
+	/**
+	 * Constructor
+	 * @param selector the html selector (ie: "#myId")
+	 * @param options the {@link Options}
+	 */
 	public CalendarBehavior(final String selector, Options options)
 	{
 		super(selector, METHOD, options);
 
-		this.add(new CssResourceReference(CalendarBehavior.class, "fullcalendar.css"));
-		this.add(new JavaScriptResourceReference(CalendarBehavior.class, "fullcalendar.min.js"));
-		this.add(new JavaScriptResourceReference(CalendarBehavior.class, "gcal.js"));
+		this.initReferences();
+	}
+
+	/**
+	 * Initializes CSS & JavaScript resource references
+	 */
+	private void initReferences()
+	{
+		ICalendarLibrarySettings settings = getLibrarySettings();
+
+		// fullcalendar.css //
+		if (settings != null && settings.getCalendarStyleSheetReference() != null)
+		{
+			this.add(settings.getCalendarStyleSheetReference());
+		}
+		else
+		{
+			this.add(CalendarStyleSheetResourceReference.get());
+		}
+
+		// fullcalendar.min.js //
+		if (settings != null && settings.getCalendarJavaScriptReference() != null)
+		{
+			this.add(settings.getCalendarJavaScriptReference());
+		}
+		else
+		{
+			this.add(CalendarJavaScriptResourceReference.get());
+		}
+
+		// gcal.js //
+		if (settings != null && settings.getGCalJavaScriptReference() != null)
+		{
+			this.add(settings.getGCalJavaScriptReference());
+		}
+		else
+		{
+			this.add(GCalJavaScriptResourceReference.get());
+		}
 	}
 
 
@@ -96,6 +163,11 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		{
 			component.add(this.onEventResizeBehavior = this.newOnEventResizeBehavior());
 		}
+
+		if (this.isViewDisplayEnabled())
+		{
+			component.add(this.onViewDisplayBehavior = this.newOnViewDisplayBehavior());
+		}
 	}
 
 	@Override
@@ -106,14 +178,17 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
 
 		/* adds and configure the busy indicator */
-		response.renderJavaScript("jQuery(function(){ "
-				+ "jQuery('<img />')"
-				+ ".attr('src', '" + RequestCycle.get().urlFor(handler).toString() + "')"
-				+ ".ajaxStart(function() { jQuery(this).show(); })"
-				+ ".ajaxStop(function() { jQuery(this).hide(); })"
-				+ ".appendTo('.fc-header-center');"
-				+ " });", this.getClass().getName());
+		StringBuilder builder = new StringBuilder();
+
+		builder.append("jQuery(function(){\n");
+		builder.append("jQuery(\"<img id='calendar-indicator' src='").append(RequestCycle.get().urlFor(handler)).append("' />\").appendTo('.fc-header-center');\n"); //allows only one calendar.
+		builder.append("jQuery(document).ajaxStart(function() { jQuery('#calendar-indicator').show(); });\n");
+		builder.append("jQuery(document).ajaxStop(function() { jQuery('#calendar-indicator').hide(); });\n");
+		builder.append("});\n");
+
+		response.renderJavaScript(builder, this.getClass().getSimpleName() + "-indicator");
 	}
+
 
 	// Events //
 	@Override
@@ -127,15 +202,19 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		this.options.set("disableDragging", !this.isEventDropEnabled());
 		this.options.set("disableResizing", !this.isEventResizeEnabled());
 
-		if (this.isEditable())
+		if (this.onDayClickBehavior != null)
 		{
 			this.setOption("dayClick", this.onDayClickBehavior.getCallbackFunction());
-			this.setOption("eventClick", this.onEventClickBehavior.getCallbackFunction());
 		}
 
 		if (this.onSelectBehavior != null)
 		{
 			this.setOption("select", this.onSelectBehavior.getCallbackFunction());
+		}
+
+		if (this.onEventClickBehavior != null)
+		{
+			this.setOption("eventClick", this.onEventClickBehavior.getCallbackFunction());
 		}
 
 		if (this.onEventDropBehavior != null)
@@ -146,6 +225,11 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		if (this.onEventResizeBehavior != null)
 		{
 			this.setOption("eventResize", this.onEventResizeBehavior.getCallbackFunction());
+		}
+
+		if (this.onViewDisplayBehavior != null)
+		{
+			this.setOption("viewDisplay", this.onViewDisplayBehavior.getCallbackFunction());
 		}
 	}
 
@@ -181,7 +265,14 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			ResizeEvent resizeEvent = (ResizeEvent) event;
 			this.onEventResize(target, resizeEvent.getEventId(), resizeEvent.getDelta());
 		}
+
+		else if (event instanceof ViewDisplayEvent)
+		{
+			ViewDisplayEvent displayEvent = (ViewDisplayEvent) event;
+			this.onViewDisplay(target, displayEvent.getView());
+		}
 	}
+
 
 	// Factories //
 	/**
@@ -235,7 +326,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			@Override
 			public CharSequence getCallbackScript()
 			{
-				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&start=' + startDate.getTime() + '&end=' + endDate.getTime() + '&allDay=' + allDay + '&viewName=' + view.name");
+				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&startDate=' + startDate.getTime() + '&endDate=' + endDate.getTime() + '&allDay=' + allDay + '&viewName=' + view.name");
 			}
 
 			@Override
@@ -339,6 +430,37 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		};
 	}
 
+	/**
+	 * Gets the ajax behavior that will be triggered when the calendar loads and every time a different date-range is displayed.
+	 *
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	protected JQueryAjaxBehavior newOnViewDisplayBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(view) { " + this.getCallbackScript() + " }";
+			}
+
+			@Override
+			public CharSequence getCallbackScript()
+			{
+				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&viewName=' + view.name");
+			}
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new ViewDisplayEvent();
+			}
+		};
+	}
+
 
 	// Event classes //
 	/**
@@ -375,8 +497,8 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		 */
 		public CalendarView getView()
 		{
-			return CalendarView.valueOf(this.viewName);
-		}
+	        return CalendarView.get(this.viewName);
+	    }
 	}
 
 	/**
@@ -391,10 +513,10 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 
 		public SelectEvent()
 		{
-			long start = RequestCycleUtils.getQueryParameterValue("start").toLong();
+			long start = RequestCycleUtils.getQueryParameterValue("startDate").toLong();
 			this.start = new Date(start);
 
-			long end = RequestCycleUtils.getQueryParameterValue("end").toLong();
+			long end = RequestCycleUtils.getQueryParameterValue("endDate").toLong();
 			this.end = new Date(end);
 
 			this.isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
@@ -434,7 +556,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		 */
 		public CalendarView getView()
 		{
-			return CalendarView.valueOf(this.viewName);
+			return CalendarView.get(this.viewName);
 		}
 	}
 
@@ -470,8 +592,33 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		 */
 		public CalendarView getView()
 		{
-			return CalendarView.valueOf(this.viewName);
+			return CalendarView.get(this.viewName);
 		}
+	}
+
+	/**
+	 * An event object that will be broadcasted when the calendar loads and every time a different date-range is displayed.
+	 */
+	protected static class ViewDisplayEvent extends JQueryEvent
+	{
+		private final String viewName;
+
+		/**
+		 * Constructor
+		 */
+		public ViewDisplayEvent()
+		{
+			this.viewName = RequestCycleUtils.getQueryParameterValue("viewName").toString();
+		}
+
+		/**
+		 * Gets the current {@link CalendarView}
+		 * @return the view name
+		 */
+		public CalendarView getView()
+		{
+	        return CalendarView.get(this.viewName);
+	    }
 	}
 
 	/**

@@ -5,7 +5,11 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
+import org.apache.wicket.request.resource.PackageResourceReference;
 
+import com.googlecode.wicket.jquery.core.settings.ApplicationJavaScriptLibrarySettings;
+import com.googlecode.wicket.jquery.core.settings.IJQueryLibrarySettings;
+import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
 import com.googlecode.wicket.jquery.ui.samples.pages.accordion.DefaultAccordionPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.autocomplete.DefaultAutoCompletePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.button.DefaultButtonPage;
@@ -16,6 +20,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.draggable.DefaultDraggableP
 import com.googlecode.wicket.jquery.ui.samples.pages.droppable.DefaultDroppablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.effect.DefaultEffectPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.combobox.DefaultComboBoxPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datatable.DefaultDataTablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.KendoDatePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.dropdown.DefaultDropDownPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.editor.DefaultEditorPage;
@@ -23,6 +28,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter.DefaultSplit
 import com.googlecode.wicket.jquery.ui.samples.pages.menu.DefaultMenuPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.FontSizePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.datepicker.RangeDatePickerPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.plugins.wysiwyg.WysiwygEditorPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.progressbar.ButtonProgressBarPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.resizable.DefaultResizablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.selectable.DefaultSelectablePage;
@@ -45,9 +51,10 @@ public class SampleApplication extends WebApplication
 		this.getMarkupSettings().setStripWicketTags(true); //IMPORTANT!
 		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
 
-		// jQuery Globalize Resource References //
-//		IJQueryLibrarySettings librarySettings = JQueryLibrarySettings.get();
-//		librarySettings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get());
+		IJQueryLibrarySettings settings = new JQueryLibrarySettings();
+		settings.setJQueryReference(new PackageResourceReference(SampleApplication.class, "jquery-1.9.1.js"));
+		//settings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get()); // jQuery Globalize Resource References
+		ApplicationJavaScriptLibrarySettings.set(settings);
 
 		// SiteMap //
 		this.mountPage("/sitemap.xml", SiteMapPage.class);
@@ -79,6 +86,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/kendo/editor", DefaultEditorPage.class);
 		this.mountPackage("/kendo/dropdown", DefaultDropDownPage.class);
 		this.mountPackage("/kendo/combobox", DefaultComboBoxPage.class);
+		this.mountPackage("/kendo/datatable", DefaultDataTablePage.class);
 		this.mountPackage("/kendo/datetimepicker", KendoDatePickerPage.class);
 		this.mountPackage("/kendo/splitter", DefaultSplitterPage.class);
 
@@ -88,6 +96,7 @@ public class SampleApplication extends WebApplication
 		// Plugins //
 		this.mountPackage("/plugins", FontSizePage.class);
 		this.mountPackage("/plugins/datepicker", RangeDatePickerPage.class);
+		this.mountPackage("/plugins/wysiwyg", WysiwygEditorPage.class);
 
 		// Test //
 		this.mountPackage("/test", TestPage.class);

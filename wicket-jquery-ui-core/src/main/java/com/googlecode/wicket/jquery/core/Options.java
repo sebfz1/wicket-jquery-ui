@@ -38,6 +38,7 @@ import org.apache.wicket.IClusterable;
 public class Options implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
+	public static final String QUOTE = "\"";
 
 	/**
 	 * Converts a string representation of an object to its javascript representation. ie: "myvalue" (with the double quotes)
@@ -56,11 +57,11 @@ public class Options implements IClusterable
 	 */
 	public static String asString(String value)
 	{
-		return String.format("\"%s\"", value);
+		return String.format("%s%s%s", QUOTE, value, QUOTE);
 	}
 
 	/**
-	 * Converts a date to its ISO8601/javascript representation. ie: "2009-11-05T13:15:30Z" (with the double quotes)
+	 * Converts a date to its ISO8601/javascript representation. ie: "2009-11-05T13:15:30+0200" (with the double quotes)
 	 * @param date the date to convert
 	 * @return the JSON value
 	 */
@@ -168,9 +169,9 @@ public class Options implements IClusterable
 		for (Entry<String, Serializable> entry : this.map.entrySet())
 		{
 			if (i++ > 0) { builder.append(", "); }
-			builder.append("\"").append(entry.getKey()).append("\": ").append(entry.getValue());
+			builder.append(QUOTE).append(entry.getKey()).append(QUOTE).append(": ").append(entry.getValue());
 		}
 
-		return builder.append("}").toString();
+		return builder.append(" }").toString();
 	}
 }
