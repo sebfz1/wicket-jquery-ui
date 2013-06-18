@@ -78,7 +78,7 @@ public interface ICalendarLibrarySettings extends IJavaScriptLibrarySettings
 	ResourceReference getCalendarJavaScriptReference();
 
 	/**
-	 * Gets the fullcalendar's javascript resource reference
+	 * Gets the gcal's javascript resource reference
 	 *
 	 * @return the {@link ResourceReference}
 	 */

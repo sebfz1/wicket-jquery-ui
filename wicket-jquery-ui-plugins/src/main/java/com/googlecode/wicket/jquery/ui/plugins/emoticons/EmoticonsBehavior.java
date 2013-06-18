@@ -16,13 +16,11 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.emoticons;
 
-import org.apache.wicket.Application;
-
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.settings.ApplicationJavaScriptLibrarySettings;
 import com.googlecode.wicket.jquery.core.settings.IJavaScriptLibrarySettings;
-import com.googlecode.wicket.jquery.ui.plugins.emoticons.resource.EmoticonsJavaScriptResourceReference;
-import com.googlecode.wicket.jquery.ui.plugins.emoticons.resource.EmoticonsStyleSheetResourceReference;
+import com.googlecode.wicket.jquery.ui.plugins.emoticons.settings.EmoticonsLibrarySettings;
 import com.googlecode.wicket.jquery.ui.plugins.emoticons.settings.IEmoticonsLibrarySettings;
 
 /**
@@ -37,16 +35,17 @@ public class EmoticonsBehavior extends JQueryBehavior
 
 	/**
 	 * Gets the {@link IEmoticonsLibrarySettings}
+	 *
 	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link IEmoticonsLibrarySettings}
 	 */
 	private static IEmoticonsLibrarySettings getLibrarySettings()
 	{
-		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IEmoticonsLibrarySettings))
+		if (ApplicationJavaScriptLibrarySettings.get() instanceof IEmoticonsLibrarySettings)
 		{
-			return (IEmoticonsLibrarySettings) Application.get().getJavaScriptLibrarySettings();
+			return (IEmoticonsLibrarySettings) ApplicationJavaScriptLibrarySettings.get();
 		}
 
-		return null;
+		return EmoticonsLibrarySettings.get();
 	}
 
 
@@ -79,23 +78,15 @@ public class EmoticonsBehavior extends JQueryBehavior
 		IEmoticonsLibrarySettings settings = getLibrarySettings();
 
 		// jquery.cssemoticons.css //
-		if (settings != null && settings.getEmoticonsStyleSheetReference() != null)
+		if (settings.getEmoticonsStyleSheetReference() != null)
 		{
 			this.add(settings.getEmoticonsStyleSheetReference());
 		}
-		else
-		{
-			this.add(EmoticonsStyleSheetResourceReference.get());
-		}
 
 		// jquery.cssemoticons.min.js //
-		if (settings != null && settings.getEmoticonsJavaScriptReference() != null)
+		if (settings.getEmoticonsJavaScriptReference() != null)
 		{
 			this.add(settings.getEmoticonsJavaScriptReference());
-		}
-		else
-		{
-			this.add(EmoticonsJavaScriptResourceReference.get());
 		}
 	}
 }

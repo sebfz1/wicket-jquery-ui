@@ -16,13 +16,10 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.emoticons.settings;
 
-import org.apache.wicket.request.resource.CssResourceReference;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
 import com.googlecode.wicket.jquery.core.settings.IJavaScriptLibrarySettings;
 
-/**
 /**
  * Provides library settings for css-emoticons resource references<br/>
  * <br/>
@@ -66,12 +63,12 @@ public interface IEmoticonsLibrarySettings extends IJavaScriptLibrarySettings
 	 *
 	 * @return the {@link ResourceReference}
 	 */
-	CssResourceReference getEmoticonsStyleSheetReference();
+	ResourceReference getEmoticonsStyleSheetReference();
 
 	/**
 	 * Gets the css-emoticons javascript resource reference
 	 *
 	 * @return the {@link ResourceReference}
 	 */
-	JavaScriptResourceReference getEmoticonsJavaScriptReference();
+	ResourceReference getEmoticonsJavaScriptReference();
 }

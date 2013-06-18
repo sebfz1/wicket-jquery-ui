@@ -29,12 +29,11 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 
 /**
  * Provides a jQuery context menu behavior.<br/>
- * A {@link ContextMenuBehavior} can be associated to only one {@link Component} (ie: The behavior cannot be reused).
+ * A {@link ContextMenuBehavior} can be associated to <i>only one</i> {@link Component} (ie: The behavior cannot be reused).
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.2.8
  */
-//TODO NEW
 public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
@@ -111,7 +110,7 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 		return new JQueryAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
-//TODO check it works
+
 			@Override
 			public String getCallbackFunction()
 			{

@@ -30,11 +30,9 @@ import org.apache.wicket.request.resource.ResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.googlecode.wicket.jquery.core.resource.JQueryResourceReference;
-import com.googlecode.wicket.jquery.core.resource.JQueryUIResourceReference;
 import com.googlecode.wicket.jquery.core.settings.ApplicationJavaScriptLibrarySettings;
 import com.googlecode.wicket.jquery.core.settings.IJQueryLibrarySettings;
-import com.googlecode.wicket.jquery.core.settings.IJavaScriptLibrarySettings;
+import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
 
 /**
  * Provides the base class for every jQuery behavior.
@@ -51,14 +49,14 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 * Gets the {@link IJQueryLibrarySettings}
 	 * @return the {@link IJQueryLibrarySettings}
 	 */
-	private static IJQueryLibrarySettings getLibrarySettings()
+	public static IJQueryLibrarySettings getJQueryLibrarySettings()
 	{
 		if (ApplicationJavaScriptLibrarySettings.get() instanceof IJQueryLibrarySettings)
 		{
-			return ApplicationJavaScriptLibrarySettings.get();
+			return (IJQueryLibrarySettings) ApplicationJavaScriptLibrarySettings.get();
 		}
 
-		return null;
+		return JQueryLibrarySettings.get();
 	}
 
 
@@ -97,32 +95,24 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		// Gets the library settings //
-		IJQueryLibrarySettings settings = getLibrarySettings();
+		IJQueryLibrarySettings settings = getJQueryLibrarySettings();
 
 		// Adds jQuery Core javascript resource reference //
-		if (settings != null && settings.getJQueryReference() != null)
+		if (settings.getJQueryReference() != null)
 		{
 			response.renderJavaScriptReference(settings.getJQueryReference());
 		}
-		else
-		{
-			response.renderJavaScriptReference(JQueryResourceReference.get());
-		}
-
-		// Adds jQuery Globalize javascript resource reference //
-		if (settings != null && settings.getJQueryGlobalizeReference() != null)
-		{
-			response.renderJavaScriptReference(settings.getJQueryGlobalizeReference());
-		}
 
 		// Adds jQuery UI javascript resource reference //
-		if (settings instanceof IJQueryLibrarySettings && ((IJQueryLibrarySettings) settings).getJQueryUIReference() != null)
+		if (settings.getJQueryUIReference() != null)
 		{
 			response.renderJavaScriptReference(settings.getJQueryUIReference());
 		}
-		else
+
+		// Adds jQuery Globalize javascript resource reference //
+		if (settings.getJQueryGlobalizeReference() != null)
 		{
-			response.renderJavaScriptReference(JQueryUIResourceReference.get());
+			response.renderJavaScriptReference(settings.getJQueryGlobalizeReference());
 		}
 
 		// Adds additional resource references //

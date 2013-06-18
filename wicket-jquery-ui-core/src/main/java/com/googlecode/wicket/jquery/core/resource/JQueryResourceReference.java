@@ -50,6 +50,6 @@ public class JQueryResourceReference extends JavaScriptResourceReference
 	 */
 	private JQueryResourceReference()
 	{
-		super(JQueryResourceReference.class, "jquery-1.9.1.min.js");
+		super(JQueryResourceReference.class, "jquery-1.10.1.js");
 	}
 }

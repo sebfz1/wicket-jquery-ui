@@ -5,11 +5,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
-import org.apache.wicket.request.resource.PackageResourceReference;
 
-import com.googlecode.wicket.jquery.core.settings.ApplicationJavaScriptLibrarySettings;
-import com.googlecode.wicket.jquery.core.settings.IJQueryLibrarySettings;
-import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
 import com.googlecode.wicket.jquery.ui.samples.pages.accordion.DefaultAccordionPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.autocomplete.DefaultAutoCompletePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.button.DefaultButtonPage;
@@ -51,10 +47,10 @@ public class SampleApplication extends WebApplication
 		this.getMarkupSettings().setStripWicketTags(true); //IMPORTANT!
 		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
 
-		IJQueryLibrarySettings settings = new JQueryLibrarySettings();
-		settings.setJQueryReference(new PackageResourceReference(SampleApplication.class, "jquery-1.9.1.js"));
-		//settings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get()); // jQuery Globalize Resource References
-		ApplicationJavaScriptLibrarySettings.set(settings);
+//		IJQueryLibrarySettings settings = new JQueryLibrarySettings();
+//		settings.setJQueryReference(new PackageResourceReference(SampleApplication.class, "jquery-1.9.1.js"));	// jQuery
+//		settings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get());							// jQuery Globalize
+//		ApplicationJavaScriptLibrarySettings.set(settings);
 
 		// SiteMap //
 		this.mountPage("/sitemap.xml", SiteMapPage.class);

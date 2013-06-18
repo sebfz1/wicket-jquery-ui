@@ -18,7 +18,7 @@ package com.googlecode.wicket.jquery.ui.kendo.settings;
 
 import org.apache.wicket.request.resource.ResourceReference;
 
-import com.googlecode.wicket.jquery.core.settings.IJQueryLibrarySettings;
+import com.googlecode.wicket.jquery.core.settings.IJavaScriptLibrarySettings;
 
 /**
  * Provides library settings for Kendo UI resource references<br/>
@@ -62,7 +62,7 @@ import com.googlecode.wicket.jquery.core.settings.IJQueryLibrarySettings;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IKendoUILibrarySettings extends IJQueryLibrarySettings
+public interface IKendoUILibrarySettings extends IJavaScriptLibrarySettings
 {
 	/**
 	 * Gets the Kendo UI common stylesheet resource reference

@@ -16,7 +16,8 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo.resource;
 
-import com.googlecode.wicket.jquery.core.resource.JQueryPluginResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+
 import com.googlecode.wicket.jquery.ui.kendo.settings.IKendoUILibrarySettings;
 
 /**
@@ -27,7 +28,7 @@ import com.googlecode.wicket.jquery.ui.kendo.settings.IKendoUILibrarySettings;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class KendoUIJavaScriptResourceReference extends JQueryPluginResourceReference
+public class KendoUIJavaScriptResourceReference extends JavaScriptResourceReference
 {
 	private static final long serialVersionUID = 1L;
 

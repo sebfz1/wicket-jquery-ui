@@ -18,7 +18,7 @@ package com.googlecode.wicket.jquery.core.settings;
 
 
 /**
- * Default implementation of {@link IJQueryLibrarySettings}.<br/>
+ * Provides an alternative to WebApplication#setJavaScriptLibrarySettings (wicket6).<br/>
  *
  * <code><pre>
  * public class MyApplication extends WebApplication
@@ -26,19 +26,15 @@ package com.googlecode.wicket.jquery.core.settings;
  *     public void init()
  *     {
  *         super.init();
- *TODO javadoc
- *         IJQueryLibrarySettings librarySettings = JQueryLibrarySettings.get();
- *         librarySettings.setJQueryUIReference(new JQueryPluginResourceReference(MyApplication.class, "jquery-ui-x.x.x.min.js"));
  *
- *         //to enable globalization:
- *         librarySettings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get());
+ *         IJQueryLibrarySettings settings = new JQueryLibrarySettings();
+ *         settings.setJQueryReference(new PackageResourceReference(SampleApplication.class, "jquery-1.9.1.js"));	// jQuery
+ *         settings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get());							// jQuery Globalize
  *
- *         this.setJavaScriptLibrarySettings(librarySettings);
+ *         ApplicationJavaScriptLibrarySettings.set(settings);
  *     }
  * }
  * <pre></code>
- *
- * <b>Note:</b> The reference given as parameter can be null.
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -47,16 +43,27 @@ public class ApplicationJavaScriptLibrarySettings
 {
 	private static IJavaScriptLibrarySettings settings = null;
 
+	/**
+	 * Gets the {@link IJavaScriptLibrarySettings}
+	 * @return the {@link IJavaScriptLibrarySettings}
+	 */
 	public static IJavaScriptLibrarySettings get()
 	{
 		return ApplicationJavaScriptLibrarySettings.settings;
 	}
 
+	/**
+	 * Sets the {@link IJavaScriptLibrarySettings}
+	 * @param settings the {@link IJavaScriptLibrarySettings}
+	 */
 	public static void set(IJavaScriptLibrarySettings settings)
 	{
 		ApplicationJavaScriptLibrarySettings.settings = settings;
 	}
 
+	/**
+	 * Static class
+	 */
 	private ApplicationJavaScriptLibrarySettings()
 	{
 	}

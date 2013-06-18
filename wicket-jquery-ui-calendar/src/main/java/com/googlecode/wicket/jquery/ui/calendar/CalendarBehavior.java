@@ -35,9 +35,7 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.settings.ApplicationJavaScriptLibrarySettings;
 import com.googlecode.wicket.jquery.core.settings.IJavaScriptLibrarySettings;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
-import com.googlecode.wicket.jquery.ui.calendar.resource.CalendarJavaScriptResourceReference;
-import com.googlecode.wicket.jquery.ui.calendar.resource.CalendarStyleSheetResourceReference;
-import com.googlecode.wicket.jquery.ui.calendar.resource.GCalJavaScriptResourceReference;
+import com.googlecode.wicket.jquery.ui.calendar.settings.CalendarLibrarySettings;
 import com.googlecode.wicket.jquery.ui.calendar.settings.ICalendarLibrarySettings;
 
 /**
@@ -56,14 +54,14 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	 *
 	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link ICalendarLibrarySettings}
 	 */
-	public static ICalendarLibrarySettings getLibrarySettings()
+	private static ICalendarLibrarySettings getLibrarySettings()
 	{
 		if (ApplicationJavaScriptLibrarySettings.get() instanceof ICalendarLibrarySettings)
 		{
 			return (ICalendarLibrarySettings) ApplicationJavaScriptLibrarySettings.get();
 		}
 
-		return null;
+		return CalendarLibrarySettings.get();
 	}
 
 
@@ -106,33 +104,21 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		ICalendarLibrarySettings settings = getLibrarySettings();
 
 		// fullcalendar.css //
-		if (settings != null && settings.getCalendarStyleSheetReference() != null)
+		if (settings.getCalendarStyleSheetReference() != null)
 		{
 			this.add(settings.getCalendarStyleSheetReference());
 		}
-		else
-		{
-			this.add(CalendarStyleSheetResourceReference.get());
-		}
 
 		// fullcalendar.min.js //
-		if (settings != null && settings.getCalendarJavaScriptReference() != null)
+		if (settings.getCalendarJavaScriptReference() != null)
 		{
 			this.add(settings.getCalendarJavaScriptReference());
 		}
-		else
-		{
-			this.add(CalendarJavaScriptResourceReference.get());
-		}
 
 		// gcal.js //
-		if (settings != null && settings.getGCalJavaScriptReference() != null)
+		if (settings.getGCalJavaScriptReference() != null)
 		{
 			this.add(settings.getGCalJavaScriptReference());
-		}
-		else
-		{
-			this.add(GCalJavaScriptResourceReference.get());
 		}
 	}
 

@@ -31,7 +31,6 @@ import com.googlecode.wicket.jquery.core.Options;
  * @author Sebastien Briquet - sebfz1
  */
 //TODO remove 6.8.2-SNAPSHOT in description
-//TODO NEW
 public class ContextMenu extends Menu
 {
 	private static final long serialVersionUID = 1L;

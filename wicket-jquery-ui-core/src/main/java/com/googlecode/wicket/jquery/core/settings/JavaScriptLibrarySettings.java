@@ -21,7 +21,7 @@ import org.apache.wicket.request.resource.ResourceReference;
 import com.googlecode.wicket.jquery.core.resource.JQueryResourceReference;
 
 /**
- * Default implementation of {@link IJQueryLibrarySettings}.<br/>
+ * Default implementation of {@link IJavaScriptLibrarySettings}.<br/>
  *
  * <code><pre>
  * public class MyApplication extends WebApplication
@@ -29,27 +29,21 @@ import com.googlecode.wicket.jquery.core.resource.JQueryResourceReference;
  *     public void init()
  *     {
  *         super.init();
- *TODO javadoc
- *         IJQueryLibrarySettings librarySettings = JQueryLibrarySettings.get();
- *         librarySettings.setJQueryUIReference(new JQueryPluginResourceReference(MyApplication.class, "jquery-ui-x.x.x.min.js"));
  *
- *         //to enable globalization:
- *         librarySettings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get());
+ *         IJQueryLibrarySettings settings = new JQueryLibrarySettings();
+ *         settings.setJQueryReference(new PackageResourceReference(SampleApplication.class, "jquery-1.9.1.js"));
  *
- *         this.setJavaScriptLibrarySettings(librarySettings);
+ *         ApplicationJavaScriptLibrarySettings.set(settings);
  *     }
  * }
  * <pre></code>
- *
- * <b>Note:</b> The reference given as parameter can be null.
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
 public class JavaScriptLibrarySettings implements IJavaScriptLibrarySettings
 {
-	private static ResourceReference jQueryReference = JQueryResourceReference.get();
-	private static ResourceReference jQueryGlobalizeReference = null; //null by default, meaning the user has to set it explicitly
+	private ResourceReference jQueryReference = JQueryResourceReference.get();
 
 	/**
 	 * Constructor
@@ -62,25 +56,12 @@ public class JavaScriptLibrarySettings implements IJavaScriptLibrarySettings
 	@Override
 	public ResourceReference getJQueryReference()
 	{
-		return JavaScriptLibrarySettings.jQueryReference;
+		return this.jQueryReference;
 	}
 
 	@Override
 	public void setJQueryReference(ResourceReference reference)
 	{
-		JavaScriptLibrarySettings.jQueryReference = reference;
-	}
-
-	// jQuery Globalize //
-	@Override
-	public ResourceReference getJQueryGlobalizeReference()
-	{
-		return JavaScriptLibrarySettings.jQueryGlobalizeReference;
-	}
-
-	@Override
-	public void setJQueryGlobalizeReference(ResourceReference reference)
-	{
-		JavaScriptLibrarySettings.jQueryGlobalizeReference = reference;
+		this.jQueryReference = reference;
 	}
 }

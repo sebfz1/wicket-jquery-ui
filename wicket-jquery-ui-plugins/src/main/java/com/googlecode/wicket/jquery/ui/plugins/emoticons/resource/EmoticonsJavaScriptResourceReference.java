@@ -16,7 +16,8 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.emoticons.resource;
 
-import com.googlecode.wicket.jquery.core.resource.JQueryPluginResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+
 import com.googlecode.wicket.jquery.ui.plugins.emoticons.settings.IEmoticonsLibrarySettings;
 
 /**
@@ -27,7 +28,7 @@ import com.googlecode.wicket.jquery.ui.plugins.emoticons.settings.IEmoticonsLibr
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class EmoticonsJavaScriptResourceReference extends JQueryPluginResourceReference
+public class EmoticonsJavaScriptResourceReference extends JavaScriptResourceReference
 {
 	private static final long serialVersionUID = 1L;
 

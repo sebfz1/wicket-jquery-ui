@@ -16,14 +16,13 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.fixedheadertable.settings;
 
-import org.apache.wicket.request.resource.CssResourceReference;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 
 import com.googlecode.wicket.jquery.core.settings.IJavaScriptLibrarySettings;
 
 public interface IFixedHeaderTableLibrarySettings extends IJavaScriptLibrarySettings
 {
-	CssResourceReference getFixedHeaderTableStyleSheetReference();
+	ResourceReference getFixedHeaderTableStyleSheetReference();
 
-	JavaScriptResourceReference getFixedHeaderTableJavaScriptReference();
+	ResourceReference getFixedHeaderTableJavaScriptReference();
 }

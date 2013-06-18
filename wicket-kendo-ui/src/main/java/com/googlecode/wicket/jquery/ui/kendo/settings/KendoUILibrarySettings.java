@@ -18,7 +18,7 @@ package com.googlecode.wicket.jquery.ui.kendo.settings;
 
 import org.apache.wicket.request.resource.ResourceReference;
 
-import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
+import com.googlecode.wicket.jquery.core.settings.JavaScriptLibrarySettings;
 import com.googlecode.wicket.jquery.ui.kendo.resource.KendoUIJavaScriptResourceReference;
 
 /**
@@ -27,15 +27,16 @@ import com.googlecode.wicket.jquery.ui.kendo.resource.KendoUIJavaScriptResourceR
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class KendoUILibrarySettings extends JQueryLibrarySettings implements IKendoUILibrarySettings
+public class KendoUILibrarySettings extends JavaScriptLibrarySettings implements IKendoUILibrarySettings
 {
 	private static KendoUILibrarySettings instance = null;
 
-	private static ResourceReference kendoUIJavaScriptReference = KendoUIJavaScriptResourceReference.get();
-	private static ResourceReference kendoUICommonStyleSheetReference = null;
-	private static ResourceReference kendoUIThemeStyleSheetReference = null;
+	private ResourceReference kendoUIJavaScriptReference = KendoUIJavaScriptResourceReference.get();
+	private ResourceReference kendoUICommonStyleSheetReference = null;
+	private ResourceReference kendoUIThemeStyleSheetReference = null;
 
 	/**
+	 * INTERNAL USE<br/>
 	 * Gets the {@link KendoUILibrarySettings} instance
 	 * @return the {@link KendoUILibrarySettings} instance
 	 */
@@ -53,26 +54,25 @@ public class KendoUILibrarySettings extends JQueryLibrarySettings implements IKe
 	/**
 	 * Constructor
 	 */
-	protected KendoUILibrarySettings()
+	public KendoUILibrarySettings()
 	{
-		super();
 	}
 
 	@Override
 	public ResourceReference getKendoUIJavaScriptReference()
 	{
-		return kendoUIJavaScriptReference;
+		return this.kendoUIJavaScriptReference;
 	}
 
 	@Override
 	public ResourceReference getKendoUICommonStyleSheetReference()
 	{
-		return kendoUICommonStyleSheetReference;
+		return this.kendoUICommonStyleSheetReference;
 	}
 
 	@Override
 	public ResourceReference getKendoUIThemeStyleSheetReference()
 	{
-		return kendoUIThemeStyleSheetReference;
+		return this.kendoUIThemeStyleSheetReference;
 	}
 }

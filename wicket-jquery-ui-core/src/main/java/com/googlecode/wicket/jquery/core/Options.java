@@ -163,7 +163,7 @@ public class Options implements IClusterable
 	@Override
 	public String toString()
 	{
-		StringBuilder builder = new StringBuilder("{");
+		StringBuilder builder = new StringBuilder("{ ");
 
 		int i = 0;
 		for (Entry<String, Serializable> entry : this.map.entrySet())

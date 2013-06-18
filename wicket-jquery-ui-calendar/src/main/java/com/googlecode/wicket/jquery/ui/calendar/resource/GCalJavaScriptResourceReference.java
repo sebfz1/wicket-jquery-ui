@@ -16,7 +16,8 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar.resource;
 
-import com.googlecode.wicket.jquery.core.resource.JQueryPluginResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+
 import com.googlecode.wicket.jquery.ui.calendar.settings.ICalendarLibrarySettings;
 
 /**
@@ -27,7 +28,7 @@ import com.googlecode.wicket.jquery.ui.calendar.settings.ICalendarLibrarySetting
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class GCalJavaScriptResourceReference extends JQueryPluginResourceReference
+public class GCalJavaScriptResourceReference extends JavaScriptResourceReference
 {
 	private static final long serialVersionUID = 1L;
 

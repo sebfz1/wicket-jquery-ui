@@ -16,9 +16,9 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.fixedheadertable.resource;
 
-import com.googlecode.wicket.jquery.core.resource.JQueryPluginResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
-public class FixedHeaderTableJavaScriptResourceReference extends JQueryPluginResourceReference
+public class FixedHeaderTableJavaScriptResourceReference extends JavaScriptResourceReference
 {
 	private static final long serialVersionUID = 1L;
 	private static final FixedHeaderTableJavaScriptResourceReference INSTANCE = new FixedHeaderTableJavaScriptResourceReference();

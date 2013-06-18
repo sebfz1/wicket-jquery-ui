@@ -18,8 +18,8 @@ package com.googlecode.wicket.jquery.ui.kendo;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.settings.ApplicationJavaScriptLibrarySettings;
 import com.googlecode.wicket.jquery.core.settings.IJavaScriptLibrarySettings;
-import com.googlecode.wicket.jquery.ui.kendo.resource.KendoUIJavaScriptResourceReference;
 import com.googlecode.wicket.jquery.ui.kendo.settings.IKendoUILibrarySettings;
 import com.googlecode.wicket.jquery.ui.kendo.settings.KendoUILibrarySettings;
 
@@ -39,6 +39,11 @@ public class KendoAbstractBehavior extends JQueryBehavior
 	 */
 	private static IKendoUILibrarySettings getLibrarySettings()
 	{
+		if (ApplicationJavaScriptLibrarySettings.get() instanceof IKendoUILibrarySettings)
+		{
+			return (IKendoUILibrarySettings) ApplicationJavaScriptLibrarySettings.get();
+		}
+
 		return KendoUILibrarySettings.get();
 	}
 
@@ -74,25 +79,21 @@ public class KendoAbstractBehavior extends JQueryBehavior
 		IKendoUILibrarySettings settings = getLibrarySettings();
 
 		// kendo.common.min.css //
-		if (settings != null && settings.getKendoUICommonStyleSheetReference() != null)
+		if (settings.getKendoUICommonStyleSheetReference() != null)
 		{
 			this.add(settings.getKendoUICommonStyleSheetReference());
 		}
 
 		// kendo.<theme>.min.css //
-		if (settings != null && settings.getKendoUIThemeStyleSheetReference() != null)
+		if (settings.getKendoUIThemeStyleSheetReference() != null)
 		{
 			this.add(settings.getKendoUIThemeStyleSheetReference());
 		}
 
 		// kendo.web.min.js //
-		if (settings != null && settings.getKendoUIJavaScriptReference() != null)
+		if (settings.getKendoUIJavaScriptReference() != null)
 		{
 			this.add(settings.getKendoUIJavaScriptReference());
-		}
-		else
-		{
-			this.add(KendoUIJavaScriptResourceReference.get());
 		}
 	}
 }

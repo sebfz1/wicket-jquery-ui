@@ -48,7 +48,7 @@ public abstract class JQueryAbstractTemplateBehavior extends Behavior
 	{
 		super.renderHead(component, response);
 
-		IJQueryLibrarySettings settings = JQueryAbstractBehavior.getLibrarySettings();
+		IJQueryLibrarySettings settings = JQueryAbstractBehavior.getJQueryLibrarySettings();
 
 		if (settings.getJQueryReference() != null)
 		{
