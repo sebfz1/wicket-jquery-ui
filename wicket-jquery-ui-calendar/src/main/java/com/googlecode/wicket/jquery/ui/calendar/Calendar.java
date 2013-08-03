@@ -92,8 +92,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	 * @return a {@link CalendarModel}
 	 */
 	private CalendarModelBehavior getCalendarModelBehaviour() {
-		modelBehavior = new CalendarModelBehavior(this.getModel());
-		return modelBehavior;
+		return new CalendarModelBehavior(this.getModel());
 	}
 
 
@@ -169,7 +168,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	{
 		super.onInitialize();
 		
-		this.add(getCalendarModelBehaviour());
+		this.add(modelBehavior = getCalendarModelBehaviour());
 	}
 
 	@Override
