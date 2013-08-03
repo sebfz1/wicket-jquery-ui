@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -85,6 +86,16 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	{
 		return (CalendarModel) this.getDefaultModel();
 	}
+	
+	/**
+	 * Gets the calendar's model behaviour
+	 * @return a {@link CalendarModel}
+	 */
+	private CalendarModelBehavior getCalendarModelBehaviour() {
+		modelBehavior = new CalendarModelBehavior(this.getModel());
+		return modelBehavior;
+	}
+
 
 	// Methods //
 	/**
@@ -157,8 +168,8 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	protected void onInitialize()
 	{
 		super.onInitialize();
-
-		this.add(this.modelBehavior = new CalendarModelBehavior(this.getModel()));
+		
+		this.add(getCalendarModelBehaviour());
 	}
 
 	@Override

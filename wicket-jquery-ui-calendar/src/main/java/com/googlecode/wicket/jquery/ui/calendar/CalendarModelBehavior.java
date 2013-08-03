@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * @author Sebastien Briquet - sebfz1
  *
  */
-class CalendarModelBehavior extends AbstractAjaxBehavior
+public class CalendarModelBehavior extends AbstractAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(CalendarModelBehavior.class);
