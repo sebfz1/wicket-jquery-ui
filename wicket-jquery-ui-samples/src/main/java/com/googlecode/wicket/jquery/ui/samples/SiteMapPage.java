@@ -97,7 +97,6 @@ public class SiteMapPage extends WebPage
 	private static final String BASE_URL = "http://www.7thweb.net/wicket-jquery-ui/";
 	private static final Pattern PATTERN = Pattern.compile("^\\./");
 
-	@SuppressWarnings("unchecked")
 	private static final List<? extends Class<?>> LIST = Arrays.asList(
 			HomePage.class,
 			DefaultAccordionPage.class,
@@ -204,7 +203,7 @@ public class SiteMapPage extends WebPage
 			@SuppressWarnings("unchecked")
 			protected List<SiteUrl> load()
 			{
-				final List<SiteUrl> list = new ArrayList<SiteUrl>();
+				final List<SiteUrl> list = new ArrayList<>();
 
 				for (Class<?> type : LIST)
 				{

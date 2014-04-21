@@ -17,7 +17,6 @@
 package com.googlecode.wicket.jquery.ui.calendar.settings;
 
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 /**
  * Provides library settings for fullcalendar resource references<br/>
@@ -60,7 +59,7 @@ import org.apache.wicket.settings.IJavaScriptLibrarySettings;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface ICalendarLibrarySettings extends IJavaScriptLibrarySettings
+public interface ICalendarLibrarySettings
 {
 	/**
 	 * Gets the fullcalendar's stylesheet resource reference

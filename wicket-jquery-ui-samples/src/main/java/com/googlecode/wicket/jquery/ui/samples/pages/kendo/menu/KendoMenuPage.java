@@ -19,7 +19,7 @@ public class KendoMenuPage extends AbstractMenuPage
 
 	static List<IMenuItem> newMenuItemList()
 	{
-		List<IMenuItem> list = new ArrayList<IMenuItem>();
+		List<IMenuItem> list = new ArrayList<>();
 
 		list.add(new MenuItem("Item with icon", KendoIcon.CLOCK));
 		list.add(new MenuItem("Change the title") {
@@ -50,7 +50,7 @@ public class KendoMenuPage extends AbstractMenuPage
 
 	static List<IMenuItem> newSubMenuList()
 	{
-		List<IMenuItem> list = new ArrayList<IMenuItem>();
+		List<IMenuItem> list = new ArrayList<>();
 
 		list.add(new MenuItem("Sub-menu #1"));
 		list.add(new MenuItem("Sub-menu #2"));

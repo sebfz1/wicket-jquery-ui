@@ -91,7 +91,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 
 		this.label = label;
 
-		this.form = new Form<T>("form");
+		this.form = new Form<>("form");
 		this.add(this.form);
 
 		this.form.add(new Label("label", this.label));

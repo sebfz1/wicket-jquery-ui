@@ -17,7 +17,7 @@
 package com.googlecode.wicket.jquery.ui.plugins.wysiwyg;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
+import org.apache.wicket.settings.JavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
@@ -32,7 +32,7 @@ public class WysiwygBehavior extends JQueryBehavior
 	/**
 	 * Gets the {@link IWysiwygLibrarySettings}
 	 *
-	 * @return Default {@link IWysiwygLibrarySettings} if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link IWysiwygLibrarySettings}
+	 * @return Default {@link IWysiwygLibrarySettings} if Application's {@link JavaScriptLibrarySettings} is not an instance of {@link IWysiwygLibrarySettings}
 	 */
 	private static IWysiwygLibrarySettings getLibrarySettings()
 	{

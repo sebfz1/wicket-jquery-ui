@@ -13,7 +13,7 @@ public class DefaultButtonPage extends AbstractButtonPage
 
 	public DefaultButtonPage()
 	{
-		final Form<Void> form = new Form<Void>("form");
+		final Form<Void> form = new Form<>("form");
 		this.add(form);
 
 		// FeedbackPanel //

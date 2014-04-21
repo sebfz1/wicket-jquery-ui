@@ -17,7 +17,6 @@
 package com.googlecode.wicket.jquery.ui.plugins.emoticons;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;

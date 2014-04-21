@@ -52,7 +52,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	private WebMarkupContainer root;
 
 	/** Keep a reference to the {@link MenuItem}<code>s</code> hash */
-	private Map<String, IMenuItem> map = new HashMap<String, IMenuItem>();
+	private Map<String, IMenuItem> map = new HashMap<>();
 
 	/**
 	 * Constructor

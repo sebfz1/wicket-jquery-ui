@@ -17,7 +17,7 @@
 package com.googlecode.wicket.jquery.ui.plugins.sfmenu;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
+import org.apache.wicket.settings.JavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
@@ -40,7 +40,7 @@ public class SfMenuBehavior extends JQueryBehavior
 	/**
 	 * Gets the {@link ISuperfishLibrarySettings}
 	 *
-	 * @return Default internal {@link ISuperfishLibrarySettings} if {@link Application}'s {@link IJavaScriptLibrarySettings} is not an instance of {@link ISuperfishLibrarySettings}
+	 * @return Default internal {@link ISuperfishLibrarySettings} if {@link Application}'s {@link JavaScriptLibrarySettings} is not an instance of {@link ISuperfishLibrarySettings}
 	 */
 	private static ISuperfishLibrarySettings getLibrarySettings()
 	{

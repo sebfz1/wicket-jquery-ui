@@ -54,7 +54,7 @@ public class CalendarDAO
 
 	public static List<DemoCalendarEvent> getEvents(Date start, Date end)
 	{
-		List<DemoCalendarEvent> events = new ArrayList<DemoCalendarEvent>();
+		List<DemoCalendarEvent> events = new ArrayList<>();
 
 		CalendarDAO dao = get();
 
@@ -87,7 +87,7 @@ public class CalendarDAO
 
 	public CalendarDAO()
 	{
-		this.list = new ArrayList<DemoCalendarEvent>();
+		this.list = new ArrayList<>();
 		this.initList();
 	}
 

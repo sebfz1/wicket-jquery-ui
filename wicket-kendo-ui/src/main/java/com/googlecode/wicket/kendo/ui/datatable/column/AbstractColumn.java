@@ -190,7 +190,7 @@ public abstract class AbstractColumn implements IColumn
 	 */
 	protected String getAggregatesAsString()
 	{
-		List<String> aggregates = new ArrayList<String>();
+		List<String> aggregates = new ArrayList<>();
 
 		for (String aggregate : this.getAggregates())
 		{

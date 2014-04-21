@@ -17,7 +17,7 @@ public class KendoDatePickerPage extends AbstractTimePickerPage
 
 	public KendoDatePickerPage()
 	{
-		final Form<Date> form = new Form<Date>("form");
+		final Form<Date> form = new Form<>("form");
 		this.add(form);
 
 		// FeedbackPanel //

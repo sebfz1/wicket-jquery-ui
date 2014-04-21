@@ -22,10 +22,10 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 	public RendererAutoCompletePage()
 	{
 		// Model //
-		final IModel<Genre> model = new Model<Genre>();
+		final IModel<Genre> model = new Model<>();
 
 		// Form //
-		final Form<Void> form = new Form<Void>("form");
+		final Form<Void> form = new Form<>("form");
 		this.add(form);
 
 		// FeedbackPanel //
@@ -40,7 +40,7 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 			@Override
 			protected List<Genre> getChoices(String input)
 			{
-				List<Genre> choices = new ArrayList<Genre>();
+				List<Genre> choices = new ArrayList<>();
 				int count = 0;
 
 				for (Genre genre : GenresDAO.all())

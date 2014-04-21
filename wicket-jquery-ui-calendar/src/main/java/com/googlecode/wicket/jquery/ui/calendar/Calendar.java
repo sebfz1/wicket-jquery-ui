@@ -111,7 +111,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	{
 		if (this.gcals == null)
 		{
-			this.gcals = new HashMap<CharSequence, String>();
+			this.gcals = new HashMap<>();
 		}
 
 		this.gcals.put(gcal, className);

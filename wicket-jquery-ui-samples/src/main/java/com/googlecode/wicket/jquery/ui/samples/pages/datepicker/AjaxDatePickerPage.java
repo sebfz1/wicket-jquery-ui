@@ -21,7 +21,7 @@ public class AjaxDatePickerPage extends AbstractDatePickerPage
 
 	private void initialize()
 	{
-		final Form<Date> form = new Form<Date>("form");
+		final Form<Date> form = new Form<>("form");
 		this.add(form);
 
 		// FeedbackPanel //

@@ -28,7 +28,6 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 import org.apache.wicket.util.time.Duration;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;

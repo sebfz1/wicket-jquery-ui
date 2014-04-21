@@ -24,7 +24,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 	public ExtendedCalendarPage()
 	{
 		// Form //
-		final Form<Date> form = new Form<Date>("form");
+		final Form<Date> form = new Form<>("form");
 		this.add(form);
 
 		// FeedbackPanel //

@@ -31,7 +31,7 @@ public class UserDialogPage extends AbstractDialogPage
 
 	public UserDialogPage()
 	{
-		this.users = new ArrayList<User>();
+		this.users = new ArrayList<>();
 
 		this.initialize();
 	}

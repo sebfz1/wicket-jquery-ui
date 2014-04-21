@@ -17,7 +17,6 @@
 package com.googlecode.wicket.jquery.core.settings;
 
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 /**
  * Provides the jQuery UI backing library resource references.
@@ -25,7 +24,7 @@ import org.apache.wicket.settings.IJavaScriptLibrarySettings;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IJQueryLibrarySettings extends IJavaScriptLibrarySettings
+public interface IJQueryLibrarySettings
 {
 	/**
 	 * Gets the JQuery UI backing library resource reference

@@ -82,7 +82,7 @@ public class CustomSortablePage extends AbstractSortablePage
 	 */
 	private static List<Item> newList(String... names)
 	{
-		List<Item> list = new ArrayList<Item>();
+		List<Item> list = new ArrayList<>();
 
 		for (String name : names)
 		{

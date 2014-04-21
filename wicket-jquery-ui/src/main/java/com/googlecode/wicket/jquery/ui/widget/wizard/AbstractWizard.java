@@ -196,7 +196,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		this.wizardModel.addListener(this);
 
 		// form //
-		this.form = new Form<T>(Wizard.FORM_ID);
+		this.form = new Form<>(Wizard.FORM_ID);
 		this.add(this.form);
 
 		// header (title + summary )//

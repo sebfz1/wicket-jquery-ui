@@ -20,7 +20,7 @@ public class ProductDataProvider extends ListDataProvider<Product> implements IS
 {
 	private static final long serialVersionUID = 1L;
 
-	private final SingleSortState<String> state = new SingleSortState<String>();
+	private final SingleSortState<String> state = new SingleSortState<>();
 
 	public ProductDataProvider()
 	{

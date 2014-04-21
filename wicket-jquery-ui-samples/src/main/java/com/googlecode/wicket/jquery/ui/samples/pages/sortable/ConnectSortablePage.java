@@ -113,7 +113,7 @@ public class ConnectSortablePage extends AbstractSortablePage
 	 */
 	private static List<String> newList(String... items)
 	{
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> list = new ArrayList<>();
 
 		for (String item : items)
 		{

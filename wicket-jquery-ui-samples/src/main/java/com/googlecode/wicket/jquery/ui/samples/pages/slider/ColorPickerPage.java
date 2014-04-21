@@ -30,7 +30,7 @@ public class ColorPickerPage extends AbstractSliderPage
 
 	private void initialize()
 	{
-		final Form<Void> form = new Form<Void>("form");
+		final Form<Void> form = new Form<>("form");
 		this.add(form);
 
 		// FeedbackPanel //

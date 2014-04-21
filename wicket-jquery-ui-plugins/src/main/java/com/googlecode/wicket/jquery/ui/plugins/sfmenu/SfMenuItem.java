@@ -58,7 +58,7 @@ public class SfMenuItem extends AbstractSfMenuItem
 	{
 		super(title);
 
-		this.items = new ArrayList<ISfMenuItem>();
+		this.items = new ArrayList<>();
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class SfMenuItem extends AbstractSfMenuItem
 	{
 		super(title, pageClass);
 
-		this.items = new ArrayList<ISfMenuItem>();
+		this.items = new ArrayList<>();
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class SfMenuItem extends AbstractSfMenuItem
 	{
 		super(title, pageClass, pageParameters);
 
-		this.items = new ArrayList<ISfMenuItem>();
+		this.items = new ArrayList<>();
 	}
 
 	/**
@@ -208,7 +208,7 @@ public class SfMenuItem extends AbstractSfMenuItem
 	{
 		super(title, pageUrl, openInNewWindow);
 
-		this.items = new ArrayList<ISfMenuItem>();
+		this.items = new ArrayList<>();
 	}
 
 	// Properties //

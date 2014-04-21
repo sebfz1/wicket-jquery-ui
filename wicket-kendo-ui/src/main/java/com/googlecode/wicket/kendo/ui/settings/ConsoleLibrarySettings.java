@@ -17,7 +17,7 @@
 package com.googlecode.wicket.kendo.ui.settings;
 
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.settings.def.JavaScriptLibrarySettings;
+import org.apache.wicket.settings.JavaScriptLibrarySettings;
 
 import com.googlecode.wicket.kendo.ui.resource.ConsoleJavaScriptResourceReference;
 import com.googlecode.wicket.kendo.ui.resource.ConsoleStyleSheetResourceReference;

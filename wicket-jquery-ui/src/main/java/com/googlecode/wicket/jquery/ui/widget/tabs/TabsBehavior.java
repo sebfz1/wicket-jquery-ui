@@ -86,7 +86,7 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 	 */
 	protected List<ITab> getVisibleTabs()
 	{
-		List<ITab> list = new ArrayList<ITab>();
+		List<ITab> list = new ArrayList<>();
 
 		for (ITab tab : this.getTabs())
 		{

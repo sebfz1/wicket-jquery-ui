@@ -17,7 +17,7 @@
 package com.googlecode.wicket.jquery.ui.plugins.sfmenu.settings;
 
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.settings.def.JavaScriptLibrarySettings;
+import org.apache.wicket.settings.JavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.ui.plugins.sfmenu.resource.SuperfishStyleSheetResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.sfmenu.resource.SuperfishVerticalStyleSheetResourceReference;

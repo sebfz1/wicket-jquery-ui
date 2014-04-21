@@ -61,7 +61,7 @@ public class CSVDataExporter implements IDataExporter
 	 */
 	public static void export(RequestCycle cycle, final DataTable<?> table, String filename)
 	{
-		List<IExportableColumn> columns = new ArrayList<IExportableColumn>();
+		List<IExportableColumn> columns = new ArrayList<>();
 
 		for (IColumn column : table.getColumns())
 		{

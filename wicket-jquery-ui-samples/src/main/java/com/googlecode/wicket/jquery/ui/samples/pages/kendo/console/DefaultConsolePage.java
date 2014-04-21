@@ -32,7 +32,7 @@ public class DefaultConsolePage extends AbstractConsolePage
 		this.add(console);
 
 		// Form //
-		final Form<Void> form = new Form<Void>("form");
+		final Form<Void> form = new Form<>("form");
 		this.add(form);
 
 		// TextField //

@@ -17,7 +17,6 @@
 package com.googlecode.wicket.kendo.ui.settings;
 
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 /**
  * Provides library settings for Kendo UI resource references<br/>
@@ -61,7 +60,7 @@ import org.apache.wicket.settings.IJavaScriptLibrarySettings;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IKendoUILibrarySettings extends IJavaScriptLibrarySettings
+public interface IKendoUILibrarySettings
 {
 	/**
 	 * Gets the Kendo UI common stylesheet resource reference

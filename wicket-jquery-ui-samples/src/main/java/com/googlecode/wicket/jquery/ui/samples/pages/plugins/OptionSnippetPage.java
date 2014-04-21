@@ -42,7 +42,7 @@ public class OptionSnippetPage extends AbstractSnippetPage
 	public OptionSnippetPage()
 	{
 		// Form //
-		Form<Void> form = new Form<Void>("form");
+		Form<Void> form = new Form<>("form");
 		this.add(form);
 
 		// SnippetLabel //

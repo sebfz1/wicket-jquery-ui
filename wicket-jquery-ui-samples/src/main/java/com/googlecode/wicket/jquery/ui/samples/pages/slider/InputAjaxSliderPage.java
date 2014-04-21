@@ -20,7 +20,7 @@ public class InputAjaxSliderPage extends AbstractSliderPage
 
 	public InputAjaxSliderPage()
 	{
-		final Form<Void> form = new Form<Void>("form");
+		final Form<Void> form = new Form<>("form");
 		this.add(form);
 
 		// FeedbackPanel //

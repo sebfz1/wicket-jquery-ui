@@ -18,7 +18,7 @@ public class WysiwygEditorPage extends SamplePage
 	public WysiwygEditorPage()
 	{
 		// Form //
-		final Form<Void> form = new Form<Void>("form");
+		final Form<Void> form = new Form<>("form");
 		this.add(form);
 
 		// Wysiwyg //

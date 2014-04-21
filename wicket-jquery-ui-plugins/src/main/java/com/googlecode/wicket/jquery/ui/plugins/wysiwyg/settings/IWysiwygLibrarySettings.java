@@ -18,9 +18,8 @@ package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.settings;
 
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
-public interface IWysiwygLibrarySettings extends IJavaScriptLibrarySettings
+public interface IWysiwygLibrarySettings
 {
 
 	CssResourceReference getBootstrapCombinedNoIconsStyleSheetReference();

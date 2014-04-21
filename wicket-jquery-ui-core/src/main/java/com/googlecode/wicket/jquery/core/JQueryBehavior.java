@@ -215,7 +215,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	{
 		if (this.events == null)
 		{
-			this.events = new ArrayList<String>();
+			this.events = new ArrayList<>();
 		}
 
 		this.events.add(String.format("jQuery('%s').on('%s', %s);", selector, event, callback));

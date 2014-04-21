@@ -33,7 +33,7 @@ public class ContainerEffectPage extends AbstractEffectPage
 
 		container.add(new JQueryBehavior("#tabs", "tabs"));
 
-		Form<Void> form = new Form<Void>("form");
+		Form<Void> form = new Form<>("form");
 		this.add(form);
 
 		// DropDownList //

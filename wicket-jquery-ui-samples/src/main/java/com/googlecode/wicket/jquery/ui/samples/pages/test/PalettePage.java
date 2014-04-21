@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.ui.form.palette.Palette;
 import com.googlecode.wicket.jquery.ui.samples.TemplatePage;
@@ -16,10 +16,11 @@ public class PalettePage extends TemplatePage
 
 	public PalettePage()
 	{
-		final Form<Void> form = new Form<Void>("form");
+		final Form<Void> form = new Form<>("form");
 		this.add(form);
 
 		// Palette //
-		form.add(new Palette<String>("palette", Model.ofList(new ArrayList<String>()), Model.ofList(Arrays.asList("Choice #1", "Choice #2", "Choice #3", "Choice #4")), new ChoiceRenderer<String>(), 6, true));
+		final Palette<String> palette = new Palette<String>("palette", new ListModel<String>(new ArrayList<String>()), new ListModel<String>(Arrays.asList("1", "2", "3", "4")), new ChoiceRenderer<String>(), 6, true);
+		form.add(palette);
 	}
 }

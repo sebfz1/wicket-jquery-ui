@@ -17,7 +17,6 @@
 package com.googlecode.wicket.jquery.ui.plugins.sfmenu.settings;
 
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 /**
  * Provides library settings for superfish css resource references<br/>
@@ -55,7 +54,7 @@ import org.apache.wicket.settings.IJavaScriptLibrarySettings;
  * @author Ludger Kluitmann - JavaLuigi
  * @since 6.12.0
  */
-public interface ISuperfishLibrarySettings extends IJavaScriptLibrarySettings
+public interface ISuperfishLibrarySettings
 {
 	/**
 	 * Gets the superfish stylesheet resource reference

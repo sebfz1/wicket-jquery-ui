@@ -54,7 +54,7 @@ public class AutoCompleteUtils
 	 */
 	public static <T> List<T> contains(String search, List<T> list, int max)
 	{
-		List<T> choices = new ArrayList<T>();
+		List<T> choices = new ArrayList<>();
 
 		int count = 0;
 		for (T choice : list)
@@ -98,7 +98,7 @@ public class AutoCompleteUtils
 	 */
 	public static <T> List<T> startsWith(String search, List<T> list, int max)
 	{
-		List<T> choices = new ArrayList<T>();
+		List<T> choices = new ArrayList<>();
 
 		int count = 0;
 		for (T choice : list)

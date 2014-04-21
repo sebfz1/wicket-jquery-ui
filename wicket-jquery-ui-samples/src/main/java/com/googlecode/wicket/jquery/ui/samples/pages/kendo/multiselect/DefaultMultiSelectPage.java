@@ -29,7 +29,7 @@ public class DefaultMultiSelectPage extends AbstractMultiSelectPage
 		form.add(feedback);
 
 		// MultiSelect //
-		List<String> selected = new ArrayList<String>();
+		List<String> selected = new ArrayList<>();
 		selected.add("Heavy Metal");
 		selected.add("Trash Metal");
 

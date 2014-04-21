@@ -21,7 +21,6 @@ import java.io.Serializable;
 import org.apache.wicket.Application;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.kendo.ui.settings.ConsoleLibrarySettings;

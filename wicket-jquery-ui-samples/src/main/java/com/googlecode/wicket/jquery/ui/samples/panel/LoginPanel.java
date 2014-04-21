@@ -14,7 +14,7 @@ public class LoginPanel extends Panel
 	{
 		super(id);
 
-		final Form<Void> form = new Form<Void>("sform");
+		final Form<Void> form = new Form<>("sform");
 		this.add(form);
 
 		form.add(new Button("login") {

@@ -48,7 +48,7 @@ class GoogleAnalyticsBehavior extends Behavior
 
 	private IModel<Map<String, Object>> newResourceModel()
 	{
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		map.put("url", this.url);
 
 		return Model.ofMap(map);

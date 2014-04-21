@@ -37,7 +37,7 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 			@Override
 			protected List<Genre> getChoices(String input)
 			{
-				List<Genre> choices = new ArrayList<Genre>();
+				List<Genre> choices = new ArrayList<>();
 
 				int count = 0;
 				for (Genre genre : GenresDAO.all())

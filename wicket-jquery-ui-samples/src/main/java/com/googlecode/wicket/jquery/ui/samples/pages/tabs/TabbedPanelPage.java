@@ -28,7 +28,7 @@ public class TabbedPanelPage extends AbstractTabsPage
 
 	private List<ITab> newTabList()
 	{
-		List<ITab> tabs = new ArrayList<ITab>();
+		List<ITab> tabs = new ArrayList<>();
 
 		// tab #1 //
 		tabs.add(new SimpleTab(Model.of("Tab #1"), Model.of("my content")));

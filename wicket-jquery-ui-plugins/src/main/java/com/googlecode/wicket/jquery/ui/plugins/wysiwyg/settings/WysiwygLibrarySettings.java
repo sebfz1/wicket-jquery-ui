@@ -18,7 +18,7 @@ package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.settings;
 
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
-import org.apache.wicket.settings.def.JavaScriptLibrarySettings;
+import org.apache.wicket.settings.JavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapCombinedNoIconsStyleSheetResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.resource.BootstrapDropDownJavaScriptResourceReference;

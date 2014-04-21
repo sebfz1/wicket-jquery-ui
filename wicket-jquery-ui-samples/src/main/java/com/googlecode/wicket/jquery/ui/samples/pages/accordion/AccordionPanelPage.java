@@ -25,7 +25,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 
 	public AccordionPanelPage()
 	{
-		final Form<?> form = new Form<Void>("form");
+		final Form<?> form = new Form<>("form");
 		this.add(form);
 
 		// Feedback Panel //
@@ -66,7 +66,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 
 	private List<ITab> newTabList()
 	{
-		List<ITab> tabs = new ArrayList<ITab>();
+		List<ITab> tabs = new ArrayList<>();
 
 		// tab #1, using SimpleTab //
 		tabs.add(new SimpleTab(new Model<String>("Tab (SimpleTab)"), new Model<String>("My content !")));

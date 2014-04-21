@@ -22,7 +22,7 @@ public class RangeDatePickerTextFieldPage extends AbstractRangeDatePickerPage
 	public RangeDatePickerTextFieldPage()
 	{
 		// Form //
-		Form<Void> form = new Form<Void>("form");
+		Form<Void> form = new Form<>("form");
 		this.add(form);
 
 		// FeedbackPanel //
