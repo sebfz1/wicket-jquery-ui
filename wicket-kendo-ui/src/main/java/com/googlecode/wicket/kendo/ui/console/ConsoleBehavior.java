@@ -21,6 +21,7 @@ import java.io.Serializable;
 import org.apache.wicket.Application;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
+import org.apache.wicket.settings.JavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.kendo.ui.settings.ConsoleLibrarySettings;
@@ -39,7 +40,7 @@ public abstract class ConsoleBehavior extends JQueryAbstractBehavior
 	/**
 	 * Gets the {@link IConsoleLibrarySettings}
 	 *
-	 * @return Default internal {@link ConsoleLibrarySettings} instance if {@link Application}'s {@link IJavaScriptLibrarySettings} is not an instance of {@link IConsoleLibrarySettings}
+	 * @return Default internal {@link ConsoleLibrarySettings} instance if {@link Application}'s {@link JavaScriptLibrarySettings} is not an instance of {@link IConsoleLibrarySettings}
 	 */
 	private static IConsoleLibrarySettings getLibrarySettings()
 	{
