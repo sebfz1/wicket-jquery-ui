@@ -11,7 +11,12 @@
 	</parent>
 
 	<artifactId>wicket-jquery-ui-calendar</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
+
+    <properties>
+        <bundle.symbolicName>com.googlecode.wicket.jquery.ui.calendar</bundle.symbolicName>
+        <bundle.namespace>${bundle.symbolicName}</bundle.namespace>
+    </properties>
 
 	<dependencies>
 		<!-- JQUERY-UI DEPENDENCIES -->
@@ -19,6 +24,8 @@
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-jquery-ui-core</artifactId>
 			<version>6.15.1-SNAPSHOT</version>
+            <scope>provided</scope>
+            <!--should be changed to provided-->
 		</dependency>
 
 		<!-- WICKET DEPENDENCIES -->
@@ -43,5 +50,14 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

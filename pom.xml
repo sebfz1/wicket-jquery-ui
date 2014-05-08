@@ -64,7 +64,39 @@
 
 	<build>
 		<pluginManagement>
+            <!--added to auto create menifest.mf file-->
 			<plugins>
+                <plugin>
+                    <!--
+                     | the following instructions build a simple set of public/private classes into an OSGi bundle
+                    -->
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <instructions>
+                            <Bundle-SymbolicName>${bundle.symbolicName}</Bundle-SymbolicName>
+                            <Bundle-Version>${project.version}</Bundle-Version>
+                            <Embed-Dependency>
+                                *;scope=compile|runtime
+                            </Embed-Dependency>
+                            <!--<Embed-Dependency>*;scope=compile|runtime;inline=true</Embed-Dependency>-->
+                            <!--<Embed-Directory>lib</Embed-Directory>-->
+                            <!--<Embed-Transitive>true</Embed-Transitive>-->
+                            <!--
+                             | assume public classes are in the top package, and private classes are under ".internal"
+                            -->
+                            <Export-Package>
+                                ${bundle.namespace}.*;version="${project.version}"
+                            </Export-Package>
+                            <Private-Package>${bundle.namespace}.internal.*</Private-Package>
+                            <!--| each module can override these defaults in their osgi.bnd file -->
+                            <!--<Import-Package>*</Import-Package>-->
+                            <_include>-osgi.bnd</_include>
+                            <!--<Bundle-Activator>${bundle.namespace}.internal.ExampleActivator</Bundle-Activator>-->
+                        </instructions>
+                    </configuration>
+                </plugin>
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
