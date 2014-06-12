@@ -37,6 +37,7 @@ public class ContextMenu extends Menu
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public ContextMenu(String id)
@@ -46,6 +47,7 @@ public class ContextMenu extends Menu
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param items the menu-items
 	 */
@@ -56,6 +58,7 @@ public class ContextMenu extends Menu
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param options {@link Options}
 	 */
@@ -66,13 +69,14 @@ public class ContextMenu extends Menu
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param items the menu-items
 	 * @param options {@link Options}
 	 */
 	public ContextMenu(String id, List<IMenuItem> items, Options options)
 	{
-		super(id, options);
+		super(id, items, options);
 	}
 
 
@@ -106,12 +110,13 @@ public class ContextMenu extends Menu
 	 */
 	protected void onContextMenu(AjaxRequestTarget target, Component component)
 	{
+		// noop
 	}
-
 
 	// Factories //
 	/**
 	 * Gets a new {@link JQueryAbstractBehavior} that handles the closing of the context-menu
+	 *
 	 * @return a {@link JQueryAbstractBehavior}
 	 */
 	protected JQueryAbstractBehavior newContextMenuDocumentBehavior()

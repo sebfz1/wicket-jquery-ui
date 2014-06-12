@@ -15,11 +15,6 @@ public class InputDialogPage extends AbstractDialogPage
 
 	public InputDialogPage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
@@ -27,7 +22,7 @@ public class InputDialogPage extends AbstractDialogPage
 		form.add(new JQueryFeedbackPanel("feedback"));
 
 		// Dialog //
-		final InputDialog<String> dialog = new InputDialog<String>("dialog", "Input", "Please provide a value:", new Model<String>("a sample value")) {
+		final InputDialog<String> dialog = new InputDialog<String>("dialog", "Input", "Please provide a value:", Model.of("a sample value")) {
 
 			private static final long serialVersionUID = 1L;
 

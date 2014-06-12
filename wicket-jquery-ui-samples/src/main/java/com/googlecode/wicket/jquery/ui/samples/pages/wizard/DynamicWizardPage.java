@@ -63,7 +63,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 			{
 				User user = this.getModelObject();
 
-				this.info(String.format("Created user: '%s' - %s [%s] with %s", user.getName(), user.getMail(), user.getRole(), (user.getAvatar() != null ? user.getAvatar() : "no avatar" )));
+				this.info(String.format("Created user: '%s' - %s [%s] with %s", user.getName(), user.getMail(), user.getRole(), user.getAvatar() != null ? user.getAvatar() : "no avatar" ));
 				target.add(feedback.setEscapeModelStrings(false));
 			}
 		};
@@ -103,11 +103,11 @@ public class DynamicWizardPage extends AbstractWizardPage
 		private final IDynamicWizardStep step3;
 		private final IDynamicWizardStep step4;
 
-		private IModel<Boolean> enableAvatarStepModel = new Model<Boolean>(Boolean.FALSE);
+		private IModel<Boolean> enableAvatarStepModel = Model.of(Boolean.FALSE);
 
 		public UserWizard(String id, String title)
 		{
-			super(id, title, new Model<User>(new User()));
+			super(id, title, Model.of(new User()));
 
 			this.step0 = new Step0();
 			this.step1 = new Step1();
@@ -147,7 +147,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 					@Override
 					public Object getDisplayValue(Boolean bool)
 					{
-						return (bool ? "Yes" : "No");
+						return bool ? "Yes" : "No";
 					}
 
 					@Override
@@ -244,7 +244,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 			public IDynamicWizardStep next()
 			{
 				//defines if wizard goes to avatar step or finish step
-				return (UserWizard.this.enableAvatarStepModel.getObject() ? UserWizard.this.step3 : UserWizard.this.step4);
+				return UserWizard.this.enableAvatarStepModel.getObject() ? UserWizard.this.step3 : UserWizard.this.step4;
 			}
 		}
 
@@ -345,7 +345,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 			@Override
 			public IDynamicWizardStep previous()
 			{
-				return (UserWizard.this.enableAvatarStepModel.getObject() ? UserWizard.this.step3 : super.previous());
+				return UserWizard.this.enableAvatarStepModel.getObject() ? UserWizard.this.step3 : super.previous();
 			}
 
 			@Override

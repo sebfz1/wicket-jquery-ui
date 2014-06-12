@@ -38,6 +38,7 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public RadioChoice(String id)
@@ -48,6 +49,7 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param choices the collection of choices in the radio choice
 	 */
@@ -59,6 +61,7 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param choices the collection of choices in the radio choice
 	 * @param renderer the rendering engine
@@ -71,6 +74,7 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param choices the collection of choices in the radio choice
 	 */
@@ -82,6 +86,7 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param choices the collection of choices in the radio choice
 	 * @param renderer the rendering engine
@@ -92,9 +97,9 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 		this.init();
 	}
 
-
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the collection of choices in the radio choice
@@ -107,6 +112,7 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the collection of choices in the radio choice
@@ -120,6 +126,7 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the collection of choices in the radio choice
@@ -132,6 +139,7 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param choices the collection of choices in the radio choice
@@ -168,6 +176,7 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //

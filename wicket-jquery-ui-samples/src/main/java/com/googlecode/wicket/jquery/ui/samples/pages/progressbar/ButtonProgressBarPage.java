@@ -15,10 +15,10 @@ public class ButtonProgressBarPage extends AbstractProgressBarPage
 
 	public ButtonProgressBarPage()
 	{
-		this.init();
+		this.initialize();
 	}
 
-	private void init()
+	private void initialize()
 	{
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
@@ -28,7 +28,7 @@ public class ButtonProgressBarPage extends AbstractProgressBarPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// ProgressBar //
-		final ProgressBar progressBar = new ProgressBar("progress", new Model<Integer>(90)) {
+		final ProgressBar progressBar = new ProgressBar("progress", Model.of(90)) {
 
 			private static final long serialVersionUID = 1L;
 

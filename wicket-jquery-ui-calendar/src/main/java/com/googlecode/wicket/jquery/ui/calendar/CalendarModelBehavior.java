@@ -26,28 +26,25 @@ import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Provides the behavior that gets the {@link CalendarEvent}<code>s</code> from the {@link CalendarModel}
+ * Provides the behavior that loads {@link CalendarEvent}<code>s</code> according to {@link CalendarModel} start &amp; end dates
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-class CalendarModelBehavior extends AbstractAjaxBehavior
+public class CalendarModelBehavior extends AbstractAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = LoggerFactory.getLogger(CalendarModelBehavior.class);
 
-	private CalendarModel model;
+	private final CalendarModel model;
 
 	/**
 	 * Constructor
 	 *
 	 * @param model the {@link CalendarModel}
 	 */
-	public CalendarModelBehavior(CalendarModel model)
+	public CalendarModelBehavior(final CalendarModel model)
 	{
 		this.model = model;
 	}
@@ -63,12 +60,35 @@ class CalendarModelBehavior extends AbstractAjaxBehavior
 
 		if (this.model != null)
 		{
-			this.model.setStart(new Date(start  * 1000));
-			this.model.setEnd(new Date(end * 1000));
+			this.setStartDate(this.model, new Date(start * 1000));
+			this.setEndDate(this.model, new Date(end * 1000));
 		}
 
-		final IRequestHandler handler = this.newRequestHandler();
-		requestCycle.scheduleRequestHandlerAfterCurrent(handler);
+		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler());
+	}
+
+	/**
+	 * Sets the start date to the model<br/>
+	 * This can be overridden to perform additional operation on date before the assignment.
+	 *
+	 * @param model the {@link CalendarModel}
+	 * @param date the {@link Date}
+	 */
+	protected void setStartDate(CalendarModel model, Date date)
+	{
+		model.setStart(date);
+	}
+
+	/**
+	 * Sets the end date to the model<br/>
+	 * This can be overridden to perform additional operation on date before the assignment.
+	 *
+	 * @param model the {@link CalendarModel}
+	 * @param date the {@link Date}
+	 */
+	protected void setEndDate(CalendarModel model, Date date)
+	{
+		model.setEnd(date);
 	}
 
 	/**
@@ -76,14 +96,13 @@ class CalendarModelBehavior extends AbstractAjaxBehavior
 	 *
 	 * @return the {@link IRequestHandler}
 	 */
-	private IRequestHandler newRequestHandler()
+	protected IRequestHandler newRequestHandler()
 	{
-		return new IRequestHandler()
-		{
+		return new IRequestHandler() {
 			@Override
 			public void respond(final IRequestCycle requestCycle)
 			{
-				WebResponse response = (WebResponse)requestCycle.getResponse();
+				WebResponse response = (WebResponse) requestCycle.getResponse();
 
 				final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
 				response.setContentType("text/json; charset=" + encoding);
@@ -91,7 +110,7 @@ class CalendarModelBehavior extends AbstractAjaxBehavior
 
 				if (model != null)
 				{
-					List<? extends CalendarEvent> list =  model.getObject(); // calls load()
+					List<? extends CalendarEvent> list = model.getObject(); // calls load()
 
 					if (list != null)
 					{
@@ -102,16 +121,18 @@ class CalendarModelBehavior extends AbstractAjaxBehavior
 						{
 							if (model instanceof ICalendarVisitor)
 							{
-								event.accept((ICalendarVisitor) model); //last chance to set options
+								event.accept((ICalendarVisitor) model); // last chance to set options
 							}
 
-							if (count++ > 0) { builder.append(", "); }
+							if (count++ > 0)
+							{
+								builder.append(", ");
+							}
 							builder.append(event.toString());
 						}
 
 						builder.append(" ]");
 
-						LOG.debug(builder.toString());
 						response.write(builder);
 					}
 				}
@@ -120,6 +141,7 @@ class CalendarModelBehavior extends AbstractAjaxBehavior
 			@Override
 			public void detach(final IRequestCycle requestCycle)
 			{
+				// noop
 			}
 		};
 	}

@@ -32,8 +32,6 @@ import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.toolbar.IWysiwygToolbar;
  * Provides an implementation of bootstrap-wysiwyg<br/>
  * {@link WysiwygEditor} should be contained in a {@link Form} in order to work properly
  *
- * TODO remove 6.8.2-SNAPSHOT in description
- *
  * @author sebfz1
  * @author solomax
  * @author andunslg
@@ -88,7 +86,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	{
 		super(id, model);
 
-		this.container = new WebMarkupContainer("container"); //widget component
+		this.container = new WebMarkupContainer("container"); // widget component
 		this.add(this.container);
 
 		this.textarea = new TextArea<String>("textarea", Model.of(this.getModelObject()));
@@ -100,17 +98,17 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 		}
 	}
 
-
 	// Properties //
+
 	/**
 	 * Gets the editor markup-id
+	 *
 	 * @return the editor markup-id
 	 */
 	public String getEditorMarkupId()
 	{
 		return this.container.getMarkupId();
 	}
-
 
 	// Methods //
 	@Override

@@ -93,5 +93,12 @@ public interface IJQueryWidget
 		{
 			return widget.newWidgetBehavior(selector);
 		}
+
+		/**
+		 * Utility class
+		 */
+		private JQueryWidget()
+		{
+		}
 	}
 }

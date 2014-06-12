@@ -149,11 +149,13 @@ public class Draggable<T> extends JQueryContainer implements IDraggableListener
 	@Override
 	public void onDragStart(AjaxRequestTarget target)
 	{
+		// noop
 	}
 
 	@Override
 	public void onDragStop(AjaxRequestTarget target)
 	{
+		// noop
 	}
 
 	// Options //

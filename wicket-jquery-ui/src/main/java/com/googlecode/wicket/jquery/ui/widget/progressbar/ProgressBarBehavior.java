@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.ui.widget.progressbar;
 
 import org.apache.wicket.Component;
+
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;

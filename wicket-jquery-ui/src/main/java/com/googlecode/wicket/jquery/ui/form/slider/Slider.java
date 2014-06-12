@@ -218,8 +218,8 @@ public class Slider extends AbstractSlider<Integer>
 				StringBuilder statements = new StringBuilder();
 
 				statements.append("jQuery('#").append(Slider.this.input.getMarkupId()).append("').on('change', function() { ");
-				statements.append("jQuery('#").append(Slider.this.label.getMarkupId()).append("').slider('value', jQuery(this).val()); "); //change the slider value (+slide)
-				statements.append("} );");
+				statements.append("		jQuery('#").append(Slider.this.label.getMarkupId()).append("').slider('value', jQuery(this).val()); "); //change the slider value (+slide)
+				statements.append("});");
 
 				return String.format("jQuery(function() { %s });", statements);
 			}

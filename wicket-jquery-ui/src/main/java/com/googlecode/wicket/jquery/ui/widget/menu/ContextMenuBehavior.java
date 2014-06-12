@@ -20,6 +20,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
@@ -39,8 +40,7 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * CSS class used to identify the component that invoke the context menu, in order
-	 * to avoid events conflict (with the registered click in {@link ContextMenu})
+	 * CSS class used to identify the component that invoke the context menu, in order to avoid events conflict (with the registered click in {@link ContextMenu})
 	 */
 	public static final String COMPONENT_CSS = "context-menu-invoker";
 
@@ -58,9 +58,8 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	{
 		super("context-menu");
 
-		this.menu = menu;
+		this.menu = Args.notNull(menu, "menu");
 	}
-
 
 	// Methods //
 
@@ -85,7 +84,6 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 		return String.format("jQuery(function() { jQuery('%s').on('contextmenu', %s); });", JQueryWidget.getSelector(this.component), this.onContextMenuEventBehavior.getCallbackFunction());
 	}
 
-
 	// Events //
 
 	@Override
@@ -96,7 +94,6 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 			this.menu.fireOnContextMenu(target, this.component);
 		}
 	}
-
 
 	// Factories //
 
@@ -124,7 +121,6 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 			}
 		};
 	}
-
 
 	// Event class //
 

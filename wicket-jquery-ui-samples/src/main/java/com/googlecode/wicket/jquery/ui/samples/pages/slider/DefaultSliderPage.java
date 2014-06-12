@@ -17,12 +17,7 @@ public class DefaultSliderPage extends AbstractSliderPage
 	
 	public DefaultSliderPage()
 	{
-		this.init();
-	}
-	
-	private void init()
-	{
-		final Form<Integer> form = new Form<Integer>("form", new Model<Integer>(15));
+		final Form<Integer> form = new Form<Integer>("form", Model.of(15));
 		this.add(form);
 
 		// FeedbackPanel //
@@ -31,9 +26,9 @@ public class DefaultSliderPage extends AbstractSliderPage
 		// Sliders //
 		final Label label = new Label("label", form.getModel()); //the supplied model allows the initial display
 		form.add(label);
-		
+
 		form.add(new Slider("slider", form.getModel(), label)); //will use the html markupId
-		
+
 		// Buttons //
 		form.add(new Button("submit") {
 
@@ -43,7 +38,7 @@ public class DefaultSliderPage extends AbstractSliderPage
 			public void onSubmit()
 			{
 				DefaultSliderPage.this.info(this, form);
-			}			
+			}
 		});
 
 		form.add(new AjaxButton("button") {

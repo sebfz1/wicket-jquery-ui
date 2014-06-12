@@ -21,11 +21,11 @@
 	            	<span class="ui-icon ui-icon-extlink" style="display: inline-block;"></span>
 	            </li>
 	            <li>
-	            	Announcements / Questions: <a href="http://groups.google.com/group/wicket-jquery-ui/">http://groups.google.com/group/wicket-jquery-ui</a>
+	            	Changelogs: <a target="ext" href="https://github.com/sebfz1/wicket-jquery-ui/wiki/_pages">https://github.com/sebfz1/wicket-jquery-ui/wiki</a>
 	            	<span class="ui-icon ui-icon-extlink" style="display: inline-block;"></span>
 	            </li>
 	            <li>
-	            	Releases infos (roadmaps, changelogs): <a href="http://wicket-jquery-ui.blogspot.fr/">http://wicket-jquery-ui.blogspot.fr</a>
+	            	Questions: <a target="ext" href="http://groups.google.com/group/wicket-jquery-ui/">http://groups.google.com/group/wicket-jquery-ui</a>
 	            	<span class="ui-icon ui-icon-extlink" style="display: inline-block;"></span>
 	            </li>
             </ul>
@@ -43,8 +43,10 @@
             In order to get started using this API, you may download appropriate jar(s) or set a maven dependency.<br/>
             <h4>Download jar(s)</h4>
             <div>
-                If you are not using maven, you need to download the core jar here: <a href="https://oss.sonatype.org/index.html#nexus-search;quick~wicket-jquery-ui">https://oss.sonatype.org/...~wicket-jquery-ui</a><br/>
-                You may also download other jars as required (ie: <code>jquery-ui-kendo</code>). Once done, just include the jar(s) in your project's build path.
+                If you are not using maven, you need to download the core jar here:<br/>
+                <a href="http://central.maven.org/maven2/com/googlecode/wicket-jquery-ui/">http://central.maven.org/maven2/com/googlecode/wicket-jquery-ui/</a><br/>
+                <br/>
+                You may also download other jars as required (ie: <code>wicket-kendo-ui</code>). Once done, just include the jar(s) in your project's build path.
             </div>
             <h4>Using Maven</h4>
             <div>
@@ -52,10 +54,10 @@
 &lt;dependency&gt;
     &lt;groupId&gt;com.googlecode.wicket-jquery-ui&lt;/groupId&gt;
     &lt;artifactId&gt;wicket-jquery-ui&lt;/artifactId&gt;
-    &lt;version&gt;6.8.1&lt;/version&gt; &lt;!-- <i>or</i> 1.5.10 --&gt;
+    &lt;version&gt;6.15.0&lt;/version&gt; &lt;!-- <i>or</i> 1.5.10 --&gt;
 &lt;/dependency&gt;
                 </pre>
-                If the version you specified is 'snapshot', you might define this repository:
+                If the version you specified is 'snapshot', you may define this repository:
                 <pre>
 &lt;repositories&gt;
 	&lt;repository&gt;
@@ -79,7 +81,8 @@
 &lt;!DOCTYPE html&gt;
 &lt;html xmlns:wicket="http://wicket.apache.org"&gt;
 &lt;head&gt;
-    &lt;link rel="stylesheet" type="text/css" href="css/<i>ui-lightness</i>/jquery-ui-1.10.3.custom.min.css" /&gt;
+    &lt;!-- jQuery UI --&gt;
+    &lt;link rel="stylesheet" type="text/css" href="css/<i>ui-lightness</i>/jquery-ui-1.10.4.custom.min.css" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 &lt;/body&gt;
@@ -110,10 +113,6 @@ public void init()
 &lt;!DOCTYPE html&gt;
 &lt;html xmlns:wicket="http://wicket.apache.org"&gt;
 &lt;head&gt;
-
-    &lt;!-- jQuery UI --&gt;
-    &lt;link rel="stylesheet" type="text/css" href="css/<i>ui-lightness</i>/jquery-ui-1.10.3.custom.min.css" /&gt;
-    
     &lt;!-- Kendo UI --&gt;
     &lt;link rel="stylesheet" type="text/css" href="css/kendo/kendo.common.min.css" media="all" /&gt;
     &lt;link rel="stylesheet" type="text/css" href="css/kendo/kendo.default.min.css" media="all" /&gt;

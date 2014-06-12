@@ -21,11 +21,6 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 
 	public RendererAutoCompletePage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		// Model //
 		final IModel<Genre> model = new Model<Genre>();
 
@@ -54,7 +49,11 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 					{
 						choices.add(genre);
 
-						if (++count == 20) { break; } //limits the number of results
+						// limits the number of results
+						if (++count == 20)
+						{
+							break;
+						}
 					}
 				}
 

@@ -40,6 +40,7 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public AjaxDatePicker(String id)
@@ -49,6 +50,7 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param options the {@link Options}
 	 */
@@ -59,6 +61,7 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
 	 * @param options the {@link Options}
@@ -70,6 +73,7 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -80,6 +84,7 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param options the {@link Options}
@@ -91,6 +96,7 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
@@ -125,5 +131,6 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 	@Override
 	public void onValueChanged(AjaxRequestTarget target)
 	{
+		// noop
 	}
 }

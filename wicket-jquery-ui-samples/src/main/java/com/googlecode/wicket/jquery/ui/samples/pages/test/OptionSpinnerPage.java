@@ -9,7 +9,6 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
-import org.apache.wicket.util.convert.IConverter;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
@@ -29,12 +28,7 @@ public class OptionSpinnerPage extends AbstractKendoPage
 
 	public OptionSpinnerPage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
-		final Form<Double> form = new Form<Double>("form", new Model<Double>(new Double(1.5)));
+		final Form<Double> form = new Form<Double>("form", Model.of(new Double(1.5)));
 		this.add(form);
 
 		// FeedbackPanel //
@@ -126,9 +120,9 @@ public class OptionSpinnerPage extends AbstractKendoPage
 			behavior.add(new JavaScriptResourceReference(SampleApplication.class, "globalize.culture.fr-FR.js"));
 		}
 
-		@Override
-		public <C> IConverter<C> getConverter(Class<C> type)
-		{
+//		@Override
+//		public <C> IConverter<C> getConverter(Class<C> type)
+//		{
 //			if (Double.class.isAssignableFrom(type))
 //			{
 //				return (IConverter<C>) new CurrencyConverter<Double>(this) {
@@ -143,9 +137,9 @@ public class OptionSpinnerPage extends AbstractKendoPage
 //
 //				};
 //			}
-
-			return super.getConverter(type);
-		}
+//
+//			return super.getConverter(type);
+//		}
 	}
 
 	class CultureDropDown extends AjaxDropDownList<String>

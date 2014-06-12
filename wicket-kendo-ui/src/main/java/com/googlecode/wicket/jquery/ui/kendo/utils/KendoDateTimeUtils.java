@@ -25,7 +25,7 @@ package com.googlecode.wicket.jquery.ui.kendo.utils;
 public class KendoDateTimeUtils
 {
 	static final String j_chars = "GyMdkHmsSEDFwWahKzZ";
-	static final String k_chars = "GyMdkHmsfEDFwWthKzZ"; //'S' > 'f', 'a' > 't'
+	static final String k_chars = "GyMdkHmsfEDFwWthKzZ"; // 'S' > 'f', 'a' > 't'
 	static final int chars_lenth = 19;
 
 	/**

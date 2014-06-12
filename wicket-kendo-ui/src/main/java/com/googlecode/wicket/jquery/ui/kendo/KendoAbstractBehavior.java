@@ -60,6 +60,7 @@ public class KendoAbstractBehavior extends JQueryBehavior
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param method the kendo-ui method
 	 * @param options the {@link Options}

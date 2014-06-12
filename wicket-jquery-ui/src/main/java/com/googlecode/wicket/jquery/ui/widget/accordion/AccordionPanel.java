@@ -81,6 +81,7 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	}
 
 	// Properties //
+
 	@SuppressWarnings("unchecked")
 	public List<ITab> getModelObject()
 	{
@@ -129,15 +130,17 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	/**
 	 * Activates the selected tab<br/>
 	 * <b>Warning: </b> invoking this method results to a dual client-server round-trip. Use this method if you cannot use {@link #setActiveTab(int)} followed by <code>target.add(myTabbedPannel)</code>
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index to activate
 	 */
 	public void setActiveTab(int index, AjaxRequestTarget target)
 	{
-		this.widgetBehavior.activate(index, target); // sets 'active' option, that fires 'activate' event (best would be that is also fires a 'show' event)
+		this.widgetBehavior.activate(index, target); // sets 'active' option, that fires 'activate' event (best would be that it also fires a 'show' event)
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
@@ -177,9 +180,11 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	@Override
 	public void onActivate(AjaxRequestTarget target, int index, ITab tab)
 	{
+		// noop
 	}
 
 	// Factories //
+
 	/**
 	 * Gets a new {@link Label} for the tab's title
 	 *
@@ -193,6 +198,7 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public AccordionBehavior newWidgetBehavior(String selector)
 	{

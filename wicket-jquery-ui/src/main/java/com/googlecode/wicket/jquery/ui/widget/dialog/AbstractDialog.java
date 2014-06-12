@@ -35,6 +35,7 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.DialogBehavior.ButtonAjaxBe
 
 /**
  * Base class for implementing jQuery dialogs
+ *
  * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the type of the model object
@@ -58,12 +59,12 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	private boolean modal;
 	private DialogBehavior widgetBehavior;
 
-
 	/** Default button */
 	private final DialogButton btnOk = new DialogButton(LBL_OK);
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 */
@@ -74,6 +75,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 */
@@ -84,6 +86,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param model the model to be used in the dialog.
@@ -95,6 +98,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param model the model to be used in the dialog.
@@ -106,6 +110,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param modal indicates whether the dialog is modal
@@ -117,6 +122,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param modal indicates whether the dialog is modal
@@ -128,6 +134,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 	/**
 	 * Constructor
+	 *
 	 * @param id markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param modal indicates whether the dialog is modal
@@ -140,6 +147,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 	/**
 	 * Constructor
+	 *
 	 * @param id markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param modal indicates whether the dialog is modal
@@ -152,10 +160,9 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 		this.title = title;
 		this.modal = modal;
 
-		this.add(new DisplayNoneBehavior()); //enhancement, fixes issue #22
+		this.add(new DisplayNoneBehavior()); // enhancement, fixes issue #22
 		this.setOutputMarkupPlaceholderTag(true);
 	}
-
 
 	// Events //
 
@@ -164,7 +171,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	{
 		super.onInitialize();
 
-		this.add(this.widgetBehavior = this.newWidgetBehavior(JQueryWidget.getSelector(this))); //warning: ButtonAjaxBehavior(s) should be set at this point!
+		this.add(this.widgetBehavior = this.newWidgetBehavior(JQueryWidget.getSelector(this))); // warning: ButtonAjaxBehavior(s) should be set at this point!
 	}
 
 	/**
@@ -179,6 +186,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 	/**
 	 * Triggered when the dialog opens
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	protected void onOpen(AjaxRequestTarget target)
@@ -186,8 +194,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	}
 
 	/**
-	 * Triggered when a button is clicked.
-	 * This method may be overridden to handle button behaviors, but the dialog will not been closed until <code>super.onClick(event)</code> or {@link #close(AjaxRequestTarget, DialogButton)} is called.
+	 * Triggered when a button is clicked. This method may be overridden to handle button behaviors, but the dialog will not been closed until <code>super.onClick(event)</code> or {@link #close(AjaxRequestTarget, DialogButton)} is called.
 	 */
 	@Override
 	public void onClick(AjaxRequestTarget target, DialogButton button)
@@ -208,10 +215,12 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	}
 
 	// Properties //
+
 	/**
 	 * Gets the dialog's buttons.<br/>
 	 * It is allowed to return a predefined list (ie: DialogButtons#OK_CANCEL#toList()) as long as the buttons state (enable and/or visible) are not modified<br/>
 	 * <b>Warning: </b>It is not legal to create the buttons to be returned in this method.
+	 *
 	 * @return {@link #btnOk} by default
 	 */
 	protected List<DialogButton> getButtons()
@@ -221,6 +230,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 	/**
 	 * Gets the dialog's with
+	 *
 	 * @return {@link #WIDTH} by default
 	 */
 	public int getWidth()
@@ -230,6 +240,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 	/**
 	 * Gets the dialog's title
+	 *
 	 * @return the dialog's title
 	 */
 	public IModel<String> getTitle()
@@ -239,6 +250,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 	/**
 	 * Sets the dialog's title
+	 *
 	 * @param title the dialog's title
 	 */
 	public void setTitle(IModel<String> title)
@@ -253,6 +265,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 	/**
 	 * Gets the modal flag
+	 *
 	 * @return the modal flag supplied to the constructor by default
 	 */
 	public boolean isModal()
@@ -261,7 +274,8 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	}
 
 	/**
-	 * Gets the resizable flag
+	 * Indicated whether the dialog is resizable
+	 *
 	 * @return false by default
 	 */
 	public boolean isResizable()
@@ -277,26 +291,29 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 	/**
 	 * Gets the model
+	 *
 	 * @return the parameterized model
 	 */
 	@SuppressWarnings("unchecked")
 	public IModel<T> getModel()
 	{
-		return (IModel<T>)this.getDefaultModel();
+		return (IModel<T>) this.getDefaultModel();
 	}
 
 	/**
 	 * Gets the model object
+	 *
 	 * @return the typed model object
 	 */
 	@SuppressWarnings("unchecked")
 	public T getModelObject()
 	{
-		return (T)this.getDefaultModelObject();
+		return (T) this.getDefaultModelObject();
 	}
 
 	/**
 	 * Sets the model object
+	 *
 	 * @param object the typed model object
 	 */
 	public void setModelObject(T object)
@@ -305,8 +322,10 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	}
 
 	// Methods //
+
 	/**
 	 * Finds a {@link DialogButton} - identified by its text - within the list of buttons returned by {@link #getButtons()}
+	 *
 	 * @param text the button's text
 	 * @return the {@link DialogButton} if found, null otherwise
 	 */
@@ -354,8 +373,8 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 		this.onClose(target, button);
 	}
 
-
 	// IJQueryWidget //
+
 	/**
 	 * @see IJQueryWidget#newWidgetBehavior(String)
 	 */
@@ -414,13 +433,12 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 		};
 	}
 
-
 	/**
 	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.<br/>
-	 * This method mays be overridden internally to provide another behavior
+	 * This method may be overridden to provide additional behaviors
 	 *
 	 * @param source the {@link IJQueryAjaxAware} source
-	 * @param button the button that is passed to the behavior so it can be retrieved via the <code>DialogBehavior#ClickEvent</code>
+	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
 	 * @return the {@link ButtonAjaxBehavior}
 	 */
 	protected ButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, DialogButton button)

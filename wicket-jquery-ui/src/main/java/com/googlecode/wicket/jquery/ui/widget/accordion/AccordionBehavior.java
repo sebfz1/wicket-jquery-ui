@@ -66,10 +66,9 @@ public abstract class AccordionBehavior extends JQueryBehavior implements IJQuer
 		super(selector, METHOD, options);
 	}
 
-
 	// Properties //
 	/**
-	 * Gets the reference list of tabs.<br/>
+	 * Gets the reference {@link List} of {@link ITab}<tt>s</tt>.<br/>
 	 * Usually the model object of the component on which this {@link AccordionBehavior} is bound to.
 	 *
 	 * @return a non-null {@link List}

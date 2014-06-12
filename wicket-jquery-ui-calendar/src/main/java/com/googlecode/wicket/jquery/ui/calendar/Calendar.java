@@ -40,11 +40,12 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	private static final long serialVersionUID = 1L;
 
 	private final Options options;
-	private Map<CharSequence, String> gcals; //TODO: move gcals to CalendarBehavior?
+	private Map<CharSequence, String> gcals; // TODO: move gcals to CalendarBehavior?
 	private CalendarModelBehavior modelBehavior; // events load
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param options {@link Options}. Note that 'selectable' and 'selectHelper' options are set by overriding {@link #isSelectable()} (default is false)
 	 */
@@ -57,6 +58,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link CalendarModel}
 	 */
@@ -67,6 +69,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link CalendarModel}
 	 * @param options {@link Options}. Note that 'selectable' and 'selectHelper' options are set by overriding {@link #isSelectable()} (default is false)
@@ -80,6 +83,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 	/**
 	 * Gets the calendar's model
+	 *
 	 * @return a {@link CalendarModel}
 	 */
 	public CalendarModel getModel()
@@ -90,6 +94,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	// Methods //
 	/**
 	 * Adds a Google Calendar Feed
+	 *
 	 * @param gcal url to xml feed
 	 */
 	public void addFeed(CharSequence gcal)
@@ -99,6 +104,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 	/**
 	 * Adds a Google Calendar Feed
+	 *
 	 * @param gcal url to xml feed
 	 * @param className css class to be used
 	 */
@@ -113,7 +119,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	/**
-	 * Refreshes the events currently available in the selected view.
+	 * Refetches and refreshes the events currently available in the selected view.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
@@ -175,31 +181,37 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	@Override
 	public void onSelect(AjaxRequestTarget target, CalendarView view, Date start, Date end, boolean allDay)
 	{
+		// noop
 	}
 
 	@Override
 	public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date)
 	{
+		// noop
 	}
 
 	@Override
 	public void onEventClick(AjaxRequestTarget target, CalendarView view, int eventId)
 	{
+		// noop
 	}
 
 	@Override
 	public void onEventDrop(AjaxRequestTarget target, int eventId, long delta, boolean allDay)
 	{
+		// noop
 	}
 
 	@Override
 	public void onEventResize(AjaxRequestTarget target, int eventId, long delta)
 	{
+		// noop
 	}
 
 	@Override
 	public void onViewDisplay(AjaxRequestTarget target, CalendarView view)
 	{
+		// noop
 	}
 
 

@@ -15,11 +15,6 @@ public class SliderProgressBarPage extends AbstractProgressBarPage
 
 	public SliderProgressBarPage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
@@ -28,7 +23,7 @@ public class SliderProgressBarPage extends AbstractProgressBarPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// ProgressBar //
-		final ProgressBar progressbar = new ProgressBar("progress", new Model<Integer>(90)) {
+		final ProgressBar progressbar = new ProgressBar("progress", Model.of(90)) {
 
 			private static final long serialVersionUID = 1L;
 

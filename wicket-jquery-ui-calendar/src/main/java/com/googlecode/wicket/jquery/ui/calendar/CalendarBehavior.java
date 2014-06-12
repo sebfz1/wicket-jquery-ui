@@ -77,6 +77,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public CalendarBehavior(final String selector)
@@ -86,6 +87,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
@@ -121,7 +123,6 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			this.add(settings.getGCalJavaScriptReference());
 		}
 	}
-
 
 	// Methods //
 	@Override
@@ -487,6 +488,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	    }
 	}
 
+	// Event classes //
 	/**
 	 * An event object that will be broadcasted when the user select a cell range
 	 */
@@ -511,6 +513,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 
 		/**
 		 * Gets the event start date
+		 *
 		 * @return the start date
 		 */
 		public Date getStart()
@@ -520,6 +523,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 
 		/**
 		 * Gets the end date
+		 *
 		 * @return the end date
 		 */
 		public Date getEnd()
@@ -529,6 +533,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 
 		/**
 		 * Indicated whether this event is an 'all-day' event
+		 *
 		 * @return true or false
 		 */
 		public boolean isAllDay()
@@ -565,6 +570,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 
 		/**
 		 * Gets the event's id
+		 *
 		 * @return the event's id
 		 */
 		public int getEventId()
@@ -574,6 +580,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 
 		/**
 		 * Gets the current {@link CalendarView}
+		 *
 		 * @return the view name
 		 */
 		public CalendarView getView()
@@ -610,7 +617,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	/**
 	 * A base event object that contains a delta time
 	 */
-	protected static abstract class DeltaEvent extends JQueryEvent
+	protected abstract static class DeltaEvent extends JQueryEvent
 	{
 		private final int eventId;
 		private long delta;
@@ -629,6 +636,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 
 		/**
 		 * Gets the event's id
+		 *
 		 * @return the event's id
 		 */
 		public int getEventId()
@@ -638,6 +646,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 
 		/**
 		 * Gets the event's delta time in milliseconds
+		 *
 		 * @return the event's delta time
 		 */
 		public long getDelta()

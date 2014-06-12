@@ -85,8 +85,8 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 		}
 	}
 
-
 	// Factories //
+
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'change' javascript callback
 	 * @return the {@link JQueryAjaxBehavior}

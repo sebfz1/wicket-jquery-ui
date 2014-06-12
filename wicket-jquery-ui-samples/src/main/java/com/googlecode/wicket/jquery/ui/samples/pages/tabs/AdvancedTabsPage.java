@@ -70,7 +70,6 @@ public class AdvancedTabsPage extends AbstractTabsPage
 		form.add(this.tabPanel);
 	}
 
-
 	// Factories //
 	private TabDialog newTabDialog(String id)
 	{
@@ -157,8 +156,8 @@ public class AdvancedTabsPage extends AbstractTabsPage
 	{
 		List<ITab> tabs = new ArrayList<ITab>();
 
-		// tab #1 //
-		tabs.add(new SimpleTab(new Model<String>("Tab #1"), new Model<String>("my content")));
+		// tab #1, using SimpleTab //
+		tabs.add(new SimpleTab(Model.of("Tab #1"), Model.of("my content")));
 
 		// tab #2 //
 		tabs.add(new AbstractTab(new Model<String>("Tab #2")) {

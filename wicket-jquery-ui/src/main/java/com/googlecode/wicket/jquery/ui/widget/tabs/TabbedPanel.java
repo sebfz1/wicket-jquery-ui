@@ -46,6 +46,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param tabs the list of {@link ITab}<code>s</code>
 	 */
@@ -56,6 +57,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param tabs the list of {@link ITab}<code>s</code>
 	 * @param options {@link Options}
@@ -77,7 +79,6 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 		super(id, model, options);
 	}
 
-
 	// Properties //
 	@SuppressWarnings("unchecked")
 	public List<ITab> getModelObject()
@@ -94,6 +95,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 
 	/**
 	 * Activates the selected tab
+	 *
 	 * @param index the tab's index to activate
 	 * @return this, for chaining
 	 */
@@ -107,12 +109,13 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	/**
 	 * Activates the selected tab<br/>
 	 * <b>Warning: </b> invoking this method results to a dual client-server round-trip. Use this method if you cannot use {@link #setActiveTab(int)} followed by <code>target.add(myTabbedPannel)</code>
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index to activate
 	 */
 	public void setActiveTab(int index, AjaxRequestTarget target)
 	{
-		this.widgetBehavior.activate(index, target); //sets 'active' option, that fires 'activate' event (best would be that is also fires a 'show' event)
+		this.widgetBehavior.activate(index, target); // sets 'active' option, that fires 'activate' event (best would be that is also fires a 'show' event)
 	}
 
 	@Override
@@ -121,18 +124,17 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 		return false;
 	}
 
-
 	// Methods //
 	/**
 	 * Helper method. Adds an {@link ITab} to the list of tabs.
+	 *
 	 * @param tab the {@link ITab} to be added
 	 * @return true (as specified by Collection.add)
 	 */
 	public boolean add(ITab tab)
 	{
-		return this.getModelObject().add(tab); //will throw an UnsupportedOperationException if null is supplied to the constructor
+		return this.getModelObject().add(tab); // will throw an UnsupportedOperationException if null is supplied to the constructor
 	}
-
 
 	// Events //
 	@Override
@@ -147,7 +149,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 			@Override
 			public String newChildId()
 			{
-				return String.format("tab-%s-%s", this.getMarkupId(), super.newChildId()); //fixes issue #14
+				return String.format("tab-%s-%s", this.getMarkupId(), super.newChildId()); // fixes issue #14
 			}
 
 			@Override
@@ -155,7 +157,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 			{
 				super.onConfigure();
 
-				this.removeAll(); //fixes issue #7
+				this.removeAll(); // fixes issue #7
 			}
 		};
 
@@ -199,15 +201,19 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	}
 
 	@Override
-	public void onActivating(AjaxRequestTarget target, int index, ITab tab)
-	{
-	}
-	@Override
 	public void onActivate(AjaxRequestTarget target, int index, ITab tab)
 	{
+		// noop
+	}
+
+	@Override
+	public void onActivating(AjaxRequestTarget target, int index, ITab tab)
+	{
+		// noop
 	}
 
 	// Factories //
+
 	/**
 	 * Gets a new {@link Label} for the tab's title
 	 *
@@ -220,8 +226,8 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 		return new Label(id, title);
 	}
 
-
 	// IJQueryWidget //
+
 	@Override
 	public TabsBehavior newWidgetBehavior(String selector)
 	{

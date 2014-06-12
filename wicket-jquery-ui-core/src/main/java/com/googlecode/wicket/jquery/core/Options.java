@@ -41,27 +41,32 @@ public class Options implements IClusterable
 	public static final String QUOTE = "\"";
 
 	/**
-	 * Converts a string representation of an object to its javascript representation. ie: "myvalue" (with the double quotes)
+	 * Converts a string representation of an object to its javascript representation. ie: "myvalue" (with the double quotes)<br/>
+	 * If the supplied value is null, "null" is returned
+	 *
 	 * @param value the object
 	 * @return the JSON value
 	 */
 	public static String asString(Object value)
 	{
-		return Options.asString(value.toString());
+		return Options.asString(String.valueOf(value));
 	}
 
 	/**
-	 * Converts a string to its javascript representation. ie: "myvalue" (with the double quotes)
+	 * Converts a string to its javascript representation. ie: "myvalue" (with the double quotes)<br/>
+	 * If the supplied value is null, "null" is returned
+	 *
 	 * @param value the object
 	 * @return the JSON value
 	 */
 	public static String asString(String value)
 	{
-		return String.format("%s%s%s", QUOTE, value, QUOTE);
+		return String.format("%s%s%s", QUOTE, String.valueOf(value).replace(QUOTE, "\\" + QUOTE), QUOTE);
 	}
 
 	/**
 	 * Converts a date to its ISO8601/javascript representation. ie: "2009-11-05T13:15:30+0200" (with the double quotes)
+	 *
 	 * @param date the date to convert
 	 * @return the JSON value
 	 */
@@ -93,7 +98,6 @@ public class Options implements IClusterable
 		return builder.toString();
 	}
 
-
 	private final Map<String, Serializable> map;
 
 	/**
@@ -118,6 +122,7 @@ public class Options implements IClusterable
 
 	/**
 	 * Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
+	 *
 	 * @param key the key whose associated value is to be returned
 	 * @return the value to which the specified key is mapped, or null if this map contains no mapping for the key
 	 */
@@ -134,7 +139,7 @@ public class Options implements IClusterable
 	 * @param value - value to be associated with the specified key
 	 * @return this
 	 */
-	public Options set(String key, Serializable value)
+	public final Options set(String key, Serializable value)
 	{
 		if (value != null)
 		{
@@ -150,6 +155,7 @@ public class Options implements IClusterable
 
 	/**
 	 * Gets a read-only entry set of options
+	 *
 	 * @return an unmodifiable set of internal map entries
 	 */
 	public Set<Entry<String, Serializable>> entries()
@@ -168,7 +174,11 @@ public class Options implements IClusterable
 		int i = 0;
 		for (Entry<String, Serializable> entry : this.map.entrySet())
 		{
-			if (i++ > 0) { builder.append(", "); }
+			if (i++ > 0)
+			{
+				builder.append(", ");
+			}
+
 			builder.append(QUOTE).append(entry.getKey()).append(QUOTE).append(": ").append(entry.getValue());
 		}
 

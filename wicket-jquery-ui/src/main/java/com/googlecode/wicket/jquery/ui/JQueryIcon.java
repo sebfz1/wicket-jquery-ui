@@ -204,9 +204,20 @@ public class JQueryIcon
 	public static final String GRIP_DIAGONAL_SE = "ui-icon-grip-diagonal-se";
 
 	/**
-	 * Contants class
+	 * Constants class
 	 */
 	private JQueryIcon()
 	{
+	}
+
+	/**
+	 * Indicates whether the icon is {@link JQueryIcon#NONE}
+	 *
+	 * @param icon the icon
+	 * @return true or false
+	 */
+	public static boolean isNone(String icon)
+	{
+		return JQueryIcon.NONE.equals(icon);
 	}
 }

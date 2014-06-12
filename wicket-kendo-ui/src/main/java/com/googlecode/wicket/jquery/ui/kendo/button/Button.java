@@ -32,6 +32,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public Button(String id)
@@ -41,6 +42,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */

@@ -19,11 +19,6 @@ public class DefaultAutoCompletePage extends AbstractAutoCompletePage
 
 	public DefaultAutoCompletePage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		// Form //
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
@@ -49,7 +44,11 @@ public class DefaultAutoCompletePage extends AbstractAutoCompletePage
 					{
 						choices.add(choice);
 
-						if (++count == 20) { break; } //limits the number of results
+						// limits the number of results
+						if (++count == 20)
+						{
+							break;
+						}
 					}
 				}
 

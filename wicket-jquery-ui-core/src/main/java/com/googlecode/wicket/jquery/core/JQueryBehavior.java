@@ -45,6 +45,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public JQueryBehavior(String selector)
@@ -54,6 +55,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param method the jquery method
 	 */
@@ -64,6 +66,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param method the jquery method
 	 * @param options the {@link Options}
@@ -117,6 +120,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Sets a behavior option.
+	 *
 	 * @param key the option key
 	 * @param value the option value
 	 * @return the {@link JQueryBehavior} (this)
@@ -146,8 +150,10 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	}
 
 	// Statements //
+
 	/**
 	 * Registers a jQuery event callback
+	 *
 	 * @param event the jQuery event (ie: "click")
 	 * @param callback the jQuery callback
 	 */
@@ -158,6 +164,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Registers a jQuery event callback
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param event the jQuery event (ie: "click")
 	 * @param callback the jQuery callback

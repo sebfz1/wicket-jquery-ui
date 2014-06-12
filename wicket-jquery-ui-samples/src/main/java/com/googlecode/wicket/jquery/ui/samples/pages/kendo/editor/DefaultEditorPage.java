@@ -22,7 +22,7 @@ public class DefaultEditorPage extends AbstractEditorPage
 		form.add(feedback);
 
 		// ComboBox //
-		final Editor<String> editor = new Editor<String>("editor", new Model<String>("<p>test</p>"));
+		final Editor<String> editor = new Editor<String>("editor", Model.of("<p>test</p>"));
 		form.add(editor);
 
 		// Buttons //

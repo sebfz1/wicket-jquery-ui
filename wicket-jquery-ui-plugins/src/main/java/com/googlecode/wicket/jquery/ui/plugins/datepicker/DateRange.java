@@ -38,12 +38,12 @@ public class DateRange implements IClusterable
 		return new DateRange(new Date(), new Date());
 	}
 
-
 	private Date start;
 	private Date end;
 
 	/**
 	 * Constructor
+	 *
 	 * @param start the start date
 	 * @param end the end date
 	 */
@@ -55,6 +55,7 @@ public class DateRange implements IClusterable
 
 	/**
 	 * Gets the start date
+	 *
 	 * @return the start date
 	 */
 	public final Date getStart()
@@ -64,6 +65,7 @@ public class DateRange implements IClusterable
 
 	/**
 	 * Sets the start date.<br/>
+	 *
 	 * @param date the start date
 	 */
 	public void setStart(Date date)
@@ -73,6 +75,7 @@ public class DateRange implements IClusterable
 
 	/**
 	 * Gets the end date
+	 *
 	 * @return the end date
 	 */
 	public Date getEnd()
@@ -82,6 +85,7 @@ public class DateRange implements IClusterable
 
 	/**
 	 * Sets the end date.<br/>
+	 *
 	 * @param date the end date
 	 */
 	public void setEnd(Date date)

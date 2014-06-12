@@ -51,6 +51,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 
 		form.add(accordion);
 
+		// Button //
 		form.add(new AjaxButton("button") {
 
 			private static final long serialVersionUID = 1L;
@@ -93,7 +94,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 				try
 				{
 					// sleep the thread to simulate a long load
-					Thread.sleep(750);
+					Thread.sleep(500);
 				}
 				catch (InterruptedException e)
 				{

@@ -18,11 +18,6 @@ public class MessageDialogPage extends AbstractDialogPage
 
 	public MessageDialogPage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
@@ -38,6 +33,7 @@ public class MessageDialogPage extends AbstractDialogPage
 			@Override
 			public void onClose(AjaxRequestTarget target, DialogButton button)
 			{
+				// noop
 			}
 		};
 
@@ -50,6 +46,7 @@ public class MessageDialogPage extends AbstractDialogPage
 			@Override
 			public void onClose(AjaxRequestTarget target, DialogButton button)
 			{
+				// noop
 			}
 		};
 
@@ -62,6 +59,7 @@ public class MessageDialogPage extends AbstractDialogPage
 			@Override
 			public void onClose(AjaxRequestTarget target, DialogButton button)
 			{
+				// noop
 			}
 		};
 

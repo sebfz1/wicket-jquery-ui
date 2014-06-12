@@ -36,7 +36,7 @@ public class JQueryUIResourceReference extends JavaScriptResourceReference
 
 	/**
 	 * Normally you should not use this method, but use
-	 * {@link JQueryLibrarySettings#getJQueryUIReference()} to prevent version conflicts.
+	 * {@link IJQueryLibrarySettings#getJQueryUIReference()} to prevent version conflicts.
 	 *
 	 * @return the single instance of the resource reference
 	 */
@@ -50,6 +50,6 @@ public class JQueryUIResourceReference extends JavaScriptResourceReference
 	 */
 	private JQueryUIResourceReference()
 	{
-		super(JQueryUIResourceReference.class, "jquery-ui-1.10.3.custom.js");
+		super(JQueryUIResourceReference.class, "jquery-ui-1.10.4.custom.js");
 	}
 }

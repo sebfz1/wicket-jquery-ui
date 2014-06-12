@@ -22,7 +22,8 @@ import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 
 /**
- * TODO javadoc
+ * Provides a property column for a {@link DataTable}
+ *
  * @author Sebastien Briquet - sebfz1
  *
  * @param <T>
@@ -41,6 +42,8 @@ public class PropertyColumn<T extends Serializable> implements IColumn<T>
 	private Integer width;
 
 	/**
+	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 */
 	public PropertyColumn(String title)
@@ -49,6 +52,8 @@ public class PropertyColumn<T extends Serializable> implements IColumn<T>
 	}
 
 	/**
+	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 */
@@ -58,6 +63,8 @@ public class PropertyColumn<T extends Serializable> implements IColumn<T>
 	}
 
 	/**
+	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 * @param property the object property name
 	 */
@@ -67,6 +74,8 @@ public class PropertyColumn<T extends Serializable> implements IColumn<T>
 	}
 
 	/**
+	 * Constructor
+	 *
 	 * @param title the text of the column header
 	 * @param property the object property name
 	 * @param width the desired width of the column

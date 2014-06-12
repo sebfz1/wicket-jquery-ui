@@ -148,6 +148,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 		return this.findButton(LBL_OK);
 	}
 
+	// Events //
 	@Override
 	protected void onOpen(AjaxRequestTarget target)
 	{

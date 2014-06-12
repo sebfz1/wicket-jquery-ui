@@ -20,34 +20,35 @@ import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
 /**
- * Provides a Border Layout {@link WebMarkupContainer} based on vertical and horizontal {@link SplitterBehavior}<pre>s</pre><br/>
+ * Provides a Border Layout {@link WebMarkupContainer} based on vertical and horizontal {@link SplitterBehavior}<tt>s</tt><br/>
  * {@link #getVerticalPanes()} and {@link #getHorizontalPanes()} may be overridden to change the default layout<br/>
  * <br/>
- * <b>Note:</b> the {@link BorderLayout} IS a {@link WebMarkupContainer}. If you wish to apply a {@link BorderLayout} on an existing Page or an existing Panel, you can implement the {@link IBorderLayout} interface.<br/>
+ * <b>Note:</b> the {@link BorderLayout} IS a {@link WebMarkupContainer}. If you wish to apply a {@link BorderLayout} on an existing Page or an existing Panel, consider implementing the {@link IBorderLayout} interface.<br/>
  * <br/>
  * Alternatively, the HTML markup look like:
+ *
  * <pre>
-&lt;div wicket:id="layout"&gt;
-	&lt;div id="vertical"&gt;
-		&lt;div&gt;
-			- top -
-		&lt;/div&gt;		
-		&lt;div id="horizontal"&gt;	
-			&lt;div&gt;
-				- left -
-			&lt;/div&gt;
-			&lt;div&gt;
-				- center -
-			&lt;/div&gt;
-			&lt;div&gt;
-				- right -
-			&lt;/div&gt;
-		&lt;/div&gt;
-		&lt;div&gt;
-			- bottom -
-		&lt;/div&gt;
-	&lt;/div&gt;
-&lt;/div&gt;
+ * &lt;div wicket:id="layout"&gt;
+ * 	&lt;div id="vertical"&gt;
+ * 		&lt;div id="top"&gt;
+ * 			&lt;br/&gt;
+ * 		&lt;/div&gt;
+ * 		&lt;div id="horizontal"&gt;
+ * 			&lt;div id="left"&gt;
+ * 				&lt;br/&gt;
+ * 			&lt;/div&gt;
+ * 			&lt;div id="center"&gt;
+ * 				&lt;br/&gt;
+ * 			&lt;/div&gt;
+ * 			&lt;div id="right"&gt;
+ * 				&lt;br/&gt;
+ * 			&lt;/div&gt;
+ * 		&lt;/div&gt;
+ * 		&lt;div id="bottom"&gt;
+ * 			&lt;br/&gt;
+ * 		&lt;/div&gt;
+ * 	&lt;/div&gt;
+ * &lt;/div&gt;
  * </pre>
  * 
  * @author Sebastien Briquet - sebfz1
@@ -83,6 +84,7 @@ public class BorderLayout extends WebMarkupContainer implements IBorderLayout
 
 	/**
 	 * Gets vertical panes in a JSON array
+	 *
 	 * @return by default: 15% - middle - 15%
 	 */
 	@Override
@@ -93,12 +95,13 @@ public class BorderLayout extends WebMarkupContainer implements IBorderLayout
 
 	/**
 	 * Gets horizontal panes in a JSON array
+	 *
 	 * @return by default: 15% - center - 15%
 	 */
 	@Override
 	public String getHorizontalPanes()
 	{
-		return "[ { size: '15%' }, { }, { size: '15%' } ]"; 
+		return "[ { size: '15%' }, { }, { size: '15%' } ]";
 	}
 
 	

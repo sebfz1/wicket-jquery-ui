@@ -37,9 +37,8 @@ public class DialogButton implements IClusterable
 	 */
 	private static synchronized int nextSequence()
 	{
-		return (DialogButton.sequence++ % Short.MAX_VALUE);
+		return DialogButton.sequence++ % Short.MAX_VALUE;
 	}
-
 
 	private final int id;
 	private final String text;
@@ -49,6 +48,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Constructor
+	 *
 	 * @param text the button's text
 	 */
 	public DialogButton(String text)
@@ -58,6 +58,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Constructor
+	 *
 	 * @param text the button's text
 	 * @param icon the button's icon
 	 */
@@ -68,6 +69,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Constructor
+	 *
 	 * @param text the button's text
 	 * @param enabled indicates whether the button is enabled
 	 */
@@ -78,6 +80,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Constructor
+	 *
 	 * @param text the button's text
 	 * @param icon the button's icon
 	 * @param enabled indicates whether the button is enabled
@@ -92,6 +95,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Constructor
+	 *
 	 * @param model the button's text model
 	 */
 	public DialogButton(final IModel<String> model)
@@ -101,6 +105,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Constructor
+	 *
 	 * @param model the button's text model
 	 * @param icon the button's icon
 	 */
@@ -111,6 +116,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Constructor
+	 *
 	 * @param model the button's text model
 	 * @param enabled indicates whether the button is enabled
 	 */
@@ -121,6 +127,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Constructor
+	 *
 	 * @param model the button's text model
 	 * @param icon the button's icon
 	 * @param enabled indicates whether the button is enabled
@@ -130,10 +137,10 @@ public class DialogButton implements IClusterable
 		this(model.getObject(), icon, enabled);
 	}
 
-
 	// Properties //
 	/**
 	 * Gets the button's icon
+	 *
 	 * @return the button's icon
 	 */
 	public String getIcon()
@@ -143,6 +150,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Sets the button's icon
+	 *
 	 * @param icon the css class (ie: ui-my-icon)
 	 */
 	public void setIcon(String icon)
@@ -152,6 +160,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Indicates whether the button is enabled
+	 *
 	 * @return true or false
 	 */
 	public boolean isEnabled()
@@ -161,6 +170,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Sets the enable state of the button
+	 *
 	 * @param enabled true or false
 	 */
 	public void setEnabled(boolean enabled)
@@ -170,6 +180,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Sets the enable state of the button
+	 *
 	 * @param enabled true or false
 	 * @param target the {@link AjaxRequestTarget}
 	 */
@@ -187,6 +198,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Sets the visible state of the button
+	 *
 	 * @param visible true or false
 	 * @param target the {@link AjaxRequestTarget}
 	 */
@@ -218,11 +230,11 @@ public class DialogButton implements IClusterable
 		return String.format("btn%02x", this.id).toLowerCase();
 	}
 
-
 	// Methods //
 
 	/**
 	 * Enables the button
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	private void enable(AjaxRequestTarget target)
@@ -232,6 +244,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Disables the button
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	private void disable(AjaxRequestTarget target)
@@ -241,6 +254,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Shows the button
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	private void show(AjaxRequestTarget target)
@@ -250,13 +264,13 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Hides the button
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	private void hide(AjaxRequestTarget target)
 	{
 		target.appendJavaScript(String.format("jQuery('#%s').hide();", this.getMarkupId()));
 	}
-
 
 	@Override
 	public int hashCode()

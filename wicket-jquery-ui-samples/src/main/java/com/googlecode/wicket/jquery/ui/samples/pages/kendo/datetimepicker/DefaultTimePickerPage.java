@@ -26,7 +26,7 @@ public class DefaultTimePickerPage extends AbstractTimePickerPage
 
 		// TimePicker //
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(0, 0, 0, 14, 0); //2:00 PM
+		calendar.set(0, 0, 0, 14, 0); // 2:00 PM
 
 		final TimePicker timepicker = new TimePicker("timepicker", Model.of(calendar.getTime()));
 		form.add(timepicker);

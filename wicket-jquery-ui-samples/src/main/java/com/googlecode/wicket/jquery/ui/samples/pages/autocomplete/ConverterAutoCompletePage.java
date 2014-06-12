@@ -21,11 +21,6 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 
 	public ConverterAutoCompletePage()
 	{
-		this.init();
-	}
-
-	private void init()
-	{
 		// Form //
 		final Form<Genre> form = new Form<Genre>("form", new Model<Genre>(GENRES.get(0))); //test default value
 		this.add(form);
@@ -51,7 +46,11 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 					{
 						choices.add(genre);
 
-						if (++count == 20) { break; } //limits the number of results
+						// limits the number of results
+						if (++count == 20)
+						{
+							break;
+						}
 					}
 				}
 

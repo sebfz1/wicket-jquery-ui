@@ -19,7 +19,8 @@ package com.googlecode.wicket.jquery.ui.kendo.datatable.column;
 import org.apache.wicket.IClusterable;
 
 /**
- * TODO javadoc
+ * Specifies the column definition of a {@link DataTable}
+ *
  * @author Sebastien Briquet - sebfz1
  *
  * @param <T>

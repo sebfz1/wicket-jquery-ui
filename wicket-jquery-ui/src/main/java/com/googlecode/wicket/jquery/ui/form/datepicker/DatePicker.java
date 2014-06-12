@@ -41,6 +41,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public DatePicker(String id)
@@ -50,6 +51,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param options {@link Options}
 	 */
@@ -62,6 +64,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
 	 * @param options {@link Options}
@@ -75,6 +78,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -83,9 +87,9 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 		this(id, model, new Options());
 	}
 
-
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param options {@link Options}
@@ -99,6 +103,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
@@ -124,7 +129,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
+		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
 	/**
@@ -135,11 +140,13 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
+		// noop
 	}
 
 	@Override
 	public void onSelect(AjaxRequestTarget target, String date)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //

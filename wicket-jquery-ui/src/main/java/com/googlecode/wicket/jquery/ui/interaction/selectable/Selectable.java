@@ -66,7 +66,8 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 {
 	private static final long serialVersionUID = 1L;
 
-	private List<T> items = null; //selected items
+	/** The list of selectable items */
+	private List<T> items = null;
 
 	/**
 	 * Constructor
@@ -142,6 +143,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
@@ -201,10 +203,11 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	 */
 	public Draggable<?> createDraggable(String id, SelectableDraggableFactory factory)
 	{
-		return factory.create(id, JQueryWidget.getSelector(this)); //let throw a NPE if no factory is defined
+		return factory.create(id, JQueryWidget.getSelector(this)); // let throw a NPE if no factory is defined
 	}
 
 	// Default Draggable Factory //
+
 	/**
 	 * Default {@link SelectableDraggableFactory} implementation which will create a {@link Draggable} with a {@link JQueryIcon#ARROW_4_DIAG} icon
 	 */

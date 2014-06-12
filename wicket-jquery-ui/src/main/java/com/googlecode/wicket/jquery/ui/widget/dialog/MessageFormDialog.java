@@ -25,6 +25,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * Provides a modal dialog box that display a specific message, with a predefined icon and a predefined button set.
@@ -44,7 +45,7 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param message the message to be displayed
-	 * @param buttons button set to display
+	 * @param buttons button set to be displayed
 	 */
 	public MessageFormDialog(String id, String title, String message, DialogButtons buttons)
 	{
@@ -56,7 +57,7 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param message the message to be displayed
-	 * @param buttons button set to display
+	 * @param buttons list of buttons to be displayed
 	 */
 	public MessageFormDialog(String id, IModel<String> title, IModel<String> message, DialogButtons buttons)
 	{
@@ -68,7 +69,7 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param message the message to be displayed
-	 * @param buttons button set to display
+	 * @param buttons button set to be displayed
 	 * @param icon the predefined icon to display
 	 */
 	public MessageFormDialog(String id, String title, String message, DialogButtons buttons, DialogIcon icon)
@@ -78,16 +79,17 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 
 	/**
 	 * Constructor.
+	 *
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param message the message to be displayed
-	 * @param buttons button set to display
+	 * @param buttons button set to be displayed
 	 * @param icon the predefined icon to display
 	 */
 	public MessageFormDialog(String id, IModel<String> title, IModel<String> message, DialogButtons buttons, DialogIcon icon)
 	{
 		super(id, title, message, true);
-		this.buttons = buttons;
+		this.buttons = Args.notNull(buttons, "buttons");
 
 		WebMarkupContainer container = new WebMarkupContainer("container");
 		this.add(container);

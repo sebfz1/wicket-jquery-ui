@@ -68,7 +68,7 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 
 	// Properties //
 	/**
-	 * Gets the reference list of tabs.<br/>
+	 * Gets the reference {@link List} of {@link ITab}<tt>s</tt>.<br/>
 	 * Usually the model object of the component on which this {@link TabsBehavior} is bound to.
 	 *
 	 * @return a non-null {@link List}
@@ -88,11 +88,11 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 		{
 			component.add(this.activatingEventBehavior = this.newActivatingEventBehavior());
 		}
-
 	}
 
 	/**
 	 * Activates the selected tab, identified by the index
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index
 	 */
@@ -149,6 +149,7 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 	// Factories //
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' javascript callback
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newActivateEventBehavior()
@@ -179,6 +180,7 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'beforeActivate' javascript callback
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newActivatingEventBehavior()
@@ -207,8 +209,8 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 		};
 	}
 
-
 	// Event objects //
+
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'activate' callback
 	 */
@@ -228,6 +230,7 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 
 		/**
 		 * Gets the tab's index
+		 *
 		 * @return the index
 		 */
 		public int getIndex()
@@ -236,6 +239,9 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 		}
 	}
 
+	/**
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'beforeActivate' callback
+	 */
 	protected static class ActivatingEvent extends ActivateEvent
 	{
 	}

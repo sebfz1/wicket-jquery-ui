@@ -48,6 +48,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public DateTimePicker(String id)
@@ -57,6 +58,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param datePattern the SimpleDateFormat pattern for the date
 	 * @param timePattern the SimpleDateFormat pattern for the time
@@ -71,6 +73,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param date the initial date
 	 */
@@ -81,6 +84,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param date the initial date
 	 * @param datePattern the SimpleDateFormat pattern for the date
@@ -99,6 +103,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	protected void convertInput()
 	{
 		final IConverter<Date> converter = this.getConverter(Date.class);
+
 		String dateInput = this.datePicker.getInput();
 		String timeInput = this.timePicker.getInput();
 
