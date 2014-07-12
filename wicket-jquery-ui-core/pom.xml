@@ -11,7 +11,12 @@
 	</parent>
 
 	<artifactId>wicket-jquery-ui-core</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
+
+    <properties>
+        <bundle.symbolicName>com.googlecode.wicket.jquery.core</bundle.symbolicName>
+        <bundle.namespace>${bundle.symbolicName}</bundle.namespace>
+    </properties>
 
     <properties>
 	    <bundle.namespace>com.googlecode.wicket.jquery.core</bundle.namespace>
@@ -25,6 +30,7 @@
 			<artifactId>wicket-core</artifactId>
 			<version>${wicket.version}</version>
 			<scope>provided</scope>
+            <!--should be changed to provided-->
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
