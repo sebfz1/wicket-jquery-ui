@@ -19,15 +19,14 @@ package com.googlecode.wicket.jquery.ui.interaction.selectable;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
-import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 
@@ -35,6 +34,7 @@ import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
  * Provides a jQuery UI selectable {@link JQueryContainer}.<br/>
  * Children of that container can be selected using the mouse or by pressing ctrl+click<br/>
  * Usage:
+ *
  * <pre>
  * &lt;ul wicket:id="selectable"&gt;
  * 	&lt;li wicket:id="items"&gt;
@@ -66,17 +66,17 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 {
 	private static final long serialVersionUID = 1L;
 
-	/** The list of selectable items */
-	private List<T> items = null;
+	private List<T> items = null; //selected items
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
-	 * @param list the list the {@link Selectable} should observe.
+	 * @param items the list the {@link Selectable} should observe.
 	 */
-	public Selectable(String id, List<T> list)
+	public Selectable(String id, List<T> items)
 	{
-		this(id, new ListModel<T>(list));
+		this(id, new ListModel<T>(items));
 	}
 
 	/**
@@ -123,16 +123,6 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 
 	// Events //
 	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
-	{
-	}
-
-	/**
 	 * Triggered when a selection has been made (stops)
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -164,24 +154,16 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 			}
 
 			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				Selectable.this.onConfigure(this);
-			}
-
-			@Override
 			public void onSelect(AjaxRequestTarget target, List<T> items)
 			{
 				Selectable.this.items = items;
 				Selectable.this.onSelect(target, items);
 			}
-
 		};
 	}
 
 	// DraggableFactory methods //
+
 	/**
 	 * Creates a {@link Draggable} object that is related to this {@link Selectable}.<br/>
 	 * Uses a default factory that will create a {@link Draggable} with a <code>ui-icon-arrow-4-diag</code> icon
@@ -223,7 +205,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected void onConfigure(JQueryBehavior behavior)
+				public void onConfigure(JQueryBehavior behavior)
 				{
 					super.onConfigure(behavior);
 

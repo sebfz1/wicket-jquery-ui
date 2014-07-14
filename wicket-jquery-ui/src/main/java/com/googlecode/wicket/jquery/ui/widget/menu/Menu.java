@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -42,12 +41,14 @@ import com.googlecode.wicket.jquery.core.Options;
  * Provides the jQuery menu based on a {@link JQueryPanel}
  *
  * @author Sebastien Briquet - sebfz1
+ * @since 1.4.2
+ * @since 1.6.2
  */
 public class Menu extends JQueryPanel implements IMenuListener
 {
 	private static final long serialVersionUID = 1L;
 
-	private final List<IMenuItem> items; //first level
+	private final List<IMenuItem> items; // first level
 	private WebMarkupContainer root;
 
 	/** Keep a reference to the {@link MenuItem}<code>s</code> hash */
@@ -74,7 +75,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 		super(id);
 
 		this.items = Args.notNull(items, "items");
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -100,13 +101,13 @@ public class Menu extends JQueryPanel implements IMenuListener
 		super(id, options);
 
 		this.items = Args.notNull(items, "items");
-		this.init();
+		this.initialize();
 	}
 
 	/**
 	 * Initialization
 	 */
-	private void init()
+	private void initialize()
 	{
 		this.root = new WebMarkupContainer("root");
 		this.root.add(new ListFragment("list", this.items));
@@ -130,17 +131,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this, JQueryWidget.getSelector(this.root)));
-	}
-
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
-	{
+		this.add(JQueryWidget.newWidgetBehavior(this, this.root));
 	}
 
 	@Override
@@ -163,14 +154,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 				return Menu.this.map;
 			}
 
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				Menu.this.onConfigure(this);
-			}
-
+			// Events //
 			@Override
 			public void onClick(AjaxRequestTarget target, IMenuItem item)
 			{
@@ -218,11 +202,15 @@ public class Menu extends JQueryPanel implements IMenuListener
 					Menu.this.map.put(menuItem.getId(), menuItem);
 
 					item.add(new ItemFragment("item", menuItem));
-					item.add(new MenuFragment("menu", menuItem.getItems()));
 					item.add(AttributeModifier.replace("id", menuItem.getId()));
 
-					if (!menuItem.isEnabled())
+					if (menuItem.isEnabled())
 					{
+						item.add(new MenuFragment("menu", menuItem.getItems()));
+					}
+					else
+					{
+						item.add(new EmptyPanel("menu"));
 						item.add(AttributeModifier.append("class", Model.of("ui-state-disabled")));
 					}
 				}

@@ -8,12 +8,12 @@ import com.googlecode.wicket.jquery.ui.samples.SamplePage;
 abstract class AbstractDialogPage extends SamplePage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public AbstractDialogPage()
 	{
-		
+
 	}
-	
+
 	@Override
 	protected List<DemoLink> getDemoLinks()
 	{

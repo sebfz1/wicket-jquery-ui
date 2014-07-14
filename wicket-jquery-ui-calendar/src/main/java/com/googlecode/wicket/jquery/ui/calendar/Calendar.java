@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -130,13 +129,19 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 	// Properties //
 	@Override
-	public boolean isEditable()
+	public boolean isSelectable()
 	{
 		return false;
 	}
 
 	@Override
-	public boolean isSelectable()
+	public boolean isDayClickEnabled()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isEventClickEnabled()
 	{
 		return false;
 	}
@@ -154,7 +159,13 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	@Override
-	public boolean isViewDisplayEnabled()
+	public boolean isObjectDropEnabled()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isViewRenderEnabled()
 	{
 		return false;
 	}
@@ -165,17 +176,28 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	{
 		super.onInitialize();
 
-		this.add(this.modelBehavior = new CalendarModelBehavior(this.getModel()));
+		this.add(this.modelBehavior = this.newCalendarModelBehavior(this.getModel()));
 	}
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
 	{
+		super.onConfigure(behavior);
+
+		// builds sources //
+		StringBuilder sourceBuilder = new StringBuilder();
+		sourceBuilder.append("'").append(Calendar.this.modelBehavior.getCallbackUrl()).append("'");
+
+		if (Calendar.this.gcals != null)
+		{
+			for (Entry<CharSequence, String> gcal : Calendar.this.gcals.entrySet())
+			{
+				sourceBuilder.append(", ");
+				sourceBuilder.append("jQuery.fullCalendar.gcalFeed('").append(gcal.getKey()).append("', { className: '").append(gcal.getValue()).append("' })");
+			}
+		}
+
+		behavior.setOption("eventSources", String.format("[%s]", sourceBuilder.toString()));
 	}
 
 	@Override
@@ -185,7 +207,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	@Override
-	public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date)
+	public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date, boolean allDay)
 	{
 		// noop
 	}
@@ -209,11 +231,16 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	@Override
-	public void onViewDisplay(AjaxRequestTarget target, CalendarView view)
+	public void onObjectDrop(AjaxRequestTarget target, String title, Date date, boolean allDay)
 	{
 		// noop
 	}
 
+	@Override
+	public void onViewRender(AjaxRequestTarget target, CalendarView view, Date start, Date end)
+	{
+		// noop
+	}
 
 	// IJQueryWidget //
 	/**
@@ -227,15 +254,21 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public boolean isEditable()
-			{
-				return Calendar.this.isEditable();
-			}
-
-			@Override
 			public boolean isSelectable()
 			{
 				return Calendar.this.isSelectable();
+			}
+
+			@Override
+			public boolean isDayClickEnabled()
+			{
+				return Calendar.this.isDayClickEnabled();
+			}
+
+			@Override
+			public boolean isEventClickEnabled()
+			{
+				return Calendar.this.isEventClickEnabled();
 			}
 
 			@Override
@@ -251,33 +284,15 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			}
 
 			@Override
-			public boolean isViewDisplayEnabled()
+			public boolean isObjectDropEnabled()
 			{
-				return Calendar.this.isViewDisplayEnabled();
+				return Calendar.this.isObjectDropEnabled();
 			}
 
 			@Override
-			public void onConfigure(Component component)
+			public boolean isViewRenderEnabled()
 			{
-				super.onConfigure(component);
-
-				// lazy options //
-				Calendar.this.onConfigure(this);
-
-				// builds sources //
-				StringBuilder sourceBuilder = new StringBuilder();
-				sourceBuilder.append("'").append(Calendar.this.modelBehavior.getCallbackUrl()).append("'");
-
-				if (Calendar.this.gcals != null)
-				{
-					for (Entry<CharSequence, String> gcal : Calendar.this.gcals.entrySet())
-					{
-						sourceBuilder.append(", ");
-						sourceBuilder.append("jQuery.fullCalendar.gcalFeed('").append(gcal.getKey()).append("', { className: '").append(gcal.getValue()).append("' })");
-					}
-				}
-
-				this.setOption("eventSources", String.format("[%s]", sourceBuilder.toString()));
+				return Calendar.this.isViewRenderEnabled();
 			}
 
 			@Override
@@ -287,9 +302,9 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			}
 
 			@Override
-			public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date)
+			public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date, boolean allDay)
 			{
-				Calendar.this.onDayClick(target, view, date);
+				Calendar.this.onDayClick(target, view, date, allDay);
 			}
 
 			@Override
@@ -311,10 +326,28 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			}
 
 			@Override
-			public void onViewDisplay(AjaxRequestTarget target, CalendarView view)
+			public void onObjectDrop(AjaxRequestTarget target, String title, Date date, boolean allDay)
 			{
-				Calendar.this.onViewDisplay(target, view);
+				Calendar.this.onObjectDrop(target, title, date, allDay);
+			}
+
+			@Override
+			public void onViewRender(AjaxRequestTarget target, CalendarView view, Date start, Date end)
+			{
+				Calendar.this.onViewRender(target, view, start, end);
 			}
 		};
+	}
+
+	// Factory methods //
+	/**
+	 * Gets a new {@link CalendarModelBehavior}
+	 *
+	 * @param model the {@link CalendarModel}
+	 * @return the {@link CalendarModelBehavior}
+	 */
+	protected CalendarModelBehavior newCalendarModelBehavior(final CalendarModel model)
+	{
+		return new CalendarModelBehavior(model);
 	}
 }

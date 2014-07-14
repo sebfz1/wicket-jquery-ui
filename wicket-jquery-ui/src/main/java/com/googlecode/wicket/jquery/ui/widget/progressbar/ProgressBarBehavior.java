@@ -22,7 +22,7 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
-import com.googlecode.wicket.jquery.core.event.JQueryAjaxChangeBehavior;
+import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxChangeBehavior;
 
 /**
  * Provides a jQuery progress-bar behavior.

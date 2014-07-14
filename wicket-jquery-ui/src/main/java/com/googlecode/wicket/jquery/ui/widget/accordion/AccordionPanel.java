@@ -19,7 +19,6 @@ package com.googlecode.wicket.jquery.ui.widget.accordion;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
@@ -28,7 +27,6 @@ import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
@@ -139,6 +137,38 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 		this.widgetBehavior.activate(index, target); // sets 'active' option, that fires 'activate' event (best would be that it also fires a 'show' event)
 	}
 
+	/**
+	 * Gets the last <i>visible</i> tab index
+	 *
+	 * @return the tab index, or -1 if none
+	 */
+	public int getLastTabIndex()
+	{
+		int index = -1;
+
+		for (ITab tab : this.getModelObject())
+		{
+			if (tab.isVisible())
+			{
+				index++;
+			}
+		}
+
+		return index;
+	}
+
+	@Override
+	public boolean isCreateEventEnabled()
+	{
+		return true;
+	}
+
+	@Override
+	public boolean isActivateEventEnabled()
+	{
+		return true;
+	}
+
 	// Events //
 
 	@Override
@@ -151,30 +181,28 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			protected LoopItem newItem(final int index)
+			{
+				ITab tab = AccordionPanel.this.getModelObject().get(index);
+
+				LoopItem item = super.newItem(index);
+				item.setVisible(tab.isVisible());
+
+				return item;
+			}
+
+			@Override
 			protected void populateItem(LoopItem item)
 			{
 				int index = item.getIndex();
 				final ITab tab = AccordionPanel.this.getModelObject().get(index);
 
-				if (tab.isVisible())
-				{
-					item.add(AccordionPanel.this.newTitleLabel("title", tab.getTitle()));
-					item.add(tab.getPanel("panel"));
-				}
+				item.add(AccordionPanel.this.newTitleLabel("title", tab.getTitle()));
+				item.add(tab.getPanel("panel"));
 			}
 		});
 
 		this.add(this.widgetBehavior = this.newWidgetBehavior(JQueryWidget.getSelector(this)));
-	}
-
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering cycle has begun, the behavior can modify the
-	 * configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
-	{
 	}
 
 	@Override
@@ -207,17 +235,21 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected List<ITab> getTabs()
+			public boolean isCreateEventEnabled()
 			{
-				return AccordionPanel.this.getModelObject();
+				return AccordionPanel.this.isCreateEventEnabled();
 			}
 
 			@Override
-			public void onConfigure(Component component)
+			public boolean isActivateEventEnabled()
 			{
-				super.onConfigure(component);
+				return AccordionPanel.this.isActivateEventEnabled();
+			}
 
-				AccordionPanel.this.onConfigure(this);
+			@Override
+			protected List<ITab> getTabs()
+			{
+				return AccordionPanel.this.getModelObject();
 			}
 
 			@Override

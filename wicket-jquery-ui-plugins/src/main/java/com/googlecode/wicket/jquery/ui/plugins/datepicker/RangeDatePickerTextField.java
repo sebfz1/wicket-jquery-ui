@@ -163,7 +163,10 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 	 */
 	protected DateFormat newDateFormat(Locale locale)
 	{
-		return new SimpleDateFormat("dd MMM yyyy", locale);
+		DateFormat df = new SimpleDateFormat("dd MMM yyyy", locale);
+		df.setTimeZone(DateRange.UTC);
+
+		return df;
 	}
 
 	/**
@@ -244,10 +247,10 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 				StringBuilder statements = new StringBuilder();
 
 				statements.append("jQuery('#").append(input.getMarkupId()).append("').on('click', function() { ");
-				statements.append("jQuery('#").append(datepicker.getMarkupId()).append("').DatePickerShow(); ");
+				statements.append("		jQuery('#").append(datepicker.getMarkupId()).append("').DatePickerShow(); ");
 				statements.append("} );");
 
-				return String.format("jQuery(function() { %s });", statements);
+				return statements.toString();
 			}
 		};
 	}

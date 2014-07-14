@@ -178,7 +178,9 @@ public class DynamicWizardPage extends AbstractWizardPage
 
 				// reset the avatar to null if the option has been changed since the avatar has been set
 				// (ie, the users chooses 'yes', set the avatar and then choose no by going steps backward)
-				if (UserWizard.this.enableAvatarStepModel.getObject() == false)
+				boolean enabled = UserWizard.this.enableAvatarStepModel.getObject();
+
+				if (!enabled)
 				{
 					User user = UserWizard.this.getModelObject();
 

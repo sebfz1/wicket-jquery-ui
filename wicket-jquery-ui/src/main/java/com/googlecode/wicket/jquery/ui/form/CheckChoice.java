@@ -19,7 +19,6 @@ package com.googlecode.wicket.jquery.ui.form;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
@@ -45,7 +44,7 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	public CheckChoice(String id)
 	{
 		super(id);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -56,7 +55,7 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	public CheckChoice(String id, List<? extends T> choices)
 	{
 		super(id, choices);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -68,7 +67,7 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	public CheckChoice(String id, List<? extends T> choices, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, choices, renderer);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -79,7 +78,7 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	public CheckChoice(String id, IModel<? extends List<? extends T>> choices)
 	{
 		super(id, choices);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -91,7 +90,7 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	public CheckChoice(String id, IModel<? extends List<? extends T>> choices, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, choices, renderer);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -103,7 +102,7 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	public CheckChoice(String id, IModel<? extends Collection<T>> model, List<? extends T> choices)
 	{
 		super(id, model, choices);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -115,7 +114,7 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	public CheckChoice(String id, IModel<? extends Collection<T>> model, IModel<? extends List<? extends T>> choices)
 	{
 		super(id, model, choices);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -128,7 +127,7 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	public CheckChoice(String id, IModel<? extends Collection<T>> model, List<? extends T> choices, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, model, choices, renderer);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -141,13 +140,13 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	public CheckChoice(String id, IModel<? extends Collection<T>> model, IModel<? extends List<? extends T>> choices, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, model, choices, renderer);
-		this.init();
+		this.initialize();
 	}
 
 	/**
 	 * Initialization
 	 */
-	private void init()
+	private void initialize()
 	{
 		this.setSuffix(""); // prevent the <br/> tag
 	}
@@ -161,30 +160,23 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
 	}
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
 	{
+		// noop
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+		// noop
 	}
 
 	// IJQueryWidget //
 	@Override
 	public CheckChoiceBehavior newWidgetBehavior(String selector)
 	{
-		return new CheckChoiceBehavior(selector) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				CheckChoice.this.onConfigure(this);
-			}
-		};
+		return new CheckChoiceBehavior(selector);
 	}
 
 	/**

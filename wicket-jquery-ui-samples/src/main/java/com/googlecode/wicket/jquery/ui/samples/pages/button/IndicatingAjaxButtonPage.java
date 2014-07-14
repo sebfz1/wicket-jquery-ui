@@ -45,30 +45,6 @@ public class IndicatingAjaxButtonPage extends AbstractButtonPage
 		};
 
 		form.add(button1);
-
-		form.add(new IndicatingAjaxButton("button2") {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
-			{
-				try
-				{
-					Thread.sleep(2000);
-				}
-				catch (InterruptedException e)
-				{
-					info(e.getMessage());
-				}
-
-				IndicatingAjaxButtonPage.this.info(this);
-				//IndicatingAjaxButtonPage.this.info("re-attaching button1");
-
-				target.add(button1);
-				target.add(feedbackPanel);
-			}
-		});
 	}
 
 	private void info(Component component)

@@ -42,7 +42,7 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	/**
 	 * CSS class used to identify the component that invoke the context menu, in order to avoid events conflict (with the registered click in {@link ContextMenu})
 	 */
-	public static final String COMPONENT_CSS = "context-menu-invoker";
+	public static final String INVOKER_CSS_CLASS = "context-menu-invoker";
 
 	private final ContextMenu menu;
 	private Component component = null;
@@ -74,14 +74,14 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 		}
 
 		this.component = component;
-		this.component.add(AttributeModifier.append("class", COMPONENT_CSS));
+		this.component.add(AttributeModifier.append("class", INVOKER_CSS_CLASS));
 		this.component.add(this.onContextMenuEventBehavior = this.newOnContextMenuBehavior());
 	}
 
 	@Override
 	protected String $()
 	{
-		return String.format("jQuery(function() { jQuery('%s').on('contextmenu', %s); });", JQueryWidget.getSelector(this.component), this.onContextMenuEventBehavior.getCallbackFunction());
+		return String.format("jQuery('%s').on('contextmenu', %s);", JQueryWidget.getSelector(this.component), this.onContextMenuEventBehavior.getCallbackFunction());
 	}
 
 	// Events //

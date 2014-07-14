@@ -17,8 +17,6 @@
 package com.googlecode.wicket.jquery.core;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,6 +25,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.wicket.IClusterable;
+
+import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
 /**
  * Provides a wrapper on a {@link Map} that will contains jQuery behavior options (key/value).<br/>
@@ -72,16 +72,16 @@ public class Options implements IClusterable
 	 */
 	public static String asDate(Date date)
 	{
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
-		return Options.asString(df.format(date));
+		return Options.asString(DateUtils.toISO8601(date));
 	}
 
 	/**
 	 * Converts a list of options to a comma delimited string.
+	 *
 	 * @param objects options
 	 * @return a comma delimited string
 	 */
-	public static String fromList(Object... objects)
+	public static String fromArray(Object... objects)
 	{
 		StringBuilder builder = new StringBuilder();
 

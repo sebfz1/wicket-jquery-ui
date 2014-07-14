@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.form.slider;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
@@ -80,7 +79,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	 * Initialization, should be called *manually* by overridden classes, in their constructors.<br/>
 	 * <b>Warning:</b> Options should not be set before this method has been called.
 	 */
-	protected void init()
+	void initialize()
 	{
 		this.options = new Options();
 
@@ -130,13 +129,13 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	}
 
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+	}
+
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
 	{
 	}
 
@@ -144,16 +143,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new SliderBehavior(selector, this.options) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				AbstractSlider.this.onConfigure(this);
-			}
-		};
+		return new SliderBehavior(selector, this.options);
 	}
 
 	// Factory //

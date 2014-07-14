@@ -37,7 +37,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	private static final long serialVersionUID = 1L;
 	private static final String NULL_OPTIONS = "Options have not been defined (null has been supplied to the constructor)";
 
-	protected final String selector;
+	protected String selector = null;
 	protected final String method;
 	protected final Options options;
 
@@ -104,7 +104,38 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	// Properties //
 	/**
+	 * Gets the selector
+	 *
+	 * @return the selector
+	 */
+	public String getSelector()
+	{
+		return this.selector;
+	}
+
+	/**
+	 * Sets the selector
+	 *
+	 * @param selector the html selector (ie: "#myId")
+	 */
+	protected void setSelector(String selector)
+	{
+		this.selector = selector;
+	}
+
+	/**
+	 * Gets the jQuery method
+	 *
+	 * @return the method
+	 */
+	public String getMethod()
+	{
+		return this.method;
+	}
+
+	/**
 	 * Gets a behavior option, referenced by its key
+	 *
 	 * @param key the option key
 	 * @return null if the key does not exists
 	 */
@@ -138,7 +169,18 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	}
 
 	/**
+	 * Gets the {@link Options}
+	 *
+	 * @return the {@link Options}
+	 */
+	public Options getOptions()
+	{
+		return this.options;
+	}
+
+	/**
 	 * Adds or replace behavior options
+	 *
 	 * @param options the {@link Options}
 	 */
 	public void setOptions(Options options)
@@ -188,19 +230,21 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	/**
 	 * Gets the jQuery statement.<br/>
 	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
+	 *
 	 * @param options the list of options to be supplied to the current method
-	 * @return Statement like 'jQuery(function() { ... })'
+	 * @return the jQuery statement
 	 */
 	public String $(Object... options)
 	{
-		return this.$(Options.fromList(options));
+		return this.$(Options.fromArray(options));
 	}
 
 	/**
 	 * Gets the jQuery statement.<br/>
 	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
+	 *
 	 * @param options the options to be supplied to the current method
-	 * @return Statement like 'jQuery(function() { ... })'
+	 * @return the jQuery statement
 	 */
 	public String $(String options)
 	{
@@ -209,13 +253,48 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Gets the jQuery statement.
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param method the jQuery method to invoke
 	 * @param options the options to be applied
-	 * @return Statement like 'jQuery(function() { ... })'
+	 * @return the jQuery statement
 	 */
 	private static String $(String selector, String method, String options)
 	{
-		return String.format("jQuery(function() { jQuery('%s').%s(%s); });", selector, method, options);
+		return String.format("jQuery('%s').%s(%s);", selector, method, options);
+	}
+
+	// Events //
+
+	/**
+	 * {@inheritDoc} <br/>
+	 * Also, {@link #onConfigure(Component)} will call {@link IJQueryWidget#onConfigure(JQueryBehavior)} (if the component IS-A {@link IJQueryWidget})<br/>
+	 * If a property set is in {@link #onConfigure(Component)} is needed in {@link IJQueryWidget#onConfigure(JQueryBehavior)}, <code>super.onConfigure(component)</code> should be the last statement.
+	 */
+	@Override
+	public void onConfigure(Component component)
+	{
+		super.onConfigure(component);
+
+		if (component instanceof IJQueryWidget)
+		{
+			((IJQueryWidget) component).onConfigure(this);
+		}
+	}
+
+	/**
+	 * {@inheritDoc} <br/>
+	 * Also, {@link #beforeRender(Component)} will call {@link IJQueryWidget#onBeforeRender(JQueryBehavior)} (if the component IS-A {@link IJQueryWidget})<br/>
+	 * If a property set is in {@link #beforeRender(Component)} is needed in {@link IJQueryWidget#onBeforeRender(JQueryBehavior)}, <code>super.beforeRender(component)</code> should be the last statement.
+	 */
+	@Override
+	public void beforeRender(Component component)
+	{
+		super.beforeRender(component);
+
+		if (component instanceof IJQueryWidget)
+		{
+			((IJQueryWidget) component).onBeforeRender(this);
+		}
 	}
 }

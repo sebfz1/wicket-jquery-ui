@@ -5,15 +5,15 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
-import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
-import com.googlecode.wicket.jquery.ui.kendo.button.Button;
-import com.googlecode.wicket.jquery.ui.kendo.combobox.ComboBox;
-import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
+import com.googlecode.wicket.jquery.ui.samples.data.dao.GenresDAO;
+import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
+import com.googlecode.wicket.kendo.ui.form.button.Button;
+import com.googlecode.wicket.kendo.ui.form.combobox.ComboBox;
+import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
 public class TemplateComboBoxPage extends AbstractComboBoxPage
 {
@@ -25,11 +25,11 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
-		form.add(feedback.setOutputMarkupId(true));
+		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
+		form.add(feedback);
 
 		// ComboBox //
-		final ComboBox<Genre> combobox = new ComboBox<Genre>("combobox", new Model<String>(), GENRES) {
+		final ComboBox<Genre> combobox = new ComboBox<Genre>("combobox", new Model<String>(), GenresDAO.all()) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -98,18 +98,4 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 
 		this.info(choice != null ? choice : "no choice");
 	}
-
-
-	// List of Genre(s) //
-	private static final List<Genre> GENRES = Arrays.asList(
-			new Genre("Black Metal", "cover-black-metal.png"),
-			new Genre("Death Metal", "cover-death-metal.png"),
-			new Genre("Doom Metal", "cover-doom-metal.png"),
-			new Genre("Folk Metal", "cover-folk-metal.png"),
-			new Genre("Gothic Metal", "cover-gothic-metal.png"),
-			new Genre("Heavy Metal", "cover-heavy-metal.png"),
-			new Genre("Power Metal", "cover-power-metal.png"),
-			new Genre("Symphonic Metal", "cover-symphonic-metal.png"),
-			new Genre("Trash Metal", "cover-trash-metal.png"),
-			new Genre("Vicking Metal", "cover-vicking-metal.png"));
 }

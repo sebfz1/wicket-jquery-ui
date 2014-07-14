@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.form.button;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
@@ -36,6 +35,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public Button(String id)
@@ -45,6 +45,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
@@ -55,7 +56,8 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 
 	/**
 	 * Gets the icon being displayed in the button
-	 * @return the icon class
+	 *
+	 * @return {@link JQueryIcon#NONE} by default
 	 */
 	protected String getIcon()
 	{
@@ -63,42 +65,36 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
+		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(ButtonBehavior behavior)
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
 	{
-		if (!JQueryIcon.NONE.equals(this.getIcon()))
+		if (!JQueryIcon.isNone(this.getIcon()))
 		{
 			behavior.setOption("icons", String.format("{ primary: '%s' }", this.getIcon()));
 		}
 	}
 
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+		// noop
+	}
+
 	// IJQueryWidget //
+
 	@Override
 	public ButtonBehavior newWidgetBehavior(String selector)
 	{
-		return new ButtonBehavior(selector) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				Button.this.onConfigure(this);
-			}
-		};
+		return new ButtonBehavior(selector);
 	}
 
 	/**

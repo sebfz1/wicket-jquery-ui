@@ -20,7 +20,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -31,7 +30,7 @@ import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.ui.interaction.behavior.DisplayNoneBehavior;
-import com.googlecode.wicket.jquery.ui.widget.dialog.DialogBehavior.ButtonAjaxBehavior;
+import com.googlecode.wicket.jquery.ui.widget.dialog.ButtonAjaxBehavior.ClickEvent;
 
 /**
  * Base class for implementing jQuery dialogs
@@ -174,14 +173,15 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 		this.add(this.widgetBehavior = this.newWidgetBehavior(JQueryWidget.getSelector(this))); // warning: ButtonAjaxBehavior(s) should be set at this point!
 	}
 
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
 	{
+		// class options //
+		behavior.setOption("autoOpen", false);
+		behavior.setOption("title", Options.asString(this.title.getObject()));
+		behavior.setOption("modal", this.isModal());
+		behavior.setOption("resizable", this.isResizable());
+		behavior.setOption("width", this.getWidth());
 	}
 
 	/**
@@ -264,6 +264,30 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	}
 
 	/**
+	 * Sets the dialog's title dynamically
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param title the dialog's title
+	 */
+	public void setTitle(AjaxRequestTarget target, String title)
+	{
+		this.setTitle(target, Model.of(title));
+	}
+
+	/**
+	 * Sets the dialog's title dynamically
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param title the dialog's title
+	 */
+	public void setTitle(AjaxRequestTarget target, IModel<String> title)
+	{
+		this.setTitle(title);
+
+		target.appendJavaScript(this.widgetBehavior.$(Options.asString("option"), Options.asString("title"), Options.asString(title.getObject())));
+	}
+
+	/**
 	 * Gets the modal flag
 	 *
 	 * @return the modal flag supplied to the constructor by default
@@ -285,6 +309,12 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 	@Override
 	public boolean isDefaultCloseEventEnabled()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isEscapeCloseEventEnabled()
 	{
 		return false;
 	}
@@ -333,7 +363,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	{
 		for (DialogButton button : this.getButtons())
 		{
-			if (button != null && button.equals(text))
+			if (button != null && button.match(text))
 			{
 				return button;
 			}
@@ -392,25 +422,15 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 			}
 
 			@Override
-			protected List<DialogButton> getButtons()
+			public boolean isEscapeCloseEventEnabled()
 			{
-				return AbstractDialog.this.getButtons();
+				return AbstractDialog.this.isEscapeCloseEventEnabled();
 			}
 
 			@Override
-			public void onConfigure(Component component)
+			protected List<DialogButton> getButtons()
 			{
-				super.onConfigure(component);
-
-				// class options //
-				this.setOption("autoOpen", false);
-				this.setOption("title", Options.asString(AbstractDialog.this.title.getObject()));
-				this.setOption("modal", AbstractDialog.this.modal);
-				this.setOption("resizable", AbstractDialog.this.isResizable());
-				this.setOption("width", AbstractDialog.this.getWidth());
-
-				// lazy options //
-				AbstractDialog.this.onConfigure(this);
+				return AbstractDialog.this.getButtons();
 			}
 
 			@Override

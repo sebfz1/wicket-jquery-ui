@@ -59,7 +59,7 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 	{
 		super(id);
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 	{
 		super(id, new ComponentFeedbackMessageFilter(filter));
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -85,20 +85,20 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 	{
 		super(id, new ContainerFeedbackMessageFilter(filter));
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
 	 * Initialization
 	 */
-	private void init()
+	private void initialize()
 	{
 		this.setOutputMarkupId(true);
 	}
 
 	@Override
-	protected Component newMessageDisplayComponent(String id, FeedbackMessage message) {
-
+	protected Component newMessageDisplayComponent(String id, FeedbackMessage message)
+	{
 		WebMarkupContainer container = new WebMarkupContainer(id);
 		container.add(AttributeModifier.replace("class", this.getMessageClass(message)));
 		container.add(new EmptyPanel("icon").add(AttributeModifier.replace("class", this.getIconClass(message))));
@@ -115,6 +115,7 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 
 	/**
 	 * Gets the icon CSS class for the given message.
+	 *
 	 * @param message the {@link FeedbackMessage}
 	 * @return the icon class
 	 */

@@ -33,6 +33,7 @@ public class DialogButton implements IClusterable
 
 	/**
 	 * Gets the next id-sequence. This is used to generate the markupId
+	 *
 	 * @return 0x0000 to 0x7FFF
 	 */
 	private static synchronized int nextSequence()
@@ -279,15 +280,32 @@ public class DialogButton implements IClusterable
 	}
 
 	/**
-	 * Indicates whether this {@link DialogButton} is equal to another {@link DialogButton}. Are considered equals buttons having the same text representation ({@link #toString()}), which is the text supplied to the constructor (if not overridden).
+	 * Indicates whether this {@link DialogButton} is equal to another {@link DialogButton}.<br/>
+	 * Are considered equals buttons having the same text representation, which is the text supplied to the constructor (if {@link #toString()} is not overridden).
 	 *
-	 * @param object either a {@link DialogButton} or a {@link String}
+	 * @param object the {@link DialogButton} to compare to
 	 * @return true if considered as equal
 	 */
 	@Override
 	public boolean equals(Object object)
 	{
-		return (object != null) && (object.toString().equals(this.toString()));
+		if (object instanceof DialogButton)
+		{
+			return this.match(object.toString());
+		}
+
+		return super.equals(object);
+	}
+
+	/**
+	 * Indicates whether this {@link DialogButton} text representation ({@link #toString()}) match to the supplied text.
+	 *
+	 * @param text the text to compare to
+	 * @return true if equal
+	 */
+	public boolean match(String text)
+	{
+		return text.equals(this.toString()); // let throw a NPE
 	}
 
 	@Override

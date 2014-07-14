@@ -14,7 +14,7 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class DefaultSliderPage extends AbstractSliderPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public DefaultSliderPage()
 	{
 		final Form<Integer> form = new Form<Integer>("form", Model.of(15));

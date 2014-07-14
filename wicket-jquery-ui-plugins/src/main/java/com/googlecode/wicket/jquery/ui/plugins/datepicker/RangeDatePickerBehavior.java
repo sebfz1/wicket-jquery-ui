@@ -41,7 +41,7 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "DatePicker";
 
-	private JQueryAjaxBehavior onChangeBehavior;
+	private JQueryAjaxBehavior onRangeChangeBehavior;
 
 	public RangeDatePickerBehavior(final String selector)
 	{
@@ -62,7 +62,7 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 	{
 		super.bind(component);
 
-		component.add(this.onChangeBehavior = this.newOnChangeBehavior());
+		component.add(this.onRangeChangeBehavior = this.newOnRangeChangeBehavior());
 	}
 
 
@@ -72,7 +72,7 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 	{
 		super.onConfigure(component);
 
-		this.setOption("onChange", this.onChangeBehavior.getCallbackFunction());
+		this.setOption("onRangeChange", this.onRangeChangeBehavior.getCallbackFunction());
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'change' javascript callback
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	private JQueryAjaxBehavior newOnChangeBehavior()
+	private JQueryAjaxBehavior newOnRangeChangeBehavior()
 	{
 		return new JQueryAjaxBehavior(this) {
 
@@ -106,7 +106,7 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 			@Override
 			public CharSequence getCallbackScript()
 			{
-				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&start=' + dates[0].getTime() + '&end=' + dates[1].getTime()");
+				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&startTime=' + dates[0].getTime() + '&startOffset=' + dates[0].getTimezoneOffset() + '&endTime=' + dates[1].getTime() + '&endOffset=' + dates[1].getTimezoneOffset()");
 			}
 
 			@Override
@@ -118,8 +118,12 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 	}
 
 	// Event class //
+
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'change' callback
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'change' callback<br/>
+	 * <br/>
+	 * <b>Note</b>: The <tt>start</tt> and <tt>end</tt> dates will be translated to GMT.<br/>
+	 * ie: if the behavior receives 10/10/2010 0:00:00 CET, it will be translated to 10/10/2010 0:00:00 UTC 
 	 */
 	protected static class DateChangeEvent extends JQueryEvent
 	{
@@ -128,11 +132,13 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 
 		public DateChangeEvent()
 		{
-			long start = RequestCycleUtils.getQueryParameterValue("start").toLong();
-			this.start = new Date(start);
+			long startTime = RequestCycleUtils.getQueryParameterValue("startTime").toLong();
+			int startOffset = RequestCycleUtils.getQueryParameterValue("startOffset").toInt(0) * 60 * 1000; // minutes to milliseconds
+			this.start = new Date(startTime - startOffset);
 
-			long end = RequestCycleUtils.getQueryParameterValue("end").toLong();
-			this.end = new Date(end);
+			long endTime = RequestCycleUtils.getQueryParameterValue("endTime").toLong();
+			int endOffset = RequestCycleUtils.getQueryParameterValue("endOffset").toInt(0) * 60 * 1000; // minutes to milliseconds
+			this.end = new Date(endTime - endOffset);
 		}
 
 		/**

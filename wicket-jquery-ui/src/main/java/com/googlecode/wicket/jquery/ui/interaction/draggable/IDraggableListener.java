@@ -27,7 +27,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 interface IDraggableListener
 {
 	/**
-	 * Indicates whether the 'stop' event is enabled.<br />
+	 * Indicates whether the 'stop' event is enabled.<br/>
 	 * If true, the {@link #onDragStop(AjaxRequestTarget)} event will be triggered.
 	 *
 	 * @return false by default
@@ -41,7 +41,7 @@ interface IDraggableListener
 	void onDragStart(AjaxRequestTarget target);
 
 	/**
-	 * Triggered when the drag stops<br />
+	 * Triggered when the drag stops<br/>
 	 * @param target the {@link AjaxRequestTarget}
 	 * @see #isStopEventEnabled()
 	 */

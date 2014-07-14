@@ -183,7 +183,7 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior implements IJQu
 	 */
 	private static String $(String selector, String effect, String options, int speed, String callback)
 	{
-		return String.format("jQuery(function() { jQuery('%s').%s('%s', %s, %d, function() { %s }); });", selector, METHOD, effect, options, speed, callback);
+		return String.format("jQuery('%s').%s('%s', %s, %d, function() { %s });", selector, METHOD, effect, options, speed, callback);
 	}
 
 	// Factories //

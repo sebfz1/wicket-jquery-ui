@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
@@ -16,12 +17,12 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.form.RadioChoice;
-import com.googlecode.wicket.jquery.ui.kendo.datetime.DateTimePicker;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent.Category;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
+import com.googlecode.wicket.kendo.ui.form.datetime.DateTimePicker;
 
 public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendarEvent>
 {
@@ -31,7 +32,7 @@ public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendar
 
 	static IModel<DemoCalendarEvent> emptyModel()
 	{
-		return new Model<DemoCalendarEvent>(new DemoCalendarEvent(0, "", Category.PUBLIC, new Date()));
+		return Model.of(new DemoCalendarEvent(0, "", Category.PUBLIC, new Date()));
 	}
 
 	private Form<?> form;
@@ -41,23 +42,45 @@ public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendar
 	{
 		super(id, title, emptyModel(), true);
 
-		this.init();
-	}
-
-	private void init()
-	{
 		this.form = new Form<DemoCalendarEvent>("form", new CompoundPropertyModel<DemoCalendarEvent>(this.getModel()));
 		this.add(this.form);
 
 		this.form.add(new RequiredTextField<String>("title"));
 		this.form.add(new RadioChoice<Category>("category", Arrays.asList(Category.values())));
 
-		CheckBox checkAllDay = new CheckBox("allDay");
-		this.form.add(checkAllDay.setOutputMarkupId(true));
+		// DateTimePickers //
+		final DateTimePicker startDateTimePicker = new DateTimePicker("start");
+		final DateTimePicker endDateTimePicker = new DateTimePicker("end");
 
+		this.form.add(startDateTimePicker.setRequired(true));
+		this.form.add(endDateTimePicker);
+
+		// All-day checkbox //
+		CheckBox checkAllDay = new AjaxCheckBox("allDay") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onConfigure()
+			{
+				super.onConfigure();
+
+				Boolean allday = this.getModelObject();
+				startDateTimePicker.setTimePickerEnabled(!allday);
+				endDateTimePicker.setTimePickerEnabled(!allday);
+			}
+
+			@Override
+			protected void onUpdate(AjaxRequestTarget target)
+			{
+				Boolean allday = this.getModelObject();
+				startDateTimePicker.setTimePickerEnabled(target, !allday);
+				endDateTimePicker.setTimePickerEnabled(target, !allday);
+			}
+		};
+
+		this.form.add(checkAllDay.setOutputMarkupId(true));
 		this.form.add(new Label("label", "All day?").add(AttributeModifier.append("for", checkAllDay.getMarkupId())));
-		this.form.add(new DateTimePicker("start").setRequired(true));
-		this.form.add(new DateTimePicker("end"));
 
 		// FeedbackPanel //
 		this.feedback = new JQueryFeedbackPanel("feedback");

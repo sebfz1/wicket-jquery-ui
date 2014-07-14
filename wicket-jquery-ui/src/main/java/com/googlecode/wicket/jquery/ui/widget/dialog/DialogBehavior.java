@@ -27,10 +27,11 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.ui.form.button.Button;
+import com.googlecode.wicket.jquery.ui.widget.dialog.ButtonAjaxBehavior.ClickEvent;
 
 /**
  * Provides a jQuery dialog behavior.
- *
+ * 
  * @author Sebastien Briquet - sebfz1
  * @since 1.2.3
  * @since 6.0.1
@@ -41,10 +42,11 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 	private static final String METHOD = "dialog";
 
 	private JQueryAjaxBehavior onDefaultClose = null;
+	private JQueryAjaxBehavior onEscapeClose = null;
 
 	/**
 	 * Constructor
-	 *
+	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public DialogBehavior(String selector)
@@ -54,7 +56,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 
 	/**
 	 * Constructor
-	 *
+	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
@@ -66,7 +68,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 	// Properties //
 	/**
 	 * Gets the dialog's buttons.<br/>
-	 *
+	 * 
 	 * @return the {@link List} of {@link Button}
 	 */
 	protected abstract List<DialogButton> getButtons();
@@ -86,11 +88,16 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 		{
 			component.add(this.onDefaultClose = this.newDefaultCloseBehavior());
 		}
+
+		if (this.isEscapeCloseEventEnabled())
+		{
+			component.add(this.onEscapeClose = this.newEscapeCloseBehavior());
+		}
 	}
 
 	/**
 	 * Opens the dialogs in ajax.<br/>
-	 *
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void open(AjaxRequestTarget target)
@@ -100,12 +107,12 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 
 	/**
 	 * Closes the dialogs in ajax.<br/>
-	 *
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void close(AjaxRequestTarget target)
 	{
-		target.prependJavaScript(this.$("'close'")); //fixes #88
+		target.prependJavaScript(this.$("'close'")); // fixes #88
 	}
 
 	// Events //
@@ -117,6 +124,11 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 		if (this.onDefaultClose != null)
 		{
 			this.setOption("close", this.onDefaultClose.getCallbackFunction());
+		}
+
+		if (this.onEscapeClose != null)
+		{
+			this.setOption("beforeClose", this.onEscapeClose.getCallbackFunction());
 		}
 
 		// buttons events //
@@ -171,9 +183,9 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 
 	// Factories //
 	/**
-	 * Gets a new ButtonAjaxBehavior that will be called by the corresponding dialog's button.<br/>
-	 * This method mays be overridden internally to provide another behavior;
-	 *
+	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.<br/>
+	 * This method may be overridden to provide additional behaviors
+	 * 
 	 * @param source the {@link IJQueryAjaxAware} source
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
 	 * @return the {@link ButtonAjaxBehavior}
@@ -182,7 +194,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 
 	/**
 	 * Gets the ajax behavior that will be triggered when the user clicks on the X-icon
-	 *
+	 * 
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newDefaultCloseBehavior()
@@ -205,71 +217,32 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 		};
 	}
 
-
-	// Ajax behaviors //
 	/**
-	 * Provides the {@link JQueryAjaxBehavior} being called by the button(s).
+	 * Gets the ajax behavior that will be triggered when the user press the escape key
+	 * 
+	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected static class ButtonAjaxBehavior extends JQueryAjaxBehavior
+	protected JQueryAjaxBehavior newEscapeCloseBehavior()
 	{
-		private static final long serialVersionUID = 1L;
+		return new JQueryAjaxBehavior(this) {
 
-		private final DialogButton button;
+			private static final long serialVersionUID = 1L;
 
-		/**
-		 * Constructor
-		 * @param source the {@link IJQueryAjaxAware}
-		 * @param button the {@link DialogButton} to attach to the {@link ClickEvent}
-		 */
-		public ButtonAjaxBehavior(IJQueryAjaxAware source, DialogButton button)
-		{
-			super(source);
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(event, ui) { if (event.keyCode == $.ui.keyCode.ESCAPE) { " + this.getCallbackScript() + " } }";
+			}
 
-			this.button = button;
-		}
-
-		/**
-		 * Gets the {@link DialogButton}
-		 * @return the {@link DialogButton}
-		 */
-		public DialogButton getButton()
-		{
-			return this.button;
-		}
-
-		@Override
-		protected JQueryEvent newEvent()
-		{
-			return new ClickEvent(this.button);
-		}
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new CloseEvent();
+			}
+		};
 	}
 
-
-	// Events classes //
-	/**
-	 * Provides a dialog event that will be transmitted to the dialog {@link AbstractDialog}
-	 */
-	protected static class ClickEvent extends JQueryEvent
-	{
-		private final DialogButton button;
-
-		public ClickEvent(DialogButton button)
-		{
-			super();
-
-			this.button = button;
-		}
-
-		/**
-		 * Get the button that has been attached to this event object
-		 * @return the button
-		 */
-		public DialogButton getButton()
-		{
-			return this.button;
-		}
-	}
-
+	// Event class //
 	/**
 	 * An event object that will be broadcasted when the user clicks on the X-icon
 	 */

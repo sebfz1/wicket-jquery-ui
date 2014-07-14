@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
@@ -29,7 +28,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
+
 import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
@@ -50,7 +49,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	 * @param id the markup id
 	 * @param tabs the list of {@link ITab}<code>s</code>
 	 */
-	public TabbedPanel(String id, List<ITab> tabs)
+	public TabbedPanel(String id, List<? extends ITab> tabs)
 	{
 		this(id, tabs, new Options());
 	}
@@ -119,7 +118,19 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	}
 
 	@Override
-	public boolean isOnActivatingEventEnabled()
+	public boolean isCreateEventEnabled()
+	{
+		return true;
+	}
+
+	@Override
+	public boolean isActivateEventEnabled()
+	{
+		return true;
+	}
+
+	@Override
+	public boolean isActivatingEventEnabled()
 	{
 		return false;
 	}
@@ -168,6 +179,15 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			protected ListItem<ITab> newItem(int index, IModel<ITab> model)
+			{
+				ListItem<ITab> item = super.newItem(index, model);
+				item.setVisible(model.getObject().isVisible());
+
+				return item;
+			}
+
+			@Override
 			protected void populateItem(ListItem<ITab> item)
 			{
 				final ITab tab = item.getModelObject();
@@ -188,16 +208,6 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 		});
 
 		this.add(this.widgetBehavior = this.newWidgetBehavior(JQueryWidget.getSelector(this)));
-	}
-
-	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 *
-	 * @param behavior the {@link JQueryBehavior}
-	 */
-	protected void onConfigure(JQueryBehavior behavior)
-	{
 	}
 
 	@Override
@@ -242,29 +252,33 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 			}
 
 			@Override
-			public boolean isOnActivatingEventEnabled()
+			public boolean isCreateEventEnabled()
 			{
-				return TabbedPanel.this.isOnActivatingEventEnabled();
+				return TabbedPanel.this.isCreateEventEnabled();
 			}
 
 			@Override
-			public void onConfigure(Component component)
+			public boolean isActivateEventEnabled()
 			{
-				super.onConfigure(component);
-
-				TabbedPanel.this.onConfigure(this);
+				return TabbedPanel.this.isActivateEventEnabled();
 			}
 
 			@Override
-			public void onActivating(AjaxRequestTarget target, int index, ITab tab)
+			public boolean isActivatingEventEnabled()
 			{
-				TabbedPanel.this.onActivating(target, index, tab);
+				return TabbedPanel.this.isActivatingEventEnabled();
 			}
 
 			@Override
 			public void onActivate(AjaxRequestTarget target, int index, ITab tab)
 			{
 				TabbedPanel.this.onActivate(target, index, tab);
+			}
+
+			@Override
+			public void onActivating(AjaxRequestTarget target, int index, ITab tab)
+			{
+				TabbedPanel.this.onActivating(target, index, tab);
 			}
 		};
 	}

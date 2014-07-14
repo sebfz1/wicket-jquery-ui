@@ -16,10 +16,8 @@ import com.googlecode.wicket.jquery.ui.samples.pages.draggable.DefaultDraggableP
 import com.googlecode.wicket.jquery.ui.samples.pages.droppable.DefaultDroppablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.effect.DefaultEffectPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.combobox.DefaultComboBoxPage;
-import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datatable.DefaultDataTablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.KendoDatePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.dropdown.DefaultDropDownPage;
-import com.googlecode.wicket.jquery.ui.samples.pages.kendo.editor.DefaultEditorPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter.DefaultSplitterPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.menu.DefaultMenuPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.FontSizePage;
@@ -66,7 +64,6 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/slider", DefaultSliderPage.class);
 		this.mountPackage("/spinner", DefaultSpinnerPage.class);
 		this.mountPackage("/tabs", DefaultTabsPage.class);
-//		this.mountPackage("/tooltip",
 		this.mountPackage("/wizard", DefaultWizardPage.class);
 
 		// interactions //
@@ -79,10 +76,8 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/effect", DefaultEffectPage.class);
 
 		// Kendo //
-		this.mountPackage("/kendo/editor", DefaultEditorPage.class);
 		this.mountPackage("/kendo/dropdown", DefaultDropDownPage.class);
 		this.mountPackage("/kendo/combobox", DefaultComboBoxPage.class);
-		this.mountPackage("/kendo/datatable", DefaultDataTablePage.class);
 		this.mountPackage("/kendo/datetimepicker", KendoDatePickerPage.class);
 		this.mountPackage("/kendo/splitter", DefaultSplitterPage.class);
 

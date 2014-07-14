@@ -49,6 +49,6 @@ public class CalendarJavaScriptResourceReference extends JavaScriptResourceRefer
 	 */
 	private CalendarJavaScriptResourceReference()
 	{
-		super(CalendarJavaScriptResourceReference.class, "fullcalendar.min.js");
+		super(CalendarJavaScriptResourceReference.class, "fullcalendar.js");
 	}
 }

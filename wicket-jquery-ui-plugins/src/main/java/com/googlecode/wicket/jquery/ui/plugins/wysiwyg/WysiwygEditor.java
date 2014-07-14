@@ -22,7 +22,6 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -40,7 +39,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 {
 	private static final long serialVersionUID = 1L;
 
-	private final TextArea<String> textarea;
+	private TextArea<String> textarea;
 	private final WebMarkupContainer container;
 
 	/**
@@ -89,9 +88,6 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 		this.container = new WebMarkupContainer("container"); // widget component
 		this.add(this.container);
 
-		this.textarea = new TextArea<String>("textarea", Model.of(this.getModelObject()));
-		this.add(this.textarea.setOutputMarkupId(true));
-
 		if (toolbar != null)
 		{
 			toolbar.attachToEditor(this.container);
@@ -125,24 +121,30 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 		response.renderJavaScript(String.format("addTextAreaMapper('%s', '%s');", this.container.getMarkupId(), this.textarea.getMarkupId()), "wysiwyg-mapper");
 	}
 
-
 	// Events //
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
 
+		this.textarea = new TextArea<String>("textarea", this.getModel());
+		this.textarea.setEscapeModelStrings(false);
+		this.add(this.textarea.setOutputMarkupId(true));
+
 		this.add(JQueryWidget.newWidgetBehavior(this, this.container));
 	}
 
 	@Override
-	protected void onModelChanged()
+	public void onConfigure(JQueryBehavior behavior)
 	{
-		super.onModelChanged();
-
-		this.textarea.setModelObject(this.getDefaultModelObjectAsString());
+		// noop
 	}
 
+	@Override
+	public void onBeforeRender(JQueryBehavior behavior)
+	{
+		// noop
+	}
 
 	// IJQueryWidget //
 	@Override

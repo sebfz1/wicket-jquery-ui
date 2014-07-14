@@ -29,16 +29,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 interface ICalendarListener
 {
 	/**
-	 * Indicates whether the event can be edited (ie, clicked).<br/>
-	 * IIF true, an event can override this global setting to false by using CalendarEvent#setEditable(boolean);<br/>
-	 * If true, the {@link #onEventClick(AjaxRequestTarget, CalendarView, int)} event and {@link #onDayClick(AjaxRequestTarget, CalendarView, Date)} event will be triggered<br/>
-	 *
-	 * @return false by default
-	 */
-	boolean isEditable();
-
-	/**
-	 * Indicated whether a cell can be selected.<br />
+	 * Indicates whether a cell can be selected.<br/>
 	 * If true, the {@link #onSelect(AjaxRequestTarget, CalendarView, Date, Date, boolean)} event will be triggered
 	 *
 	 * @return false by default
@@ -46,28 +37,52 @@ interface ICalendarListener
 	boolean isSelectable();
 
 	/**
-	 * Indicates whether the event can be dragged &#38; dropped.
-	 * If true, the {@link #onEventDrop(AjaxRequestTarget, int, long, boolean)} event will be triggered
+	 * Indicates whether a day can be clicked.<br/>
+	 * If true, the {@link #onDayClick(AjaxRequestTarget, CalendarView, Date, boolean)} event will be triggered<br/>
+	 * <b>Note:</b> <tt>true</tt> will enable the global 'editable' option to <tt>true</tt>.
+	 *
+	 * @return false by default
+	 * @see CalendarEvent#setEditable(Boolean)
+	 */
+	boolean isDayClickEnabled();
+
+	/**
+	 * Indicates whether an event can be clicked.<br/>
+	 * If true, the {@link #onEventClick(AjaxRequestTarget, CalendarView, int)} event will be triggered<br/>
+	 * <b>Note:</b> <tt>true</tt> will enable the global 'editable' option to <tt>true</tt>.
+	 *
+	 * @return false by default
+	 * @see CalendarEvent#setEditable(Boolean)
+	 */
+	boolean isEventClickEnabled();
+
+	/**
+	 * Indicates whether the {@link #onObjectDrop(AjaxRequestTarget, String, Date, boolean)} event will be triggered
+	 *
+	 * @return false by default
+	 */
+	boolean isObjectDropEnabled();
+
+	/**
+	 * Indicates whether the event can be dragged &#38; dropped. If true, the {@link #onEventDrop(AjaxRequestTarget, int, long, boolean)} event will be triggered
 	 *
 	 * @return false by default
 	 */
 	boolean isEventDropEnabled();
 
 	/**
-	 * Indicates whether the event can be resized.
-	 * If true, the {@link #onEventResize(AjaxRequestTarget, int, long)} event will be triggered
+	 * Indicates whether the event can be resized. If true, the {@link #onEventResize(AjaxRequestTarget, int, long)} event will be triggered
 	 *
 	 * @return false by default
 	 */
 	boolean isEventResizeEnabled();
 
 	/**
-	 * Indicates whether the {@link #onViewDisplay(AjaxRequestTarget, CalendarView)} event will be triggered
+	 * Indicates whether the {@link #onViewRender(AjaxRequestTarget, CalendarView, Date, Date)} event will be triggered
 	 *
 	 * @return false by default
 	 */
-	boolean isViewDisplayEnabled();
-
+	boolean isViewRenderEnabled();
 
 	/**
 	 * Triggered when an cell is selected.<br/>
@@ -82,16 +97,19 @@ interface ICalendarListener
 	void onSelect(AjaxRequestTarget target, CalendarView view, Date start, Date end, boolean allDay);
 
 	/**
-	 * Triggered when a calendar day is clicked
+	 * Triggered when a calendar day is clicked<br/>
+	 * {@link #isDayClickEnabled()} should return true for this event to be triggered.
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param view the current calendar view
 	 * @param date the day
+	 * @param allDay the event all-day property
 	 */
-	void onDayClick(AjaxRequestTarget target, CalendarView view, Date date);
+	void onDayClick(AjaxRequestTarget target, CalendarView view, Date date, boolean allDay);
 
 	/**
 	 * Triggered when an event is clicked.<br/>
-	 * {@link #isEditable()} should return true for this event to be triggered.
+	 * {@link #isEventClickEnabled()} should return true for this event to be triggered.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param view the current calendar view
@@ -121,11 +139,24 @@ interface ICalendarListener
 	void onEventResize(AjaxRequestTarget target, int eventId, long delta);
 
 	/**
-	 * Triggered when the calendar loads and every time a different date-range is displayed.
-	 * {@link #isViewDisplayEnabled()} should return true for this event to be triggered.
+	 * Triggered when an event-object is dropped.<br/>
+	 * {@link #isObjectDropEnabled()} should return true for this event to be triggered.
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param title the title
+	 * @param date the day
+	 * @param allDay the event all-day property
+	 */
+	void onObjectDrop(AjaxRequestTarget target, String title, Date date, boolean allDay);
+
+	/**
+	 * Triggered when the calendar loads and every time a different date-range is displayed.<br/>
+	 * {@link #isViewRenderEnabled()} should return true for this event to be triggered.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param view the current calendar view
+	 * @param start the start {@link Date} of the current view
+	 * @param end the event end {@link Date} of the current view
 	 */
-	void onViewDisplay(AjaxRequestTarget target, CalendarView view);
+	void onViewRender(AjaxRequestTarget target, CalendarView view, Date start, Date end);
 }

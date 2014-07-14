@@ -29,11 +29,23 @@ public class CustomDialogPage extends AbstractDialogPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			public boolean isDefaultCloseEventEnabled()
+			{
+				return true;
+			}
+
+			@Override
+			public boolean isEscapeCloseEventEnabled()
+			{
+				return true;
+			}
+
+			@Override
 			public void onClose(AjaxRequestTarget target, DialogButton button)
 			{
 				this.info(button + " has been clicked");
 
-				if (button != null && button.equals(LBL_OK))
+				if (button != null && button.match(LBL_OK))
 				{
 					this.info(String.format("The model object is: '%s'", this.getModelObject()));
 				}

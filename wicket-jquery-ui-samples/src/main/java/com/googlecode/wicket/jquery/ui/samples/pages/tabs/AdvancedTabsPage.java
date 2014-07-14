@@ -103,16 +103,17 @@ public class AdvancedTabsPage extends AbstractTabsPage
 		return new NavigationAjaxButton(id) {
 
 			private static final long serialVersionUID = 1L;
+			private int max = 0;
 
 			@Override
 			protected void onConfigure()
 			{
 				super.onConfigure();
 
-				int max = tabPanel.getModelObject().size() - 1;
+				this.max = this.count() - 1;
 
 				this.getBackwardButton().setEnabled(tabIndex > 0);
-				this.getForwardButton().setEnabled(tabIndex < max);
+				this.getForwardButton().setEnabled(tabIndex < this.max);
 			}
 
 			@Override
@@ -120,16 +121,14 @@ public class AdvancedTabsPage extends AbstractTabsPage
 			{
 				if (tabIndex > 0)
 				{
-					tabPanel.setActiveTab(tabIndex - 1, target); //fires onActivate
+					tabPanel.setActiveTab(tabIndex - 1, target); // fires onActivate
 				}
 			}
 
 			@Override
 			protected void onForward(AjaxRequestTarget target, AjaxButton button)
 			{
-				int max = tabPanel.getModelObject().size() - 1;
-
-				if (tabIndex < max)
+				if (tabIndex < this.max)
 				{
 					tabPanel.setActiveTab(tabIndex + 1, target);
 				}
@@ -143,11 +142,31 @@ public class AdvancedTabsPage extends AbstractTabsPage
 				// broadcasted by the TabbedPanel
 				if (event.getPayload() instanceof ChangeEvent)
 				{
-					ChangeEvent payload = (ChangeEvent)event.getPayload();
+					ChangeEvent payload = (ChangeEvent) event.getPayload();
 					AjaxRequestTarget target = payload.getTarget();
 
 					target.add(this);
 				}
+			}
+
+			/**
+			 * Gets count of visible tabs
+			 *
+			 * @return the count
+			 */
+			private int count()
+			{
+				int count = 0;
+
+				for (ITab tab : tabPanel.getModelObject())
+				{
+					if (tab.isVisible())
+					{
+						count++;
+					}
+				}
+
+				return count;
 			}
 		};
 	}
@@ -159,8 +178,20 @@ public class AdvancedTabsPage extends AbstractTabsPage
 		// tab #1, using SimpleTab //
 		tabs.add(new SimpleTab(Model.of("Tab #1"), Model.of("my content")));
 
-		// tab #2 //
-		tabs.add(new AbstractTab(new Model<String>("Tab #2")) {
+		// tab #2, invisible Tab //
+		tabs.add(new SimpleTab(Model.of("Tab #2"), Model.of("invisible")) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isVisible()
+			{
+				return false;
+			}
+		});
+
+		// tab #3, using AbstractTab //
+		tabs.add(new AbstractTab(Model.of("Tab #3")) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -171,8 +202,8 @@ public class AdvancedTabsPage extends AbstractTabsPage
 			}
 		});
 
-		// tab #3 //
-		tabs.add(new AjaxTab(new Model<String>("Tab (ajax)")) {
+		// tab #4, using AjaxTab //
+		tabs.add(new AjaxTab(Model.of("Tab (ajax)")) {
 
 			private static final long serialVersionUID = 1L;
 

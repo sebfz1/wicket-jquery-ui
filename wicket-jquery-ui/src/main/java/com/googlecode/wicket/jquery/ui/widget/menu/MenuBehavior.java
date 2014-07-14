@@ -129,7 +129,7 @@ public abstract class MenuBehavior extends JQueryBehavior implements IJQueryAjax
 			@Override
 			public CharSequence getCallbackScript()
 			{
-				return generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&id=' + ui.item.context.id");
+				return generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&hash=' + ui.item.context.id");
 			}
 
 			@Override
@@ -155,7 +155,7 @@ public abstract class MenuBehavior extends JQueryBehavior implements IJQueryAjax
 		{
 			super();
 
-			this.hash = RequestCycleUtils.getQueryParameterValue("id").toString();
+			this.hash = RequestCycleUtils.getQueryParameterValue("hash").toString();
 		}
 
 		/**

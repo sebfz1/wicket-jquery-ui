@@ -59,7 +59,6 @@ import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.Patter
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.PatternTimePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.dropdown.AjaxDropDownPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.dropdown.DefaultDropDownPage;
-import com.googlecode.wicket.jquery.ui.samples.pages.kendo.editor.DefaultEditorPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter.BorderLayoutPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter.DefaultSplitterPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.menu.DefaultMenuPage;
@@ -129,7 +128,6 @@ public class SiteMapPage extends WebPage
 			DefaultDraggablePage.class,
 			DefaultDropDownPage.class,
 			DefaultDroppablePage.class,
-			DefaultEditorPage.class,
 			DefaultEffectPage.class,
 			DefaultMenuPage.class,
 			DefaultProgressBarPage.class,

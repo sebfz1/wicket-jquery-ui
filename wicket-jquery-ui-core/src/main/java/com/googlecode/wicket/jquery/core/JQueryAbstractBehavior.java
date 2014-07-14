@@ -47,6 +47,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 	/**
 	 * Gets the {@link IJQueryLibrarySettings}
+	 *
 	 * @return the {@link IJQueryLibrarySettings}
 	 */
 	public static IJQueryLibrarySettings getJQueryLibrarySettings()
@@ -58,7 +59,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 		return JQueryLibrarySettings.get();
 	}
-
 
 	/**
 	 * Behavior name
@@ -72,6 +72,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 	/**
 	 * Constructor.
+	 *
 	 * @param name the name of the behavior. It is used in the token so the behavior can be identified in the generated page.
 	 */
 	public JQueryAbstractBehavior(final String name)
@@ -80,9 +81,9 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		this.references = new ArrayList<ResourceReference>();
 	}
 
-
 	/**
 	 * Adds a reference to be added at {@link #renderHead(Component, IHeaderResponse)} time.
+	 *
 	 * @param reference a {@link CssResourceReference} or a {@link JavaScriptResourceReference}
 	 * @return true (as specified by Collection.add(E))
 	 */
@@ -135,18 +136,19 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 	/**
 	 * Gets the jQuery statement.
-	 * @return Statement like 'jQuery(function() { ... })'
+	 *
+	 * @return the jQuery statement
 	 */
 	protected abstract String $();
-
 
 	// Properties //
 
 	/**
 	 * Get the unique behavior token that act as the script id.
+	 *
 	 * @return the token
 	 */
-	String getToken()
+	protected String getToken()
 	{
 		return String.format("jquery-%s-%d", this.name, this.hashCode());
 	}
@@ -163,7 +165,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 		if (target != null)
 		{
-			target.appendJavaScript(this.toString());
+			target.appendJavaScript(this.$());
 		}
 	}
 
@@ -182,9 +184,13 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		}
 	}
 
+	/**
+	 * Gets the jQuery statement.
+	 * @return statement like 'jQuery(function() { ... });'
+	 */
 	@Override
-	public final String toString()
+	public String toString()
 	{
-		return this.$();
+		return String.format("jQuery(function() { %s });", this.$());
 	}
 }

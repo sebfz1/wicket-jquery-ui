@@ -66,7 +66,7 @@ public class Slider extends AbstractSlider<Integer>
 	public Slider(String id)
 	{
 		super(id);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class Slider extends AbstractSlider<Integer>
 	public Slider(String id, IModel<Integer> model)
 	{
 		super(id, model);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class Slider extends AbstractSlider<Integer>
 	public Slider(String id, IModel<Integer> model, Label label)
 	{
 		super(id, model, label);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class Slider extends AbstractSlider<Integer>
 		this.input.setOutputMarkupId(true);
 		this.input.add(this.newInputBehavior());
 
-		this.init();
+		this.initialize();
 	}
 
 	@Override
@@ -149,7 +149,7 @@ public class Slider extends AbstractSlider<Integer>
 	}
 
 	@Override
-	protected void onConfigure(JQueryBehavior behavior)
+	public void onConfigure(JQueryBehavior behavior)
 	{
 		super.onConfigure(behavior);
 
@@ -221,7 +221,7 @@ public class Slider extends AbstractSlider<Integer>
 				statements.append("		jQuery('#").append(Slider.this.label.getMarkupId()).append("').slider('value', jQuery(this).val()); "); //change the slider value (+slide)
 				statements.append("});");
 
-				return String.format("jQuery(function() { %s });", statements);
+				return statements.toString();
 			}
 		};
 	}

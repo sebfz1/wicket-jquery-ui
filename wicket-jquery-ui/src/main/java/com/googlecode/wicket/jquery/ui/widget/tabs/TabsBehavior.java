@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.jquery.ui.widget.tabs;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.Component;
@@ -41,7 +43,8 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "tabs";
 
-	private JQueryAjaxBehavior activateEventBehavior;
+	private JQueryAjaxBehavior createEventBehavior = null;
+	private JQueryAjaxBehavior activateEventBehavior = null;
 	private JQueryAjaxBehavior activatingEventBehavior = null;
 
 	/**
@@ -75,6 +78,26 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 	 */
 	protected abstract List<ITab> getTabs();
 
+	/**
+	 * Gets a read-only {@link ITab} {@link List} having its visible flag set to true.
+	 *
+	 * @return a {@link List} of {@link ITab}<tt>s</tt>
+	 */
+	protected List<ITab> getVisibleTabs()
+	{
+		List<ITab> list = new ArrayList<ITab>();
+
+		for (ITab tab : this.getTabs())
+		{
+			if (tab.isVisible())
+			{
+				list.add(tab);
+			}
+		}
+
+		return Collections.unmodifiableList(list);
+	}
+
 
 	// Methods //
 	@Override
@@ -82,9 +105,17 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 	{
 		super.bind(component);
 
-		component.add(this.activateEventBehavior = this.newActivateEventBehavior());
+		if (this.isCreateEventEnabled())
+		{
+			component.add(this.createEventBehavior = this.newActivateEventBehavior());
+		}
 
-		if (this.isOnActivatingEventEnabled())
+		if (this.isActivateEventEnabled())
+		{
+			component.add(this.activateEventBehavior = this.newActivateEventBehavior());
+		}
+
+		if (this.isActivatingEventEnabled())
 		{
 			component.add(this.activatingEventBehavior = this.newActivatingEventBehavior());
 		}
@@ -108,8 +139,15 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 	{
 		super.onConfigure(component);
 
-		this.setOption("create", this.activateEventBehavior.getCallbackFunction());
-		this.setOption("activate", this.activateEventBehavior.getCallbackFunction());
+		if (this.createEventBehavior != null)
+		{
+			this.setOption("create", this.createEventBehavior.getCallbackFunction());
+		}
+
+		if (this.activateEventBehavior != null)
+		{
+			this.setOption("activate", this.activateEventBehavior.getCallbackFunction());
+		}
 
 		if (this.activatingEventBehavior != null)
 		{
@@ -123,10 +161,11 @@ public abstract class TabsBehavior extends JQueryBehavior implements IJQueryAjax
 		if (event instanceof ActivateEvent)
 		{
 			int index = ((ActivateEvent) event).getIndex();
+			final List<ITab> tabs = this.getVisibleTabs();
 
-			if (-1 < index && index < this.getTabs().size()) /* index could be unknown depending on options and user action */
+			if (-1 < index && index < tabs.size()) /* index could be unknown depending on options and user action */
 			{
-				ITab tab = this.getTabs().get(index);
+				ITab tab = tabs.get(index);
 
 				if (tab instanceof AjaxTab)
 				{

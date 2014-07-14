@@ -18,13 +18,13 @@ package com.googlecode.wicket.jquery.ui.widget.dialog;
 
 import java.io.Serializable;
 
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IFormSubmitter;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
-import com.googlecode.wicket.jquery.ui.widget.dialog.DialogBehavior.ButtonAjaxBehavior;
 
 /**
  * Provides the base class for form-based dialogs
@@ -180,6 +180,17 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 
 	// Events //
 	@Override
+	protected void onInitialize()
+	{
+		if (this.getForm() == null)
+		{
+			throw new WicketRuntimeException("The form should not be null at this stage"); // if null, will not be available to the DialogBehavior
+		}
+
+		super.onInitialize();
+	}
+
+	@Override
 	void internalOnClick(AjaxRequestTarget target, DialogButton button)
 	{
 		final Form<?> form = this.getForm(button);
@@ -222,14 +233,14 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	// Factories //
 
 	/**
-	 * Gets the {@link FormButtonAjaxBehavior} associated to the specified button.
+	 * Gets the {@link ButtonAjaxPostBehavior} associated to the specified button.
 	 *
 	 * @return the {@link ButtonAjaxBehavior}
 	 */
 	@Override
 	protected ButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, DialogButton button)
 	{
-		return new FormButtonAjaxBehavior(source, button, this.getForm(button));
+		return new ButtonAjaxPostBehavior(source, button, this.getForm(button));
 	}
 
 	/**
@@ -272,45 +283,6 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 		public void onError()
 		{
 			AbstractFormDialog.this.onError(this.target);
-		}
-	}
-
-	/**
-	 * Provides the button's form-submit behavior
-	 */
-	protected static class FormButtonAjaxBehavior extends ButtonAjaxBehavior
-	{
-		private static final long serialVersionUID = 1L;
-
-		private final Form<?> form;
-
-		/**
-		 * Constructor
-		 * @param source the {@link IJQueryAjaxAware}
-		 * @param button the {@link DialogButton}
-		 * @param form the {@link Form}
-		 */
-		public FormButtonAjaxBehavior(IJQueryAjaxAware source, DialogButton button, Form<?> form)
-		{
-			super(source, button);
-
-			this.form = form;
-		}
-
-		/**
-		 * The formId may intentionally be null
-		 */
-		@Override
-		public CharSequence getCallbackScript()
-		{
-			if (this.form != null)
-			{
-				final CharSequence script = String.format("wicketSubmitFormById('%s', '%s', null", this.form.getMarkupId(), this.getCallbackUrl());
-
-				return this.generateCallbackScript(script) + ";return false";
-			}
-
-			return super.getCallbackScript();
 		}
 	}
 }

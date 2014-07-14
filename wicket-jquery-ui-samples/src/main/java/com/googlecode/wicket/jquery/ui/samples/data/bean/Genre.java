@@ -14,11 +14,6 @@ public class Genre implements IClusterable
 
 	private static final String EMPTY_COVER = "cover-empty.png";
 
-	public static Genre emptyGenre()
-	{
-		return new Genre("");
-	}
-
 	private final int id;
 	private final String name;
 	private final String cover;
@@ -26,11 +21,6 @@ public class Genre implements IClusterable
 	public Genre(final String name)
 	{
 		this(0, name, EMPTY_COVER);
-	}
-
-	public Genre(final String name, final String cover)
-	{
-		this(0, name, cover);
 	}
 
 	public Genre(final int id, final String name)

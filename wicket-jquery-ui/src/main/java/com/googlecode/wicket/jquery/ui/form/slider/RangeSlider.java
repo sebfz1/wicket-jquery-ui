@@ -52,7 +52,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	public RangeSlider(String id)
 	{
 		super(id);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	public RangeSlider(String id, IModel<RangeValue> model)
 	{
 		super(id, model);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	public RangeSlider(String id, IModel<RangeValue> model, Label label)
 	{
 		super(id, model, label);
-		this.init();
+		this.initialize();
 	}
 
 	/**
@@ -99,16 +99,16 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 		this.upper.setOutputMarkupId(true);
 		this.upper.add(this.newUpperBehavior());
 
-		this.init();
+		this.initialize();
 	}
 
 	/**
 	 * Initialization
 	 */
 	@Override
-	protected void init()
+	void initialize()
 	{
-		super.init();
+		super.initialize();
 
 		this.setRange(true);
 	}
@@ -173,7 +173,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	}
 
 	@Override
-	protected void onConfigure(JQueryBehavior behavior)
+	public void onConfigure(JQueryBehavior behavior)
 	{
 		super.onConfigure(behavior);
 
@@ -244,10 +244,10 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 				StringBuilder statements = new StringBuilder();
 
 				statements.append("jQuery('#").append(lower.getMarkupId()).append("').on('change', function() { ");
-				statements.append("jQuery('#").append(label.getMarkupId()).append("').slider('values', 0, jQuery(this).val()); "); //change the slider value (+slide)
-				statements.append("} );");
+				statements.append("		jQuery('#").append(label.getMarkupId()).append("').slider('values', 0, jQuery(this).val()); "); //change the slider value (+slide)
+				statements.append("});");
 
-				return String.format("jQuery(function() { %s });", statements);
+				return statements.toString();
 			}
 		};
 	}
@@ -269,10 +269,10 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 				StringBuilder statements = new StringBuilder();
 
 				statements.append("jQuery('#").append(upper.getMarkupId()).append("').on('change', function() { ");
-				statements.append("jQuery('#").append(label.getMarkupId()).append("').slider('values', 1, jQuery(this).val()); "); //change the slider value (+slide)
-				statements.append("} );");
+				statements.append("		jQuery('#").append(label.getMarkupId()).append("').slider('values', 1, jQuery(this).val()); "); //change the slider value (+slide)
+				statements.append("});");
 
-				return String.format("jQuery(function() { %s });", statements);
+				return statements.toString();
 			}
 		};
 	}
