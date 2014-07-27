@@ -106,7 +106,6 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 		return container;
 	}
 
-	//XXX: report removed: #getMessageClass(FeedbackMessage message)
 	@Override
 	protected String getCSSClass(FeedbackMessage message)
 	{

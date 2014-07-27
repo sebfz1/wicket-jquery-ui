@@ -109,7 +109,6 @@ public class JQueryFencedFeedbackPanel extends FencedFeedbackPanel
 		return container;
 	}
 
-	//XXX: report removed: #getMessageClass(FeedbackMessage message)
 	@Override
 	protected String getCSSClass(FeedbackMessage message)
 	{

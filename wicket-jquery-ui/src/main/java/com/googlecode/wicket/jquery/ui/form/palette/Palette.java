@@ -43,7 +43,6 @@ public class Palette<T> extends org.apache.wicket.extensions.markup.html.form.pa
 	 * @param rows Number of choices to be visible on the screen with out scrolling
 	 * @param allowOrder Allow user to move selections up and down
 	 */
-	//XXX: report ctor change; Use new CollectionModel to use this ctor
 	public Palette(String id, IModel<? extends Collection<T>> choicesModel, IChoiceRenderer<T> choiceRenderer, int rows, boolean allowOrder)
 	{
 		super(id, choicesModel, choiceRenderer, rows, allowOrder);
@@ -57,7 +56,6 @@ public class Palette<T> extends org.apache.wicket.extensions.markup.html.form.pa
 	 * @param rows Number of choices to be visible on the screen with out scrolling
 	 * @param allowOrder Allow user to move selections up and down
 	 */
-	//XXX: report ctor change; Use new ListModel & new CollectionModel to use this ctor
 	public Palette(String id, IModel<? extends Collection<T>> model, IModel<? extends Collection<? extends T>> choicesModel, IChoiceRenderer<T> choiceRenderer, int rows, boolean allowOrder)
 	{
 		super(id, model, choicesModel, choiceRenderer, rows, allowOrder);
