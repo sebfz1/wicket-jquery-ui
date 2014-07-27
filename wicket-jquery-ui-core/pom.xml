@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.googlecode.wicket-jquery-ui</groupId>
 		<artifactId>wicket-jquery-ui-parent</artifactId>
-		<version>1.5.11</version>
+		<version>1.5.12-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicket-jquery-ui-core</artifactId>
