@@ -42,6 +42,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 	private static final String METHOD = "dialog";
 
 	private JQueryAjaxBehavior onDefaultClose = null;
+	private JQueryAjaxBehavior onEscapeClose = null;
 
 	/**
 	 * Constructor
@@ -87,6 +88,11 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 		{
 			component.add(this.onDefaultClose = this.newDefaultCloseBehavior());
 		}
+
+		if (this.isEscapeCloseEventEnabled())
+		{
+			component.add(this.onEscapeClose = this.newEscapeCloseBehavior());
+		}
 	}
 
 	/**
@@ -106,7 +112,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 	 */
 	public void close(AjaxRequestTarget target)
 	{
-		target.prependJavaScript(this.$("'close'")); //fixes #88
+		target.prependJavaScript(this.$("'close'")); // fixes #88
 	}
 
 	// Events //
@@ -118,6 +124,11 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 		if (this.onDefaultClose != null)
 		{
 			this.setOption("close", this.onDefaultClose.getCallbackFunction());
+		}
+
+		if (this.onEscapeClose != null)
+		{
+			this.setOption("beforeClose", this.onEscapeClose.getCallbackFunction());
 		}
 
 		// buttons events //
@@ -196,6 +207,31 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 			public String getCallbackFunction()
 			{
 				return "function(event, ui) { if (event.button == 0) { " + this.getCallbackScript() + " } }";
+			}
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new CloseEvent();
+			}
+		};
+	}
+
+	/**
+	 * Gets the ajax behavior that will be triggered when the user press the escape key
+	 * 
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	protected JQueryAjaxBehavior newEscapeCloseBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(event, ui) { if (event.keyCode == $.ui.keyCode.ESCAPE) { " + this.getCallbackScript() + " } }";
 			}
 
 			@Override

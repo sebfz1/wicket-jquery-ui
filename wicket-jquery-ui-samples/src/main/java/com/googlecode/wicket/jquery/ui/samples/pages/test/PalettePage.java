@@ -20,6 +20,7 @@ public class PalettePage extends TemplatePage
 		this.add(form);
 
 		// Palette //
+		// TODO: Model.ofList(new ArrayList<String>()), Model.ofList(
 		form.add(new Palette<String>("palette", new ListModel<String>(new ArrayList<String>()), new ListModel<String>(Arrays.asList("Choice #1", "Choice #2", "Choice #3", "Choice #4")), new ChoiceRenderer<String>(), 6, true));
 	}
 }

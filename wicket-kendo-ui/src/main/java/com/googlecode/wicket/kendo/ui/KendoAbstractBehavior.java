@@ -17,6 +17,7 @@
 package com.googlecode.wicket.kendo.ui;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.settings.JavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
@@ -35,7 +36,7 @@ public class KendoAbstractBehavior extends JQueryBehavior
 	/**
 	 * Gets the {@link IKendoUILibrarySettings}
 	 *
-	 * @return Default internal {@link KendoUILibrarySettings} instance if {@link Application}'s {@link IJavaScriptLibrarySettings} is not an instance of {@link IKendoUILibrarySettings}
+	 * @return Default internal {@link KendoUILibrarySettings} instance if {@link Application}'s {@link JavaScriptLibrarySettings} is not an instance of {@link IKendoUILibrarySettings}
 	 */
 	private static IKendoUILibrarySettings getLibrarySettings()
 	{
