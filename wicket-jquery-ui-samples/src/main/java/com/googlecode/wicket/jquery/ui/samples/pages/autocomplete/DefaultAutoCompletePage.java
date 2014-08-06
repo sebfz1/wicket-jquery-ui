@@ -63,7 +63,7 @@ public class DefaultAutoCompletePage extends AbstractAutoCompletePage
 
 				//
 				// Equivalent to:
-				// return AutoCompleteUtils.startsWith(input, CHOICES);
+				// return ListUtils.startsWith(input, CHOICES);
 				//
 			}
 

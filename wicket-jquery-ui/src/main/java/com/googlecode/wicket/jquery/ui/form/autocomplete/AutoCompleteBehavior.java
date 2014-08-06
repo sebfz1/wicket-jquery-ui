@@ -28,7 +28,7 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 
 /**
- * Provides a jQuery resizable behavior
+ * Provides a jQuery auto-complete behavior
  *
  * @author Sebastien Briquet - sebfz1
  */
@@ -41,6 +41,7 @@ public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQ
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public AutoCompleteBehavior(String selector)
@@ -50,6 +51,7 @@ public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQ
 
 	/**
 	 * Constructor
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
@@ -59,6 +61,7 @@ public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQ
 	}
 
 	// Methods //
+
 	@Override
 	public void bind(Component component)
 	{
@@ -68,6 +71,7 @@ public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQ
 	}
 
 	// Events //
+
 	@Override
 	public void onConfigure(Component component)
 	{
@@ -77,6 +81,7 @@ public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQ
 	}
 
 	// IJQueryAjaxAware //
+
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
@@ -89,6 +94,7 @@ public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQ
 	// Factories //
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'select' javascript method
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	protected JQueryAjaxBehavior newOnSelectBehavior()
@@ -122,7 +128,7 @@ public abstract class AutoCompleteBehavior extends JQueryBehavior implements IJQ
 
 		public SelectEvent()
 		{
-			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(1) - 1;
+			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(0) - 1;
 		}
 
 		public int getIndex()

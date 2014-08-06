@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.kendo.ui.panel;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.apache.wicket.Component;
@@ -43,7 +42,7 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 {
 	private static final long serialVersionUID = 1L;
 
-	private Options options;
+	private final Options options;
 
 	/**
 	 * Constructor
@@ -116,11 +115,11 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 			}
 
 			@Override
-			protected String format(Serializable message, String level)
+			protected CharSequence format(CharSequence message, String level)
 			{
 				if (KendoFeedbackPanel.this.getEscapeModelStrings())
 				{
-					return Strings.escapeMarkup(String.valueOf(message), false, false).toString();
+					return Strings.escapeMarkup(message, false, false);
 				}
 
 				return super.format(message, level);
