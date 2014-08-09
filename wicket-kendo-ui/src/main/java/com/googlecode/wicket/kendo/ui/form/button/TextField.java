@@ -23,6 +23,7 @@ import org.apache.wicket.model.Model;
 /**
  * Provides a {@link org.apache.wicket.markup.html.form.TextField} with the Kendo-ui style
  *
+ * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -44,6 +45,17 @@ public class TextField<T> extends org.apache.wicket.markup.html.form.TextField<T
 	 * Constructor
 	 *
 	 * @param id the markup id
+	 * @param type the type for field validation
+	 */
+	public TextField(final String id, final Class<T> type)
+	{
+		super(id, type);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
 	public TextField(String id, IModel<T> model)
@@ -51,7 +63,17 @@ public class TextField<T> extends org.apache.wicket.markup.html.form.TextField<T
 		super(id, model);
 	}
 
-	//TODO: add other ctors
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param type the type for field validation
+	 */
+	public TextField(final String id, IModel<T> model, final Class<T> type)
+	{
+		super(id, model, type);
+	}
 
 	// Events //
 
@@ -59,7 +81,7 @@ public class TextField<T> extends org.apache.wicket.markup.html.form.TextField<T
 	protected void onInitialize()
 	{
 		super.onInitialize();
-		
+
 		this.add(AttributeModifier.append("class", Model.of("k-textbox")));
 	}
 }
