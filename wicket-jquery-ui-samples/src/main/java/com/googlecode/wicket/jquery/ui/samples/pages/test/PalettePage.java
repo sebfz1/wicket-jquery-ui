@@ -16,7 +16,7 @@ public class PalettePage extends TemplatePage
 
 	public PalettePage()
 	{
-		final Form<Void> form = new Form<>("form");
+		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// Palette //

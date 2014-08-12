@@ -87,7 +87,7 @@ public class CalendarDAO
 
 	public CalendarDAO()
 	{
-		this.list = new ArrayList<>();
+		this.list = new ArrayList<DemoCalendarEvent>();
 		this.initList();
 	}
 

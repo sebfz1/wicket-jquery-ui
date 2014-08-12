@@ -66,7 +66,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 
 	private List<ITab> newTabList()
 	{
-		List<ITab> tabs = new ArrayList<>();
+		List<ITab> tabs = new ArrayList<ITab>();
 
 		// tab #1, using SimpleTab //
 		tabs.add(new SimpleTab(Model.of("Tab (SimpleTab)"), Model.of("My content !")));

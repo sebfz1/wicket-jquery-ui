@@ -203,7 +203,7 @@ public class SiteMapPage extends WebPage
 			@SuppressWarnings("unchecked")
 			protected List<SiteUrl> load()
 			{
-				final List<SiteUrl> list = new ArrayList<>();
+				final List<SiteUrl> list = new ArrayList<SiteUrl>();
 
 				for (Class<?> type : LIST)
 				{
