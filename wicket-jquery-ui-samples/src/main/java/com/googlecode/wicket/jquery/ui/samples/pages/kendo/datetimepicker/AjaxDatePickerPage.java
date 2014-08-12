@@ -16,7 +16,7 @@ public class AjaxDatePickerPage extends AbstractTimePickerPage
 
 	public AjaxDatePickerPage()
 	{
-		final Form<Date> form = new Form<>("form");
+		final Form<Date> form = new Form<Date>("form");
 		this.add(form);
 
 		// FeedbackPanel //

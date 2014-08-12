@@ -41,7 +41,7 @@ public abstract class TabDialog extends AbstractDialog<String>
 
 	private List<ITab> newTabList()
 	{
-		List<ITab> tabs = new ArrayList<>();
+		List<ITab> tabs = new ArrayList<ITab>();
 
 		// tab #1 //
 		tabs.add(new AbstractTab(Model.of("My Tab")) {

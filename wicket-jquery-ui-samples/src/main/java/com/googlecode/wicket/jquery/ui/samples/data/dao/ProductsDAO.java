@@ -29,7 +29,7 @@ public class ProductsDAO
 
 	public ProductsDAO()
 	{
-		this.list = new ArrayList<>();
+		this.list = new ArrayList<Product>();
 		this.list.add(new Product(1, "Chai", "10 boxes x 20 bags", 18.0000, new Vendor("vendor #1")));
 		this.list.add(new Product(2, "Chang", "24 - 12 oz bottles", 19.0000, new Vendor("vendor #2")));
 		this.list.add(new Product(3, "Aniseed Syrup", "12 - 550 ml bottles", 10.0000, new Vendor("vendor #3")));

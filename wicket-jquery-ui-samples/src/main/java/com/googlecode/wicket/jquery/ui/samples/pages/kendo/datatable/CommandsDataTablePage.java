@@ -109,7 +109,7 @@ public class CommandsDataTablePage extends AbstractDataTablePage
 
 	private static List<IColumn> newColumnList()
 	{
-		List<IColumn> columns = new ArrayList<>();
+		List<IColumn> columns = new ArrayList<IColumn>();
 
 		columns.add(new PropertyColumn("ID", "id", 50));
 		columns.add(new PropertyColumn("Name", "name"));

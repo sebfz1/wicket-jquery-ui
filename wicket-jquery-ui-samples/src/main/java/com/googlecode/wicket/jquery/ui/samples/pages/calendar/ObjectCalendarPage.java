@@ -26,9 +26,9 @@ public class ObjectCalendarPage extends AbstractCalendarPage
 
 	public ObjectCalendarPage()
 	{
-		this.events = new ArrayList<>();
+		this.events = new ArrayList<CalendarEvent>();
 
-		this.objects = new ArrayList<>();
+		this.objects = new ArrayList<MyEvent>();
 		this.objects.add(new MyEvent("event #1"));
 		this.objects.add(new MyEvent("event #2"));
 

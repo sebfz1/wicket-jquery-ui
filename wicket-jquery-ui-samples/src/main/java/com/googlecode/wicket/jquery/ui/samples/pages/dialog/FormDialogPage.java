@@ -16,7 +16,7 @@ public class FormDialogPage extends AbstractDialogPage
 
 	public FormDialogPage()
 	{
-		final Form<Void> form = new Form<>("form");
+		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //

@@ -17,7 +17,7 @@ public class DefaultTimePickerPage extends AbstractTimePickerPage
 
 	public DefaultTimePickerPage()
 	{
-		Form<Void> form = new Form<>("form");
+		Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //

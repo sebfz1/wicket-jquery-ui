@@ -20,10 +20,10 @@ public class RadioButtonPage extends AbstractButtonPage
 
 	public RadioButtonPage()
 	{
-		final IModel<String> radioModel = new Model<>();
+		final IModel<String> radioModel = new Model<String>();
 		final List<String> radioList = Arrays.asList("my radio 1", "my radio 2", "my radio 3");
 
-		Form<Void> form = new Form<>("form");
+		Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //

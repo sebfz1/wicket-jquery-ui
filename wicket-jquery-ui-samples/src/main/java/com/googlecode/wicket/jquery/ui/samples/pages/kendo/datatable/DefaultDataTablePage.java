@@ -23,7 +23,7 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 	public DefaultDataTablePage()
 	{
 		// Form //
-		final Form<?> form = new Form<>("form");
+		final Form<?> form = new Form<Void>("form");
 		this.add(form);
 
 		// DataTable //
@@ -60,7 +60,7 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 
 	private static List<IColumn> newColumnList()
 	{
-		List<IColumn> columns = new ArrayList<>();
+		List<IColumn> columns = new ArrayList<IColumn>();
 
 		columns.add(new PropertyColumn("ID", "id", 50));
 		columns.add(new PropertyColumn("Name", "name"));

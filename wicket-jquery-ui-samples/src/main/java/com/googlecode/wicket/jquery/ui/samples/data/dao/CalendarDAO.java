@@ -54,7 +54,7 @@ public class CalendarDAO
 
 	public static List<DemoCalendarEvent> getEvents(Date start, Date end)
 	{
-		List<DemoCalendarEvent> events = new ArrayList<>();
+		List<DemoCalendarEvent> events = new ArrayList<DemoCalendarEvent>();
 
 		CalendarDAO dao = get();
 

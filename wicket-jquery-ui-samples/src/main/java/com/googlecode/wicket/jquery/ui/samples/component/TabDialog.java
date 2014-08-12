@@ -30,7 +30,7 @@ public abstract class TabDialog extends AbstractFormDialog<TabItem>
 		super(id, title, new CompoundPropertyModel<TabItem>(new TabItem()), true);
 
 		// Form //
-		this.form = new Form<>("form");
+		this.form = new Form<Integer>("form");
 		this.add(this.form);
 
 		// FeedbackPanel //

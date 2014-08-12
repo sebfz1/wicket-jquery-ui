@@ -28,7 +28,7 @@ public abstract class SliderDialog extends AbstractFormDialog<Integer>
 	{
 		super(id, title, model, true);
 
-		this.form = new Form<>("form");
+		this.form = new Form<Integer>("form");
 		this.add(this.form);
 
 		// Slider //

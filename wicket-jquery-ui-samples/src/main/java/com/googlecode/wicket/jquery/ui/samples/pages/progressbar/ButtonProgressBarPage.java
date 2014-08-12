@@ -20,7 +20,7 @@ public class ButtonProgressBarPage extends AbstractProgressBarPage
 
 	private void initialize()
 	{
-		final Form<Void> form = new Form<>("form");
+		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //

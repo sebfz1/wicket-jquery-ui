@@ -18,7 +18,7 @@ public class InputSliderPage extends AbstractSliderPage
 
 	public InputSliderPage()
 	{
-		Form<Integer> form = new Form<>("form");
+		Form<Integer> form = new Form<Integer>("form");
 		this.add(form);
 
 		// FeedbackPanel //

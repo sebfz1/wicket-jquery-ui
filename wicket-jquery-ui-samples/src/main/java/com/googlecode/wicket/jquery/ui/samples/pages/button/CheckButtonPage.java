@@ -26,10 +26,10 @@ public class CheckButtonPage extends AbstractButtonPage
 
 	private void initialize()
 	{
-		final IModel<ArrayList<String>> checkModel = new Model<>();
+		final IModel<ArrayList<String>> checkModel = new Model<ArrayList<String>>();
 		final List<String> checkList = Arrays.asList("my check 1", "my check 2", "my check 3");
 
-		Form<Void> form = new Form<>("form");
+		Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //

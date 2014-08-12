@@ -15,7 +15,7 @@ public class DynamicEffectPage extends AbstractEffectPage
 	{
 		this.add(new JQueryBehavior("#tabs", "tabs"));
 
-		Form<Void> form = new Form<>("form");
+		Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		form.add(new AjaxButton("button") {

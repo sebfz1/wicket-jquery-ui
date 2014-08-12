@@ -27,7 +27,7 @@ public class DefaultWizardPage extends AbstractWizardPage
 	public DefaultWizardPage()
 	{
 		// Form //
-		Form<Void> form = new Form<>("form");
+		Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //

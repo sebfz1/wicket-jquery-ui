@@ -31,7 +31,7 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 	public ShoppingDroppablePage()
 	{
 		this.books = this.newBookList();
-		this.orders = new ArrayList<>();
+		this.orders = new ArrayList<Book>();
 
 		this.initialize();
 	}

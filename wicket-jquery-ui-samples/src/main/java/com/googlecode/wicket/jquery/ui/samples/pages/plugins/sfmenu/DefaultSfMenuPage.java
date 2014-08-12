@@ -21,7 +21,7 @@ public class DefaultSfMenuPage extends AbstractSfMenuPage
 
 	static List<ISfMenuItem> newSfMenuItemList()
 	{
-		List<ISfMenuItem> list = new ArrayList<>();
+		List<ISfMenuItem> list = new ArrayList<ISfMenuItem>();
 
 		list.add(new SfMenuItem("Home", HomePage.class));
 		list.add(new SfMenuItem("Widgets", widgetSubMenuList()));
@@ -34,7 +34,7 @@ public class DefaultSfMenuPage extends AbstractSfMenuPage
 
 	static List<ISfMenuItem> newSubMenuList()
 	{
-		List<ISfMenuItem> list = new ArrayList<>();
+		List<ISfMenuItem> list = new ArrayList<ISfMenuItem>();
 
 		list.add(new SfMenuItem("Sub-menu #1", HomePage.class));
 		SfMenuItem subMenuItem2 = new SfMenuItem("Disabled Menu Item", HomePage.class);
@@ -47,7 +47,7 @@ public class DefaultSfMenuPage extends AbstractSfMenuPage
 
 	static List<ISfMenuItem> widgetSubMenuList()
 	{
-		List<ISfMenuItem> list = new ArrayList<>();
+		List<ISfMenuItem> list = new ArrayList<ISfMenuItem>();
 
 		list.add(new SfMenuItem("Accordion", DefaultAccordionPage.class));
 		list.add(new SfMenuItem("Button", DefaultButtonPage.class));
@@ -58,7 +58,7 @@ public class DefaultSfMenuPage extends AbstractSfMenuPage
 
 	static List<ISfMenuItem> externalPagesList()
 	{
-		List<ISfMenuItem> list = new ArrayList<>();
+		List<ISfMenuItem> list = new ArrayList<ISfMenuItem>();
 
 		list.add(new SfMenuItem("External Link to Google (new Window)", "http://www.google.com/", true));
 		list.add(new SfMenuItem("External Link to Yahoo (this Window)", "http://www.yahoo.com/"));

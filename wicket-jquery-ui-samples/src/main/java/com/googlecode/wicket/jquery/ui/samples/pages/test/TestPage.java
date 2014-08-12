@@ -33,7 +33,7 @@ public class TestPage extends AbstractKendoPage
 	{
 		super.onInitialize();
 
-		final Form<?> form = new Form<>("form");
+		final Form<?> form = new Form<Void>("form");
 		// this.form.setMultiPart(true);
 		this.add(form);
 

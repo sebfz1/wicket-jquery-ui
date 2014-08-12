@@ -21,7 +21,7 @@ public class VerticalSfMenuPage extends AbstractSfMenuPage
 
 	static List<ISfMenuItem> newSfMenuItemList()
 	{
-		List<ISfMenuItem> list = new ArrayList<>();
+		List<ISfMenuItem> list = new ArrayList<ISfMenuItem>();
 
 		list.add(new SfMenuItem("Home", HomePage.class));
 		list.add(new SfMenuItem("Widgets", widgetSubMenuList()));
@@ -34,7 +34,7 @@ public class VerticalSfMenuPage extends AbstractSfMenuPage
 
 	static List<ISfMenuItem> newSubMenuList()
 	{
-		List<ISfMenuItem> list = new ArrayList<>();
+		List<ISfMenuItem> list = new ArrayList<ISfMenuItem>();
 
 		list.add(new SfMenuItem("Sub-menu #1", HomePage.class));
 		list.add(new SfMenuItem("Sub-menu #2", HomePage.class));
@@ -45,7 +45,7 @@ public class VerticalSfMenuPage extends AbstractSfMenuPage
 
 	static List<ISfMenuItem> widgetSubMenuList()
 	{
-		List<ISfMenuItem> list = new ArrayList<>();
+		List<ISfMenuItem> list = new ArrayList<ISfMenuItem>();
 
 		list.add(new SfMenuItem("Accordion", DefaultAccordionPage.class));
 		list.add(new SfMenuItem("Button", DefaultButtonPage.class));

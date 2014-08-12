@@ -15,7 +15,7 @@ public class SliderProgressBarPage extends AbstractProgressBarPage
 
 	public SliderProgressBarPage()
 	{
-		final Form<Void> form = new Form<>("form");
+		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //

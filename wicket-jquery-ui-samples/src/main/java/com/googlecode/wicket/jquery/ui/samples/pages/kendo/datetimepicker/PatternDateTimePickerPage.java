@@ -19,7 +19,7 @@ public class PatternDateTimePickerPage extends AbstractTimePickerPage
 
 	public PatternDateTimePickerPage()
 	{
-		Form<Void> form = new Form<>("form");
+		Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //

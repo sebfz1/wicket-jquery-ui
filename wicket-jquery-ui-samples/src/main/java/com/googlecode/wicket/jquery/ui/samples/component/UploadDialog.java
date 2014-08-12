@@ -29,7 +29,7 @@ public abstract class UploadDialog extends AbstractFormDialog<FileUpload>
 		super(id, title, new Model<FileUpload>(), true);
 
 		// Form //
-		this.form = new Form<>("form");
+		this.form = new Form<Integer>("form");
 //		this.form.setMultiPart(true);
 		this.add(this.form);
 

@@ -18,7 +18,7 @@ public class RendererComboBoxPage extends AbstractComboBoxPage
 
 	public RendererComboBoxPage()
 	{
-		Form<Void> form = new Form<>("form");
+		Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //

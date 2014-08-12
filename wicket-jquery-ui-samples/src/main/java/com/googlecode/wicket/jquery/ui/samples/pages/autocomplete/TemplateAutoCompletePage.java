@@ -26,7 +26,7 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 		final IModel<Genre> model = Model.of(GenresDAO.newGenre());
 
 		// Form //
-		final Form<Void> form = new Form<>("form");
+		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //

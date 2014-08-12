@@ -35,7 +35,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 		this.add(dialog);
 
 		// Form //
-		Form<Void> form = new Form<>("form");
+		Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// Nav-tab Buttons //
@@ -173,7 +173,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 
 	private List<ITab> newTabList()
 	{
-		List<ITab> tabs = new ArrayList<>();
+		List<ITab> tabs = new ArrayList<ITab>();
 
 		// tab #1, using SimpleTab //
 		tabs.add(new SimpleTab(Model.of("Tab #1"), Model.of("my content")));

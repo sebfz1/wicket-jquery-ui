@@ -47,7 +47,7 @@ public abstract class TemplatePage extends WebPage
 
 		private IModel<Map<String, Object>> newResourceModel()
 		{
-			Map<String, Object> map = new HashMap<>();
+			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("url", this.url);
 
 			return Model.ofMap(map);

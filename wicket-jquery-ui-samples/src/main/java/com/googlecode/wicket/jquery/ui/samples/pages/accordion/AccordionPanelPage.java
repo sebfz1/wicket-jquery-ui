@@ -25,7 +25,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 
 	public AccordionPanelPage()
 	{
-		final Form<?> form = new Form<>("form");
+		final Form<?> form = new Form<Void>("form");
 		this.add(form);
 
 		// Feedback Panel //
