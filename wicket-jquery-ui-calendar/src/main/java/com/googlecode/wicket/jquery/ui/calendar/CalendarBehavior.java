@@ -18,7 +18,6 @@ package com.googlecode.wicket.jquery.ui.calendar;
 
 import java.util.Date;
 
-import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -37,7 +36,6 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.jquery.ui.calendar.settings.CalendarLibrarySettings;
-import com.googlecode.wicket.jquery.ui.calendar.settings.ICalendarLibrarySettings;
 
 /**
  * Provides the jQuery fullCalendar behavior
@@ -49,21 +47,6 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "fullCalendar";
-
-	/**
-	 * Gets the {@link ICalendarLibrarySettings}
-	 *
-	 * @return Default internal {@link ICalendarLibrarySettings} instance if {@link Application}'s {@link IJavaScriptLibrarySettings} is not an instance of {@link ICalendarLibrarySettings}
-	 */
-	private static ICalendarLibrarySettings getLibrarySettings()
-	{
-		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof ICalendarLibrarySettings))
-		{
-			return (ICalendarLibrarySettings) Application.get().getJavaScriptLibrarySettings();
-		}
-
-		return CalendarLibrarySettings.get();
-	}
 
 	private JQueryAjaxBehavior onSelectBehavior = null; // date range-select behavior;
 
@@ -104,18 +87,18 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	 */
 	private void initReferences()
 	{
-		ICalendarLibrarySettings settings = getLibrarySettings();
+		CalendarLibrarySettings settings = CalendarLibrarySettings.get();
 
 		// fullcalendar.css //
-		if (settings.getCalendarStyleSheetReference() != null)
+		if (settings.getStyleSheetReference() != null)
 		{
-			this.add(settings.getCalendarStyleSheetReference());
+			this.add(settings.getStyleSheetReference());
 		}
 
 		// fullcalendar.min.js //
-		if (settings.getCalendarJavaScriptReference() != null)
+		if (settings.getJavaScriptReference() != null)
 		{
-			this.add(settings.getCalendarJavaScriptReference());
+			this.add(settings.getJavaScriptReference());
 		}
 
 		// gcal.js //

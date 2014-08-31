@@ -28,7 +28,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
-			<artifactId>wicket-kendo-ui</artifactId>
+			<artifactId>wicket-jquery-ui-theme-uilightness</artifactId>
 			<version>7.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
@@ -39,6 +39,18 @@
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-jquery-ui-plugins</artifactId>
+			<version>7.0.0-SNAPSHOT</version>
+		</dependency>
+
+		<!-- KENDO-UI DEPENDENCIES -->
+		<dependency>
+			<groupId>com.googlecode.wicket-jquery-ui</groupId>
+			<artifactId>wicket-kendo-ui</artifactId>
+			<version>7.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.wicket-jquery-ui</groupId>
+			<artifactId>wicket-kendo-ui-theme-default</artifactId>
 			<version>7.0.0-SNAPSHOT</version>
 		</dependency>
 

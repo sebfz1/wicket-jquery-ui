@@ -43,7 +43,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>7.0.0-SNAPSHOT</wicket.version>
+		<wicket.version>7.0.0-M3</wicket.version>
 		<junit.version>4.11</junit.version>
 		<jetty.version>8.1.15.v20140411</jetty.version>
 	</properties>
@@ -58,7 +58,7 @@
 		</repository>
 		<repository>
 			<id>Wicket Nexus Staging</id>
-			<url>https://repository.apache.org/content/repositories/orgapachewicket-1018/</url>
+			<url>https://repository.apache.org/content/repositories/orgapachewicket-1028/</url>
 		</repository>
 	</repositories>
 
@@ -85,9 +85,51 @@
 										<ignore />
 									</action>
 								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.felix
+										</groupId>
+										<artifactId>
+											maven-bundle-plugin
+										</artifactId>
+										<versionRange>
+											[2.3.7,)
+										</versionRange>
+										<goals>
+											<goal>manifest</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>2.4.0</version>
+					<executions>
+						<execution>
+							<id>bundle-manifest</id>
+							<phase>process-classes</phase>
+							<goals>
+								<goal>manifest</goal>
+							</goals>
+							<configuration>
+								<instructions>
+				                    <Bundle-Version>${project.version}</Bundle-Version>
+									<Bundle-SymbolicName>${bundle.namespace}</Bundle-SymbolicName>
+				                    <Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
+									<Export-Package>${bundle.namespace}.*;version="${project.version}"</Export-Package>
+								</instructions>
+							</configuration>
+						</execution>
+					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -156,9 +198,11 @@
 	<modules>
 		<module>wicket-jquery-ui-core</module>
 		<module>wicket-jquery-ui</module>
+		<module>wicket-jquery-ui-themes</module>
 		<module>wicket-jquery-ui-plugins</module>
 		<module>wicket-jquery-ui-calendar</module>
 		<module>wicket-kendo-ui</module>
+		<module>wicket-kendo-ui-themes</module>
 		<module>wicket-jquery-ui-samples</module>
 	</modules>
 </project>

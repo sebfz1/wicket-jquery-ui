@@ -17,23 +17,42 @@
 package com.googlecode.wicket.kendo.ui.settings;
 
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.settings.JavaScriptLibrarySettings;
 
 import com.googlecode.wicket.kendo.ui.resource.KendoUIJavaScriptResourceReference;
 
 /**
- * Default implementation of {@link IKendoUILibrarySettings}.<br/>
+ * Provides library settings for Kendo UI resource references<br/>
+ * <br/>
+ * Usage:
+ *
+ * <pre>
+ * <code>
+ * public class MyApplication extends WebApplication
+ * {
+ * 	public void init()
+ * 	{
+ * 		super.init();
+ *
+ * 		this.getMarkupSettings().setStripWicketTags(true); // important
+ *
+ * 		KendoUILibrarySettings settings = KendoUILibrarySettings.get();
+ * 		settings.setJavaScriptReference(new JavaScriptResourceReference(...)); // if you want to change the js version
+ * 		settings.setCommonStyleSheetReference(new CssResourceReference(MyApplication.class, "kendo.common.min.css"));
+ * 		settings.setThemeStyleSheetReference(new CssResourceReference(MyApplication.class, "kendo.custom.min.css"));
+ * 	}
+ * }
+ * </code>
+ * </pre>
  *
  * @author Sebastien Briquet - sebfz1
- *
  */
-public class KendoUILibrarySettings extends JavaScriptLibrarySettings implements IKendoUILibrarySettings
+public class KendoUILibrarySettings
 {
 	private static KendoUILibrarySettings instance = null;
 
 	/**
-	 * INTERNAL USE<br/>
 	 * Gets the {@link KendoUILibrarySettings} instance
+	 *
 	 * @return the {@link KendoUILibrarySettings} instance
 	 */
 	public static synchronized KendoUILibrarySettings get()
@@ -46,29 +65,77 @@ public class KendoUILibrarySettings extends JavaScriptLibrarySettings implements
 		return KendoUILibrarySettings.instance;
 	}
 
+	private ResourceReference javascriptReference = KendoUIJavaScriptResourceReference.get();
+	private ResourceReference stylesheetReferenceC = null;
+	private ResourceReference stylesheetReferenceT = null;
 
 	/**
 	 * Constructor
 	 */
-	public KendoUILibrarySettings()
+	private KendoUILibrarySettings()
 	{
 	}
 
-	@Override
-	public ResourceReference getKendoUIJavaScriptReference()
+	/**
+	 * Gets the Kendo UI javascript resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 * @see #setJavaScriptReference(ResourceReference)
+	 */
+	public ResourceReference getJavaScriptReference()
 	{
-		return KendoUIJavaScriptResourceReference.get();
+		return this.javascriptReference;
 	}
 
-	@Override
-	public ResourceReference getKendoUICommonStyleSheetReference()
+	/**
+	 * Sets the Kendo UI javascript resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setJavaScriptReference(ResourceReference reference)
 	{
-		return null;
+		this.javascriptReference = reference;
 	}
 
-	@Override
-	public ResourceReference getKendoUIThemeStyleSheetReference()
+	/**
+	 * Gets the Kendo UI common stylesheet resource reference
+	 *
+	 * @return <tt>null</tt> by default, meaning the style is supplied through the HTML page (&lt;link rel="stylesheet" type="text/css" href="..." /&gt;)
+	 * @see #setCommonStyleSheetReference(ResourceReference)
+	 */
+	public ResourceReference getCommonStyleSheetReference()
 	{
-		return null;
+		return this.stylesheetReferenceC;
+	}
+
+	/**
+	 * Sets the Kendo UI common stylesheet resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setCommonStyleSheetReference(ResourceReference reference)
+	{
+		this.stylesheetReferenceC = reference;
+	}
+
+	/**
+	 * Gets the Kendo UI theme stylesheet resource reference
+	 *
+	 * @return <tt>null</tt> by default, meaning the style is supplied through the HTML page (&lt;link rel="stylesheet" type="text/css" href="..." /&gt;)
+	 * @see #setThemeStyleSheetReference(ResourceReference)
+	 */
+	public ResourceReference getThemeStyleSheetReference()
+	{
+		return this.stylesheetReferenceT;
+	}
+
+	/**
+	 * Sets the Kendo UI theme stylesheet resource reference
+	 *
+	 * @param reference the {@link ResourceReference}
+	 */
+	public void setThemeStyleSheetReference(ResourceReference reference)
+	{
+		this.stylesheetReferenceT = reference;
 	}
 }

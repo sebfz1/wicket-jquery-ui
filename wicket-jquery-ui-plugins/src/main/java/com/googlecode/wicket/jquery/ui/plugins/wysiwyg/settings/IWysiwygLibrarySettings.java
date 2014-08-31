@@ -16,18 +16,13 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.wysiwyg.settings;
 
-import org.apache.wicket.request.resource.CssResourceReference;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
-
+/**
+ * Provides library settings for Wysiwyg resource references
+ *
+ * @deprecated The way of customizing ResourceReference(s) has changed, please read <a href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references">[howto] change resource references</a>
+ */
+// TODO: remove in next version
+@Deprecated
 public interface IWysiwygLibrarySettings
 {
-
-	CssResourceReference getBootstrapCombinedNoIconsStyleSheetReference();
-	CssResourceReference getBootstrapResponsiveStyleSheetReference();
-	CssResourceReference getEditorStyleSheetReference();
-
-	JavaScriptResourceReference getBootstrapDropDownJavaScriptReference();
-	JavaScriptResourceReference getBootstrapWysiwygJavaScriptReference();
-	JavaScriptResourceReference getJQueryHotKeysJavaScriptReference();
-	JavaScriptResourceReference getPrettifyJavaScriptReference();
 }
