@@ -228,7 +228,7 @@ public class SiteMapPage extends WebPage
 		return new MarkupType("html", "text/xml");
 	}
 
-	class SiteUrl
+	static class SiteUrl
 	{
 		private String loc;
 
