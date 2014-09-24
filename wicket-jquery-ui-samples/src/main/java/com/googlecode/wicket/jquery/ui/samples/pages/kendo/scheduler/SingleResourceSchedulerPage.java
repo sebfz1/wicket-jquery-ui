@@ -94,8 +94,8 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 	static ResourceList newResourceList()
 	{
 		ResourceList list = new ResourceList("Agenda", "agendaId");
-		list.add(new Resource(1, "Sebastien", "#6699cc"));
-		list.add(new Resource(2, "Emilie", "#cc6699"));
+		list.add(new Resource("1", "Sebastien", "#6699cc"));
+		list.add(new Resource("2", "Emilie", "#cc6699"));
 
 		return list;
 	}

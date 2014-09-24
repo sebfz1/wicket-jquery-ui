@@ -34,7 +34,7 @@ public class Resource implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	private int id;
+	private String id;
 	private String text;
 	private String color;
 
@@ -51,7 +51,7 @@ public class Resource implements Serializable
 	 * @param id the resource id
 	 * @param text the text title
 	 */
-	public Resource(int id, String text)
+	public Resource(String id, String text)
 	{
 		this(id, text, null);
 	}
@@ -63,7 +63,7 @@ public class Resource implements Serializable
 	 * @param text the text (ie: the name of the resource)
 	 * @param color the color (ie: #336699)
 	 */
-	public Resource(int id, String text, String color)
+	public Resource(String id, String text, String color)
 	{
 		this.id = id;
 		this.text = text;
@@ -75,7 +75,7 @@ public class Resource implements Serializable
 	 *
 	 * @return the resource id
 	 */
-	public int getId()
+	public String getId()
 	{
 		return this.id;
 	}
@@ -85,7 +85,7 @@ public class Resource implements Serializable
 	 *
 	 * @param id the resource id
 	 */
-	public void setId(int id)
+	public void setId(String id)
 	{
 		this.id = id;
 	}
@@ -138,7 +138,7 @@ public class Resource implements Serializable
 	{
 		Options value = new Options();
 
-		value.set("value", this.id);
+		value.set("value", Options.asString(this.id));
 		value.set("text", Options.asString(this.text));
 
 		if (this.color != null)

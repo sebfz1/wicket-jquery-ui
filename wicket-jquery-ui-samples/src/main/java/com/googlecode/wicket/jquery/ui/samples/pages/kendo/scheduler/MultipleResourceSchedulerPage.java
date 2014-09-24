@@ -97,8 +97,8 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 	static ResourceList newRoomList()
 	{
 		ResourceList list = new ResourceList("Room", "roomId", "Rooms"); // grouping by "Rooms" (optional)
-		list.add(new Resource(1, "Room #1", "#6699cc"));
-		list.add(new Resource(2, "Room #2", "#9966cc"));
+		list.add(new Resource("1", "Room #1", "#6699cc"));
+		list.add(new Resource("2", "Room #2", "#9966cc"));
 
 		return list;
 	}
@@ -106,8 +106,8 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 	static ResourceList newEmployeeList()
 	{
 		ResourceList list = new ResourceList("Employee", "employeeId", true); // true: multiple
-		list.add(new Resource(1, "Patrick", "#339966"));
-		list.add(new Resource(2, "Sebastien", "#996633"));
+		list.add(new Resource("1", "Patrick", "#339966"));
+		list.add(new Resource("2", "Sebastien", "#996633"));
 
 		return list;
 	}
