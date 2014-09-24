@@ -18,8 +18,6 @@ package com.googlecode.wicket.kendo.ui.scheduler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -407,22 +405,20 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 			this.event.setRecurrenceException(recurrenceException);
 
 			// Resources //
-			Pattern pattern = Pattern.compile("(\\d+)");
-
 			for (ResourceList list : listModel.getObject())
 			{
 				String field = list.getField();
 				StringValue value = RequestCycleUtils.getQueryParameterValue(field);
 
-				List<Integer> values = new ArrayList<Integer>();
+				List<String> values = new ArrayList<String>();
 
 				if (value != null)
 				{
-					Matcher matcher = pattern.matcher(value.toString());
+					String[] splittedValues = value.toString().split(",");
 
-					while (matcher.find())
+					for (int i = 0; i < splittedValues.length; i++)
 					{
-						values.add(Integer.valueOf(matcher.group()));
+						values.add(splittedValues[i]);
 					}
 
 					if (list.isMultiple())

@@ -364,7 +364,7 @@ public class SchedulerEvent implements Serializable
 	 * @param field the resource field (ie: 'resourceId')
 	 * @param value the value
 	 */
-	public void setResource(String field, Integer value)
+	public void setResource(String field, String value)
 	{
 		this.resources.put(field, value);
 	}
@@ -375,7 +375,7 @@ public class SchedulerEvent implements Serializable
 	 * @param field the resource field (ie: 'resourceId')
 	 * @param values the values
 	 */
-	public void setResource(String field, List<Integer> values)
+	public void setResource(String field, List<String> values)
 	{
 		this.resources.put(field, values);
 	}
