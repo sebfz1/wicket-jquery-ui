@@ -89,7 +89,6 @@ public class CSVDataExporter implements IDataExporter
 	 */
 	public static void export(RequestCycle cycle, final IDataProvider<?> provider, final List<IExportableColumn> columns, String filename)
 	{
-		@SuppressWarnings("resource")
 		DataExporterResourceStreamWriter writer = new DataExporterResourceStreamWriter(new CSVDataExporter(), provider, columns);
 
 		cycle.scheduleRequestHandlerAfterCurrent(new ResourceStreamRequestHandler(writer, filename));
@@ -126,7 +125,7 @@ public class CSVDataExporter implements IDataExporter
 	@Override
 	public String getContentType()
 	{
-		return this.contentType + "; charset=" + CSVDataExporter.characterSet + "; header=" + (this.exportHeadersEnabled ? "present" : "absent");
+		return String.format("%s; charset=%s; header=%s", this.contentType, CSVDataExporter.characterSet, this.exportHeadersEnabled ? "present" : "absent");
 	}
 
 	/**
