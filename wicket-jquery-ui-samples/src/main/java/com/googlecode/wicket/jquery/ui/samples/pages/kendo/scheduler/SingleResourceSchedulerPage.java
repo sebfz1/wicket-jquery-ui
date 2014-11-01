@@ -62,6 +62,7 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 			@Override
 			public void onDelete(AjaxRequestTarget target, SchedulerEvent event)
 			{
+
 				ResourceEventsDAO.get().delete(event);
 
 				this.info("Deleted: " + event);
@@ -74,7 +75,7 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 
 	static SchedulerModel newSchedulerModel()
 	{
-		//ISchedulerVisitor
+		// ISchedulerVisitor
 		return new SchedulerModel() {
 
 			private static final long serialVersionUID = 1L;
