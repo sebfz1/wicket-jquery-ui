@@ -62,7 +62,6 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 			@Override
 			public void onDelete(AjaxRequestTarget target, SchedulerEvent event)
 			{
-
 				ResourceEventsDAO.get().delete(event);
 
 				this.info("Deleted: " + event);
