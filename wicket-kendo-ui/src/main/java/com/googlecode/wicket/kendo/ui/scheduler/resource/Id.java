@@ -70,6 +70,51 @@ public class Id<T> implements IClusterable
 		return this.toString();
 	}
 
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (this.id == null ? 0 : this.id.hashCode());
+
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object object)
+	{
+		if (this == object)
+		{
+			return true;
+		}
+
+		if (object == null)
+		{
+			return false;
+		}
+
+		if (!(object instanceof Id))
+		{
+			return false;
+		}
+
+		Id<?> other = (Id<?>) object;
+
+		if (this.id == null)
+		{
+			if (other.id != null)
+			{
+				return false;
+			}
+		}
+		else if (!this.id.equals(other.id))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 	/**
 	 * Converts an id of type I to its corresponding {@link Id} type
 	 *
