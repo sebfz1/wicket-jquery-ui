@@ -293,11 +293,11 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				// http://arshaw.com/fullcalendar/docs/selection/select_callback/
+				// http://fullcalendar.io/docs/selection/select_method/
 				// function(startDate, endDate, allDay, jsEvent, view) { }
-				return new CallbackParameter[] { CallbackParameter.converted("startDate", "startDate.getTime()"), // retrieved
-						CallbackParameter.converted("endDate", "endDate.getTime()"), // retrieved
-						CallbackParameter.explicit("allDay"), // retrieved
+				return new CallbackParameter[] { CallbackParameter.converted("startDate", "startDate.valueOf()"), // retrieved
+						CallbackParameter.converted("endDate", "endDate.valueOf()"), // retrieved
+						CallbackParameter.resolved("allDay", "!startDate.hasTime()"), // retrieved
 						CallbackParameter.context("jsEvent"), // lf
 						CallbackParameter.context("view"), // lf
 						CallbackParameter.resolved("viewName", "view.name") // retrieved
@@ -326,10 +326,10 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				// http://arshaw.com/fullcalendar/docs/mouse/dayClick/
+				// http://fullcalendar.io/docs/mouse/dayClick/
 				// function(date, allDay, jsEvent, view)
-				return new CallbackParameter[] { CallbackParameter.converted("date", "date.getTime()"), // retrieved
-						CallbackParameter.explicit("allDay"), // retrieved
+				return new CallbackParameter[] { CallbackParameter.converted("date", "date.valueOf()"), // retrieved
+						CallbackParameter.resolved("allDay", "!date.hasTime()"), // retrieved
 						CallbackParameter.context("jsEvent"), // lf
 						CallbackParameter.context("view"),// lf
 						CallbackParameter.resolved("viewName", "view.name") // retrieved
