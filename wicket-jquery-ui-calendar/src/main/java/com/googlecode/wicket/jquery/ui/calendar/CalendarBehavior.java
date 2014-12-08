@@ -30,7 +30,6 @@ import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 import org.apache.wicket.util.string.Strings;
-import org.apache.wicket.util.time.Duration;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -293,8 +292,8 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				// http://fullcalendar.io/docs/selection/select_method/
-				// function(startDate, endDate, allDay, jsEvent, view) { }
+				// http://fullcalendar.io/docs/selection/select_callback/
+				// function(startDate, endDate, jsEvent, view) { }
 				return new CallbackParameter[] { CallbackParameter.converted("startDate", "startDate.valueOf()"), // retrieved
 						CallbackParameter.converted("endDate", "endDate.valueOf()"), // retrieved
 						CallbackParameter.resolved("allDay", "!startDate.hasTime()"), // retrieved
@@ -405,12 +404,12 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				// http://arshaw.com/fullcalendar/docs/event_ui/eventResize/
-				// function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) { }
+				// http://fullcalendar.io/docs/event_ui/eventDrop/
+				// function(event, delta, revertFunc, jsEvent, ui, view) { }
 				return new CallbackParameter[] { CallbackParameter.context("event"), // lf
-						CallbackParameter.explicit("dayDelta"), // retrieved
-						CallbackParameter.explicit("minuteDelta"), // retrieved
-						CallbackParameter.explicit("allDay"), // retrieved
+						CallbackParameter.context("delta"), // lf
+						CallbackParameter.resolved("millisDelta", "delta.asMilliseconds()"), // retrieved
+						CallbackParameter.resolved("allDay", "event.start.hasTime()"), // retrieved
 						CallbackParameter.context("revertFunc"), // lf
 						CallbackParameter.context("jsEvent"), // lf
 						CallbackParameter.context("ui"), // lf
@@ -456,11 +455,11 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				// http://arshaw.com/fullcalendar/docs/event_ui/eventResize/
-				// function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) { }
+				// http://fullcalendar.io/docs/event_ui/eventResize/
+				// function(event, delta, revertFunc, jsEvent, ui, view) { }
 				return new CallbackParameter[] { CallbackParameter.context("event"), // lf
-						CallbackParameter.explicit("dayDelta"), // retrieved
-						CallbackParameter.explicit("minuteDelta"), // retrieved
+						CallbackParameter.resolved("millisDelta", "delta.asMilliseconds()"), // retrieved
+						CallbackParameter.resolved("allDay", "event.start.hasTime()"), // retrieved
 						CallbackParameter.context("revertFunc"), // lf
 						CallbackParameter.context("jsEvent"), // lf
 						CallbackParameter.context("ui"), // lf
@@ -491,10 +490,10 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				// http://arshaw.com/fullcalendar/docs/dropping/drop/
-				// function(date, allDay, jsEvent, ui) { }
-				return new CallbackParameter[] { CallbackParameter.converted("date", "date.getTime()"), // retrieved
-						CallbackParameter.explicit("allDay"), // retrieved
+				// http://fullcalendar.io/docs/dropping/drop/
+				// function(date, jsEvent, ui) { }
+				return new CallbackParameter[] { CallbackParameter.converted("date", "date.valueOf()"), // retrieved
+						CallbackParameter.resolved("allDay", "!date.hasTime()"), // retrieved
 						CallbackParameter.context("jsEvent"), // lf
 						CallbackParameter.context("ui"), // lf
 						CallbackParameter.resolved("title", "jQuery(this).data('title')") // retrieved
@@ -528,8 +527,8 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 				return new CallbackParameter[] { CallbackParameter.context("view"),// lf
 						CallbackParameter.context("element"), // lf
 						CallbackParameter.resolved("viewName", "view.name"), // retrieved
-						CallbackParameter.resolved("startDate", "view.start.getTime()"), // retrieved
-						CallbackParameter.resolved("endDate", "view.end.getTime()") }; // retrieved
+						CallbackParameter.resolved("startDate", "view.start.valueOf()"), // retrieved
+						CallbackParameter.resolved("endDate", "view.end.valueOf()") }; // retrieved
 			}
 
 			@Override
@@ -763,9 +762,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		{
 			this.eventId = RequestCycleUtils.getQueryParameterValue("eventId").toInt();
 
-			int dayDelta = RequestCycleUtils.getQueryParameterValue("dayDelta").toInt();
-			int minuteDelta = RequestCycleUtils.getQueryParameterValue("minuteDelta").toInt();
-			this.delta = (dayDelta * Duration.ONE_DAY.getMilliseconds()) + (minuteDelta * Duration.ONE_MINUTE.getMilliseconds());
+			this.delta = RequestCycleUtils.getQueryParameterValue("millisDelta").toLong();
 		}
 
 		/**
