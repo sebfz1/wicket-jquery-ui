@@ -16,10 +16,14 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.request.IRequestCycle;
 import org.apache.wicket.request.IRequestHandler;
@@ -36,6 +40,11 @@ import org.apache.wicket.request.http.WebResponse;
 public class CalendarModelBehavior extends AbstractAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
+	private static final ThreadLocal<DateFormat> ISO8601 = new ThreadLocal<DateFormat>() {
+		protected DateFormat initialValue() {
+			return new SimpleDateFormat("yyyy-MM-dd");
+		}
+	};
 
 	private final CalendarModel model;
 
@@ -55,13 +64,17 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 		final RequestCycle requestCycle = RequestCycle.get();
 		IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
 
-		final long start = parameters.getParameterValue("start").toLong(0);
-		final long end = parameters.getParameterValue("end").toLong(0);
+		final String start = parameters.getParameterValue("start").toString();
+		final String end = parameters.getParameterValue("end").toString();
 
 		if (this.model != null)
 		{
-			this.setStartDate(this.model, new Date(start * 1000));
-			this.setEndDate(this.model, new Date(end * 1000));
+			try {
+				this.setStartDate(this.model, ISO8601.get().parse(start));
+				this.setEndDate(this.model, ISO8601.get().parse(end));
+			} catch (ParseException e) {
+				throw new WicketRuntimeException("Invalid date string was passed to calendar range.", e);
+			}
 		}
 
 		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler());
