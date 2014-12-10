@@ -16,20 +16,16 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.request.IRequestCycle;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
+import org.threeten.bp.LocalDate;
 
 /**
  * Provides the behavior that loads {@link CalendarEvent}<code>s</code> according to {@link CalendarModel} start &amp; end dates
@@ -40,12 +36,6 @@ import org.apache.wicket.request.http.WebResponse;
 public class CalendarModelBehavior extends AbstractAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
-	private static final ThreadLocal<DateFormat> ISO8601 = new ThreadLocal<DateFormat>() {
-		protected DateFormat initialValue() {
-			return new SimpleDateFormat("yyyy-MM-dd");
-		}
-	};
-
 	private final CalendarModel model;
 
 	/**
@@ -69,12 +59,8 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 
 		if (this.model != null)
 		{
-			try {
-				this.setStartDate(this.model, ISO8601.get().parse(start));
-				this.setEndDate(this.model, ISO8601.get().parse(end));
-			} catch (ParseException e) {
-				throw new WicketRuntimeException("Invalid date string was passed to calendar range.", e);
-			}
+			this.setStartDate(this.model, LocalDate.parse(start));
+			this.setEndDate(this.model, LocalDate.parse(end));
 		}
 
 		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler());
@@ -85,9 +71,9 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 	 * This can be overridden to perform additional operation on date before the assignment.
 	 *
 	 * @param model the {@link CalendarModel}
-	 * @param date the {@link Date}
+	 * @param date the {@link LocalDate}
 	 */
-	protected void setStartDate(CalendarModel model, Date date)
+	protected void setStartDate(CalendarModel model, LocalDate date)
 	{
 		model.setStart(date);
 	}
@@ -97,9 +83,9 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 	 * This can be overridden to perform additional operation on date before the assignment.
 	 *
 	 * @param model the {@link CalendarModel}
-	 * @param date the {@link Date}
+	 * @param date the {@link LocalDate}
 	 */
-	protected void setEndDate(CalendarModel model, Date date)
+	protected void setEndDate(CalendarModel model, LocalDate date)
 	{
 		model.setEnd(date);
 	}

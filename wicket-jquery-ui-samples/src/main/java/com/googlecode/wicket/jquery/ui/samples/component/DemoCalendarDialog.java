@@ -1,7 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.component;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
@@ -15,6 +14,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.threeten.bp.LocalDateTime;
 
 import com.googlecode.wicket.jquery.ui.form.RadioChoice;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -32,7 +32,7 @@ public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendar
 
 	static IModel<DemoCalendarEvent> emptyModel()
 	{
-		return Model.of(new DemoCalendarEvent(0, "", Category.PUBLIC, new Date()));
+		return Model.of(new DemoCalendarEvent(0, "", Category.PUBLIC, LocalDateTime.now()));
 	}
 
 	private Form<?> form;
