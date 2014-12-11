@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<name>wicket-jquery-ui-calendar</name>
-	<description>Wicket-jQuery UI calendar</description>
+	<name>wicket-kendo-ui-localdatetime</name>
+	<description>Wicket-Kendo UI datetime components using LocalDate/LocalDateTime instead of java.util.Date</description>
 
 	<parent>
 		<groupId>com.googlecode.wicket-jquery-ui</groupId>
@@ -10,11 +10,11 @@
 		<version>6.18.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>wicket-jquery-ui-calendar</artifactId>
+	<artifactId>wicket-kendo-ui-localdatetime</artifactId>
 	<packaging>bundle</packaging>
 
     <properties>
-	    <bundle.namespace>com.googlecode.wicket.jquery.ui.calendar</bundle.namespace>
+	    <bundle.namespace>com.googlecode.wicket.kendo.ui</bundle.namespace>
 	</properties>
 
 	<dependencies>
@@ -25,6 +25,13 @@
 			<version>6.18.1-SNAPSHOT</version>
 		</dependency>
 
+		<!-- KENDO-UI DEPENDENCIES -->
+		<dependency>
+			<groupId>com.googlecode.wicket-jquery-ui</groupId>
+			<artifactId>wicket-kendo-ui</artifactId>
+			<version>6.18.1-SNAPSHOT</version>
+		</dependency>
+		
 		<!-- WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
