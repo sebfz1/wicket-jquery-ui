@@ -409,7 +409,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 				return new CallbackParameter[] { CallbackParameter.context("event"), // lf
 						CallbackParameter.context("delta"), // lf
 						CallbackParameter.resolved("millisDelta", "delta.asMilliseconds()"), // retrieved
-						CallbackParameter.resolved("allDay", "event.start.hasTime()"), // retrieved
+						CallbackParameter.resolved("allDay", "!event.start.hasTime()"), // retrieved
 						CallbackParameter.context("revertFunc"), // lf
 						CallbackParameter.context("jsEvent"), // lf
 						CallbackParameter.context("ui"), // lf
@@ -459,7 +459,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 				// function(event, delta, revertFunc, jsEvent, ui, view) { }
 				return new CallbackParameter[] { CallbackParameter.context("event"), // lf
 						CallbackParameter.resolved("millisDelta", "delta.asMilliseconds()"), // retrieved
-						CallbackParameter.resolved("allDay", "event.start.hasTime()"), // retrieved
+						CallbackParameter.resolved("allDay", "!event.start.hasTime()"), // retrieved
 						CallbackParameter.context("revertFunc"), // lf
 						CallbackParameter.context("jsEvent"), // lf
 						CallbackParameter.context("ui"), // lf
