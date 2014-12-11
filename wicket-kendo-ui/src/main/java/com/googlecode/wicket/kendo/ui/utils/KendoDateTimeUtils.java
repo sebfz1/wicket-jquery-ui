@@ -53,7 +53,9 @@ public class KendoDateTimeUtils
 				converted = converted.replace(j, k);
 			}
 		}
-
+		if (converted.indexOf("t") > -1 && converted.indexOf("tt") < 0) {
+			converted = converted.replace("t", "tt"); //'aa' is not allowed in LocalTime pattern :(
+		}
 		return converted;
 	}
 
