@@ -269,7 +269,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	}
 
 	@Override
-	protected String $()
+	public String $()
 	{
 		return JQueryBehavior.$(this.selector, this.method, this.options.toString());
 	}
