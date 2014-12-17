@@ -111,6 +111,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	// Methods //
+	
 	@Override
 	public void bind(Component component)
 	{
@@ -172,6 +173,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	// Properties //
+	
 	/**
 	 * Indicates whether the Calendar will be editable
 	 *
@@ -183,6 +185,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	// Events //
+	
 	@Override
 	public void onConfigure(Component component)
 	{
@@ -397,6 +400,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 				{
 					AjaxCallListener ajaxCallListener = new AjaxCallListener();
 					ajaxCallListener.onPrecondition(precondition);
+
 					attributes.getAjaxCallListeners().add(ajaxCallListener);
 				}
 			}
@@ -448,6 +452,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 				{
 					AjaxCallListener ajaxCallListener = new AjaxCallListener();
 					ajaxCallListener.onPrecondition(precondition);
+
 					attributes.getAjaxCallListeners().add(ajaxCallListener);
 				}
 			}
@@ -552,13 +557,13 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 
 		public SelectEvent()
 		{
-			isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
+			this.isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
 			
 			String start = RequestCycleUtils.getQueryParameterValue("startDate").toString();
-			this.start = isAllDay ? LocalDate.parse(start).atStartOfDay() : LocalDateTime.parse(start);
+			this.start = this.isAllDay ? LocalDate.parse(start).atStartOfDay() : LocalDateTime.parse(start);
 
 			String end = RequestCycleUtils.getQueryParameterValue("endDate").toString();
-			this.end = isAllDay ? LocalDate.parse(end).atStartOfDay() : LocalDateTime.parse(end);
+			this.end = this.isAllDay ? LocalDate.parse(end).atStartOfDay() : LocalDateTime.parse(end);
 
 			this.viewName = RequestCycleUtils.getQueryParameterValue("viewName").toString();
 		}
@@ -618,10 +623,10 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		 */
 		public DayClickEvent()
 		{
-			isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
+			this.isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
 			
 			String date = RequestCycleUtils.getQueryParameterValue("date").toString();
-			this.day = isAllDay ? LocalDate.parse(date).atStartOfDay() : LocalDateTime.parse(date);
+			this.day = this.isAllDay ? LocalDate.parse(date).atStartOfDay() : LocalDateTime.parse(date);
 
 			this.viewName = RequestCycleUtils.getQueryParameterValue("viewName").toString();
 		}
@@ -835,10 +840,10 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		 */
 		public ObjectDropEvent()
 		{
-			isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
+			this.isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
 			
 			String date = RequestCycleUtils.getQueryParameterValue("date").toString();
-			this.day = isAllDay ? LocalDate.parse(date).atStartOfDay() : LocalDateTime.parse(date);
+			this.day = this.isAllDay ? LocalDate.parse(date).atStartOfDay() : LocalDateTime.parse(date);
 
 			this.title = RequestCycleUtils.getQueryParameterValue("title").toString();
 		}

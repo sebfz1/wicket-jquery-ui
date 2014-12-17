@@ -14,17 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.form.localdatetime;
+package com.googlecode.wicket.kendo.ui.form.datetime.local;
 
 import java.util.Locale;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
-import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalTime;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -37,12 +36,12 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.form.datetime.OnChangeBehavior;
 
 /**
- * Provides a Kendo UI date-picker based on a {@link DateTextField}<br/>
+ * Provides a Kendo UI time-picker based on a {@link TimePicker}<br/>
  * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxAware, IValueChangedListener
+public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -51,7 +50,7 @@ public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxA
 	 *
 	 * @param id the markup id
 	 */
-	public AjaxLocalDatePicker(String id)
+	public AjaxTimePicker(String id)
 	{
 		super(id);
 	}
@@ -62,7 +61,7 @@ public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxA
 	 * @param id the markup id
 	 * @param options the {@link Options}
 	 */
-	public AjaxLocalDatePicker(String id, Options options)
+	public AjaxTimePicker(String id, Options options)
 	{
 		super(id, options);
 	}
@@ -73,7 +72,7 @@ public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxA
 	 * @param id the markup id
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
 	 */
-	public AjaxLocalDatePicker(String id, String pattern)
+	public AjaxTimePicker(String id, String pattern)
 	{
 		super(id, pattern);
 	}
@@ -85,7 +84,7 @@ public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxA
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
 	 * @param options the {@link Options}
 	 */
-	public AjaxLocalDatePicker(String id, String pattern, Options options)
+	public AjaxTimePicker(String id, String pattern, Options options)
 	{
 		super(id, pattern, options);
 	}
@@ -96,7 +95,7 @@ public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxA
 	 * @param id the markup id
 	 * @param locale the {@link Locale}
 	 */
-	public AjaxLocalDatePicker(String id, Locale locale)
+	public AjaxTimePicker(String id, Locale locale)
 	{
 		super(id, locale);
 	}
@@ -108,7 +107,7 @@ public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxA
 	 * @param locale the {@link Locale}
 	 * @param options the {@link Options}
 	 */
-	public AjaxLocalDatePicker(String id, Locale locale, Options options)
+	public AjaxTimePicker(String id, Locale locale, Options options)
 	{
 		super(id, locale, options);
 	}
@@ -119,7 +118,7 @@ public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxA
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
-	public AjaxLocalDatePicker(String id, IModel<LocalDate> model)
+	public AjaxTimePicker(String id, IModel<LocalTime> model)
 	{
 		super(id, model);
 	}
@@ -131,7 +130,7 @@ public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxA
 	 * @param model the {@link IModel}
 	 * @param options {@link Options}
 	 */
-	public AjaxLocalDatePicker(String id, IModel<LocalDate> model, Options options)
+	public AjaxTimePicker(String id, IModel<LocalTime> model, Options options)
 	{
 		super(id, model, options);
 	}
@@ -143,7 +142,7 @@ public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxA
 	 * @param model the {@link IModel}
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
 	 */
-	public AjaxLocalDatePicker(String id, IModel<LocalDate> model, String pattern)
+	public AjaxTimePicker(String id, IModel<LocalTime> model, String pattern)
 	{
 		super(id, model, pattern);
 	}
@@ -156,7 +155,7 @@ public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxA
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
 	 * @param options {@link Options}
 	 */
-	public AjaxLocalDatePicker(String id, IModel<LocalDate> model, String pattern, Options options)
+	public AjaxTimePicker(String id, IModel<LocalTime> model, String pattern, Options options)
 	{
 		super(id, model, pattern, options);
 	}
@@ -168,7 +167,7 @@ public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxA
 	 * @param model the {@link IModel}
 	 * @param locale the {@link Locale}
 	 */
-	public AjaxLocalDatePicker(String id, IModel<LocalDate> model, Locale locale)
+	public AjaxTimePicker(String id, IModel<LocalTime> model, Locale locale)
 	{
 		super(id, model, locale);
 	}
@@ -181,7 +180,7 @@ public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxA
 	 * @param locale the {@link Locale}
 	 * @param options the {@link Options}
 	 */
-	public AjaxLocalDatePicker(String id, IModel<LocalDate> model, Locale locale, Options options)
+	public AjaxTimePicker(String id, IModel<LocalTime> model, Locale locale, Options options)
 	{
 		super(id, model, locale, options);
 	}
@@ -205,25 +204,26 @@ public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxA
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new DatePickerBehavior(selector, this.options) {
+		return new TimePickerBehavior(selector, this.options) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 			{
-				AjaxLocalDatePicker.this.onAjax(target, event);
+				AjaxTimePicker.this.onAjax(target, event);
 			}
 		};
 	}
 
 	/**
-	 * Provides a jQuery datepicker behavior
+	 * Provides a jQuery timepicker behavior
 	 */
-	protected abstract static class DatePickerBehavior extends KendoUIBehavior implements IJQueryAjaxAware
+	protected abstract static class TimePickerBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -234,7 +234,7 @@ public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxA
 		 *
 		 * @param selector the html selector (ie: "#myId")
 		 */
-		public DatePickerBehavior(String selector)
+		public TimePickerBehavior(String selector)
 		{
 			this(selector, new Options());
 		}
@@ -245,9 +245,9 @@ public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxA
 		 * @param selector the html selector (ie: "#myId")
 		 * @param options the {@link Options}
 		 */
-		public DatePickerBehavior(String selector, Options options)
+		public TimePickerBehavior(String selector, Options options)
 		{
-			super(selector, LocalDatePicker.METHOD, options);
+			super(selector, TimePicker.METHOD, options);
 		}
 
 		// Methods //
@@ -279,6 +279,7 @@ public class AjaxLocalDatePicker extends LocalDatePicker implements IJQueryAjaxA
 		}
 
 		// Factories //
+
 		/**
 		 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript method
 		 *

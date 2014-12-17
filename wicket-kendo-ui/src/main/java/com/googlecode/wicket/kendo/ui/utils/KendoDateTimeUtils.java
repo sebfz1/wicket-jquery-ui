@@ -53,9 +53,14 @@ public class KendoDateTimeUtils
 				converted = converted.replace(j, k);
 			}
 		}
-		if (converted.indexOf("t") > -1 && converted.indexOf("tt") < 0) {
-			converted = converted.replace("t", "tt"); //'aa' is not allowed in LocalTime pattern :(
+
+		// realign kendo pattern:
+		// single 't' is *not* allowed in kendo, whereas 'a' is allowed in java date and and 'aa' is *not* allowed in LocalTime pattern
+		if (converted.contains("t") && !converted.contains("tt"))
+		{
+			converted = converted.replace("t", "tt");
 		}
+
 		return converted;
 	}
 

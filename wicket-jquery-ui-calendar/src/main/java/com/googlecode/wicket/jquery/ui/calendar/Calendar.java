@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.string.Strings;
 import org.threeten.bp.LocalDateTime;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -38,10 +38,11 @@ import com.googlecode.wicket.jquery.core.Options;
 public class Calendar extends JQueryContainer implements ICalendarListener
 {
 	private static final long serialVersionUID = 1L;
+	private static final String MISSING_API_KEY = "No Google Calendar API Key has been supplied";
 
 	private final Options options;
 	private Map<CharSequence, String> gcals;
-	private String googleCalendarApiKey; //TODO this might be per calendar option !!!!
+	private String gcalApiKey = null; // TODO this might be per calendar option !!!!
 	private CalendarModelBehavior modelBehavior; // events load
 
 	/**
@@ -94,33 +95,33 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 	// Methods //
 	/**
-	 * Gets the Google Calendar Api Key
-	 * please see http://fullcalendar.io/docs/google_calendar/
-	 *
-	 * @return googleCalendarApiKey
+	 * Sets the Google Calendar API key<br/>
+	 * 
+	 * @return the API key
+	 * @see <a href="http://fullcalendar.io/docs/google_calendar/">http://fullcalendar.io/docs/google_calendar/</a>
 	 */
 	public String getGoogleCalendarApiKey()
 	{
-		return googleCalendarApiKey;
+		return this.gcalApiKey;
 	}
-	
+
 	/**
-	 * Sets the Google Calendar API key
-	 * please see http://fullcalendar.io/docs/google_calendar/
+	 * Sets the Google Calendar API key<br/>
 	 * 
-	 * @param googleCalendarApiKey
+	 * @param key the API key
+	 * @see <a href="http://fullcalendar.io/docs/google_calendar/">http://fullcalendar.io/docs/google_calendar/</a>
 	 */
-	public void setGoogleCalendarApiKey(String googleCalendarApiKey)
+	public void setGoogleCalendarApiKey(String key)
 	{
-		this.googleCalendarApiKey = googleCalendarApiKey;
+		this.gcalApiKey = key;
 	}
-	
+
 	/**
 	 * Adds a Google Calendar Feed
 	 *
 	 * @param gcal url to xml feed
 	 */
-	public void addFeed(CharSequence gcal)
+	public synchronized void addFeed(CharSequence gcal)
 	{
 		this.addFeed(gcal, "");
 	}
@@ -131,12 +132,8 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	 * @param gcal url to xml feed
 	 * @param className css class to be used
 	 */
-	public void addFeed(CharSequence gcal, String className)
+	public synchronized void addFeed(CharSequence gcal, String className)
 	{
-		
-		if (this.googleCalendarApiKey == null) { //TODO must be Assert actually
-			throw new WicketRuntimeException("Please set google calendar API key before using this method");
-		}
 		if (this.gcals == null)
 		{
 			this.gcals = new HashMap<CharSequence, String>();
@@ -230,11 +227,19 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 		if (Calendar.this.gcals != null)
 		{
-			behavior.setOption("googleCalendarApiKey", Options.asString(Calendar.this.googleCalendarApiKey));
+			if (!Strings.isEmpty(this.gcalApiKey))
+			{
+				behavior.setOption("googleCalendarApiKey", Options.asString(Calendar.this.gcalApiKey));
+			}
+			else
+			{
+				this.error(MISSING_API_KEY);
+			}
+
 			for (Entry<CharSequence, String> gcal : Calendar.this.gcals.entrySet())
 			{
 				sourceBuilder.append(", ");
-				sourceBuilder.append(String.format("{googleCalendarId: '%s', className: '%s'}", gcal.getKey(), gcal.getValue()));
+				sourceBuilder.append(String.format("{ googleCalendarId: '%s', className: '%s' }", gcal.getKey(), gcal.getValue()));
 			}
 		}
 
@@ -393,6 +398,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	// Factory methods //
+
 	/**
 	 * Gets a new {@link CalendarModelBehavior}
 	 *

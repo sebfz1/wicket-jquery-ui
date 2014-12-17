@@ -22,7 +22,7 @@ import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent.Category;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
-import com.googlecode.wicket.kendo.ui.form.localdatetime.LocalDateTimePicker;
+import com.googlecode.wicket.kendo.ui.form.datetime.local.DateTimePicker;
 
 public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendarEvent>
 {
@@ -49,11 +49,8 @@ public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendar
 		this.form.add(new RadioChoice<Category>("category", Arrays.asList(Category.values())));
 
 		// DateTimePickers //
-		//final DateTimePicker startDateTimePicker = new DateTimePicker("start");
-		//final DateTimePicker endDateTimePicker = new DateTimePicker("end");
-		// LocalDateTimePickers //
-		final LocalDateTimePicker startDateTimePicker = new LocalDateTimePicker("start");
-		final LocalDateTimePicker endDateTimePicker = new LocalDateTimePicker("end");
+		final DateTimePicker startDateTimePicker = new DateTimePicker("start");
+		final DateTimePicker endDateTimePicker = new DateTimePicker("end");
 
 		this.form.add(startDateTimePicker.setRequired(true));
 		this.form.add(endDateTimePicker);

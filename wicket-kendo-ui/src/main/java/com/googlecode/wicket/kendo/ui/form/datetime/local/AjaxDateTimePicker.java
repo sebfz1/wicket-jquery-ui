@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.form.localdatetime;
+package com.googlecode.wicket.kendo.ui.form.datetime.local;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -31,12 +31,12 @@ import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
 import com.googlecode.wicket.kendo.ui.form.datetime.OnChangeBehavior;
 
 /**
- * Provides a datetime-picker based on a {@link AjaxLocalDatePicker} and a {@link AjaxLocalTimePicker}<br/>
- * This ajax version will post boht components, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
+ * Provides a datetime-picker based on a {@link AjaxDatePicker} and a {@link AjaxTimePicker}<br/>
+ * This ajax version will post both components, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class AjaxLocalDateTimePicker extends LocalDateTimePicker implements IJQueryAjaxAware, IValueChangedListener
+public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAware, IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -45,7 +45,7 @@ public class AjaxLocalDateTimePicker extends LocalDateTimePicker implements IJQu
 	 *
 	 * @param id the markup id
 	 */
-	public AjaxLocalDateTimePicker(String id)
+	public AjaxDateTimePicker(String id)
 	{
 		super(id);
 	}
@@ -57,7 +57,7 @@ public class AjaxLocalDateTimePicker extends LocalDateTimePicker implements IJQu
 	 * @param datePattern the SimpleDateFormat pattern for the date
 	 * @param timePattern the SimpleDateFormat pattern for the time
 	 */
-	public AjaxLocalDateTimePicker(String id, String datePattern, String timePattern)
+	public AjaxDateTimePicker(String id, String datePattern, String timePattern)
 	{
 		super(id, datePattern, timePattern);
 	}
@@ -68,7 +68,7 @@ public class AjaxLocalDateTimePicker extends LocalDateTimePicker implements IJQu
 	 * @param id the markup id
 	 * @param date the initial date
 	 */
-	public AjaxLocalDateTimePicker(String id, IModel<LocalDateTime> date)
+	public AjaxDateTimePicker(String id, IModel<LocalDateTime> date)
 	{
 		super(id, date);
 	}
@@ -81,7 +81,7 @@ public class AjaxLocalDateTimePicker extends LocalDateTimePicker implements IJQu
 	 * @param datePattern the SimpleDateFormat pattern for the date
 	 * @param timePattern the SimpleDateFormat pattern for the time
 	 */
-	public AjaxLocalDateTimePicker(String id, IModel<LocalDateTime> date, String datePattern, String timePattern)
+	public AjaxDateTimePicker(String id, IModel<LocalDateTime> date, String datePattern, String timePattern)
 	{
 		super(id, date, datePattern, timePattern);
 	}
@@ -108,9 +108,9 @@ public class AjaxLocalDateTimePicker extends LocalDateTimePicker implements IJQu
 	// Factories //
 
 	@Override
-	protected LocalDatePicker newDatePicker(String id, IModel<LocalDate> model, String datePattern)
+	protected DatePicker newDatePicker(String id, IModel<LocalDate> model, String datePattern)
 	{
-		return new AjaxLocalDatePicker(id, model, datePattern) {
+		return new AjaxDatePicker(id, model, datePattern) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -124,13 +124,13 @@ public class AjaxLocalDateTimePicker extends LocalDateTimePicker implements IJQu
 					@Override
 					public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 					{
-						AjaxLocalDateTimePicker.this.onAjax(target, event);
+						AjaxDateTimePicker.this.onAjax(target, event);
 					}
 
 					@Override
 					protected JQueryAjaxPostBehavior newOnChangeBehavior(FormComponent<?> component)
 					{
-						return new OnChangeBehavior(this, AjaxLocalDateTimePicker.this.datePicker, AjaxLocalDateTimePicker.this.timePicker);
+						return new OnChangeBehavior(this, AjaxDateTimePicker.this.datePicker, AjaxDateTimePicker.this.timePicker);
 					}
 				};
 			}
@@ -138,9 +138,9 @@ public class AjaxLocalDateTimePicker extends LocalDateTimePicker implements IJQu
 	}
 
 	@Override
-	protected LocalTimePicker newTimePicker(String id, IModel<LocalTime> model, String timePattern)
+	protected TimePicker newTimePicker(String id, IModel<LocalTime> model, String timePattern)
 	{
-		return new AjaxLocalTimePicker(id, model, timePattern) {
+		return new AjaxTimePicker(id, model, timePattern) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -154,13 +154,13 @@ public class AjaxLocalDateTimePicker extends LocalDateTimePicker implements IJQu
 					@Override
 					public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 					{
-						AjaxLocalDateTimePicker.this.onAjax(target, event);
+						AjaxDateTimePicker.this.onAjax(target, event);
 					}
 
 					@Override
 					protected JQueryAjaxPostBehavior newOnChangeBehavior(FormComponent<?> component)
 					{
-						return new OnChangeBehavior(this, AjaxLocalDateTimePicker.this.datePicker, AjaxLocalDateTimePicker.this.timePicker);
+						return new OnChangeBehavior(this, AjaxDateTimePicker.this.datePicker, AjaxDateTimePicker.this.timePicker);
 					}
 				};
 			}

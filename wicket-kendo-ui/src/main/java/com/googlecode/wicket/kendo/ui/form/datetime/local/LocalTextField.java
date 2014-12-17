@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.form.localdatetime;
+package com.googlecode.wicket.kendo.ui.form.datetime.local;
 
 import org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider;
 import org.apache.wicket.markup.html.form.TextField;
@@ -27,19 +27,22 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.utils.KendoDateTimeUtils;
 
+/**
+ * TODO javadoc
+ * 
+ * @author sbriquet
+ *
+ * @param <T>
+ */
 public abstract class LocalTextField<T> extends TextField<T> implements ITextFormatProvider, IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * The date pattern of the text field
-	 */
+	/** the date pattern of the TextField */
 	private final String pattern;
 
-	/**
-	 * The converter for the TextField
-	 */
-	private IConverter<T> converter;
+	/** the converter for the TextField */
+	private final IConverter<T> converter;
 
 	final Options options;
 
@@ -51,13 +54,13 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
 	 * @param options {@link Options}
 	 */
-	public LocalTextField(String id, IModel<T> model, String pattern, Options options, Class<T> clazz, IConverter<T> converter)
+	public LocalTextField(String id, IModel<T> model, String pattern, Options options, Class<T> type, IConverter<T> converter)
 	{
-		super(id, model, clazz);
-		this.pattern = pattern;
-		this.converter = converter;
+		super(id, model, type);
 
+		this.pattern = pattern;
 		this.options = options;
+		this.converter = converter;
 	}
 
 	/**
@@ -70,7 +73,7 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 	@Override
 	public final String getTextFormat()
 	{
-		return pattern;
+		return this.pattern;
 	}
 
 	/**
@@ -84,21 +87,17 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 
 		if (date != null)
 		{
-			return converter.convertToString(date, getLocale());
+			return this.converter.convertToString(date, this.getLocale());
 		}
 
 		return "";
 	}
 
 	/**
-	 * Returns the default converter if created without pattern; otherwise it returns a
-	 * pattern-specific converter.
+	 * Returns the default converter if created without pattern; otherwise it returns a pattern-specific converter.
 	 * 
-	 * @param type
-	 *            The type for which the convertor should work
-	 * 
+	 * @param type The type for which the convertor should work
 	 * @return A pattern-specific converter
-	 * 
 	 * @see org.apache.wicket.markup.html.form.TextField
 	 */
 	@SuppressWarnings("unchecked")
@@ -107,7 +106,7 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 	{
 		if (getType().isAssignableFrom(type))
 		{
-			return (IConverter<C>)converter;
+			return (IConverter<C>) this.converter;
 		}
 		else
 		{
@@ -116,8 +115,9 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 	}
 
 	protected abstract String getMethod();
-	
+
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
@@ -142,9 +142,10 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new KendoUIBehavior(selector, getMethod(), this.options);
+		return new KendoUIBehavior(selector, this.getMethod(), this.options);
 	}
 }

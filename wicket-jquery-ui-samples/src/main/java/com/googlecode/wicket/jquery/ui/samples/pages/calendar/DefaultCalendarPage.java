@@ -1,9 +1,8 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.calendar;
 
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
-
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.calendar.Calendar;
+import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
 public class DefaultCalendarPage extends AbstractCalendarPage
 {
@@ -12,7 +11,7 @@ public class DefaultCalendarPage extends AbstractCalendarPage
 	public DefaultCalendarPage()
 	{
 		// FeedbackPanel //
-		this.add(new FeedbackPanel("feedback"));
+		this.add(new JQueryFeedbackPanel("feedback"));
 
 		// Calendar //
 		Calendar calendar = new Calendar("calendar", new Options("theme", true));
