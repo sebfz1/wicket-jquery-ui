@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.string.Strings;
 import org.threeten.bp.LocalDateTime;
@@ -227,14 +228,12 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 
 		if (Calendar.this.gcals != null)
 		{
-			if (!Strings.isEmpty(this.gcalApiKey))
+			if (Strings.isEmpty(this.gcalApiKey))
 			{
-				behavior.setOption("googleCalendarApiKey", Options.asString(Calendar.this.gcalApiKey));
+				throw new WicketRuntimeException(MISSING_API_KEY);
 			}
-			else
-			{
-				this.error(MISSING_API_KEY);
-			}
+			
+			behavior.setOption("googleCalendarApiKey", Options.asString(Calendar.this.gcalApiKey));
 
 			for (Entry<CharSequence, String> gcal : Calendar.this.gcals.entrySet())
 			{
