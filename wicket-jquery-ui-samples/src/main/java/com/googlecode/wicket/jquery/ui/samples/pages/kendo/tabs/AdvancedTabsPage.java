@@ -129,7 +129,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 			{
 				if (tabIndex > 0)
 				{
-					tabPanel.setActiveTab(tabIndex - 1, target); // fires onActivate
+					tabPanel.setActiveTab(tabIndex - 1, target); // fires onSelect
 				}
 			}
 
@@ -138,7 +138,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 			{
 				if (tabIndex < this.max)
 				{
-					tabPanel.setActiveTab(tabIndex + 1, target);
+					tabPanel.setActiveTab(tabIndex + 1, target); // fires onSelect
 				}
 			}
 
