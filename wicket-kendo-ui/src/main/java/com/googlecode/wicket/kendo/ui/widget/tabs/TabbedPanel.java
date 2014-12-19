@@ -36,7 +36,9 @@ import com.googlecode.wicket.jquery.core.Options;
  * Provides Kendo UI tabs based on a {@link JQueryPanel}
  *
  * @author Sebastien Briquet - sebfz1
+ * @since 6.19.0
  */
+// FIXME: target.add(myTabbedPannel) does not work
 public class TabbedPanel extends JQueryPanel implements ITabsListener
 {
 	private static final long serialVersionUID = 1L;
@@ -95,6 +97,17 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	 *
 	 * @param id the markup id
 	 * @param model the list model of {@link ITab}<code>s</code>
+	 */
+	public TabbedPanel(String id, IModel<List<ITab>> model)
+	{
+		this(id, model, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the list model of {@link ITab}<code>s</code>
 	 * @param options {@link Options}
 	 */
 	public TabbedPanel(String id, IModel<List<ITab>> model, Options options)
@@ -131,27 +144,29 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	}
 
 	/**
+	 * 
 	 * Activates the selected tab<br/>
-	 * TODO: review javadoc <b>Warning: </b> invoking this method results to a dual client-server round-trip. Use this method if you cannot use {@link #setActiveTab(int)} followed by <code>target.add(myTabbedPannel)</code>
+	 * <br/>
+	 * <b>Warning: </b> invoking this method results to a dual client-server round-trip.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index to activate
 	 */
 	public void setActiveTab(int index, AjaxRequestTarget target)
 	{
-		this.widgetBehavior.activate(index, target);
+		this.widgetBehavior.select(index, target);
 	}
 
 	@Override
 	public boolean isSelectEventEnabled()
 	{
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isShowEventEnabled()
 	{
-		return true;
+		return false;
 	}
 
 	@Override
@@ -187,7 +202,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 			@Override
 			public String newChildId()
 			{
-				return String.format("tab-%s-%s", this.getMarkupId(), super.newChildId()); // fixes issue #14
+				return String.format("tab-%s-%s", this.getMarkupId(), super.newChildId());
 			}
 
 			@Override
@@ -195,7 +210,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 			{
 				super.onConfigure();
 
-				this.removeAll(); // fixes issue #7
+				this.removeAll();
 			}
 		};
 

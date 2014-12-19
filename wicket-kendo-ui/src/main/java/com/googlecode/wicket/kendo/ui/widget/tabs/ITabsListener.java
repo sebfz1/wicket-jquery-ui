@@ -20,26 +20,25 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 
 /**
- * Event listener shared by the {@link TabbedPanel} widget and the {@link TabsBehavior}
- *
+ * Event listener shared by the {@link TabbedPanel} widget and the {@link TabsBehavior}<br />
+ * <br />
+ * <b>Warning: </b> At least one event should be enabled for the {@link AjaxTab} to load.
+ * 
  * @author Sebastien Briquet - sebfz1
- *
+ * @since 6.19.0
  */
 interface ITabsListener
 {
 	/**
-	 * Triggered before a tab is selected.
-	 * TODO #onSelect
-	 * If true, the {@link #onActivate(AjaxRequestTarget, int, ITab)} event will be triggered on 'create'<br/>
-	 * <br/>
-	 * <b>Warning: </b> 'create' event is required to be enabled for the {@link AjaxTab} to load
+	 * Indicates whether the 'select' event is enabled.<br />
+	 * If true, the {@link #onSelect(AjaxRequestTarget, int, ITab)} event will be triggered.
 	 *
 	 * @return true by default
 	 */
 	boolean isSelectEventEnabled();
 
 	/**
-	 * Indicates whether the 'beforeActivate' event is enabled.<br />
+	 * Indicates whether the 'show' event is enabled.<br />
 	 * If true, the {@link #onShow(AjaxRequestTarget, int, ITab)} event will be triggered.
 	 *
 	 * @return false by default
@@ -49,22 +48,28 @@ interface ITabsListener
 	/**
 	 * Indicates whether the 'activate' event is enabled.<br/>
 	 * If true, the {@link #onActivate(AjaxRequestTarget, int, ITab)} event will be triggered on 'activate'<br/>
-	 * <br/>
-	 * <b>Warning: </b> 'activate' event is required to be enabled for the {@link AjaxTab} to load
 	 *
-	 * @return true by default
+	 * @return false by default
 	 */
 	boolean isActivateEventEnabled();
-	
-	/** TODO javadoc */
+
+	/**
+	 * Triggered before a tab is selected.
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param index the tab index that triggered this event
+	 * @param tab the {@link ITab} that corresponds to the index
+	 * @see #isSelectEventEnabled()
+	 */
 	void onSelect(AjaxRequestTarget target, int index, ITab tab);
 
 	/**
 	 * Triggered just after a tab is being made visible, but before the end of the animation.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param index the previously selected tab index
+	 * @param index the tab index that triggered this event
 	 * @param tab the {@link ITab} that corresponds to the index
+	 * @see #isShowEventEnabled()
 	 */
 	void onShow(AjaxRequestTarget target, int index, ITab tab);
 
@@ -74,6 +79,7 @@ interface ITabsListener
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab index that triggered this event
 	 * @param tab the {@link ITab} that corresponds to the index
+	 * @see #isActivateEventEnabled()
 	 */
 	void onActivate(AjaxRequestTarget target, int index, ITab tab);
 }

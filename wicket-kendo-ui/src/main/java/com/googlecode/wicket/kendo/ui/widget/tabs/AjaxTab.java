@@ -29,7 +29,7 @@ import com.googlecode.wicket.jquery.core.panel.LoadingPanel;
  * Provides an {@link AbstractTab} which loads the panel when the {@link ITab} is clicked.
  *
  * @author Sebastien Briquet - sebfz1
- * @since 1.2.1
+ * @since 6.19.0
  */
 public abstract class AjaxTab extends AbstractTab
 {

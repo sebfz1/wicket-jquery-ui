@@ -39,7 +39,7 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
  * Note, this class has almost the same code as AccordionBehavior
  *
  * @author Sebastien Briquet - sebfz1
- * @since 1.2.1
+ * @since 6.19.0
  */
 public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAjaxAware, ITabsListener
 {
@@ -143,16 +143,17 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	{
 		super.renderHead(component, response);
 
+		// selects (expands) the active tab; this is not a default behavior
 		response.render(JavaScriptHeaderItem.forScript(String.format("jQuery(function() { %s.select(%d); } );", this.widget(), this.activeTab), this.getToken() + "-select"));
 	}
 
 	/**
-	 * Activates the selected tab, identified by the index
+	 * Selects (and activate) a tab, identified by the index
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index
 	 */
-	public void activate(int index, AjaxRequestTarget target)
+	public void select(int index, AjaxRequestTarget target)
 	{
 		target.appendJavaScript(String.format("%s.select(%d);", this.widget(), index));
 	}
@@ -218,7 +219,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	// Factories //
 
 	/**
-	 * TODO javadoc Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'select' javascript callback
 	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
@@ -243,7 +244,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	}
 
 	/**
-	 * TODO javadoc Gets a new {@link JQueryAjaxBehavior} that acts as the 'beforeActivate' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'show' javascript callback
 	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
@@ -268,7 +269,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	}
 
 	/**
-	 * TODO javadoc Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' javascript callback
 	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
@@ -295,7 +296,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	// Event objects //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'activate' callback
+	 * Provides a base event object that will be broadcasted by the {@link JQueryAjaxBehavior} callbacks
 	 */
 	protected static abstract class AbtractTabEvent extends JQueryEvent
 	{
@@ -322,18 +323,23 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 		}
 	}
 
-	// TODO javadoc
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'beforeActivate' callback
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'select' callback
 	 */
 	protected static class SelectEvent extends AbtractTabEvent
 	{
 	}
 
+	/**
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'show' callback
+	 */
 	protected static class ShowEvent extends AbtractTabEvent
 	{
 	}
 
+	/**
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'activate' callback
+	 */
 	protected static class ActivateEvent extends AbtractTabEvent
 	{
 	}

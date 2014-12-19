@@ -54,7 +54,6 @@ public class NavigationAjaxButton extends Panel
 		};
 	}
 
-
 	private final AjaxButton newForwardButton()
 	{
 		return new AjaxButton("forward") {

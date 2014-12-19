@@ -27,8 +27,7 @@ import com.googlecode.wicket.jquery.core.panel.LabelPanel;
  * Provides a simple {@link AbstractTab} that embeds a {@link LabelPanel}
  *
  * @author Sebastien Briquet - sebfz1
- * @since 1.2.3
- * @since 6.0.1
+ * @since 6.19.0
  */
 public class SimpleTab extends AbstractTab
 {
