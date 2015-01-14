@@ -43,7 +43,10 @@ public class KendoIcon
 	public static final String COLLAPSE = "collapse";
 	public static final String COLLAPSE_W = "collapse-w";
 	public static final String COLUMNS = "columns";
+	public static final String CONNECTOR = "connector";
 	public static final String CUSTOM = "custom";
+	public static final String DIMENSION = "dimension";
+	public static final String EXCEL = "excel";
 	public static final String EXCEPTION = "exception";
 	public static final String EXPAND = "expand";
 	public static final String EXPAND_W = "expand-w";
@@ -52,30 +55,40 @@ public class KendoIcon
 	public static final String FUNNEL = "funnel";
 	public static final String FUNNEL_CLEAR = "funnel-clear";
 	public static final String GROUP = "group";
+	public static final String HBARS = "hbars";
 	public static final String INSERT_M = "insert-m";
 	public static final String INSERT_N = "insert-n";
 	public static final String INSERT_S = "insert-s";
+	public static final String KPI = "kpi";
 	public static final String LOCK = "lock";
 	public static final String MAXIMIZE = "maximize";
 	public static final String MINIMIZE = "minimize";
-	public static final String MOVE = "move";
 	public static final String NOTE = "note";
+	public static final String PDF = "pdf";
 	public static final String PENCIL = "pencil";
 	public static final String PIN = "pin";
 	public static final String PLUS = "plus";
+	public static final String REDO = "redo";
 	public static final String REFRESH = "refresh";
+	public static final String RESIZE_SE = "resize-se";
 	public static final String RESTORE = "restore";
+	public static final String ROTATECCW = "rotateccw";
+	public static final String ROTATECW = "rotatecw";
 	public static final String SEARCH = "search";
 	public static final String SEEK_E = "seek-e";
 	public static final String SEEK_N = "seek-n";
 	public static final String SEEK_S = "seek-s";
 	public static final String SEEK_W = "seek-w";
+	public static final String SHAPE = "shape";
 	public static final String SORT_ASC = "sort-asc";
 	public static final String SORT_DESC = "sort-desc";
+	public static final String SUM = "sum";
 	public static final String TICK = "tick";
+	public static final String UNDO = "undo";
 	public static final String UNGROUP = "ungroup";
 	public static final String UNLOCK = "unlock";
 	public static final String UNPIN = "unpin";
+	public static final String VBARS = "vbars";
 
 	/**
 	 * Constants class
