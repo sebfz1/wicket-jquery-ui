@@ -14,33 +14,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.form.button;
+package com.googlecode.wicket.kendo.ui.markup.html.link;
 
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
+import com.googlecode.wicket.kendo.ui.form.button.ButtonBehavior;
 
 /**
- * Provides a Kendo UI button based on the built-in Button
+ * Provides a Kendo UI button based on a built-in <code>AjaxLink</code>
  *
  * @author Sebastien Briquet - sebfz1
- *
+ * @since 6.19.0
+ * @since 7.0.0
  */
-public class Button extends org.apache.wicket.markup.html.form.Button  implements IJQueryWidget
+public abstract class AjaxLink<T> extends org.apache.wicket.ajax.markup.html.AjaxLink<T> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
+
+	private final String icon;
 
 	/**
 	 * Constructor
 	 *
 	 * @param id the markup id
 	 */
-	public Button(String id)
+	public AjaxLink(String id)
+	{
+		this(id, KendoIcon.NONE);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
+	 */
+	public AjaxLink(String id, String icon)
 	{
 		super(id);
+
+		this.icon = icon;
 	}
 
 	/**
@@ -49,21 +65,23 @@ public class Button extends org.apache.wicket.markup.html.form.Button  implement
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
-	public Button(String id, IModel<String> model)
+	public AjaxLink(String id, IModel<T> model)
 	{
-		super(id, model);
+		this(id, model, KendoIcon.NONE);
 	}
 
-	// Properties //
-
 	/**
-	 * Gets the icon being displayed in the button
+	 * Constructor
 	 *
-	 * @return {@link KendoIcon#NONE} by default
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param icon either a {@link KendoIcon} constant or a 'k-i-<i>icon</i>' css class
 	 */
-	protected String getIcon()
+	public AjaxLink(String id, IModel<T> model, String icon)
 	{
-		return KendoIcon.NONE; // used in #onConfigure
+		super(id, model);
+
+		this.icon = icon;
 	}
 
 	// Events //
@@ -73,29 +91,23 @@ public class Button extends org.apache.wicket.markup.html.form.Button  implement
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
+		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		if (!KendoIcon.isNone(this.getIcon()))
-		{
-			behavior.setOption("icon", Options.asString(this.getIcon()));
-		}
+		behavior.setOption("enable", this.isEnabled());
 	}
 
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
-		// noop
 	}
 
-	// IJQueryWidget //
-
 	@Override
-	public ButtonBehavior newWidgetBehavior(String selector)
+	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new ButtonBehavior(selector);
+		return new ButtonBehavior(selector, this.icon);
 	}
 }
