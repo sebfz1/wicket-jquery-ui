@@ -17,10 +17,9 @@
 package com.googlecode.wicket.kendo.ui.widget.accordion;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
  * Provides the ability to collapse panes
@@ -29,7 +28,7 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
  * @since 6.19.0
  * @since 7.0.0
  */
-public class CollapseBehavior extends JQueryBehavior
+public class CollapseBehavior extends KendoUIBehavior
 {
 	private static final long serialVersionUID = 1L;
 
@@ -44,7 +43,7 @@ public class CollapseBehavior extends JQueryBehavior
 	 */
 	public CollapseBehavior()
 	{
-		super(null);
+		super(null, METHOD);
 	}
 
 	/**
@@ -54,7 +53,7 @@ public class CollapseBehavior extends JQueryBehavior
 	 */
 	public CollapseBehavior(String selector)
 	{
-		super(selector);
+		super(selector, METHOD);
 	}
 
 	/**
@@ -64,7 +63,7 @@ public class CollapseBehavior extends JQueryBehavior
 	 */
 	public CollapseBehavior(Component component)
 	{
-		super(JQueryWidget.getSelector(component));
+		super(JQueryWidget.getSelector(component), METHOD);
 	}
 
 	// Properties //
@@ -86,11 +85,6 @@ public class CollapseBehavior extends JQueryBehavior
 		{
 			this.selector = JQueryWidget.getSelector(component);
 		}
-	}
-
-	private String widget()
-	{
-		return String.format("jQuery('%s').data('%s')", Args.notNull(this.selector, "selector"), METHOD);
 	}
 
 	@Override
