@@ -34,17 +34,15 @@ public class ExpandBehavior extends KendoUIBehavior
 
 	// TODO: move to AccordionBehavior (when will exists)
 	static final String METHOD = "kendoPanelBar";
-	
-	/** children selector TODO: to be supplied through ctors */
-	private static final String CHILDREN_ALL = "li";
 
-	/**
-	 * Constructor
-	 */
-	public ExpandBehavior()
-	{
-		super(null, METHOD);
-	}
+	/** all children selector */
+	public static final String CHILDREN_ALL = "li";
+
+	/** all children selector */
+	public static final String FIRST_CHILD = "li:first-child";
+
+	/** children selector */
+	private final String children;
 
 	/**
 	 * Constructor
@@ -53,7 +51,20 @@ public class ExpandBehavior extends KendoUIBehavior
 	 */
 	public ExpandBehavior(String selector)
 	{
+		this(selector, CHILDREN_ALL);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param selector the html selector (ie: "#myId")
+	 * @param children the children selector
+	 */
+	public ExpandBehavior(String selector, String children)
+	{
 		super(selector, METHOD);
+		
+		this.children = children;
 	}
 
 	/**
@@ -63,7 +74,20 @@ public class ExpandBehavior extends KendoUIBehavior
 	 */
 	public ExpandBehavior(Component component)
 	{
+		this(component, CHILDREN_ALL);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param component the {@link Component}
+	 * @param children the children selector
+	 */
+	public ExpandBehavior(Component component, String children)
+	{
 		super(JQueryWidget.getSelector(component), METHOD);
+		
+		this.children = children;
 	}
 
 	// Properties //
@@ -77,19 +101,8 @@ public class ExpandBehavior extends KendoUIBehavior
 	// Methods //
 
 	@Override
-	public void bind(Component component)
-	{
-		super.bind(component);
-
-		if (this.selector == null)
-		{
-			this.selector = JQueryWidget.getSelector(component);
-		}
-	}
-
-	@Override
 	public String $()
 	{
-		return String.format("%s.expand(jQuery('%s'), false);", this.widget(), CHILDREN_ALL);
+		return String.format("%s.expand(jQuery('%s'), false);", this.widget(), this.children);
 	}
 }
