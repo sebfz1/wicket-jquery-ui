@@ -14,13 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.widget.accordion;
+package com.googlecode.wicket.kendo.ui.widget.accordion;
 
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.list.LoopItem;
@@ -31,11 +32,11 @@ import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a jQuery accordion based on a {@link JQueryPanel}, which takes {@link ITab}<code>s</code> as contructor's argument
+ * Provides a Kendo UI accordion based on a {@link JQueryPanel}, which takes {@link ITab}<code>s</code> as contructor's argument
  *
  * @author Sebastien Briquet - sebfz1
- * @since 1.2.3
- * @since 6.0.1
+ * @since 6.19.0
+ * @since 7.0.0
  */
 public class AccordionPanel extends JQueryPanel implements IAccordionListener
 {
@@ -113,28 +114,31 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	}
 
 	/**
-	 * Activates the selected tab
+	 * Sets the current tab index<br/>
+	 * <b>Warning:</b> the index is related to visible tabs only
 	 *
-	 * @param index the tab's index to activate
+	 * @param index the visible tab's index to activate
 	 * @return this, for chaining
 	 */
-	public AccordionPanel setActiveTab(int index)
+	// TODO: warning changes setActiveTab by setTabIndex. See if should be changed elsewhere
+	public AccordionPanel setTabIndex(int index)
 	{
-		this.options.set("active", index);
+		this.widgetBehavior.tabIndex = index;
 
 		return this;
 	}
 
 	/**
-	 * Activates the selected tab<br/>
-	 * <b>Warning: </b> invoking this method results to a dual client-server round-trip. Use this method if you cannot use {@link #setActiveTab(int)} followed by <code>target.add(myTabbedPannel)</code>
+	 * Sets (selects and activates) the current tab index<br/>
+	 * <b>Warning:</b> the index is related to visible tabs only<br/>
+	 * <b>Warning:</b> invoking this method results to a dual client-server round-trip.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param index the tab's index to activate
+	 * @param index the visible tab's index to activate
 	 */
-	public void setActiveTab(int index, AjaxRequestTarget target)
+	public void setTabIndex(int index, AjaxRequestTarget target)
 	{
-		this.widgetBehavior.activate(index, target); // sets 'active' option, that fires 'activate' event (best would be that it also fires a 'show' event)
+		this.widgetBehavior.select(index, target);
 	}
 
 	/**
@@ -158,7 +162,7 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	}
 
 	@Override
-	public boolean isCreateEventEnabled()
+	public boolean isSelectEventEnabled()
 	{
 		return true;
 	}
@@ -166,7 +170,19 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	@Override
 	public boolean isActivateEventEnabled()
 	{
-		return true;
+		return false;
+	}
+
+	@Override
+	public boolean isExpandEventEnabled()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isCollapseEventEnabled()
+	{
+		return false;
 	}
 
 	// Events //
@@ -176,7 +192,10 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	{
 		super.onInitialize();
 
-		this.add(new Loop("tabs", this.getCountModel()) {
+		final WebMarkupContainer root = new WebMarkupContainer("root");
+		this.add(root);
+
+		root.add(new Loop("tabs", this.getCountModel()) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -202,11 +221,29 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 			}
 		});
 
-		this.add(this.widgetBehavior = JQueryWidget.newWidgetBehavior(this));
+		this.add(this.widgetBehavior = JQueryWidget.newWidgetBehavior(this, root));
+	}
+
+	@Override
+	public void onSelect(AjaxRequestTarget target, int index, ITab tab)
+	{
+		// noop
 	}
 
 	@Override
 	public void onActivate(AjaxRequestTarget target, int index, ITab tab)
+	{
+		// noop
+	}
+
+	@Override
+	public void onExpand(AjaxRequestTarget target, int index, ITab tab)
+	{
+		// noop
+	}
+
+	@Override
+	public void onCollapse(AjaxRequestTarget target, int index, ITab tab)
 	{
 		// noop
 	}
@@ -235,9 +272,9 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public boolean isCreateEventEnabled()
+			public boolean isSelectEventEnabled()
 			{
-				return AccordionPanel.this.isCreateEventEnabled();
+				return AccordionPanel.this.isSelectEventEnabled();
 			}
 
 			@Override
@@ -247,15 +284,45 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 			}
 
 			@Override
+			public boolean isExpandEventEnabled()
+			{
+				return AccordionPanel.this.isExpandEventEnabled();
+			}
+
+			@Override
+			public boolean isCollapseEventEnabled()
+			{
+				return AccordionPanel.this.isCollapseEventEnabled();
+			}
+
+			@Override
 			protected List<ITab> getTabs()
 			{
 				return AccordionPanel.this.getModelObject();
 			}
 
 			@Override
+			public void onSelect(AjaxRequestTarget target, int index, ITab tab)
+			{
+				AccordionPanel.this.onSelect(target, index, tab);
+			}
+
+			@Override
 			public void onActivate(AjaxRequestTarget target, int index, ITab tab)
 			{
 				AccordionPanel.this.onActivate(target, index, tab);
+			}
+
+			@Override
+			public void onExpand(AjaxRequestTarget target, int index, ITab tab)
+			{
+				AccordionPanel.this.onExpand(target, index, tab);
+			}
+
+			@Override
+			public void onCollapse(AjaxRequestTarget target, int index, ITab tab)
+			{
+				AccordionPanel.this.onCollapse(target, index, tab);
 			}
 		};
 	}

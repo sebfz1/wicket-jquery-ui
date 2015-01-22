@@ -16,8 +16,10 @@
    limitations under the License.
 -->
 <wicket:panel xmlns:wicket="http://wicket.apache.org">
-	<wicket:container wicket:id="tabs">
-		<h3 wicket:id="title">[title]</h3>
-		<div wicket:id="panel">[content]</div>
-	</wicket:container>
+	<ul wicket:id="root">
+		<li wicket:id="tabs">
+			<span wicket:id="title">[title]</span>
+			<div wicket:id="panel">[panel]</div>
+		</li>
+	</ul>
 </wicket:panel>

@@ -37,6 +37,7 @@ import com.googlecode.wicket.jquery.core.Options;
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
+ * @since 7.0.0
  */
 // FIXME: target.add(myTabbedPannel) does not work
 public class TabbedPanel extends JQueryPanel implements ITabsListener
@@ -144,8 +145,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	}
 
 	/**
-	 * 
-	 * Activates the selected tab<br/>
+	 * Selects (and activates) a tab, identified by the index<br/>
 	 * <br/>
 	 * <b>Warning: </b> invoking this method results to a dual client-server round-trip.
 	 *
@@ -246,7 +246,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 			}
 		});
 
-		this.add(this.widgetBehavior = this.newWidgetBehavior(JQueryWidget.getSelector(this)));
+		this.add(this.widgetBehavior = JQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

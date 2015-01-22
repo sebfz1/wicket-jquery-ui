@@ -221,7 +221,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 			}
 		});
 
-		this.add(this.widgetBehavior = this.newWidgetBehavior(JQueryWidget.getSelector(this)));
+		this.add(this.widgetBehavior = JQueryWidget.newWidgetBehavior(this));
 	}
 
 	@Override

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.widget.tabs;
+package com.googlecode.wicket.kendo.ui.widget.accordion;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,33 +33,35 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
+import com.googlecode.wicket.kendo.ui.widget.tabs.AjaxTab;
 
 /**
- * Provides a Kendo UI kendoTabStrip behavior.<br/>
- * Note, this class has almost the same code as AccordionBehavior
+ * Provides a Kendo UI kendoPanelBar behavior.
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
+ * @since 7.0.0
  */
-public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAjaxAware, ITabsListener
+public abstract class AccordionBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IAccordionListener
 {
 	private static final long serialVersionUID = 1L;
 
-	static final String METHOD = "kendoTabStrip";
-	private static final int DEFAULT_TAB = 0;
+	static final String METHOD = "kendoPanelBar";
+	private static final int TAB_NONE = -1;
 
-	int activeTab = DEFAULT_TAB;
+	int tabIndex = TAB_NONE;
 
 	private JQueryAjaxBehavior selectEventBehavior = null;
-	private JQueryAjaxBehavior showEventBehavior = null;
 	private JQueryAjaxBehavior activateEventBehavior = null;
+	private JQueryAjaxBehavior expandEventBehavior = null;
+	private JQueryAjaxBehavior collapseEventBehavior = null;
 
 	/**
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 */
-	public TabsBehavior(String selector)
+	public AccordionBehavior(String selector)
 	{
 		super(selector, METHOD);
 	}
@@ -70,7 +72,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
-	public TabsBehavior(String selector, Options options)
+	public AccordionBehavior(String selector, Options options)
 	{
 		super(selector, METHOD, options);
 	}
@@ -79,7 +81,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 
 	/**
 	 * Gets the reference {@link List} of {@link ITab}<tt>s</tt>.<br/>
-	 * Usually the model object of the component on which this {@link TabsBehavior} is bound to.
+	 * Usually the model object of the component on which this {@link AccordionBehavior} is bound to.
 	 *
 	 * @return a non-null {@link List}
 	 */
@@ -105,6 +107,17 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 		return Collections.unmodifiableList(list);
 	}
 
+	/**
+	 * Gets the jQuery 'select' and 'expand' statement
+	 * 
+	 * @param index the visible tab's index
+	 * @return the jQuery statement
+	 */
+	private String getSelectStatement(int index)
+	{
+		return String.format("var $widget = %s, $item = jQuery('li:nth-child(%d)'); $widget.select($item); $widget.expand($item);", this.widget(), index + 1);
+	}
+
 	// Methods //
 
 	/**
@@ -127,14 +140,19 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 			component.add(this.selectEventBehavior = this.newSelectEventBehavior());
 		}
 
-		if (this.isShowEventEnabled())
-		{
-			component.add(this.showEventBehavior = this.newShowEventBehavior());
-		}
-
 		if (this.isActivateEventEnabled())
 		{
 			component.add(this.activateEventBehavior = this.newActivateEventBehavior());
+		}
+
+		if (this.isExpandEventEnabled())
+		{
+			component.add(this.expandEventBehavior = this.newExpandEventBehavior());
+		}
+
+		if (this.isCollapseEventEnabled())
+		{
+			component.add(this.collapseEventBehavior = this.newCollapseEventBehavior());
 		}
 	}
 
@@ -143,21 +161,25 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	{
 		super.renderHead(component, response);
 
-		// selects (& expands) the active tab (this is not a default behavior)
-		response.render(JavaScriptHeaderItem.forScript(String.format("jQuery(function() { %s.select(%d); } );", this.widget(), this.activeTab), this.getToken() + "-select"));
+		// selects (& expands) the active tab index
+		if (this.tabIndex != TAB_NONE)
+		{
+			response.render(JavaScriptHeaderItem.forScript(String.format("jQuery(function() { %s } );", this.getSelectStatement(this.tabIndex)), this.getToken() + "-select"));
+		}
 	}
 
 	/**
-	 * Selects (and activates) a tab, identified by the index
+	 * Selects and expands a tab, identified by its index<br/>
+	 * <b>Warning:</b> the index is related to visible tabs only
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param index the tab's index
+	 * @param index the visible tab's index
 	 */
 	public void select(int index, AjaxRequestTarget target)
 	{
-		this.activeTab = index;
+		this.tabIndex = index;
 
-		target.appendJavaScript(String.format("%s.select(%d);", this.widget(), this.activeTab));
+		target.appendJavaScript(this.getSelectStatement(this.tabIndex));
 	}
 
 	// Events //
@@ -172,14 +194,19 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 			this.setOption("select", this.selectEventBehavior.getCallbackFunction());
 		}
 
-		if (this.showEventBehavior != null)
-		{
-			this.setOption("show", this.showEventBehavior.getCallbackFunction());
-		}
-
 		if (this.activateEventBehavior != null)
 		{
 			this.setOption("activate", this.activateEventBehavior.getCallbackFunction());
+		}
+
+		if (this.expandEventBehavior != null)
+		{
+			this.setOption("expand", this.expandEventBehavior.getCallbackFunction());
+		}
+
+		if (this.collapseEventBehavior != null)
+		{
+			this.setOption("collapse", this.collapseEventBehavior.getCallbackFunction());
 		}
 	}
 
@@ -205,14 +232,19 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 					this.onSelect(target, index, tab);
 				}
 
-				if (event instanceof ShowEvent)
-				{
-					this.onShow(target, index, tab);
-				}
-
 				if (event instanceof ActivateEvent)
 				{
 					this.onActivate(target, index, tab);
+				}
+
+				if (event instanceof ExpandEvent)
+				{
+					this.onExpand(target, index, tab);
+				}
+
+				if (event instanceof CollapseEvent)
+				{
+					this.onCollapse(target, index, tab);
 				}
 			}
 		}
@@ -246,31 +278,6 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'show' javascript callback
-	 *
-	 * @return the {@link JQueryAjaxBehavior}
-	 */
-	protected JQueryAjaxBehavior newShowEventBehavior()
-	{
-		return new JQueryAjaxBehavior(this) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("index", "jQuery(e.item).index()") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ShowEvent();
-			}
-		};
-	}
-
-	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' javascript callback
 	 *
 	 * @return the {@link JQueryAjaxBehavior}
@@ -290,7 +297,57 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 			@Override
 			protected JQueryEvent newEvent()
 			{
-				return new SelectEvent();
+				return new ActivateEvent();
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'expand' javascript callback
+	 *
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	protected JQueryAjaxBehavior newExpandEventBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("index", "jQuery(e.item).index()") };
+			}
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new ExpandEvent();
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'collapse' javascript callback
+	 *
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	protected JQueryAjaxBehavior newCollapseEventBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("index", "jQuery(e.item).index()") };
+			}
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new CollapseEvent();
 			}
 		};
 	}
@@ -333,16 +390,23 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'show' callback
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'activate' callback
 	 */
-	protected static class ShowEvent extends AbtractTabEvent
+	protected static class ActivateEvent extends AbtractTabEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'activate' callback
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'expand' callback
 	 */
-	protected static class ActivateEvent extends AbtractTabEvent
+	protected static class ExpandEvent extends AbtractTabEvent
+	{
+	}
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'collapse' callback
+	 */
+	protected static class CollapseEvent extends AbtractTabEvent
 	{
 	}
 }

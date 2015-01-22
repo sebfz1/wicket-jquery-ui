@@ -15,6 +15,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.dialog.MessageDialogPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.draggable.DefaultDraggablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.droppable.DefaultDroppablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.effect.DefaultEffectPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.kendo.accordion.KendoAccordionPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.autocomplete.KendoAutoCompletePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.combobox.DefaultComboBoxPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.console.DefaultConsolePage;
@@ -87,6 +88,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/effect", DefaultEffectPage.class);
 
 		// Kendo //
+		this.mountPackage("/kendo/accordion", KendoAccordionPage.class);
 		this.mountPackage("/kendo/autocomplete", KendoAutoCompletePage.class);
 		this.mountPackage("/kendo/console", DefaultConsolePage.class);
 		this.mountPackage("/kendo/combobox", DefaultComboBoxPage.class);

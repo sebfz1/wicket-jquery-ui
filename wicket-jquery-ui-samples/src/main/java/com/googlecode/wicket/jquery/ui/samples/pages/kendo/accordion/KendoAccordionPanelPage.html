@@ -2,7 +2,16 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
 <wicket:head>
-	<title>Wicket - jQuery UI: accordion panel</title>
+	<title>Wicket - Kendo UI: accordion panel</title>
+	<style type="text/css">
+		UL > LI .k-content {
+		    padding: 12px !important;
+		}
+
+		UL > LI DIV P {
+		    margin: 0;
+		}
+	</style>
 </wicket:head>
 </head>
 <body>
@@ -19,7 +28,7 @@
 	<wicket:fragment wicket:id="panel-1">
 		Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
 	</wicket:fragment>
-	
+
 	<wicket:fragment wicket:id="panel-2">
 		<b>Panel loaded in ajax</b><br/>
 		<p>

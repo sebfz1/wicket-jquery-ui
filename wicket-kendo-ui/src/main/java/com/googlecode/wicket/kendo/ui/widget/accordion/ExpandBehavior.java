@@ -22,7 +22,7 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
- * Provides the ability to expands panes
+ * Provides the ability to expands (without selecting) panes
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
@@ -32,13 +32,10 @@ public class ExpandBehavior extends KendoUIBehavior
 {
 	private static final long serialVersionUID = 1L;
 
-	// TODO: move to AccordionBehavior (when will exists)
-	static final String METHOD = "kendoPanelBar";
-
 	/** all children selector */
-	public static final String CHILDREN_ALL = "li";
+	public static final String ALL_CHILDREN = "li";
 
-	/** all children selector */
+	/** first child selector */
 	public static final String FIRST_CHILD = "li:first-child";
 
 	/** children selector */
@@ -51,7 +48,7 @@ public class ExpandBehavior extends KendoUIBehavior
 	 */
 	public ExpandBehavior(String selector)
 	{
-		this(selector, CHILDREN_ALL);
+		this(selector, ALL_CHILDREN);
 	}
 
 	/**
@@ -62,7 +59,7 @@ public class ExpandBehavior extends KendoUIBehavior
 	 */
 	public ExpandBehavior(String selector, String children)
 	{
-		super(selector, METHOD);
+		super(selector, AccordionBehavior.METHOD);
 		
 		this.children = children;
 	}
@@ -74,7 +71,7 @@ public class ExpandBehavior extends KendoUIBehavior
 	 */
 	public ExpandBehavior(Component component)
 	{
-		this(component, CHILDREN_ALL);
+		this(component, ALL_CHILDREN);
 	}
 
 	/**
@@ -85,7 +82,7 @@ public class ExpandBehavior extends KendoUIBehavior
 	 */
 	public ExpandBehavior(Component component, String children)
 	{
-		super(JQueryWidget.getSelector(component), METHOD);
+		super(JQueryWidget.getSelector(component), AccordionBehavior.METHOD);
 		
 		this.children = children;
 	}
