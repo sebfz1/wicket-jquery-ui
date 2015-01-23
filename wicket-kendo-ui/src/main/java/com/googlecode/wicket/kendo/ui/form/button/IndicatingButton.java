@@ -58,9 +58,9 @@ public class IndicatingButton extends Button implements IJQueryWidget
 	/**
 	 * Indicates whether the button will be disabled on-click to prevent double submit<br/>
 	 * <br/>
-	 * <b>Warning:</b> As the button will be disabled, it will not be send as part of the post. Therefore {@link Button#onSubmit()} will not be reached, {@link Form#onSubmit()} should be used instead.
+	 * <b>Warning:</b> the button will not be send as part of the post because of its disabled state. Therefore {@link Button#onSubmit()} will not be reached, {@link Form#onSubmit()} should be used instead.
 	 * 
-	 * @return true or false
+	 * @return false by default
 	 */
 	protected boolean isDisabledOnClick()
 	{
