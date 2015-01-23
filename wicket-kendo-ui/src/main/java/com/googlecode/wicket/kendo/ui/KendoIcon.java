@@ -26,6 +26,9 @@ import com.googlecode.wicket.kendo.ui.form.button.Button;
  */
 public class KendoIcon
 {
+	/** css class mastering icon display */
+	public static final String K_ICON = "k-icon";
+
 	public static final String NONE = "";
 
 	public static final String ARROW_E = "arrow-e";
@@ -118,7 +121,7 @@ public class KendoIcon
 	{
 		if (!isNone(icon))
 		{
-			return "k-icon k-i-" + icon;
+			return String.format("%s k-i-%s", K_ICON, icon);
 		}
 
 		return "";

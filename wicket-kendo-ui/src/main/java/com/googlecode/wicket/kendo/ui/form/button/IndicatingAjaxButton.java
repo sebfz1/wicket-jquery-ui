@@ -23,12 +23,12 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a Kendo UI button with an ajax indicator
+ * Provides a Kendo UI ajax button with an ajax indicator
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class IndicatingButton extends Button implements IJQueryWidget
+public class IndicatingAjaxButton extends AjaxButton implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 
@@ -37,7 +37,7 @@ public class IndicatingButton extends Button implements IJQueryWidget
 	 *
 	 * @param id the markup id
 	 */
-	public IndicatingButton(String id)
+	public IndicatingAjaxButton(String id)
 	{
 		super(id);
 	}
@@ -48,7 +48,7 @@ public class IndicatingButton extends Button implements IJQueryWidget
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
-	public IndicatingButton(String id, IModel<String> model)
+	public IndicatingAjaxButton(String id, IModel<String> model)
 	{
 		super(id, model);
 	}
@@ -81,7 +81,7 @@ public class IndicatingButton extends Button implements IJQueryWidget
 			{
 				Options options = super.newOnClickOptions();
 
-				if (IndicatingButton.this.isDisabledOnClick())
+				if (IndicatingAjaxButton.this.isDisabledOnClick())
 				{
 					options.set("enable", false);
 				}

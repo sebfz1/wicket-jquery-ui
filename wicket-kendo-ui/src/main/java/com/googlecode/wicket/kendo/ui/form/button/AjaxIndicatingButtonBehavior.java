@@ -26,6 +26,7 @@ import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandle
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.kendo.ui.KendoIcon;
 
 /**
  * Provides a Kendo UI button {@link JQueryBehavior} with an ajax indicator
@@ -80,9 +81,9 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 
 		// busy indicator stops //
 		builder.append("jQuery(document).ajaxStop(function() { ");
+		builder.append("jQuery('").append(this.selector).append(" .").append(KendoIcon.K_ICON).append("').remove(); "); // TODO: open issue (icon should be removed manually) 
 		builder.append($(this.options));
 		builder.append(" }); ");
-		// TODO: test busy indicator stops
 
 		return builder.toString();
 	}
