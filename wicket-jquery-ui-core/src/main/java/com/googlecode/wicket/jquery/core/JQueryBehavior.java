@@ -278,6 +278,18 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * Gets the jQuery statement.<br/>
 	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
 	 *
+	 * @param options the {@link Options} to be supplied to the current method
+	 * @return the jQuery statement
+	 */
+	public String $(Options options)
+	{
+		return this.$(options.toString());
+	}
+
+	/**
+	 * Gets the jQuery statement.<br/>
+	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
+	 *
 	 * @param options the list of options to be supplied to the current method
 	 * @return the jQuery statement
 	 */

@@ -21,7 +21,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
- * Provides a jQuery button {@link JQueryBehavior}
+ * Provides a Kendo UI button {@link JQueryBehavior}
  *
  * @author Sebastien Briquet - sebfz1
  *
