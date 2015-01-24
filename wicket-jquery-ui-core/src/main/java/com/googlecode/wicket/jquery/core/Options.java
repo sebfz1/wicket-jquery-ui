@@ -166,7 +166,7 @@ public class Options implements IClusterable
 	 */
 	public Options()
 	{
-		this.map = new HashMap<>();
+		this.map = new HashMap<String, Object>();
 	}
 
 	/**

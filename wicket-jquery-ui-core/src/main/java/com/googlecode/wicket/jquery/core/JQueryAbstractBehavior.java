@@ -76,7 +76,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	public JQueryAbstractBehavior(final String name)
 	{
 		this.name = name;
-		this.references = new ArrayList<>();
+		this.references = new ArrayList<ResourceReference>();
 	}
 
 	/**

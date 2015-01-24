@@ -35,7 +35,7 @@ public enum DialogButtons
 
 	private DialogButtons(String... labels)
 	{
-		this.buttons = new ArrayList<>();
+		this.buttons = new ArrayList<DialogButton>();
 
 		for (String label : labels)
 		{

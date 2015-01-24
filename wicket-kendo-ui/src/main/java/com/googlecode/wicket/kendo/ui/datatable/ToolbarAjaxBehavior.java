@@ -95,7 +95,7 @@ public class ToolbarAjaxBehavior extends JQueryAjaxBehavior
 			super();
 
 			this.button = RequestCycleUtils.getQueryParameterValue("button").toString();
-			this.values = new ArrayList<>();
+			this.values = new ArrayList<String>();
 
 			StringValue values = RequestCycleUtils.getQueryParameterValue("values");
 

@@ -85,7 +85,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	 */
 	protected List<ITab> getVisibleTabs()
 	{
-		List<ITab> list = new ArrayList<>();
+		List<ITab> list = new ArrayList<ITab>();
 
 		for (ITab tab : this.getTabs())
 		{
@@ -198,7 +198,11 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')") };
+				return new CallbackParameter[] {
+						CallbackParameter.context("event"),
+						CallbackParameter.context("ui"),
+						CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')")
+				};
 			}
 
 			@Override
@@ -223,7 +227,11 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')"), };
+				return new CallbackParameter[] {
+						CallbackParameter.context("event"),
+						CallbackParameter.context("ui"),
+						CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')"),
+				};
 			}
 
 			@Override

@@ -92,7 +92,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	 */
 	protected List<ITab> getVisibleTabs()
 	{
-		List<ITab> list = new ArrayList<>();
+		List<ITab> list = new ArrayList<ITab>();
 
 		for (ITab tab : this.getTabs())
 		{

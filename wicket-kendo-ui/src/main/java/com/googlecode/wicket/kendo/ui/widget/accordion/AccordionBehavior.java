@@ -94,7 +94,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected List<ITab> getVisibleTabs()
 	{
-		List<ITab> list = new ArrayList<>();
+		List<ITab> list = new ArrayList<ITab>();
 
 		for (ITab tab : this.getTabs())
 		{

@@ -80,7 +80,7 @@ public class MenuItem extends AbstractMenuItem
 	{
 		super(title, icon);
 
-		this.items = new ArrayList<>();
+		this.items = new ArrayList<IMenuItem>();
 	}
 
 	/**

@@ -107,7 +107,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	{
 		if (event instanceof StopEvent)
 		{
-			List<T> items = new ArrayList<>();
+			List<T> items = new ArrayList<T>();
 			List<T> list = this.getItemList();
 
 			for (int index : ((StopEvent)event).getIndexes())
@@ -169,7 +169,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 
 		public StopEvent()
 		{
-			this.indexes = new ArrayList<>();
+			this.indexes = new ArrayList<Integer>();
 			StringValue values = RequestCycleUtils.getQueryParameterValue("indexes");
 
 			if (values != null)

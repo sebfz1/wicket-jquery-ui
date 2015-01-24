@@ -262,7 +262,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	{
 		if (this.events == null)
 		{
-			this.events = new ArrayList<>();
+			this.events = new ArrayList<String>();
 		}
 
 		this.events.add(statement);

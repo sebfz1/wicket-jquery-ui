@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.wysiwyg;
 
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnLoadHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -86,7 +87,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	{
 		super(id, model);
 
-		this.container = new WebMarkupContainer("container"); // widget component
+		this.container = this.newMarkupContainer();
 		this.add(this.container);
 
 		if (toolbar != null)
@@ -110,6 +111,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	}
 
 	// Methods //
+
 	@Override
 	public void convertInput()
 	{
@@ -125,6 +127,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
@@ -150,9 +153,31 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
 		return new WysiwygBehavior(selector);
+	}
+
+	// Factories //
+
+	private WebMarkupContainer newMarkupContainer()
+	{
+		return new WebMarkupContainer("container") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onComponentTag(ComponentTag tag)
+			{
+				super.onComponentTag(tag);
+
+				if (!WysiwygEditor.this.getForm().isEnabled())
+				{
+					tag.put("contenteditable", "false");
+				}
+			}
+		};
 	}
 }
