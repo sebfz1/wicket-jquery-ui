@@ -19,6 +19,13 @@
 	
 	<dependencies>
 	
+		<!-- PROJECT DEPENDENCIES -->
+		<dependency>
+			<groupId>com.googlecode.wicket-jquery-ui</groupId>
+			<artifactId>wicket-jquery-ui-core</artifactId>
+			<version>7.0.0-SNAPSHOT</version>
+		</dependency>
+
 		<!-- WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>

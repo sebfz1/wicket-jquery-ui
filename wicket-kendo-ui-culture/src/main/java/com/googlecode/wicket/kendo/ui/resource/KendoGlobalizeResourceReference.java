@@ -25,7 +25,7 @@ import com.googlecode.wicket.kendo.ui.KendoCulture;
 /**
  * The resource reference for the Kendo Globalize javascript library.<br/>
  * <br/>
- * <b>Warning:</b> When globalize.js is registered before Kendo scripts, then Kendo will use globalize.js features instead of Kendo Globalization.  
+ * <b>Warning:</b> When globalize.js is registered before Kendo scripts, then Kendo will use globalize.js features instead of Kendo Globalization.
  *
  * @author Sebastien Briquet - sebfz1
  *

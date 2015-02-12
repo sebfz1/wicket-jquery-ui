@@ -73,6 +73,6 @@ public class LocaleDatePickerPage extends AbstractTimePickerPage
 
 		// response.render(JavaScriptHeaderItem.forReference(new KendoGlobalizeResourceReference("fr"))); // or fr-FR
 		// response.render(JavaScriptHeaderItem.forReference(new KendoGlobalizeResourceReference(KendoCulture.FR_FR)));
-		response.render(JavaScriptHeaderItem.forReference(new KendoGlobalizeResourceReference(Locale.FRENCH))); // wicket7
+		response.render(JavaScriptHeaderItem.forReference(new KendoGlobalizeResourceReference(Locale.FRENCH)));
 	}
 }

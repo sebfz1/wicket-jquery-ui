@@ -101,7 +101,6 @@ public class Console extends AbstractConsole
 	 * @deprecated too confusing with error(Serializable), use log(Serializable, true) or error(AjaxRequestTarget, Serializable)
 	 */
 	@Deprecated
-	// XXX
 	public void error(String message)
 	{
 		this.log(message, true);
