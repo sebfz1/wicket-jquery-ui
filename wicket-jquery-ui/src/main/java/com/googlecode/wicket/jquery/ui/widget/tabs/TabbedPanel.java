@@ -51,7 +51,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	 */
 	public TabbedPanel(String id, List<ITab> tabs)
 	{
-		this(id, tabs, new Options());
+		this(id, Model.ofList(tabs), new Options());
 	}
 
 	/**

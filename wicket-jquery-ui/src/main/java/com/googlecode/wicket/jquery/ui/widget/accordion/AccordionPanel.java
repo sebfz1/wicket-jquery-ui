@@ -30,7 +30,6 @@ import org.apache.wicket.model.Model;
 import com.googlecode.wicket.jquery.core.JQueryPanel;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.widget.tabs.TabListModel;
-import com.googlecode.wicket.jquery.ui.widget.tabs.TabbedPanel;
 
 /**
  * Provides a jQuery accordion based on a {@link JQueryPanel}, which takes {@link ITab}<code>s</code> as contructor's argument
@@ -53,7 +52,7 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	 */
 	public AccordionPanel(String id, List<ITab> tabs)
 	{
-		this(id, tabs, new Options());
+		this(id, Model.ofList(tabs), new Options());
 	}
 
 	/**
@@ -66,6 +65,17 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	public AccordionPanel(String id, List<ITab> tabs, Options options)
 	{
 		this(id, Model.ofList(tabs), options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the list model of {@link ITab}<code>s</code>
+	 */
+	public AccordionPanel(String id, IModel<List<ITab>> model)
+	{
+		this(id, model, new Options());
 	}
 
 	/**
@@ -180,7 +190,7 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	// Methods //
 
 	/**
-	 * Refreshes the {@link TabbedPanel}<br/>
+	 * Refreshes the {@link AccordionPanel}<br/>
 	 * <br/>
 	 * <b>Note:</b> This method should be used instead of <code>target.add(tabbedPanel)</code> if the underlying model is-a {@link TabListModel}
 	 * 

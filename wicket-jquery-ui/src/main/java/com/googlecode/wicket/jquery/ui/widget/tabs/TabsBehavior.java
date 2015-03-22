@@ -201,7 +201,11 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')") };
+				return new CallbackParameter[] {
+						CallbackParameter.context("event"),
+						CallbackParameter.context("ui"),
+						CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')")
+				};
 			}
 
 			@Override
@@ -226,7 +230,11 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')"), };
+				return new CallbackParameter[] {
+						CallbackParameter.context("event"),
+						CallbackParameter.context("ui"),
+						CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')"),
+				};
 			}
 
 			@Override
