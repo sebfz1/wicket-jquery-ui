@@ -52,7 +52,7 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	 */
 	public AccordionPanel(String id, List<ITab> tabs)
 	{
-		this(id, tabs, new Options());
+		this(id, Model.ofList(tabs), new Options());
 	}
 
 	/**
@@ -72,6 +72,17 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	 *
 	 * @param id the markup id
 	 * @param model the list model of {@link ITab}<code>s</code>
+	 */
+	public AccordionPanel(String id, IModel<List<ITab>> model)
+	{
+		this(id, model, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the list model of {@link ITab}<code>s</code>
 	 * @param options {@link Options}
 	 */
 	public AccordionPanel(String id, IModel<List<ITab>> model, Options options)
@@ -80,6 +91,12 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	}
 
 	// Properties //
+
+	@SuppressWarnings("unchecked")
+	public IModel<List<ITab>> getModel()
+	{
+		return (IModel<List<ITab>>) this.getDefaultModel();
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<ITab> getModelObject()

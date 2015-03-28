@@ -225,6 +225,7 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	}
 
 	// Factories //
+
 	/**
 	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
 	 * The properties used in the template text (ie: ${data.name}) should be of the prefixed by "data." and should be identified in the list returned by {@link IJQueryTemplate#getTextProperties()} (without "data.")
