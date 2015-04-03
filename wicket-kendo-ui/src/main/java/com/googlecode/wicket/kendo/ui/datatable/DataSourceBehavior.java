@@ -176,14 +176,17 @@ class DataSourceBehavior<T> extends AbstractAjaxBehavior
 				builder.append(Options.QUOTE).append("results").append(Options.QUOTE).append(": ");
 				builder.append("[ ");
 
-				for (int index = 0; iterator.hasNext(); index++)
+				if (iterator != null)
 				{
-					if (index > 0)
+					for (int index = 0; iterator.hasNext(); index++)
 					{
-						builder.append(", ");
-					}
+						if (index > 0)
+						{
+							builder.append(", ");
+						}
 
-					builder.append(DataSourceBehavior.this.newJsonRow(iterator.next()));
+						builder.append(DataSourceBehavior.this.newJsonRow(iterator.next()));
+					}
 				}
 
 				builder.append(" ] }");
