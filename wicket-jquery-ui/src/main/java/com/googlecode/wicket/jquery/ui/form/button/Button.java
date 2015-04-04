@@ -20,9 +20,7 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
-import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
  * Provides a jQuery button based on the built-in Button
@@ -96,29 +94,5 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 	public ButtonBehavior newWidgetBehavior(String selector)
 	{
 		return new ButtonBehavior(selector);
-	}
-
-	/**
-	 * Provides a jQuery button {@link JQueryBehavior}
-	 */
-	public static class ButtonBehavior extends JQueryUIBehavior
-	{
-		private static final long serialVersionUID = 1L;
-		private static final String METHOD = "button";
-
-		public ButtonBehavior(String selector)
-		{
-			super(selector, METHOD);
-		}
-
-		public ButtonBehavior(String selector, Options options)
-		{
-			super(selector, METHOD, options);
-		}
-
-		public ButtonBehavior(String selector, String icon)
-		{
-			super(selector, METHOD, new Options("icons", String.format("{ primary: '%s' }", icon)));
-		}
 	}
 }
