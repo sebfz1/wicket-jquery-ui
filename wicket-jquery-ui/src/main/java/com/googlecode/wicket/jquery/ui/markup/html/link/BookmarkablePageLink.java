@@ -102,7 +102,7 @@ public class BookmarkablePageLink<T> extends org.apache.wicket.markup.html.link.
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOption("enable", this.isEnabledInHierarchy());
+		behavior.setOption("disabled", !this.isEnabledInHierarchy());
 	}
 
 	@Override

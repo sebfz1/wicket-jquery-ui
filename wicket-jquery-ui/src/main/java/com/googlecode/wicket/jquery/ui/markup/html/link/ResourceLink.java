@@ -128,7 +128,7 @@ public class ResourceLink<T> extends org.apache.wicket.markup.html.link.Resource
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOption("enable", this.isEnabledInHierarchy());
+		behavior.setOption("disabled", !this.isEnabledInHierarchy());
 	}
 
 	@Override

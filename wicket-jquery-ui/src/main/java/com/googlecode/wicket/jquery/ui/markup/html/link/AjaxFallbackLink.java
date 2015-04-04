@@ -97,7 +97,7 @@ public abstract class AjaxFallbackLink<T> extends org.apache.wicket.ajax.markup.
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOption("enable", this.isEnabledInHierarchy());
+		behavior.setOption("disabled", !this.isEnabledInHierarchy());
 	}
 
 	@Override

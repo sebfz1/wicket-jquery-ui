@@ -70,7 +70,7 @@ public abstract class StatelessLink<T> extends org.apache.wicket.markup.html.lin
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOption("enable", this.isEnabledInHierarchy());
+		behavior.setOption("disabled", !this.isEnabledInHierarchy());
 	}
 
 	@Override

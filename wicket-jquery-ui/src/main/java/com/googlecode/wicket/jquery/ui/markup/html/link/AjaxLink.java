@@ -97,7 +97,7 @@ public abstract class AjaxLink<T> extends org.apache.wicket.ajax.markup.html.Aja
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOption("enable", this.isEnabledInHierarchy());
+		behavior.setOption("disabled", !this.isEnabledInHierarchy());
 	}
 
 	@Override

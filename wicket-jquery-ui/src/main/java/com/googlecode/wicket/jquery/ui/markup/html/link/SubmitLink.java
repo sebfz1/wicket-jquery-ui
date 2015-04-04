@@ -150,7 +150,7 @@ public class SubmitLink extends org.apache.wicket.markup.html.form.SubmitLink im
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOption("enable", this.isEnabledInHierarchy());
+		behavior.setOption("disabled", !this.isEnabledInHierarchy());
 	}
 
 	@Override

@@ -103,7 +103,7 @@ public class DownloadLink extends org.apache.wicket.markup.html.link.DownloadLin
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOption("enable", this.isEnabledInHierarchy());
+		behavior.setOption("disabled", !this.isEnabledInHierarchy());
 	}
 
 	@Override
