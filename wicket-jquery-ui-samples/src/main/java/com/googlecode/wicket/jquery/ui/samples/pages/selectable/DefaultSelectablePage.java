@@ -10,7 +10,6 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.util.ListModel;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.interaction.selectable.Selectable;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
@@ -31,14 +30,6 @@ public class DefaultSelectablePage extends AbstractSelectablePage
 		final Selectable<String> selectable = new Selectable<String>("selectable", new ListModel<String>(selected), list) {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(JQueryBehavior behavior)
-			{
-				super.onConfigure(behavior);
-				
-				behavior.setOption("selecting", "function (event, ui) { $(event.target).children('.ui-selecting').not(':first').removeClass('ui-selecting'); }");
-			}
 
 			@Override
 			public void onSelect(AjaxRequestTarget target)

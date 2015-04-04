@@ -48,7 +48,7 @@ import com.googlecode.wicket.kendo.ui.utils.PropertyUtils;
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-class DataSourceBehavior<T> extends AbstractAjaxBehavior
+public class DataSourceBehavior<T> extends AbstractAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String ASC = "asc";
