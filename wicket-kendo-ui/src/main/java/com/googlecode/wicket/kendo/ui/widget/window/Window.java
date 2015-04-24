@@ -18,9 +18,12 @@ package com.googlecode.wicket.kendo.ui.widget.window;
 
 import java.util.List;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.resource.loader.ClassStringResourceLoader;
 import org.apache.wicket.util.lang.Args;
 
 /**
@@ -34,13 +37,21 @@ public abstract class Window<T> extends AbstractWindow<T>
 {
 	private static final long serialVersionUID = 1L;
 
-	/* Default Button labels */
-	public static final String LBL_OK = "OK";
-	public static final String LBL_NO = "No";
-	public static final String LBL_YES = "Yes";
-	public static final String LBL_CLOSE = "Close";
-	public static final String LBL_CANCEL = "Cancel";
-	public static final String LBL_SUBMIT = "Submit";
+	static
+	{
+		if (Application.exists())
+		{
+//			Application.get().getResourceSettings().getStringResourceLoaders().add(new ClassStringResourceLoader(Window.class));
+		}
+	}
+
+	/* Default Button label models */
+	public static final IModel<String> LBL_OK = new ResourceModel("button.ok");
+	public static final IModel<String> LBL_NO = new ResourceModel("button.no");
+	public static final IModel<String> LBL_YES = new ResourceModel("button.yes");
+	public static final IModel<String> LBL_CLOSE = new ResourceModel("button.close");
+	public static final IModel<String> LBL_CANCEL = new ResourceModel("button.cancel");
+	public static final IModel<String> LBL_SUBMIT = new ResourceModel("button.submit");
 
 	private final List<WindowButton> buttons;
 

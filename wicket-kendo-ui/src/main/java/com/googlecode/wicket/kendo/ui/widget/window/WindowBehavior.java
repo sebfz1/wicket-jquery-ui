@@ -97,7 +97,12 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	 */
 	public void open(AjaxRequestTarget target)
 	{
-		target.appendJavaScript(this.widget() + ".open()");
+		if (this.isCentered())
+		{
+			target.appendJavaScript(this.widget() + ".center();");
+		}
+
+		target.appendJavaScript(this.widget() + ".open();");
 	}
 
 	/**
@@ -107,7 +112,19 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	 */
 	public void close(AjaxRequestTarget target)
 	{
-		target.prependJavaScript(this.widget() + ".close()");
+		target.prependJavaScript(this.widget() + ".close();");
+	}
+	
+	// Properties //
+	
+	/**
+	 * Indicates whether the window is centered
+	 *
+	 * @return false by default
+	 */
+	protected boolean isCentered()
+	{
+		return false;
 	}
 
 	// Events //
@@ -143,6 +160,7 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	}
 
 	// Factories //
+
 	protected JQueryAjaxBehavior newActionBehavior()
 	{
 		return new JQueryAjaxBehavior(this) {
