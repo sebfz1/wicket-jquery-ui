@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar;
 
+import java.util.Date;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.threeten.bp.LocalDateTime;
 
@@ -29,7 +31,7 @@ interface ICalendarListener
 {
 	/**
 	 * Indicates whether a cell can be selected.<br/>
-	 * If true, the {@link #onSelect(AjaxRequestTarget, CalendarView, Date, Date, boolean)} event will be triggered
+	 * If true, the {@link #onSelect(AjaxRequestTarget, CalendarView, LocalDateTime, LocalDateTime, boolean)} event will be triggered
 	 *
 	 * @return false by default
 	 */
@@ -37,7 +39,7 @@ interface ICalendarListener
 
 	/**
 	 * Indicates whether a day can be clicked.<br/>
-	 * If true, the {@link #onDayClick(AjaxRequestTarget, CalendarView, Date, boolean)} event will be triggered<br/>
+	 * If true, the {@link #onDayClick(AjaxRequestTarget, CalendarView, LocalDateTime, boolean)} event will be triggered<br/>
 	 * <b>Note:</b> <tt>true</tt> will enable the global 'editable' option to <tt>true</tt>.
 	 *
 	 * @return false by default
@@ -56,7 +58,7 @@ interface ICalendarListener
 	boolean isEventClickEnabled();
 
 	/**
-	 * Indicates whether the {@link #onObjectDrop(AjaxRequestTarget, String, Date, boolean)} event will be triggered
+	 * Indicates whether the {@link #onObjectDrop(AjaxRequestTarget, String, LocalDateTime, boolean)} event will be triggered
 	 *
 	 * @return false by default
 	 */
@@ -77,7 +79,7 @@ interface ICalendarListener
 	boolean isEventResizeEnabled();
 
 	/**
-	 * Indicates whether the {@link #onViewRender(AjaxRequestTarget, CalendarView, Date, Date)} event will be triggered
+	 * Indicates whether the {@link #onViewRender(AjaxRequestTarget, CalendarView, LocalDateTime, LocalDateTime)} event will be triggered
 	 *
 	 * @return false by default
 	 */

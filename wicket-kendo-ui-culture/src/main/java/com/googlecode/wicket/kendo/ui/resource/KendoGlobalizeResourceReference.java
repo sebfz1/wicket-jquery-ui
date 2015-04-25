@@ -38,7 +38,7 @@ public class KendoGlobalizeResourceReference extends JQueryPluginResourceReferen
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param locale the {@link Locale}
 	 */
 	public KendoGlobalizeResourceReference(Locale locale)
@@ -48,8 +48,8 @@ public class KendoGlobalizeResourceReference extends JQueryPluginResourceReferen
 
 	/**
 	 * Constructor
-	 * 
-	 * @param locale the {@link KendoCulture}
+	 *
+	 * @param culture the {@link KendoCulture}
 	 */
 	public KendoGlobalizeResourceReference(KendoCulture culture)
 	{
@@ -58,7 +58,7 @@ public class KendoGlobalizeResourceReference extends JQueryPluginResourceReferen
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param culture the culture, ie: 'fr' or 'fr-FR'
 	 */
 	public KendoGlobalizeResourceReference(String culture)

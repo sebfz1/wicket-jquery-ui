@@ -81,16 +81,6 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	}
 
 	/**
-	 * Gets the Kendo (jQuery) object
-	 *
-	 * @return the jQuery object
-	 */
-	protected String widget()
-	{
-		return this.widget(METHOD);
-	}
-
-	/**
 	 * Opens the window in ajax.<br/>
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -153,7 +143,7 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 			{
 				// function(e) { }
 				return new CallbackParameter[] { // lf
-						CallbackParameter.context("e"), // lf
+				CallbackParameter.context("e"), // lf
 						CallbackParameter.resolved("action", "jQuery(e.target).attr('class').match(/k-i-(\\w+)/)[1]") // lf
 				};
 			}
