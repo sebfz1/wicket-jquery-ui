@@ -54,9 +54,13 @@ public enum WindowButtons
 	/**
 	 * Constructor
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 *
 =======
 	 *
+=======
+	 *
+>>>>>>> daa8aee10853c0d6345178d9723589b26dc8752c
 	 * @param labels the button labels
 	 */
 	@SafeVarargs
@@ -70,8 +74,12 @@ public enum WindowButtons
 
 	/**
 	 * Constructor
+<<<<<<< HEAD
 	 *
 >>>>>>> Kendo UI: Window (enhancement), WIP
+=======
+	 *
+>>>>>>> daa8aee10853c0d6345178d9723589b26dc8752c
 	 * @param buttons the buttons
 	 */
 	private WindowButtons(WindowButton... buttons)
