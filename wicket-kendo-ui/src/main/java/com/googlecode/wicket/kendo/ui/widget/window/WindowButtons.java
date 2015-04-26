@@ -30,8 +30,7 @@ import com.googlecode.wicket.kendo.ui.KendoIcon;
  */
 public enum WindowButtons
 {
-	// TODO add icons
-	OK(Window.LBL_OK), // lf
+	OK(WindowButton.of(Window.LBL_OK, KendoIcon.TICK, true)), // lf
 	OK_CANCEL(WindowButton.of(Window.LBL_OK, KendoIcon.TICK, true), WindowButton.of(Window.LBL_CANCEL, KendoIcon.CANCEL, false)), // lf
 	YES_NO(Window.LBL_YES, Window.LBL_NO), // lf
 	YES_NO_CANCEL(WindowButton.of(Window.LBL_YES, true), WindowButton.of(Window.LBL_NO, true), WindowButton.of(Window.LBL_CANCEL, false));
@@ -53,14 +52,7 @@ public enum WindowButtons
 
 	/**
 	 * Constructor
-<<<<<<< HEAD
-<<<<<<< HEAD
 	 *
-=======
-	 *
-=======
-	 *
->>>>>>> daa8aee10853c0d6345178d9723589b26dc8752c
 	 * @param labels the button labels
 	 */
 	@SafeVarargs
@@ -74,12 +66,7 @@ public enum WindowButtons
 
 	/**
 	 * Constructor
-<<<<<<< HEAD
 	 *
->>>>>>> Kendo UI: Window (enhancement), WIP
-=======
-	 *
->>>>>>> daa8aee10853c0d6345178d9723589b26dc8752c
 	 * @param buttons the buttons
 	 */
 	private WindowButtons(WindowButton... buttons)

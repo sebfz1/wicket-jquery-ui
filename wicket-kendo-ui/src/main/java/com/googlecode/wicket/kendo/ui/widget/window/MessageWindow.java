@@ -155,7 +155,7 @@ public abstract class MessageWindow extends Window<String>
 		this.add(this.label.setOutputMarkupId(true));
 
 		// form //
-		this.form = this.newForm("form");
+		this.form = MessageWindow.newForm("form");
 		this.add(this.form);
 	}
 
@@ -188,11 +188,11 @@ public abstract class MessageWindow extends Window<String>
 
 	/**
 	 * Gets a new {@link Form}
-	 * 
+	 *
 	 * @param id the markup-id
 	 * @return the new form
 	 */
-	private final Form<Void> newForm(String id)
+	private static Form<Void> newForm(String id)
 	{
 		return new Form<Void>(id) {
 

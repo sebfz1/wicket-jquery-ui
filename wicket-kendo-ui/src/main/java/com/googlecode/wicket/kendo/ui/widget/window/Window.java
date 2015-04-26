@@ -18,12 +18,10 @@ package com.googlecode.wicket.kendo.ui.widget.window;
 
 import java.util.List;
 
-import org.apache.wicket.Application;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
-import org.apache.wicket.resource.loader.ClassStringResourceLoader;
 import org.apache.wicket.util.lang.Args;
 
 /**
@@ -37,14 +35,6 @@ import org.apache.wicket.util.lang.Args;
 public abstract class Window<T> extends AbstractWindow<T>
 {
 	private static final long serialVersionUID = 1L;
-
-	static
-	{
-		if (Application.exists())
-		{
-//			Application.get().getResourceSettings().getStringResourceLoaders().add(new ClassStringResourceLoader(Window.class));
-		}
-	}
 
 	/* Default Button label models */
 	public static final IModel<String> LBL_OK = new ResourceModel("button.ok");

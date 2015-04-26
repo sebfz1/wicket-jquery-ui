@@ -38,7 +38,7 @@ public class WindowButton implements IClusterable
 
 	/**
 	 * Helper that creates a new {@link WindowButton}
-	 * 
+	 *
 	 * @param text the button's text
 	 * @param formProcessing whether the form will be validated and updated
 	 * @return a new {@link WindowButton}
@@ -50,7 +50,7 @@ public class WindowButton implements IClusterable
 
 	/**
 	 * Helper that creates a new {@link WindowButton}
-	 * 
+	 *
 	 * @param text the button's text
 	 * @param icon the button's icon
 	 * @param formProcessing whether the form will be validated and updated
@@ -183,7 +183,7 @@ public class WindowButton implements IClusterable
 
 	/**
 	 * Gets the button's text
-	 * 
+	 *
 	 * @return the button's text
 	 */
 	public String getText()
@@ -192,8 +192,9 @@ public class WindowButton implements IClusterable
 	}
 
 	/**
-	 * TODO javadoc
-	 * @return
+	 * Gets the model of the button's text
+	 *
+	 * @return the {@link IModel}
 	 */
 	public IModel<String> getTextModel()
 	{
@@ -226,7 +227,7 @@ public class WindowButton implements IClusterable
 
 	/**
 	 * Indicates whether the form will be validated and updated.
-	 * 
+	 *
 	 * @return true by default
 	 * @see IFormSubmittingComponent#getDefaultFormProcessing()
 	 */
@@ -237,7 +238,7 @@ public class WindowButton implements IClusterable
 
 	/**
 	 * Set the default form processing
-	 * 
+	 *
 	 * @param processing true or false
 	 * @return this, for chaining
 	 */
@@ -262,7 +263,7 @@ public class WindowButton implements IClusterable
 	{
 		if (object instanceof WindowButton)
 		{
-			return this.match(((WindowButton) object).model); //TODO REVIEW
+			return this.match(((WindowButton) object).getTextModel());
 		}
 
 		return super.equals(object);

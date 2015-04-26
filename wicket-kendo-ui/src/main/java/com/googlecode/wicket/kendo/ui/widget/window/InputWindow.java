@@ -92,7 +92,7 @@ public abstract class InputWindow<T> extends Window<T>
 		super(id, title, model, WindowButtons.OK_CANCEL);
 
 		// form //
-		this.form = this.newForm("form");
+		this.form = InputWindow.newForm("form");
 		this.add(this.form);
 
 		// feedback //
@@ -107,9 +107,10 @@ public abstract class InputWindow<T> extends Window<T>
 
 	/**
 	 * Gets the inner {@link Form}
-	 * 
+	 *
 	 * @return the form
 	 */
+	@Override
 	public Form<Void> getForm()
 	{
 		return this.form;
@@ -118,11 +119,12 @@ public abstract class InputWindow<T> extends Window<T>
 	/**
 	 * Indicates whether the {@link TextField}'s value is required
 	 *
-	 * @return true or false
+	 * @return true by default
 	 */
 	protected boolean isRequired()
 	{
-		return false;
+		// XXX: changed InputButton#isRequired to true by default because it makes more sense - SILENT API BREAK
+		return true;
 	}
 
 	// Events //
@@ -158,7 +160,6 @@ public abstract class InputWindow<T> extends Window<T>
 	{
 		if (button != null)
 		{
-			// TODO take care / verify L10N
 			if (button.match(LBL_OK))
 			{
 				this.onSubmit(target);
@@ -191,11 +192,11 @@ public abstract class InputWindow<T> extends Window<T>
 
 	/**
 	 * Gets a new {@link Form}
-	 * 
+	 *
 	 * @param id the markup-id
 	 * @return the new form
 	 */
-	private final Form<Void> newForm(String id)
+	private static Form<Void> newForm(String id)
 	{
 		return new Form<Void>(id) {
 
