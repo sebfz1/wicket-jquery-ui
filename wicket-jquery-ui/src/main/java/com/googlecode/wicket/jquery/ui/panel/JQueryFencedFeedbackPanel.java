@@ -133,6 +133,7 @@ public class JQueryFencedFeedbackPanel extends FencedFeedbackPanel
 
 	/**
 	 * Gets the icon CSS class for the given message.
+	 *
 	 * @param message the {@link FeedbackMessage}
 	 * @return the icon class
 	 */

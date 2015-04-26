@@ -161,7 +161,7 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 			{
 				// function(e) { }
 				return new CallbackParameter[] { // lf
-				CallbackParameter.context("e"), // lf
+						CallbackParameter.context("e"), // lf
 						CallbackParameter.resolved("action", "jQuery(e.target).attr('class').match(/k-i-(\\w+)/)[1]") // lf
 				};
 			}

@@ -16,8 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar;
 
-import java.util.Date;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.threeten.bp.LocalDateTime;
 
@@ -109,8 +107,8 @@ interface ICalendarListener
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param view the current calendar view
-	 * @param start the event start {@link Date}
-	 * @param end the event end {@link Date}
+	 * @param start the event start {@link LocalDateTime}
+	 * @param end the event end {@link LocalDateTime}
 	 * @param allDay the event all-day property
 	 */
 	void onSelect(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end, boolean allDay);
@@ -174,8 +172,8 @@ interface ICalendarListener
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param view the current calendar view
-	 * @param start the start {@link Date} of the current view
-	 * @param end the event end {@link Date} of the current view
+	 * @param start the start {@link LocalDateTime} of the current view
+	 * @param end the event end {@link LocalDateTime} of the current view
 	 */
 	void onViewRender(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end);
 }

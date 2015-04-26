@@ -19,8 +19,6 @@ package com.googlecode.wicket.kendo.ui.widget.window;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.model.IModel;
-
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 
 /**
@@ -32,7 +30,7 @@ public enum WindowButtons
 {
 	OK(WindowButton.of(Window.LBL_OK, KendoIcon.TICK, true)), // lf
 	OK_CANCEL(WindowButton.of(Window.LBL_OK, KendoIcon.TICK, true), WindowButton.of(Window.LBL_CANCEL, KendoIcon.CANCEL, false)), // lf
-	YES_NO(Window.LBL_YES, Window.LBL_NO), // lf
+	YES_NO(WindowButton.of(Window.LBL_YES, true), WindowButton.of(Window.LBL_NO, true)), // lf
 	YES_NO_CANCEL(WindowButton.of(Window.LBL_YES, true), WindowButton.of(Window.LBL_NO, true), WindowButton.of(Window.LBL_CANCEL, false));
 
 	private final List<WindowButton> buttons = new ArrayList<WindowButton>();
@@ -47,20 +45,6 @@ public enum WindowButtons
 		for (String label : labels)
 		{
 			this.buttons.add(new WindowButton(label));
-		}
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param labels the button labels
-	 */
-	@SafeVarargs
-	private WindowButtons(IModel<String>... models)
-	{
-		for (IModel<String> model : models)
-		{
-			this.buttons.add(new WindowButton(model));
 		}
 	}
 

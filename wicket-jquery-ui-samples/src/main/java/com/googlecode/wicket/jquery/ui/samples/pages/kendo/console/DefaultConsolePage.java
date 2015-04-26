@@ -62,7 +62,7 @@ public class DefaultConsolePage extends AbstractConsolePage
 		});
 	}
 
-	protected static final FeedbackMessagesModel newErrorFeedbackMessagesModel(Page page)
+	protected static FeedbackMessagesModel newErrorFeedbackMessagesModel(Page page)
 	{
 		return new FeedbackMessagesModel(page, new ErrorLevelFeedbackMessageFilter(FeedbackMessage.ERROR));
 	}
