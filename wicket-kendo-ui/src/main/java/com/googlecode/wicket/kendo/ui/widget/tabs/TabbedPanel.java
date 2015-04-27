@@ -29,18 +29,18 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.core.JQueryPanel;
+import com.googlecode.wicket.jquery.core.JQueryGenericPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides Kendo UI tabs based on a {@link JQueryPanel}
+ * Provides Kendo UI tabs based on a {@link JQueryGenericPanel}
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
  * @since 7.0.0
  */
 // FIXME: target.add(myTabbedPannel) does not work
-public class TabbedPanel extends JQueryPanel implements ITabsListener
+public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabsListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -117,10 +117,10 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 
 	// Properties //
 
-	@SuppressWarnings("unchecked")
+	@Override
 	public List<ITab> getModelObject()
 	{
-		List<ITab> list = (List<ITab>) this.getDefaultModelObject();
+		List<ITab> list = super.getModelObject();
 
 		if (list != null)
 		{

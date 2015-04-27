@@ -21,16 +21,16 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryContainer;
+import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a Kendo UI progress-bar based on a {@link JQueryContainer}
+ * Provides a Kendo UI progress-bar based on a {@link JQueryGenericContainer}
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.17.0
  */
-public class ProgressBar extends JQueryContainer implements IProgressBarListener
+public class ProgressBar extends JQueryGenericContainer<Integer> implements IProgressBarListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -117,31 +117,11 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 	}
 
 	/**
-	 * Gets the model (wrapping the value)
-	 *
-	 * @return {@link IModel}
-	 */
-	@SuppressWarnings("unchecked")
-	public IModel<Integer> getModel()
-	{
-		return (IModel<Integer>) this.getDefaultModel();
-	}
-
-	/**
-	 * Gets the model object
-	 *
-	 * @return the progress-bar value
-	 */
-	public Integer getModelObject()
-	{
-		return (Integer) this.getDefaultModelObject();
-	}
-
-	/**
 	 * Sets the progress-bar value
 	 *
 	 * @param value value which should be greater than or equals to {@link #MIN} and less than or equals to {@link #MAX}
 	 */
+	@Override
 	public void setModelObject(Integer value)
 	{
 		Integer v = Args.notNull(value, "value");
@@ -158,7 +138,7 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 		this.setDefaultModelObject(v);
 	}
 
-	/* Methods */
+	// Methods //
 
 	/**
 	 * Gets the Kendo (jQuery) object
@@ -237,7 +217,7 @@ public class ProgressBar extends JQueryContainer implements IProgressBarListener
 		}
 	}
 
-	/* Events */
+	// Events //
 
 	@Override
 	protected void onModelChanged()

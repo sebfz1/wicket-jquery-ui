@@ -28,17 +28,17 @@ import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.core.JQueryPanel;
+import com.googlecode.wicket.jquery.core.JQueryGenericPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a Kendo UI accordion based on a {@link JQueryPanel}, which takes {@link ITab}<code>s</code> as contructor's argument
+ * Provides a Kendo UI accordion based on a {@link JQueryGenericPanel}, which takes {@link ITab}<code>s</code> as contructor's argument
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
  * @since 7.0.0
  */
-public class AccordionPanel extends JQueryPanel implements IAccordionListener
+public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IAccordionListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -92,16 +92,10 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 
 	// Properties //
 
-	@SuppressWarnings("unchecked")
-	public IModel<List<ITab>> getModel()
-	{
-		return (IModel<List<ITab>>) this.getDefaultModel();
-	}
-
-	@SuppressWarnings("unchecked")
+	@Override
 	public List<ITab> getModelObject()
 	{
-		List<ITab> list = (List<ITab>) this.getDefaultModelObject();
+		List<ITab> list = super.getModelObject();
 
 		if (list != null)
 		{

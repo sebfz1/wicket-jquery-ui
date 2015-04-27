@@ -27,12 +27,12 @@ import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryContainer;
+import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 
 /**
- * Provides a jQuery UI selectable {@link JQueryContainer}.<br/>
+ * Provides a jQuery UI selectable {@link JQueryGenericContainer}.<br/>
  * Children of that container can be selected using the mouse or by pressing ctrl+click<br/>
  * Usage:
  *
@@ -42,16 +42,16 @@ import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
  * 		&lt;span wicket:id="item"&gt;[label]&lt;/span&gt;
  * 	&lt;/li&gt;
  * &lt;/ul&gt;
- *
- *
+ * 
+ * 
  * final Selectable&lt;String&gt; selectable = new Selectable&lt;String&gt;("selectable", list) {
- *
+ * 
  * 	protected void onSelect(AjaxRequestTarget target)
  * 	{
  * 		//this.getModelObject(): gets the selected items
  * 	}
  * };
- *
+ * 
  * this.add(selectable);
  * </pre>
  *
@@ -59,7 +59,7 @@ import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class Selectable<T extends Serializable> extends JQueryContainer
+public class Selectable<T extends Serializable> extends JQueryGenericContainer<List<T>>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -117,38 +117,6 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	}
 
 	// Properties //
-
-	/**
-	 * Gets the model object
-	 *
-	 * @return the list of selected items
-	 */
-	@SuppressWarnings("unchecked")
-	public IModel<? extends List<T>> getModel()
-	{
-		return (IModel<? extends List<T>>) this.getDefaultModel();
-	}
-
-	/**
-	 * Gets the model object
-	 *
-	 * @return the list of selected items
-	 */
-	@SuppressWarnings("unchecked")
-	public List<T> getModelObject()
-	{
-		return (List<T>) this.getDefaultModelObject();
-	}
-
-	/**
-	 * Sets the model object
-	 *
-	 * @param list the list of selected items
-	 */
-	public void setModelObject(List<T> list)
-	{
-		this.setDefaultModelObject(list);
-	}
 
 	/**
 	 * Gets the reference list of all selectable items.

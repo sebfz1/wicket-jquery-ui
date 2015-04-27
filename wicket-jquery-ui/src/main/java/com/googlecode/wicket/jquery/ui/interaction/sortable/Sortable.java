@@ -31,19 +31,19 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryContainer;
+import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
 
 /**
- * Provides a jQuery UI sortable {@link JQueryContainer}.<br/>
+ * Provides a jQuery UI sortable {@link JQueryGenericContainer}.<br/>
  * The <tt>Sortable</tt> is usually associated to an &lt;UL&gt; element.
  *
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class Sortable<T> extends JQueryContainer implements ISortableListener<T>
+public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implements ISortableListener<T>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -103,6 +103,8 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 		this.options = options;
 	}
 
+	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
@@ -156,37 +158,6 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	}
 
 	// Properties //
-	/**
-	 * Gets the {@link IModel}
-	 *
-	 * @return the {@link IModel}
-	 */
-	@SuppressWarnings("unchecked")
-	public IModel<List<T>> getModel()
-	{
-		return (IModel<List<T>>) this.getDefaultModel();
-	}
-
-	/**
-	 * Gets the {@link IModel}
-	 *
-	 * @return the {@link IModel}
-	 */
-	@SuppressWarnings("unchecked")
-	public List<T> getModelObject()
-	{
-		return (List<T>) this.getDefaultModelObject();
-	}
-
-	/**
-	 * Sets the model object
-	 *
-	 * @param list the {@link List}
-	 */
-	public void setModelObject(List<T> list)
-	{
-		this.setDefaultModelObject(list);
-	}
 
 	@Override
 	public boolean isOnReceiveEnabled()
@@ -201,6 +172,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	}
 
 	// Methods //
+
 	/**
 	 * Connects with another {@link Sortable}<br/>
 	 * The specified {@link Sortable} will keep a reference to the caller (<code>this</code>).
@@ -243,6 +215,7 @@ public abstract class Sortable<T> extends JQueryContainer implements ISortableLi
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
