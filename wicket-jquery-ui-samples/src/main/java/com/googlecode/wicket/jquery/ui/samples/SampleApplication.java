@@ -59,7 +59,7 @@ public class SampleApplication extends WebApplication
 	{
 		super.init();
 
-//		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
+		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
 
 		// SiteMap //
 		this.mountPage("/sitemap.xml", SiteMapPage.class);
