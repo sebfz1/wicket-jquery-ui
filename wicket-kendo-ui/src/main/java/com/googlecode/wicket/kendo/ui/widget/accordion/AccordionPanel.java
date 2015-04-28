@@ -32,7 +32,7 @@ import com.googlecode.wicket.jquery.core.JQueryGenericPanel;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a Kendo UI accordion based on a {@link JQueryGenericPanel}, which takes {@link ITab}<code>s</code> as contructor's argument
+ * Provides a Kendo UI accordion based on a {@link JQueryGenericPanel}, which takes {@link ITab}{@code s} as contructor's argument
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.19.0
@@ -48,7 +48,7 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param tabs the list of {@link ITab}<code>s</code>
+	 * @param tabs the list of {@link ITab}{@code s}
 	 */
 	public AccordionPanel(String id, List<ITab> tabs)
 	{
@@ -59,7 +59,7 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param tabs the list of {@link ITab}<code>s</code>
+	 * @param tabs the list of {@link ITab}{@code s}
 	 * @param options {@link Options}
 	 */
 	public AccordionPanel(String id, List<ITab> tabs, Options options)
@@ -71,7 +71,7 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param model the list model of {@link ITab}<code>s</code>
+	 * @param model the list model of {@link ITab}{@code s}
 	 */
 	public AccordionPanel(String id, IModel<List<ITab>> model)
 	{
@@ -82,7 +82,7 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param model the list model of {@link ITab}<code>s</code>
+	 * @param model the list model of {@link ITab}{@code s}
 	 * @param options {@link Options}
 	 */
 	public AccordionPanel(String id, IModel<List<ITab>> model, Options options)

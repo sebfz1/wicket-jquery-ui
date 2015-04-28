@@ -25,7 +25,7 @@ import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.util.lang.Args;
 
 /**
- * Default implementation for {@link AbstractWindow} that provides a set of {@link WindowButton}<code>s</code> and events such as {@link #onSubmit(AjaxRequestTarget, WindowButton)}, {@link #onError(AjaxRequestTarget, WindowButton)} and
+ * Default implementation for {@link AbstractWindow} that provides a set of {@link WindowButton}{@code s} and events such as {@link #onSubmit(AjaxRequestTarget, WindowButton)}, {@link #onError(AjaxRequestTarget, WindowButton)} and
  * {@link #onAfterSubmit(AjaxRequestTarget, WindowButton)}<br/>
  * The window is automatically closed {@link #onAfterSubmit(AjaxRequestTarget, WindowButton)}
  *
@@ -172,9 +172,9 @@ public abstract class Window<T> extends AbstractWindow<T>
 	protected abstract Form<?> getForm();
 
 	/**
-	 * Gets the list of {@link WindowButton}<code>s</code> This method an be overridden to provide a behavioral helper for instance
+	 * Gets the list of {@link WindowButton}{@code s} This method an be overridden to provide a behavioral helper for instance
 	 *
-	 * @return the list of {@link WindowButton}<code>s</code>
+	 * @return the list of {@link WindowButton}{@code s}
 	 * @see WindowButtonUtils#setDefaultFormProcessing(WindowButtons, boolean)
 	 */
 	protected List<WindowButton> getButtons()

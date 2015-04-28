@@ -22,7 +22,7 @@ import java.util.List;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 
 /**
- * Provides default sets of {@link WindowButton}<code>s</code> to be used in {@link Window}
+ * Provides default sets of {@link WindowButton}{@code s} to be used in {@link Window}
  *
  * @author Sebastien Briquet - sebfz1
  */
