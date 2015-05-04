@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.interaction.draggable;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
@@ -77,7 +78,7 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 	{
 		super(id);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	/**
@@ -102,7 +103,7 @@ public class Draggable<T> extends JQueryGenericContainer<T> implements IDraggabl
 	{
 		super(id, model);
 
-		this.options = options;
+		this.options = Args.notNull(options, "options");
 	}
 
 	// Properties //
