@@ -26,6 +26,7 @@ import org.apache.wicket.util.visit.Visits;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
@@ -48,8 +49,24 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	private JQueryAjaxBehavior onDragStopBehavior = null;
 	private Component component = null;
 
-	// TODO add default ctor (see kendo DraggableBehavior)
+	/**
+	 * Constructor
+	 */
+	public DraggableBehavior()
+	{
+		this(null, new Options());
+	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param options the {@link Options}
+	 */
+	public DraggableBehavior(Options options)
+	{
+		this(null, options);
+	}
+	
 	/**
 	 * Constructor
 	 * 
@@ -81,6 +98,11 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 		if (this.component != null)
 		{
 			throw new WicketRuntimeException("Behavior is already bound to another component.");
+		}
+
+		if (this.selector == null)
+		{
+			this.selector = JQueryWidget.getSelector(component);
 		}
 
 		this.component = component; // warning, not thread-safe: the instance of this behavior should only be used once
@@ -167,9 +189,13 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("top", "ui.position.top"), CallbackParameter.resolved("left", "ui.position.left"),
+				return new CallbackParameter[] {
+						CallbackParameter.context("event"), // lf
+						CallbackParameter.context("ui"), // lf
+						CallbackParameter.resolved("top", "ui.position.top"), // lf
+						CallbackParameter.resolved("left", "ui.position.left"), // lf
 						CallbackParameter.resolved("offsetTop", "ui.offset.top | 0"), // cast to int, no rounding
-						CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0") // cast to int, no rounding
+						CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0")  // cast to int, no rounding
 				};
 			}
 
@@ -195,9 +221,13 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 			@Override
 			protected CallbackParameter[] getCallbackParameters()
 			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("top", "ui.position.top"), CallbackParameter.resolved("left", "ui.position.left"),
+				return new CallbackParameter[] {
+						CallbackParameter.context("event"), // lf
+						CallbackParameter.context("ui"), // lf
+						CallbackParameter.resolved("top", "ui.position.top"), // lf
+						CallbackParameter.resolved("left", "ui.position.left"), // lf
 						CallbackParameter.resolved("offsetTop", "ui.offset.top | 0"), // cast to int, no rounding
-						CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0") // cast to int, no rounding
+						CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0")  // cast to int, no rounding
 				};
 			}
 
