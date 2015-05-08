@@ -60,16 +60,6 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	/**
 	 * Constructor
 	 * 
-	 * @param options the {@link Options}
-	 */
-	public DraggableBehavior(Options options)
-	{
-		this(null, options);
-	}
-	
-	/**
-	 * Constructor
-	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public DraggableBehavior(String selector)
@@ -77,6 +67,16 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 		this(selector, new Options());
 	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param options the {@link Options}
+	 */
+	public DraggableBehavior(Options options)
+	{
+		this(null, options);
+	}
+	
 	/**
 	 * Constructor
 	 * 
