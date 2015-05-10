@@ -79,7 +79,7 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior implem
 	 */
 	protected IRequestHandler newRequestHandler()
 	{
-		return new RequestHandler();
+		return new ChoiceModelRequestHandler();
 	}
 
 	// Classes //
@@ -87,7 +87,7 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior implem
 	/**
 	 * Provides the {@link IRequestHandler}
 	 */
-	protected class RequestHandler implements IRequestHandler
+	protected class ChoiceModelRequestHandler implements IRequestHandler
 	{
 		@Override
 		public void respond(final IRequestCycle requestCycle)

@@ -98,7 +98,7 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 	 */
 	protected IRequestHandler newRequestHandler()
 	{
-		return new RequestHandler();
+		return new CalendarModelRequestHandler();
 	}
 	
 	// Classes //
@@ -106,7 +106,7 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 	/**
 	 * Provides the {@link IRequestHandler}
 	 */
-	protected class RequestHandler implements IRequestHandler
+	protected class CalendarModelRequestHandler implements IRequestHandler
 	{
 		@Override
 		public void respond(final IRequestCycle requestCycle)
