@@ -137,12 +137,11 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 						{
 							builder.append(", ");
 						}
+
 						builder.append(event.toString());
 					}
 
-					builder.append(" ]");
-
-					response.write(builder);
+					response.write(builder.append(" ]"));
 				}
 			}
 		}
@@ -150,7 +149,7 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 		@Override
 		public void detach(final IRequestCycle requestCycle)
 		{
-			// noop
+			CalendarModelBehavior.this.model.detach();
 		}
 	}
 }

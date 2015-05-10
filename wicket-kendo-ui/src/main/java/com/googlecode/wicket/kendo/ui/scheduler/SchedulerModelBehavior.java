@@ -97,56 +97,59 @@ public class SchedulerModelBehavior extends AbstractAjaxBehavior
 	 */
 	protected IRequestHandler newRequestHandler()
 	{
-		return new IRequestHandler() {
+		return new SchedulerModelRequestHandler();
+	}
 
-			@Override
-			public void respond(final IRequestCycle requestCycle)
+	/**
+	 * Provides the {@link IRequestHandler}
+	 */
+	protected class SchedulerModelRequestHandler implements IRequestHandler
+	{
+		@Override
+		public void respond(final IRequestCycle requestCycle)
+		{
+			WebResponse response = (WebResponse) requestCycle.getResponse();
+
+			final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
+			response.setContentType("text/json; charset=" + encoding);
+			response.disableCaching();
+
+			if (SchedulerModelBehavior.this.model != null)
 			{
-				WebResponse response = (WebResponse) requestCycle.getResponse();
+				List<SchedulerEvent> list = SchedulerModelBehavior.this.model.getObject(); // calls load()
 
-				final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
-				response.setContentType("text/json; charset=" + encoding);
-				response.disableCaching();
-
-				if (model != null)
+				if (list != null)
 				{
-					List<SchedulerEvent> list = model.getObject(); // calls load()
+					StringBuilder builder = new StringBuilder("[ ");
 
-					if (list != null)
+					int count = 0;
+					for (SchedulerEvent event : list)
 					{
-						StringBuilder builder = new StringBuilder("[ ");
-
-						int count = 0;
-						for (SchedulerEvent event : list)
+						if (SchedulerModelBehavior.this.model instanceof ISchedulerVisitor)
 						{
-							if (model instanceof ISchedulerVisitor)
-							{
-								event.accept((ISchedulerVisitor) model); // last chance to set options
-							}
-
-							if (event.isVisible())
-							{
-								if (count++ > 0)
-								{
-									builder.append(", ");
-								}
-
-								builder.append(event.toJson());
-							}
+							event.accept((ISchedulerVisitor) SchedulerModelBehavior.this.model); // last chance to set options
 						}
 
-						builder.append(" ]");
+						if (event.isVisible())
+						{
+							if (count++ > 0)
+							{
+								builder.append(", ");
+							}
 
-						response.write(builder);
+							builder.append(event.toJson());
+						}
 					}
+
+					response.write(builder.append(" ]"));
 				}
 			}
+		}
 
-			@Override
-			public void detach(final IRequestCycle requestCycle)
-			{
-				model.detach();
-			}
-		};
+		@Override
+		public void detach(final IRequestCycle requestCycle)
+		{
+			SchedulerModelBehavior.this.model.detach();
+		}
 	}
 }

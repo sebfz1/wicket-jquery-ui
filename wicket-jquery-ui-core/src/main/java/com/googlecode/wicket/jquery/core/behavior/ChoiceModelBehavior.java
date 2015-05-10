@@ -124,9 +124,7 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior implem
 					builder.append(" }");
 				}
 
-				builder.append("]");
-
-				response.write(builder);
+				response.write(builder.append("]"));
 			}
 		}
 

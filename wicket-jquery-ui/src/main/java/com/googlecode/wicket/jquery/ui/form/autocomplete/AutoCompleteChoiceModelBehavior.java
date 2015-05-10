@@ -92,9 +92,7 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 					builder.append(" }");
 				}
 
-				builder.append(" ]");
-
-				response.write(builder);
+				response.write(builder.append(" ]"));
 			}
 		}
 
