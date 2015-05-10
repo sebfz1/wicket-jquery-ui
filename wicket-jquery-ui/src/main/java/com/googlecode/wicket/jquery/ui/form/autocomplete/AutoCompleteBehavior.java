@@ -67,7 +67,8 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 	{
 		super.bind(component);
 
-		component.add(this.onSelectBehavior = this.newOnSelectBehavior());
+		this.onSelectBehavior = this.newOnSelectBehavior();
+		component.add(this.onSelectBehavior);
 	}
 
 	protected abstract CharSequence getChoiceCallbackUrl();

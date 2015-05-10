@@ -120,17 +120,20 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	{
 		super.bind(component);
 
-		component.add(this.onDropBehavior = this.newOnDropBehavior());
+		this.onDropBehavior = this.newOnDropBehavior();
+		component.add(this.onDropBehavior);
 
 		// these events are not enabled by default to prevent unnecessary server round-trips.
 		if (this.isDragEnterEventEnabled())
 		{
-			component.add(this.onDragEnterBehavior = this.newOnDragEnterBehavior());
+			this.onDragEnterBehavior = this.newOnDragEnterBehavior();
+			component.add(this.onDragEnterBehavior);
 		}
 
 		if (this.isDragLeaveEventEnabled())
 		{
-			component.add(this.onDragLeaveBehavior = this.newOnDragLeaveBehavior());
+			this.onDragLeaveBehavior = this.newOnDragLeaveBehavior();
+			component.add(this.onDragLeaveBehavior);
 		}
 	}
 

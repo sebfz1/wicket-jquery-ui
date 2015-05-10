@@ -69,7 +69,8 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	{
 		super.bind(component);
 
-		component.add(this.onSelectBehavior = this.newOnSelectBehavior());
+		this.onSelectBehavior = this.newOnSelectBehavior();
+		component.add(this.onSelectBehavior);
 	}
 
 	protected abstract CharSequence getChoiceCallbackUrl();

@@ -127,22 +127,26 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 
 		if (this.isSelectEventEnabled())
 		{
-			component.add(this.selectEventBehavior = this.newSelectEventBehavior());
+			this.selectEventBehavior = this.newSelectEventBehavior();
+			component.add(this.selectEventBehavior);
 		}
 
 		if (this.isActivateEventEnabled())
 		{
-			component.add(this.activateEventBehavior = this.newActivateEventBehavior());
+			this.activateEventBehavior = this.newActivateEventBehavior();
+			component.add(this.activateEventBehavior);
 		}
 
 		if (this.isExpandEventEnabled())
 		{
-			component.add(this.expandEventBehavior = this.newExpandEventBehavior());
+			this.expandEventBehavior = this.newExpandEventBehavior();
+			component.add(this.expandEventBehavior);
 		}
 
 		if (this.isCollapseEventEnabled())
 		{
-			component.add(this.collapseEventBehavior = this.newCollapseEventBehavior());
+			this.collapseEventBehavior = this.newCollapseEventBehavior();
+			component.add(this.collapseEventBehavior);
 		}
 	}
 

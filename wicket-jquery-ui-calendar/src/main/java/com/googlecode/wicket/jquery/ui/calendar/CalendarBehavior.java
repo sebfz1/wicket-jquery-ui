@@ -50,16 +50,26 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "fullCalendar";
 
-	private JQueryAjaxBehavior onSelectBehavior = null; // date range-select behavior;
+	/** date range-select behavior */
+	private JQueryAjaxBehavior onSelectBehavior = null;
 
-	private JQueryAjaxBehavior onDayClickBehavior; // day click
-	private JQueryAjaxBehavior onEventClickBehavior; // event click
-	private JQueryAjaxBehavior onEventDropBehavior = null; // event drop
-	private JQueryAjaxBehavior onEventResizeBehavior = null; // event resize
+	/** day click */
+	private JQueryAjaxBehavior onDayClickBehavior;
 
-	private JQueryAjaxBehavior onObjectDropBehavior = null; // event-object drop
+	/** event click */
+	private JQueryAjaxBehavior onEventClickBehavior;
 
-	private JQueryAjaxBehavior onViewRenderBehavior = null; // view render
+	/** event drop */
+	private JQueryAjaxBehavior onEventDropBehavior = null;
+
+	/** event resize */
+	private JQueryAjaxBehavior onEventResizeBehavior = null;
+
+	/** event-object drop */
+	private JQueryAjaxBehavior onObjectDropBehavior = null;
+
+	/** view render */
+	private JQueryAjaxBehavior onViewRenderBehavior = null;
 
 	/**
 	 * Constructor
@@ -111,7 +121,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	// Methods //
-	
+
 	@Override
 	public void bind(Component component)
 	{
@@ -119,37 +129,44 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 
 		if (this.isSelectable())
 		{
-			component.add(this.onSelectBehavior = this.newOnSelectBehavior());
+			this.onSelectBehavior = this.newOnSelectBehavior();
+			component.add(this.onSelectBehavior);
 		}
 
 		if (this.isDayClickEnabled())
 		{
-			component.add(this.onDayClickBehavior = this.newOnDayClickBehavior());
+			this.onDayClickBehavior = this.newOnDayClickBehavior();
+			component.add(this.onDayClickBehavior);
 		}
 
 		if (this.isEventClickEnabled())
 		{
-			component.add(this.onEventClickBehavior = this.newOnEventClickBehavior());
+			this.onEventClickBehavior = this.newOnEventClickBehavior();
+			component.add(this.onEventClickBehavior);
 		}
 
 		if (this.isEventDropEnabled())
 		{
-			component.add(this.onEventDropBehavior = this.newOnEventDropBehavior());
+			this.onEventDropBehavior = this.newOnEventDropBehavior();
+			component.add(this.onEventDropBehavior);
 		}
 
 		if (this.isEventResizeEnabled())
 		{
-			component.add(this.onEventResizeBehavior = this.newOnEventResizeBehavior());
+			this.onEventResizeBehavior = this.newOnEventResizeBehavior();
+			component.add(this.onEventResizeBehavior);
 		}
 
 		if (this.isObjectDropEnabled())
 		{
-			component.add(this.onObjectDropBehavior = this.newOnObjectDropBehavior());
+			this.onObjectDropBehavior = this.newOnObjectDropBehavior();
+			component.add(this.onObjectDropBehavior);
 		}
 
 		if (this.isViewRenderEnabled())
 		{
-			component.add(this.onViewRenderBehavior = this.newOnViewRenderBehavior());
+			this.onViewRenderBehavior = this.newOnViewRenderBehavior();
+			component.add(this.onViewRenderBehavior);
 		}
 	}
 
@@ -173,7 +190,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	// Properties //
-	
+
 	/**
 	 * Indicates whether the Calendar will be editable
 	 *
@@ -185,7 +202,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	}
 
 	// Events //
-	
+
 	@Override
 	public void onConfigure(Component component)
 	{
@@ -462,8 +479,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			{
 				// http://fullcalendar.io/docs/event_ui/eventResize/
 				// function(event, delta, revertFunc, jsEvent, ui, view) { }
-				return new CallbackParameter[] { 
-						CallbackParameter.context("event"), // lf
+				return new CallbackParameter[] { CallbackParameter.context("event"), // lf
 						CallbackParameter.context("delta"), // lf
 						CallbackParameter.context("revertFunc"), // lf
 						CallbackParameter.context("jsEvent"), // lf
@@ -560,7 +576,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		public SelectEvent()
 		{
 			this.isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
-			
+
 			String start = RequestCycleUtils.getQueryParameterValue("startDate").toString();
 			this.start = this.isAllDay ? LocalDate.parse(start).atStartOfDay() : LocalDateTime.parse(start);
 
@@ -626,7 +642,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		public DayClickEvent()
 		{
 			this.isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
-			
+
 			String date = RequestCycleUtils.getQueryParameterValue("date").toString();
 			this.day = this.isAllDay ? LocalDate.parse(date).atStartOfDay() : LocalDateTime.parse(date);
 
@@ -843,7 +859,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		public ObjectDropEvent()
 		{
 			this.isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
-			
+
 			String date = RequestCycleUtils.getQueryParameterValue("date").toString();
 			this.day = this.isAllDay ? LocalDate.parse(date).atStartOfDay() : LocalDateTime.parse(date);
 

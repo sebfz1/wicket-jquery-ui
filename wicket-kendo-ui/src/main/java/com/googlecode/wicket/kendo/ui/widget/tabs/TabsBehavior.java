@@ -114,17 +114,20 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 
 		if (this.isSelectEventEnabled())
 		{
-			component.add(this.selectEventBehavior = this.newSelectEventBehavior());
+			this.selectEventBehavior = this.newSelectEventBehavior();
+			component.add(this.selectEventBehavior);
 		}
 
 		if (this.isShowEventEnabled())
 		{
-			component.add(this.showEventBehavior = this.newShowEventBehavior());
+			this.showEventBehavior = this.newShowEventBehavior();
+			component.add(this.showEventBehavior);
 		}
 
 		if (this.isActivateEventEnabled())
 		{
-			component.add(this.activateEventBehavior = this.newActivateEventBehavior());
+			this.activateEventBehavior = this.newActivateEventBehavior();
+			component.add(this.activateEventBehavior);
 		}
 	}
 

@@ -100,18 +100,21 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 			throw new WicketRuntimeException("Behavior is already bound to another component.");
 		}
 
+		this.component = component; // warning, not thread-safe: the instance of this behavior should only be used once
+
 		if (this.selector == null)
 		{
-			this.selector = JQueryWidget.getSelector(component);
+			this.selector = JQueryWidget.getSelector(this.component);
 		}
 
-		this.component = component; // warning, not thread-safe: the instance of this behavior should only be used once
-		this.component.add(this.onDragStartBehavior = this.newOnDragStartBehavior());
+		this.onDragStartBehavior = this.newOnDragStartBehavior();
+		this.component.add(this.onDragStartBehavior);
 
 		// this event is not enabled by default to prevent unnecessary server round-trips.
 		if (this.isStopEventEnabled())
 		{
-			this.component.add(this.onDragStopBehavior = this.newOnDragStopBehavior());
+			this.onDragStopBehavior = this.newOnDragStopBehavior();
+			this.component.add(this.onDragStopBehavior);
 		}
 	}
 

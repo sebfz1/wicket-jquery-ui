@@ -95,16 +95,19 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	{
 		super.bind(component);
 
-		component.add(this.onUpdateBehavior = this.newOnUpdateBehavior());
+		this.onUpdateBehavior = this.newOnUpdateBehavior();
+		component.add(this.onUpdateBehavior);
 
 		if (this.isOnReceiveEnabled())
 		{
-			component.add(this.onReceiveBehavior = this.newOnReceiveBehavior());
+			this.onReceiveBehavior = this.newOnReceiveBehavior();
+			component.add(this.onReceiveBehavior);
 		}
 
 		if (this.isOnRemoveEnabled())
 		{
-			component.add(this.onRemoveBehavior = this.newOnRemoveBehavior());
+			this.onRemoveBehavior = this.newOnRemoveBehavior();
+			component.add(this.onRemoveBehavior);
 		}
 	}
 

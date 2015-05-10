@@ -71,12 +71,14 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 
 		if (this.isActionEventEnabled())
 		{
-			component.add(this.onActionBehavior = this.newActionBehavior());
+			this.onActionBehavior = this.newActionBehavior();
+			component.add(this.onActionBehavior);
 		}
 
 		if (this.isCloseEventEnabled())
 		{
-			component.add(this.onCloseBehavior = this.newCloseBehavior());
+			this.onCloseBehavior = this.newCloseBehavior();
+			component.add(this.onCloseBehavior);
 		}
 	}
 

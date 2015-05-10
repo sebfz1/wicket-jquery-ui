@@ -78,17 +78,20 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	{
 		super.bind(component);
 
-		component.add(this.onDropBehavior = this.newOnDropBehavior());
+		this.onDropBehavior = this.newOnDropBehavior();
+		component.add(this.onDropBehavior);
 
 		// these events are not enabled by default to prevent unnecessary server round-trips.
 		if (this.isOverEventEnabled())
 		{
-			component.add(this.onOverBehavior = this.newOnOverBehavior());
+			this.onOverBehavior = this.newOnOverBehavior();
+			component.add(this.onOverBehavior);
 		}
 
 		if (this.isExitEventEnabled())
 		{
-			component.add(this.onExitBehavior = this.newOnExitBehavior());
+			this.onExitBehavior = this.newOnExitBehavior();
+			component.add(this.onExitBehavior);
 		}
 	}
 

@@ -108,17 +108,20 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 
 		if (this.isCreateEventEnabled())
 		{
-			component.add(this.createEventBehavior = this.newActivateEventBehavior());
+			this.createEventBehavior = this.newActivateEventBehavior();
+			component.add(this.createEventBehavior);
 		}
 
 		if (this.isActivateEventEnabled())
 		{
-			component.add(this.activateEventBehavior = this.newActivateEventBehavior());
+			this.activateEventBehavior = this.newActivateEventBehavior();
+			component.add(this.activateEventBehavior);
 		}
 
 		if (this.isActivatingEventEnabled())
 		{
-			component.add(this.activatingEventBehavior = this.newActivatingEventBehavior());
+			this.activatingEventBehavior = this.newActivatingEventBehavior();
+			component.add(this.activatingEventBehavior);
 		}
 	}
 

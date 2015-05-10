@@ -199,7 +199,8 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 		{
 			super.bind(component);
 
-			component.add(this.onChangeBehavior = new JQueryAjaxChangeBehavior(this, (FormComponent<?>) component));
+			this.onChangeBehavior = new JQueryAjaxChangeBehavior(this, (FormComponent<?>) component);
+			component.add(this.onChangeBehavior);
 		}
 
 		@Override

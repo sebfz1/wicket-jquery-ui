@@ -86,12 +86,14 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 
 		if (this.isDefaultCloseEventEnabled())
 		{
-			component.add(this.onDefaultClose = this.newDefaultCloseBehavior());
+			this.onDefaultClose = this.newDefaultCloseBehavior();
+			component.add(this.onDefaultClose);
 		}
 
 		if (this.isEscapeCloseEventEnabled())
 		{
-			component.add(this.onEscapeClose = this.newEscapeCloseBehavior());
+			this.onEscapeClose = this.newEscapeCloseBehavior();
+			component.add(this.onEscapeClose);
 		}
 	}
 

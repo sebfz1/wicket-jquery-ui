@@ -68,7 +68,8 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 
 		if (this.isOnSelectEventEnabled())
 		{
-			component.add(this.onSelectBehavior = this.newOnSelectBehavior());
+			this.onSelectBehavior = this.newOnSelectBehavior();
+			component.add(this.onSelectBehavior);
 		}
 	}
 

@@ -80,7 +80,8 @@ public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAj
 	{
 		super.bind(component);
 
-		component.add(this.onSelectBehavior = this.newOnSelectBehavior());
+		this.onSelectBehavior = this.newOnSelectBehavior();
+		component.add(this.onSelectBehavior);
 	}
 
 	// Events //

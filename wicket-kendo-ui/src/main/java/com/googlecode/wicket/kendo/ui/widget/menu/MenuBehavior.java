@@ -102,7 +102,8 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 	{
 		super.bind(component);
 
-		component.add(this.onSelectBehavior = this.newOnSelectBehavior());
+		this.onSelectBehavior = this.newOnSelectBehavior();
+		component.add(this.onSelectBehavior);
 	}
 
 	// Events //

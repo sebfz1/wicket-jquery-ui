@@ -67,8 +67,11 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	{
 		super.bind(component);
 
-		component.add(this.onExpandBehavior = this.newExpandBehavior());
-		component.add(this.onCollapseBehavior = this.newCollapseBehavior());
+		this.onExpandBehavior = this.newExpandBehavior();
+		component.add(this.onExpandBehavior);
+		
+		this.onCollapseBehavior = this.newCollapseBehavior();
+		component.add(this.onCollapseBehavior);
 	}
 
 	/**

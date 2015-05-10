@@ -107,12 +107,14 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 
 		if (this.isCreateEventEnabled())
 		{
-			component.add(this.createEventBehavior = this.newActivateEventBehavior());
+			this.createEventBehavior = this.newActivateEventBehavior();
+			component.add(this.createEventBehavior);
 		}
 
 		if (this.isActivateEventEnabled())
 		{
-			component.add(this.activateEventBehavior = this.newActivateEventBehavior());
+			this.activateEventBehavior = this.newActivateEventBehavior();
+			component.add(this.activateEventBehavior);
 		}
 	}
 

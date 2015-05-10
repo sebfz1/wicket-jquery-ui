@@ -89,7 +89,8 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	{
 		super.bind(component);
 
-		component.add(this.onStopBehavior = this.newOnStopBehavior());
+		this.onStopBehavior = this.newOnStopBehavior();
+		component.add(this.onStopBehavior);
 	}
 
 	// Events //

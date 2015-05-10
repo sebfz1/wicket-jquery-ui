@@ -95,14 +95,21 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		// events //
 		if (this.isEditEnabled())
 		{
-			component.add(this.onEditBehavior = this.newOnEditBehavior());
+			this.onEditBehavior = this.newOnEditBehavior();
+			component.add(this.onEditBehavior);
 		}
 
-		component.add(this.onNavigateBehavior = this.newOnNavigateBehavior());
+		this.onNavigateBehavior = this.newOnNavigateBehavior();
+		component.add(this.onNavigateBehavior);
 
-		component.add(this.onCreateBehavior = this.newOnCreateBehavior());
-		component.add(this.onUpdateBehavior = this.newOnUpdateBehavior());
-		component.add(this.onDeleteBehavior = this.newOnDeleteBehavior());
+		this.onCreateBehavior = this.newOnCreateBehavior();
+		component.add(this.onCreateBehavior);
+
+		this.onUpdateBehavior = this.newOnUpdateBehavior();
+		component.add(this.onUpdateBehavior);
+
+		this.onDeleteBehavior = this.newOnDeleteBehavior();
+		component.add(this.onDeleteBehavior);
 	}
 
 	@Override

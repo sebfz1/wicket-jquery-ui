@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.kendo.ui.scheduler;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.Application;
@@ -60,8 +59,8 @@ public class SchedulerModelBehavior extends AbstractAjaxBehavior
 
 		if (this.model != null)
 		{
-			this.setStartDate(this.model, new Date(start));
-			this.setEndDate(this.model, new Date(end));
+			this.setStartDate(this.model, start);
+			this.setEndDate(this.model, end);
 		}
 
 		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler());
@@ -72,9 +71,9 @@ public class SchedulerModelBehavior extends AbstractAjaxBehavior
 	 * This can be overridden to perform additional operation on date before the assignment.
 	 *
 	 * @param model the {@link SchedulerModel}
-	 * @param date the {@link Date}
+	 * @param date the timestamp
 	 */
-	protected void setStartDate(SchedulerModel model, Date date)
+	protected void setStartDate(SchedulerModel model, long date)
 	{
 		model.setStart(date);
 	}
@@ -84,9 +83,9 @@ public class SchedulerModelBehavior extends AbstractAjaxBehavior
 	 * This can be overridden to perform additional operation on date before the assignment.
 	 *
 	 * @param model the {@link SchedulerModel}
-	 * @param date the {@link Date}
+	 * @param date the timestamp
 	 */
-	protected void setEndDate(SchedulerModel model, Date date)
+	protected void setEndDate(SchedulerModel model, long date)
 	{
 		model.setEnd(date);
 	}

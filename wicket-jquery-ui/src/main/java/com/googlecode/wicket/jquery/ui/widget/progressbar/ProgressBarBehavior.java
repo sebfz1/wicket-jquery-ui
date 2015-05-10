@@ -20,7 +20,6 @@ import org.apache.wicket.Component;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
-import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxChangeBehavior;
@@ -37,7 +36,7 @@ public abstract class ProgressBarBehavior extends JQueryUIBehavior implements IJ
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "progressbar";
 
-	private JQueryAjaxBehavior onChangeBehavior = null;
+	private JQueryAjaxPostBehavior onChangeBehavior = null;
 
 	/**
 	 * Constructor
@@ -67,7 +66,8 @@ public abstract class ProgressBarBehavior extends JQueryUIBehavior implements IJ
 	{
 		super.bind(component);
 
-		component.add(this.onChangeBehavior = this.newOnChangeBehavior());
+		this.onChangeBehavior = this.newOnChangeBehavior();
+		component.add(this.onChangeBehavior);
 	}
 
 	// Events //
@@ -86,7 +86,7 @@ public abstract class ProgressBarBehavior extends JQueryUIBehavior implements IJ
 	/**
 	 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript event
 	 *
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return the {@link JQueryAjaxPostBehavior}
 	 */
 	protected JQueryAjaxPostBehavior newOnChangeBehavior()
 	{

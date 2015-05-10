@@ -258,7 +258,8 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 			if (component instanceof FormComponent<?>)
 			{
-				component.add(this.onChangeBehavior = this.newOnChangeBehavior((FormComponent<?>) component));
+				this.onChangeBehavior = this.newOnChangeBehavior((FormComponent<?>) component);
+				component.add(this.onChangeBehavior);
 			}
 			else
 			{

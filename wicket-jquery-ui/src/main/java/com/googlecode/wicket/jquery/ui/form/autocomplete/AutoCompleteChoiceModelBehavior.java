@@ -95,6 +95,7 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 			@Override
 			public void detach(final IRequestCycle requestCycle)
 			{
+				// noop
 			}
 		};
 	}

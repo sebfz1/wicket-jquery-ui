@@ -79,7 +79,8 @@ public class MyJQueryLabel extends Label implements IJQueryWidget, IMyJQueryList
 		{
 			super.bind(component);
 
-			component.add(this.onMyEventBehavior = this.newJQueryAjaxBehavior());
+			this.onMyEventBehavior = this.newJQueryAjaxBehavior();
+			component.add(this.onMyEventBehavior);
 		}
 
 		// Events //

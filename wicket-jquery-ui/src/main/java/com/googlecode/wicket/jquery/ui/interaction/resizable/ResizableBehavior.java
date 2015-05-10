@@ -68,12 +68,14 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 		// these events are not enabled by default to prevent unnecessary server round-trips.
 		if (this.isResizeStartEventEnabled())
 		{
-			component.add(this.onResizeStartBehavior = this.newOnResizeStartBehavior());
+			this.onResizeStartBehavior = this.newOnResizeStartBehavior();
+			component.add(this.onResizeStartBehavior);
 		}
 
 		if (this.isResizeStopEventEnabled())
 		{
-			component.add(this.onResizeStopBehavior = this.newOnResizeStopBehavior());
+			this.onResizeStopBehavior = this.newOnResizeStopBehavior();
+			component.add(this.onResizeStopBehavior);
 		}
 	}
 
