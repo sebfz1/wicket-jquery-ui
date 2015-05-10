@@ -116,6 +116,10 @@ public abstract class LocalTextField<T> extends TextField<T> implements ITextFor
 		}
 	}
 
+	/**
+	 * TODO javadoc
+	 * @return
+	 */
 	protected abstract String getMethod();
 
 	// Events //

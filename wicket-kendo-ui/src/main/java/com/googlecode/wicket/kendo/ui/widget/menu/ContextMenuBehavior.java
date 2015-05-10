@@ -108,7 +108,7 @@ public abstract class ContextMenuBehavior extends MenuBehavior implements IConte
 	// Ajax class //
 
 	/**
-	 * Provides a default {@link JQueryAjaxBehavior} implementation for {@link ContextMenuBehavior#newOnOpenAjaxBehavior(IJQueryAjaxAware)}
+	 * Default {@link JQueryAjaxBehavior} implementation for {@link ContextMenuBehavior#newOnOpenAjaxBehavior(IJQueryAjaxAware)}
 	 */
 	// TODO: introduce OnXxxAjaxBehavior classes everywhere
 	public static class OnOpenAjaxBehavior extends JQueryAjaxBehavior
