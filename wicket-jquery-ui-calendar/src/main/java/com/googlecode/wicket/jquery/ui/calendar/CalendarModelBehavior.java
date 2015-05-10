@@ -98,51 +98,59 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 	 */
 	protected IRequestHandler newRequestHandler()
 	{
-		return new IRequestHandler() {
-			@Override
-			public void respond(final IRequestCycle requestCycle)
+		return new RequestHandler();
+	}
+	
+	// Classes //
+
+	/**
+	 * Provides the {@link IRequestHandler}
+	 */
+	protected class RequestHandler implements IRequestHandler
+	{
+		@Override
+		public void respond(final IRequestCycle requestCycle)
+		{
+			WebResponse response = (WebResponse) requestCycle.getResponse();
+
+			final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
+			response.setContentType("text/json; charset=" + encoding);
+			response.disableCaching();
+
+			if (CalendarModelBehavior.this.model != null)
 			{
-				WebResponse response = (WebResponse) requestCycle.getResponse();
+				List<? extends CalendarEvent> list = CalendarModelBehavior.this.model.getObject(); // calls load()
 
-				final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
-				response.setContentType("text/json; charset=" + encoding);
-				response.disableCaching();
-
-				if (model != null)
+				if (list != null)
 				{
-					List<? extends CalendarEvent> list = model.getObject(); // calls load()
+					StringBuilder builder = new StringBuilder("[ ");
 
-					if (list != null)
+					int count = 0;
+					for (CalendarEvent event : list)
 					{
-						StringBuilder builder = new StringBuilder("[ ");
-
-						int count = 0;
-						for (CalendarEvent event : list)
+						if (CalendarModelBehavior.this.model instanceof ICalendarVisitor)
 						{
-							if (model instanceof ICalendarVisitor)
-							{
-								event.accept((ICalendarVisitor) model); // last chance to set options
-							}
-
-							if (count++ > 0)
-							{
-								builder.append(", ");
-							}
-							builder.append(event.toString());
+							event.accept((ICalendarVisitor) CalendarModelBehavior.this.model); // last chance to set options
 						}
 
-						builder.append(" ]");
-
-						response.write(builder);
+						if (count++ > 0)
+						{
+							builder.append(", ");
+						}
+						builder.append(event.toString());
 					}
+
+					builder.append(" ]");
+
+					response.write(builder);
 				}
 			}
+		}
 
-			@Override
-			public void detach(final IRequestCycle requestCycle)
-			{
-				// noop
-			}
-		};
+		@Override
+		public void detach(final IRequestCycle requestCycle)
+		{
+			// noop
+		}
 	}
 }
