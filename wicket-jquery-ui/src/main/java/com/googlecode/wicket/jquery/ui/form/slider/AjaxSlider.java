@@ -148,9 +148,9 @@ public class AjaxSlider extends Slider implements IJQueryAjaxAware, IValueChange
 			}
 
 			@Override
-			protected JQueryAjaxPostBehavior newOnChangeBehavior()
+			protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
 			{
-				return new JQueryAjaxChangeBehavior(this, AjaxSlider.this.input);
+				return new JQueryAjaxChangeBehavior(source, AjaxSlider.this.input);
 			}
 		};
 	}

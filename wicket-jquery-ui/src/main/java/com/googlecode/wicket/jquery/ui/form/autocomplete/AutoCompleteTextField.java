@@ -231,7 +231,8 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 		if (this.template != null)
 		{
-			this.add(this.templateBehavior = new JQueryTemplateBehavior(this.template));
+			this.templateBehavior = new JQueryTemplateBehavior(this.template);
+			this.add(this.templateBehavior);
 		}
 	}
 

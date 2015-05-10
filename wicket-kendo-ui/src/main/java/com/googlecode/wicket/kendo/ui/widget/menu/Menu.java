@@ -154,7 +154,8 @@ public class Menu extends JQueryPanel implements IMenuListener
 	{
 		super.onInitialize();
 
-		this.add(this.widgetBehavior = JQueryWidget.newWidgetBehavior(this, this.root));
+		this.widgetBehavior = JQueryWidget.newWidgetBehavior(this, this.root);
+		this.add(this.widgetBehavior);
 	}
 
 	@Override

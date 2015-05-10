@@ -149,9 +149,9 @@ public class AjaxRangeSlider extends RangeSlider implements IJQueryAjaxAware, IV
 			}
 
 			@Override
-			protected JQueryAjaxPostBehavior newOnChangeBehavior()
+			protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
 			{
-				return new JQueryAjaxChangeBehavior(this, AjaxRangeSlider.this.lower, AjaxRangeSlider.this.upper);
+				return new JQueryAjaxChangeBehavior(source, AjaxRangeSlider.this.lower, AjaxRangeSlider.this.upper);
 			}
 		};
 	}

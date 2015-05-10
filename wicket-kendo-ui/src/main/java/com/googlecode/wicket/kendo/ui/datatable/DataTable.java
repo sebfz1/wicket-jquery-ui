@@ -201,7 +201,9 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	{
 		super.onInitialize();
 
-		this.add(this.sourceBehavior = this.newDataSourceBehavior(this.columns, this.provider));
+		this.sourceBehavior = this.newDataSourceBehavior(this.columns, this.provider);
+		this.add(this.sourceBehavior);
+		
 		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 

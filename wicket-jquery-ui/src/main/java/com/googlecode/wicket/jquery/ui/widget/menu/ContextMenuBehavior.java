@@ -48,7 +48,7 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	private final ContextMenu menu;
 	private Component component = null;
 
-	private JQueryAjaxBehavior onContextMenuEventBehavior;
+	private JQueryAjaxBehavior onContextMenuEventAjaxBehavior;
 
 	/**
 	 * Constructor
@@ -76,13 +76,15 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 
 		this.component = component;
 		this.component.add(AttributeModifier.append("class", INVOKER_CSS_CLASS));
-		this.component.add(this.onContextMenuEventBehavior = this.newOnContextMenuBehavior());
+
+		this.onContextMenuEventAjaxBehavior = this.newOnContextMenuBehavior();
+		this.component.add(this.onContextMenuEventAjaxBehavior);
 	}
 
 	@Override
 	protected String $()
 	{
-		return String.format("jQuery('%s').on('contextmenu', %s);", JQueryWidget.getSelector(this.component), this.onContextMenuEventBehavior.getCallbackFunction());
+		return String.format("jQuery('%s').on('contextmenu', %s);", JQueryWidget.getSelector(this.component), this.onContextMenuEventAjaxBehavior.getCallbackFunction());
 	}
 
 	// Events //
