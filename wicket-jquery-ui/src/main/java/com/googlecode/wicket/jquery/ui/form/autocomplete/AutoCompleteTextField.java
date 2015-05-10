@@ -225,7 +225,8 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	{
 		super.onInitialize();
 
-		this.add(this.choiceModelBehavior = this.newChoiceModelBehavior());
+		this.choiceModelBehavior = this.newChoiceModelBehavior();
+		this.add(this.choiceModelBehavior);
 
 		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 
