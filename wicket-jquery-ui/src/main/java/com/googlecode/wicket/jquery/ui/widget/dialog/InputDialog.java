@@ -97,18 +97,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 		this.add(this.form);
 
 		this.form.add(new Label("label", this.label));
-		this.form.add(new TextField<T>("input", this.getModel()) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onConfigure()
-			{
-				super.onConfigure();
-
-				this.setRequired(InputDialog.this.isRequired());
-			}
-		});
+		this.form.add(this.newTextField("input", this.getModel()).setRequired(this.isRequired()));
 
 		FeedbackPanel feedback = new JQueryFeedbackPanel("feedback", this.form.get("input"));
 		this.form.add(feedback);
@@ -209,5 +198,17 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 				return false;
 			}
 		};
+	}
+
+	/**
+	 * Gets a new {@link TextField}
+	 * 
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @return the new {@link TextField}
+	 */
+	protected TextField<T> newTextField(String id, IModel<T> model)
+	{
+		return new TextField<T>(id, model);
 	}
 }

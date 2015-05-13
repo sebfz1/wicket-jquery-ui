@@ -103,30 +103,6 @@ public abstract class InputWindow<T> extends Window<T>
 		this.form.add(new Label("label", label));
 	}
 
-	// Properties //
-
-	/**
-	 * Gets the inner {@link Form}
-	 *
-	 * @return the form
-	 */
-	@Override
-	public Form<?> getForm()
-	{
-		return this.form;
-	}
-
-	/**
-	 * Indicates whether the {@link TextField}'s value is required
-	 *
-	 * @return true by default
-	 */
-	protected boolean isRequired()
-	{
-		// XXX: changed InputButton#isRequired to true by default because it makes more sense - SILENT API BREAK
-		return true;
-	}
-
 	// Events //
 
 	@Override
@@ -135,7 +111,7 @@ public abstract class InputWindow<T> extends Window<T>
 		super.onInitialize();
 
 		// field //
-		this.form.add(new TextField<T>("input", this.getModel()).setRequired(this.isRequired()));
+		this.form.add(this.newTextField("input", this.getModel()).setRequired(this.isRequired()));
 
 		// buttons //
 		this.form.add(this.newButtonPanel("buttons", this.getButtons()));
@@ -188,6 +164,30 @@ public abstract class InputWindow<T> extends Window<T>
 		// noop
 	}
 
+	// Properties //
+
+	/**
+	 * Gets the inner {@link Form}
+	 *
+	 * @return the form
+	 */
+	@Override
+	public Form<?> getForm()
+	{
+		return this.form;
+	}
+
+	/**
+	 * Indicates whether the {@link TextField}'s value is required
+	 *
+	 * @return true by default
+	 */
+	protected boolean isRequired()
+	{
+		// XXX: changed InputButton#isRequired to true by default because it makes more sense - SILENT API BREAK
+		return true;
+	}
+
 	// Factories //
 
 	/**
@@ -208,5 +208,17 @@ public abstract class InputWindow<T> extends Window<T>
 				return false;
 			}
 		};
+	}
+
+	/**
+	 * Gets a new {@link TextField}
+	 * 
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @return the new {@link TextField}
+	 */
+	protected TextField<T> newTextField(String id, IModel<T> model)
+	{
+		return new TextField<T>(id, model);
 	}
 }
