@@ -126,9 +126,9 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 					}
 
 					@Override
-					protected JQueryAjaxPostBehavior newOnChangeBehavior(FormComponent<?> component)
+					protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source, FormComponent<?> component)
 					{
-						return new OnChangeBehavior(this, AjaxDateTimePicker.this.datePicker, AjaxDateTimePicker.this.timePicker);
+						return new OnChangeAjaxBehavior(source, AjaxDateTimePicker.this.datePicker, AjaxDateTimePicker.this.timePicker);
 					}
 				};
 			}
@@ -156,9 +156,9 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 					}
 
 					@Override
-					protected JQueryAjaxPostBehavior newOnChangeBehavior(FormComponent<?> component)
+					protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source, FormComponent<?> component)
 					{
-						return new OnChangeBehavior(this, AjaxDateTimePicker.this.datePicker, AjaxDateTimePicker.this.timePicker);
+						return new OnChangeAjaxBehavior(source, AjaxDateTimePicker.this.datePicker, AjaxDateTimePicker.this.timePicker);
 					}
 				};
 			}

@@ -16,9 +16,11 @@
  */
 package com.googlecode.wicket.kendo.ui.widget.window;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
@@ -41,6 +43,7 @@ public abstract class InputWindow<T> extends Window<T>
 	private final KendoFeedbackPanel feedback;
 
 	private final Form<?> form;
+	private IModel<String> labelModel;
 
 	/**
 	 * Constructor
@@ -91,6 +94,8 @@ public abstract class InputWindow<T> extends Window<T>
 	{
 		super(id, title, model, WindowButtons.OK_CANCEL);
 
+		this.labelModel = label;
+
 		// form //
 		this.form = InputWindow.newForm("form");
 		this.add(this.form);
@@ -98,9 +103,6 @@ public abstract class InputWindow<T> extends Window<T>
 		// feedback //
 		this.feedback = new KendoFeedbackPanel("feedback");
 		this.form.add(this.feedback);
-
-		// label //
-		this.form.add(new Label("label", label));
 	}
 
 	// Events //
@@ -109,6 +111,9 @@ public abstract class InputWindow<T> extends Window<T>
 	protected void onInitialize()
 	{
 		super.onInitialize();
+
+		// label //
+		this.form.add(this.newLabel("label", this.labelModel));
 
 		// field //
 		this.form.add(this.newTextField("input", this.getModel()).setRequired(this.isRequired()));
@@ -164,6 +169,14 @@ public abstract class InputWindow<T> extends Window<T>
 		// noop
 	}
 
+	@Override
+	protected void onDetach()
+	{
+		super.onDetach();
+
+		this.labelModel.detach();
+	}
+
 	// Properties //
 
 	/**
@@ -211,13 +224,27 @@ public abstract class InputWindow<T> extends Window<T>
 	}
 
 	/**
-	 * Gets a new {@link TextField}
-	 * 
-	 * @param id the markup id
-	 * @param model the {@link IModel}
-	 * @return the new {@link TextField}
+	 * Gets a new {@link Component} that will be used as a label in the window.<br/>
+	 * Override this method when you need to show formatted label.
+	 *
+	 * @param id the markup-id
+	 * @param model the label {@link IModel}
+	 * @return the new label component.
 	 */
-	protected TextField<T> newTextField(String id, IModel<T> model)
+	protected Component newLabel(String id, IModel<String> model)
+	{
+		return new Label(id, model);
+	}
+
+	/**
+	 * Gets a new {@link FormComponent} that will be used as an input.<br/>
+	 * Override this method when you need to use a {@code IValidator} or different input type, e.g. {@code NumberTextField} or {@code PasswordField}.
+	 * 
+	 * @param id the markup-id
+	 * @param model the {@link IModel}
+	 * @return the new {@link FormComponent}
+	 */
+	protected FormComponent<T> newTextField(String id, IModel<T> model)
 	{
 		return new TextField<T>(id, model);
 	}

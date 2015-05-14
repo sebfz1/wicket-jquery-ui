@@ -226,7 +226,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 	{
 		private static final long serialVersionUID = 1L;
 
-		private JQueryAjaxBehavior onChangeBehavior = null;
+		private JQueryAjaxBehavior onChangeAjaxBehavior = null;
 
 		/**
 		 * Constructor
@@ -257,8 +257,8 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 
 			if (component instanceof FormComponent<?>)
 			{
-				this.onChangeBehavior = this.newOnChangeBehavior((FormComponent<?>) component);
-				component.add(this.onChangeBehavior);
+				this.onChangeAjaxBehavior = this.newOnChangeAjaxBehavior(this, (FormComponent<?>) component);
+				component.add(this.onChangeAjaxBehavior);
 			}
 			else
 			{
@@ -272,9 +272,9 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 		{
 			super.onConfigure(component);
 
-			if (this.onChangeBehavior != null)
+			if (this.onChangeAjaxBehavior != null)
 			{
-				this.setOption("change", this.onChangeBehavior.getCallbackFunction());
+				this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
 			}
 		}
 
@@ -282,12 +282,13 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 		/**
 		 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript method
 		 *
+		 * @param source the {@link IJQueryAjaxAware}
 		 * @param component the bound {@link Component}
-		 * @return the {@link JQueryAjaxPostBehavior}, typically a {@link OnChangeBehavior}
+		 * @return the {@link JQueryAjaxPostBehavior}, typically a {@link OnChangeAjaxBehavior}
 		 */
-		protected JQueryAjaxPostBehavior newOnChangeBehavior(FormComponent<?> component)
+		protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source, FormComponent<?> component)
 		{
-			return new OnChangeBehavior(this, component);
+			return new OnChangeAjaxBehavior(source, component);
 		}
 	}
 }

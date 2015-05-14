@@ -36,7 +36,7 @@ public abstract class ProgressBarBehavior extends JQueryUIBehavior implements IJ
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "progressbar";
 
-	private JQueryAjaxPostBehavior onChangeBehavior = null;
+	private JQueryAjaxPostBehavior onChangeAjaxBehavior = null;
 
 	/**
 	 * Constructor
@@ -66,8 +66,8 @@ public abstract class ProgressBarBehavior extends JQueryUIBehavior implements IJ
 	{
 		super.bind(component);
 
-		this.onChangeBehavior = this.newOnChangeBehavior();
-		component.add(this.onChangeBehavior);
+		this.onChangeAjaxBehavior = this.newOnChangeAjaxBehavior(this);
+		component.add(this.onChangeAjaxBehavior);
 	}
 
 	// Events //
@@ -78,7 +78,7 @@ public abstract class ProgressBarBehavior extends JQueryUIBehavior implements IJ
 		super.onConfigure(component);
 
 		this.setOption("value", component.getDefaultModelObjectAsString()); // initial value
-		this.setOption("change", this.onChangeBehavior.getCallbackFunction());
+		this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
 	}
 
 	// Factories //
@@ -86,10 +86,11 @@ public abstract class ProgressBarBehavior extends JQueryUIBehavior implements IJ
 	/**
 	 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript event
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxPostBehavior}
 	 */
-	protected JQueryAjaxPostBehavior newOnChangeBehavior()
+	protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxChangeBehavior(this);
+		return new JQueryAjaxChangeBehavior(source);
 	}
 }

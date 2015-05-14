@@ -38,7 +38,7 @@ public class DateUtils
 	 * 
 	 * @return the current UTC date
 	 */
-	public static long now()
+	public static long utc()
 	{
 		return DateUtils.utc(new Date());
 	}

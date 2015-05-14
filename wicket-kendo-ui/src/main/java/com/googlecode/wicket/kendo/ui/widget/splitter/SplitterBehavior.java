@@ -38,8 +38,8 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoSplitter";
 
-	private JQueryAjaxBehavior onExpandBehavior;
-	private JQueryAjaxBehavior onCollapseBehavior;
+	private JQueryAjaxBehavior onExpandAjaxBehavior;
+	private JQueryAjaxBehavior onCollapseAjaxBehavior;
 
 	/**
 	 * Constructor
@@ -67,11 +67,11 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	{
 		super.bind(component);
 
-		this.onExpandBehavior = this.newExpandBehavior();
-		component.add(this.onExpandBehavior);
+		this.onExpandAjaxBehavior = this.newOnExpandAjaxBehavior(this);
+		component.add(this.onExpandAjaxBehavior);
 		
-		this.onCollapseBehavior = this.newCollapseBehavior();
-		component.add(this.onCollapseBehavior);
+		this.onCollapseAjaxBehavior = this.newOnCollapseAjaxBehavior(this);
+		component.add(this.onCollapseAjaxBehavior);
 	}
 
 	/**
@@ -119,8 +119,8 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	{
 		super.onConfigure(component);
 
-		this.setOption("expand", this.onExpandBehavior.getCallbackFunction());
-		this.setOption("collapse", this.onCollapseBehavior.getCallbackFunction());
+		this.setOption("expand", this.onExpandAjaxBehavior.getCallbackFunction());
+		this.setOption("collapse", this.onCollapseAjaxBehavior.getCallbackFunction());
 	}
 
 	@Override
@@ -154,11 +154,12 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'expand' callback
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newExpandBehavior()
+	protected JQueryAjaxBehavior newOnExpandAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -181,11 +182,12 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'collapse' callback
 	 *
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newCollapseBehavior()
+	protected JQueryAjaxBehavior newOnCollapseAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 

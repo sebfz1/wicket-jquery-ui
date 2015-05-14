@@ -29,7 +29,7 @@ import org.apache.wicket.util.lang.Args;
 
 /**
  * Provides a modal dialog box that displays a specific message, with a predefined icon and a predefined button set.<br/>
- * <b>Note: </b> {@link MessageDialog} & {@link MessageFormDialog} are sharing the same code, they just does not extend the same class.
+ * <b>Note: </b> {@link MessageDialog} & {@link MessageFormDialog} are sharing the same code, they just do not extend the same class.
  *
  * @author Sebastien Briquet - sebfz1
  */
@@ -153,7 +153,7 @@ public abstract class MessageDialog extends AbstractDialog<String>
 
 		container.add(AttributeModifier.append("class", icon.getStyle()));
 		container.add(new EmptyPanel("icon").add(AttributeModifier.replace("class", icon)));
-
+		// TODO add #newLabel, see MessageWindow
 		this.label = new Label("message", this.getModel());
 		container.add(this.label.setOutputMarkupId(true));
 	}

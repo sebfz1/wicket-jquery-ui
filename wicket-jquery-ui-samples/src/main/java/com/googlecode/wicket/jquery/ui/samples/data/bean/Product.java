@@ -28,7 +28,7 @@ public class Product implements IClusterable
 		this.id = id;
 		this.name = name;
 		this.desc = description;
-		this.date = DateUtils.now();
+		this.date = DateUtils.utc();
 		this.price = price;
 		this.vendor = vendor;
 	}

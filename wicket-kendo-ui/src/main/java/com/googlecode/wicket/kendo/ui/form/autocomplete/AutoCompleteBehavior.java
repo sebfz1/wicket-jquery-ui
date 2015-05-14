@@ -39,7 +39,7 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoAutoComplete";
 
-	private JQueryAjaxBehavior onSelectBehavior = null;
+	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
 
 	/**
 	 * Constructor
@@ -69,8 +69,8 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	{
 		super.bind(component);
 
-		this.onSelectBehavior = this.newOnSelectBehavior();
-		component.add(this.onSelectBehavior);
+		this.onSelectAjaxBehavior = this.newOnSelectAjaxBehavior(this);
+		component.add(this.onSelectAjaxBehavior);
 	}
 
 	protected abstract CharSequence getChoiceCallbackUrl();
@@ -85,7 +85,7 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 		this.setOption("autoBind", true); // immutable
 		this.setOption("serverFiltering", true);
 		this.setOption("dataSource", this.newDataSource());
-		this.setOption("select", this.onSelectBehavior.getCallbackFunction());
+		this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
 	}
 
 	// IJQueryAjaxAware //
@@ -104,7 +104,7 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	/**
 	 * Gets a new DataSource
 	 * 
-	 * @return the new DataSource 
+	 * @return the new DataSource
 	 */
 	protected String newDataSource()
 	{
@@ -113,12 +113,14 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'select' javascript method
-	 *
+	 * 
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnSelectBehavior()
+	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(this) {
+		// TODO OnSelectAjaxBehavior inner class
+		return new JQueryAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 

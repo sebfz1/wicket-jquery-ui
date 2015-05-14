@@ -71,10 +71,11 @@ public abstract class AjaxSliderBehavior extends SliderBehavior implements IJQue
 	}
 
 	// Factories //
+
 	/**
 	 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript event
-	 * @param ajaxSliderBehavior 
-	 *
+	 * 
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxPostBehavior}
 	 */
 	protected abstract JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source);

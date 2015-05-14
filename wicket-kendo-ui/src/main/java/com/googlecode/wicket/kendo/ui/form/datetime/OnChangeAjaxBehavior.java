@@ -26,13 +26,14 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.form.datetime.AjaxDatePicker.DatePickerBehavior;
 
 /**
- * Provides a {@link JQueryAjaxPostBehavior} that can be returned by {@link DatePickerBehavior#newOnChangeBehavior(FormComponent)}
+ * Provides a {@link JQueryAjaxPostBehavior} that can be returned by {@link DatePickerBehavior#newOnChangeAjaxBehavior(IJQueryAjaxAware, FormComponent)}
  */
-public class OnChangeBehavior extends JQueryAjaxPostBehavior
+// XXX renamed to OnChangeBehavior OnChangeAjaxBehavior
+public class OnChangeAjaxBehavior extends JQueryAjaxPostBehavior
 {
 	private static final long serialVersionUID = 1L;
 
-	public OnChangeBehavior(final IJQueryAjaxAware source, final FormComponent<?>... components)
+	public OnChangeAjaxBehavior(final IJQueryAjaxAware source, final FormComponent<?>... components)
 	{
 		super(source, components);
 	}

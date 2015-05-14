@@ -303,15 +303,15 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 			// Factories //
 
 			@Override
-			protected JQueryAjaxBehavior newToolbarAjaxBehavior()
+			protected JQueryAjaxBehavior newToolbarClickAjaxBehavior(IJQueryAjaxAware source)
 			{
-				return DataTable.this.newToolbarAjaxBehavior(this);
+				return DataTable.this.newToolbarAjaxBehavior(source);
 			}
 
 			@Override
-			protected JQueryAjaxBehavior newButtonAjaxBehavior(ColumnButton button)
+			protected JQueryAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
 			{
-				return DataTable.this.newColumnAjaxBehavior(this, button);
+				return DataTable.this.newColumnAjaxBehavior(source, button);
 			}
 		};
 	}

@@ -29,7 +29,10 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 
 	private static List<Book> newBookList()
 	{
-		return Arrays.asList(new Book("Wicket In Action", 25.64f, "book1.png"), new Book("Pro Wicket", 31.59f, "book2.png"), new Book("Wicket (German)", 29.21f, "book3.png"), new Book("Wicket (Japanese)", 30.22f, "book4.png"));
+		return Arrays.asList(new Book("Wicket In Action", 25.64f, "book1.png"), // lf
+				new Book("Pro Wicket", 31.59f, "book2.png"), // lf
+				new Book("Wicket (German)", 29.21f, "book3.png"), // lf
+				new Book("Wicket (Japanese)", 30.22f, "book4.png"));
 	}
 
 	private final List<Book> books;

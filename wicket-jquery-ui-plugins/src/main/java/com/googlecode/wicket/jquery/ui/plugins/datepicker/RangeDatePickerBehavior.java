@@ -90,6 +90,7 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'change' javascript callback
 	 * 
+	 * @param source the {@link IJQueryAjaxAware}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	private JQueryAjaxBehavior newOnRangeChangeAjaxBehavior(IJQueryAjaxAware source)
@@ -101,7 +102,7 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 
 	/**
 	 * Default {@link JQueryAjaxBehavior} implementation for {@link RangeDatePickerBehavior#newOnRangeChangeAjaxBehavior(IJQueryAjaxAware)}
-	 */	
+	 */
 	protected static class OnRangeChangeAjaxBehavior extends JQueryAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
