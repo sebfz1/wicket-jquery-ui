@@ -378,7 +378,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	{
 		private static final long serialVersionUID = 1L;
 
-		protected OnSelectAjaxBehavior(IJQueryAjaxAware source)
+		public OnSelectAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
 		}
@@ -411,7 +411,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	{
 		private static final long serialVersionUID = 1L;
 
-		protected OnDayClickAjaxBehavior(IJQueryAjaxAware source)
+		public OnDayClickAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
 		}
@@ -443,7 +443,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	{
 		private static final long serialVersionUID = 1L;
 
-		protected OnEventClickAjaxBehavior(IJQueryAjaxAware source)
+		public OnEventClickAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
 		}
@@ -477,7 +477,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 
 		private final CharSequence precondition;
 
-		protected OnEventDropAjaxBehavior(IJQueryAjaxAware source, CharSequence precondition)
+		public OnEventDropAjaxBehavior(IJQueryAjaxAware source, CharSequence precondition)
 		{
 			super(source);
 
@@ -531,7 +531,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 
 		private final CharSequence precondition;
 
-		protected OnEventResizeAjaxBehavior(IJQueryAjaxAware source, CharSequence precondition)
+		public OnEventResizeAjaxBehavior(IJQueryAjaxAware source, CharSequence precondition)
 		{
 			super(source);
 
@@ -583,7 +583,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	{
 		private static final long serialVersionUID = 1L;
 
-		protected OnObjectDropAjaxBehavior(IJQueryAjaxAware source)
+		public OnObjectDropAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
 		}
@@ -615,7 +615,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	{
 		private static final long serialVersionUID = 1L;
 
-		private OnViewRenderAjaxBehavior(IJQueryAjaxAware source)
+		public OnViewRenderAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
 		}

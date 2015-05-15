@@ -114,9 +114,9 @@ public class SchedulerModelBehavior extends AbstractAjaxBehavior
 			response.setContentType("text/json; charset=" + encoding);
 			response.disableCaching();
 
-			if (SchedulerModelBehavior.this.model != null)
+			if (model != null)
 			{
-				List<SchedulerEvent> list = SchedulerModelBehavior.this.model.getObject(); // calls load()
+				List<SchedulerEvent> list = model.getObject(); // calls load()
 
 				if (list != null)
 				{
@@ -125,9 +125,9 @@ public class SchedulerModelBehavior extends AbstractAjaxBehavior
 					int count = 0;
 					for (SchedulerEvent event : list)
 					{
-						if (SchedulerModelBehavior.this.model instanceof ISchedulerVisitor)
+						if (model instanceof ISchedulerVisitor)
 						{
-							event.accept((ISchedulerVisitor) SchedulerModelBehavior.this.model); // last chance to set options
+							event.accept((ISchedulerVisitor) model); // last chance to set options
 						}
 
 						if (event.isVisible())
@@ -149,7 +149,7 @@ public class SchedulerModelBehavior extends AbstractAjaxBehavior
 		@Override
 		public void detach(final IRequestCycle requestCycle)
 		{
-			SchedulerModelBehavior.this.model.detach();
+			model.detach();
 		}
 	}
 }

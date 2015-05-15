@@ -33,7 +33,7 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.form.datetime.OnChangeAjaxBehavior;
+import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
 
 /**
  * Provides a Kendo UI date-picker based on a {@link DatePicker}<br/>

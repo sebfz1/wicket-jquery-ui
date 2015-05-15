@@ -22,7 +22,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
-import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxChangeBehavior;
+import com.googlecode.wicket.jquery.ui.ajax.OnChangeAjaxBehavior;
 
 /**
  * Provides a jQuery progress-bar behavior.
@@ -91,6 +91,6 @@ public abstract class ProgressBarBehavior extends JQueryUIBehavior implements IJ
 	 */
 	protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxChangeBehavior(source);
+		return new OnChangeAjaxBehavior(source);
 	}
 }

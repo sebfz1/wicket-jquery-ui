@@ -107,7 +107,7 @@ public abstract class RangeDatePickerBehavior extends JQueryBehavior implements 
 	{
 		private static final long serialVersionUID = 1L;
 
-		protected OnRangeChangeAjaxBehavior(IJQueryAjaxAware source)
+		public OnRangeChangeAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
 		}

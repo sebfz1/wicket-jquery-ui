@@ -117,9 +117,9 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 			response.setContentType("text/json; charset=" + encoding);
 			response.disableCaching();
 
-			if (CalendarModelBehavior.this.model != null)
+			if (model != null)
 			{
-				List<? extends CalendarEvent> list = CalendarModelBehavior.this.model.getObject(); // calls load()
+				List<? extends CalendarEvent> list = model.getObject(); // calls load()
 
 				if (list != null)
 				{
@@ -128,9 +128,9 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 					int count = 0;
 					for (CalendarEvent event : list)
 					{
-						if (CalendarModelBehavior.this.model instanceof ICalendarVisitor)
+						if (model instanceof ICalendarVisitor)
 						{
-							event.accept((ICalendarVisitor) CalendarModelBehavior.this.model); // last chance to set options
+							event.accept((ICalendarVisitor) model); // last chance to set options
 						}
 
 						if (count++ > 0)
@@ -149,7 +149,7 @@ public class CalendarModelBehavior extends AbstractAjaxBehavior
 		@Override
 		public void detach(final IRequestCycle requestCycle)
 		{
-			CalendarModelBehavior.this.model.detach();
+			model.detach();
 		}
 	}
 }

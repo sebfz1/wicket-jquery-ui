@@ -14,25 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.form.datetime;
+package com.googlecode.wicket.kendo.ui.ajax;
 
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.form.FormComponent;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
-import com.googlecode.wicket.kendo.ui.form.datetime.AjaxDatePicker.DatePickerBehavior;
 
 /**
- * Provides a {@link JQueryAjaxPostBehavior} that can be returned by {@link DatePickerBehavior#newOnChangeAjaxBehavior(IJQueryAjaxAware, FormComponent)}
+ * Provides a new {@link JQueryAjaxPostBehavior} that is designed to be called on 'change' jQuery event<br/>
+ * It will broadcast a {@link ChangeEvent} (by default)
  */
-// XXX renamed to OnChangeBehavior OnChangeAjaxBehavior
 public class OnChangeAjaxBehavior extends JQueryAjaxPostBehavior
 {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Constructor
+	 *
+	 * @param source the {@link Behavior} that will broadcast the event.
+	 * @param components the form components to post
+	 */
 	public OnChangeAjaxBehavior(final IJQueryAjaxAware source, final FormComponent<?>... components)
 	{
 		super(source, components);
@@ -42,7 +48,9 @@ public class OnChangeAjaxBehavior extends JQueryAjaxPostBehavior
 	protected CallbackParameter[] getCallbackParameters()
 	{
 		// function() { ... }
-		return new CallbackParameter[] { CallbackParameter.resolved("value", "this.value()") };
+		return new CallbackParameter[] { // lf
+				CallbackParameter.context("e"), // lf
+				CallbackParameter.resolved("value", "this.value()") };
 	}
 
 	@Override
@@ -52,21 +60,22 @@ public class OnChangeAjaxBehavior extends JQueryAjaxPostBehavior
 	}
 
 	// Event classes //
+
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxPostBehavior} select callback
 	 */
-	protected static class ChangeEvent extends JQueryEvent
+	public static class ChangeEvent extends JQueryEvent
 	{
-		private final String date;
+		private final String value;
 
 		public ChangeEvent()
 		{
-			this.date = RequestCycleUtils.getPostParameterValue("value").toString();
+			this.value = RequestCycleUtils.getPostParameterValue("value").toString();
 		}
 
-		public String getDateText()
+		public String getValue()
 		{
-			return this.date;
+			return this.value;
 		}
 	}
 }

@@ -113,12 +113,12 @@ public abstract class ChoiceModelBehavior<T> extends AbstractAjaxBehavior implem
 					}
 
 					builder.append("{ ");
-					builder.append(RendererUtils.getJsonBody(choice, ChoiceModelBehavior.this.renderer));
+					builder.append(RendererUtils.getJsonBody(choice, renderer));
 
 					for (String property : ChoiceModelBehavior.this.getProperties())
 					{
 						builder.append(", ");
-						builder.append(RendererUtils.getJsonBody(choice, ChoiceModelBehavior.this.renderer, property));
+						builder.append(RendererUtils.getJsonBody(choice, renderer, property));
 					}
 
 					builder.append(" }");
