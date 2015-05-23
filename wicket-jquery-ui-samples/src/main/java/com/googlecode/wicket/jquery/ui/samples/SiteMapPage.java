@@ -99,6 +99,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.kendo.scheduler.SingleResou
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter.BorderLayoutPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter.DefaultSplitterPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.tabs.KendoTabsPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.kendo.tooltip.DefaultKendoTooltipPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.window.ActionWindowPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.window.DefaultWindowPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.window.InputWindowPage;
@@ -206,6 +207,7 @@ public class SiteMapPage extends WebPage
 			DefaultDroppablePage.class,
 			DefaultEditorPage.class,
 			DefaultEffectPage.class,
+			DefaultKendoTooltipPage.class,
 			DefaultMenuPage.class,
 			DefaultMultiSelectPage.class,
 			DefaultNotificationPage.class,
