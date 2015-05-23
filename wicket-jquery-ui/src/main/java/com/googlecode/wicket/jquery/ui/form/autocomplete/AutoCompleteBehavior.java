@@ -105,26 +105,39 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
-		// TODO OnSelectAjaxBehavior inner class
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("index", "ui.item.id") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new SelectEvent();
-			}
-		};
+		return new OnSelectAjaxBehavior(source);
 	}
 
-	// Event classes //
+	// Ajax classes //
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnSelectAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("index", "ui.item.id") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new SelectEvent();
+		}
+	}
+
+	// Event objects //
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} select callback

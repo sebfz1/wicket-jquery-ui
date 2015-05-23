@@ -140,24 +140,35 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
+		return new OnSelectAjaxBehavior(source);
+	}
 
-			private static final long serialVersionUID = 1L;
+	// Ajax classes //
 
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { // lf
-						CallbackParameter.context("e"), // lf
-						CallbackParameter.resolved("hash", "e.item.id") };
-			}
+	/**
+	 * TODO javadoc
+	 */
+	protected  static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
 
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new SelectEvent();
-			}
-		};
+		public OnSelectAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("hash", "e.item.id") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new SelectEvent();
+		}
 	}
 
 	// Event objects //

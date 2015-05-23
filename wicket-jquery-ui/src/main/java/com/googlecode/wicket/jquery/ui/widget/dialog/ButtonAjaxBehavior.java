@@ -59,7 +59,7 @@ public class ButtonAjaxBehavior extends JQueryAjaxBehavior
 	}
 
 
-	// Event class //
+	// Event objects //
 	/**
 	 * Provides a dialog event that will be transmitted to the {@link AbstractDialog}
 	 */

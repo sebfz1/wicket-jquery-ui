@@ -639,7 +639,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		}
 	}
 
-	// Event classes //
+	// Event objects //
 
 	/**
 	 * An event object that will be broadcasted when the user select a cell range

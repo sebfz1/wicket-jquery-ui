@@ -119,26 +119,39 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
-		// TODO OnSelectAjaxBehavior inner class
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("index", "e.item.index()"), CallbackParameter.resolved("value", "e.item.text") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new SelectEvent();
-			}
-		};
+		return new OnSelectAjaxBehavior(source);
 	}
 
-	// Event classes //
+	// Ajax classes //
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnSelectAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("index", "e.item.index()"), // lf
+					CallbackParameter.resolved("value", "e.item.text") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new SelectEvent();
+		}
+	}
+
+	// Event objects //
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} select callback

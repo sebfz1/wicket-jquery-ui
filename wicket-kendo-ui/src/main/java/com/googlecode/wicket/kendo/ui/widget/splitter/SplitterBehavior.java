@@ -43,6 +43,7 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 
 	/**
 	 * Constructor
+	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public SplitterBehavior(String selector)
@@ -52,6 +53,7 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 
 	/**
 	 * Constructor
+	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
@@ -69,7 +71,7 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 
 		this.onExpandAjaxBehavior = this.newOnExpandAjaxBehavior(this);
 		component.add(this.onExpandAjaxBehavior);
-		
+
 		this.onCollapseAjaxBehavior = this.newOnCollapseAjaxBehavior(this);
 		component.add(this.onCollapseAjaxBehavior);
 	}
@@ -149,8 +151,8 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 		// noop
 	}
 
-
 	// Factories //
+
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'expand' callback
 	 *
@@ -159,24 +161,7 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	 */
 	protected JQueryAjaxBehavior newOnExpandAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("e"),
-						CallbackParameter.resolved("id", "e.pane.id") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ExpandEvent();
-			}
-		};
+		return new OnExpandAjaxBehavior(source);
 	}
 
 	/**
@@ -187,27 +172,64 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	 */
 	protected JQueryAjaxBehavior newOnCollapseAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("e"),
-						CallbackParameter.resolved("id", "e.pane.id") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new CollapseEvent();
-			}
-		};
+		return new OnCollapseAjaxBehavior(source);
 	}
 
-	// Events classes //
+	// Ajax classes //
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnExpandAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnExpandAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("id", "e.pane.id") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ExpandEvent();
+		}
+	}
+
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnCollapseAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnCollapseAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("id", "e.pane.id") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new CollapseEvent();
+		}
+	}
+
+	// Event objects //
 
 	/**
 	 * An event object that will be broadcasted when a panes expands

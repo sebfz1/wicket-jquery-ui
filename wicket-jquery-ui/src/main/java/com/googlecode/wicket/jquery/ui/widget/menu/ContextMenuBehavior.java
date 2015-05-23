@@ -108,35 +108,47 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	 */
 	private JQueryAjaxBehavior newOnContextMenuAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("event") };
-			}
-
-			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
-			{
-				String callback = String.valueOf(super.getCallbackFunctionBody(parameters));
-				String bodyHide = String.format("jQuery('.%s').each( function() { jQuery(this).hide(); } );", ContextMenu.CONTEXTMENU_CSS_CLASS); // hide all menus
-				String bodyStop = "return false;"; // stop event propagation
-
-				return String.format("%s %s %s", bodyHide, callback, bodyStop);
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ContextMenuEvent();
-			}
-		};
+		return new OnContextMenuAjaxBehavior(source);
 	}
 
-	// Event class //
+	// Ajax classes //
+
+	/**
+	 * TODO javadoc
+	 */
+	public static class OnContextMenuAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnContextMenuAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event") };
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			String callback = String.valueOf(super.getCallbackFunctionBody(parameters));
+			String bodyHide = String.format("jQuery('.%s').each( function() { jQuery(this).hide(); } );", ContextMenu.CONTEXTMENU_CSS_CLASS); // hide all menus
+			String bodyStop = "return false;"; // stop event propagation
+
+			return String.format("%s %s %s", bodyHide, callback, bodyStop);
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ContextMenuEvent();
+		}
+	}
+
+	// Event objects //
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'contextmenu' callback

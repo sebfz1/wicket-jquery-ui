@@ -117,7 +117,7 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 
 		this.onDragStartAjaxBehavior = this.newOnDragStartAjaxBehavior(this);
 		this.component.add(this.onDragStartAjaxBehavior);
-		
+
 		this.onDragStopAjaxBehavior = this.newOnDragStopAjaxBehavior(this);
 		this.component.add(this.onDragStopAjaxBehavior);
 
@@ -212,32 +212,7 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected JQueryAjaxBehavior newOnDragStartAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-						CallbackParameter.resolved("top", "e.sender.hintOffset.top | 0"), // cast to int, no rounding
-						CallbackParameter.resolved("left", "e.sender.hintOffset.left | 0") // cast to int, no rounding
-				};
-			}
-
-			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
-			{
-				String statement = "this.element.addClass('" + CSS_HIDE + "');";
-				return statement + super.getCallbackFunctionBody(parameters);
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new DragStartEvent();
-			}
-		};
+		return new OnDragStartAjaxBehavior(source);
 	}
 
 	/**
@@ -248,32 +223,7 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected JQueryAjaxBehavior newOnDragStopAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-						CallbackParameter.resolved("top", "e.sender.hintOffset.top | 0"), // cast to int, no rounding
-						CallbackParameter.resolved("left", "e.sender.hintOffset.left | 0") // cast to int, no rounding
-				};
-			}
-
-			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
-			{
-				String statement = "this.element.removeClass('" + CSS_HIDE + "');";
-				return statement + super.getCallbackFunctionBody(parameters);
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new DragStopEvent();
-			}
-		};
+		return new OnDragStopAjaxBehavior(source);
 	}
 
 	/**
@@ -284,35 +234,117 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected JQueryAjaxBehavior newOnDragCancelAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-						CallbackParameter.resolved("top", "e.sender.hintOffset.top | 0"), // cast to int, no rounding
-						CallbackParameter.resolved("left", "e.sender.hintOffset.left | 0") // cast to int, no rounding
-				};
-			}
-
-			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
-			{
-				String statement = "this.element.removeClass('" + CSS_HIDE + "');";
-				return statement + super.getCallbackFunctionBody(parameters);
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new DragCancelEvent();
-			}
-		};
+		return new OnDragCancelAjaxBehavior(source);
 	}
 
-	// Events classes //
+	// Ajax classes //
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnDragStartAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnDragStartAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("top", "e.sender.hintOffset.top | 0"), // cast to int, no rounding
+					CallbackParameter.resolved("left", "e.sender.hintOffset.left | 0") // cast to int, no rounding
+			};
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			String statement = "this.element.addClass('" + CSS_HIDE + "');";
+			return statement + super.getCallbackFunctionBody(parameters);
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new DragStartEvent();
+		}
+	}
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnDragStopAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnDragStopAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("top", "e.sender.hintOffset.top | 0"), // cast to int, no rounding
+					CallbackParameter.resolved("left", "e.sender.hintOffset.left | 0") // cast to int, no rounding
+			};
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			String statement = "this.element.removeClass('" + CSS_HIDE + "');";
+			return statement + super.getCallbackFunctionBody(parameters);
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new DragStopEvent();
+		}
+	}
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnDragCancelAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnDragCancelAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("top", "e.sender.hintOffset.top | 0"), // cast to int, no rounding
+					CallbackParameter.resolved("left", "e.sender.hintOffset.left | 0") // cast to int, no rounding
+			};
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			String statement = "this.element.removeClass('" + CSS_HIDE + "');";
+			return statement + super.getCallbackFunctionBody(parameters);
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new DragCancelEvent();
+		}
+	}
+
+	// Event objects //
 
 	/**
 	 * Provides a base class for draggable event object

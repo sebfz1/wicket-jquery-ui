@@ -143,22 +143,7 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	 */
 	protected JQueryAjaxBehavior newOnDropAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new DropEvent();
-			}
-		};
+		return new OnDropAjaxBehavior(source);
 	}
 
 	/**
@@ -169,22 +154,7 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	 */
 	protected JQueryAjaxBehavior newOnOverAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new OverEvent();
-			}
-		};
+		return new OnOverAjaxBehavior(source);
 	}
 
 	/**
@@ -195,25 +165,87 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	 */
 	protected JQueryAjaxBehavior newOnExitAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ExitEvent();
-			}
-		};
+		return new OnExitAjaxBehavior(source);
 	}
 
-	// Event classes //
+	// Ajax classes //
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnDropAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnDropAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new DropEvent();
+		}
+	}
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnOverAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnOverAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new OverEvent();
+		}
+	}
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnExitAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnExitAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ExitEvent();
+		}
+	}
+
+	// Event objects //
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'drop' callback

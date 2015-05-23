@@ -206,26 +206,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	 */
 	protected JQueryAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { // lf
-						CallbackParameter.context("event"), // lf
-						CallbackParameter.context("ui"), // lf
-						CallbackParameter.resolved("hash", "ui.item.data('hash')"), // lf
-						CallbackParameter.resolved("index", "ui.item.index()") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new UpdateEvent();
-			}
-		};
+		return new OnUpdateAjaxBehavior(source);
 	}
 
 	/**
@@ -236,26 +217,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	 */
 	protected JQueryAjaxBehavior newOnReceiveAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { // lf
-						CallbackParameter.context("event"), // lf
-						CallbackParameter.context("ui"), // lf
-						CallbackParameter.resolved("hash", "ui.item.data('hash')"), // lf
-						CallbackParameter.resolved("index", "ui.item.index()") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ReceiveEvent();
-			}
-		};
+		return new OnReceiveAjaxBehavior(source);
 	}
 
 	/**
@@ -266,28 +228,95 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	 */
 	protected JQueryAjaxBehavior newOnRemoveAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { // lf
-						CallbackParameter.context("event"), // lf
-						CallbackParameter.context("ui"), // lf
-						CallbackParameter.resolved("hash", "ui.item.data('hash')") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new RemoveEvent();
-			}
-		};
+		return new OnRemoveAjaxBehavior(source);
 	}
 
-	// Event Objects //
+	// Ajax classes //
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnUpdateAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnUpdateAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("hash", "ui.item.data('hash')"), // lf
+					CallbackParameter.resolved("index", "ui.item.index()") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new UpdateEvent();
+		}
+	}
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnReceiveAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnReceiveAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("hash", "ui.item.data('hash')"), // lf
+					CallbackParameter.resolved("index", "ui.item.index()") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ReceiveEvent();
+		}
+	}
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnRemoveAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnRemoveAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("hash", "ui.item.data('hash')") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new RemoveEvent();
+		}
+	}
+
+	// Event objects //
 
 	/**
 	 * A base event object for sortable

@@ -198,26 +198,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	 */
 	protected JQueryAjaxBehavior newOnActivateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"),
-						CallbackParameter.context("ui"),
-						CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')")
-				};
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ActivateEvent();
-			}
-		};
+		return new OnActivateAjaxBehavior(source);
 	}
 
 	/**
@@ -228,26 +209,63 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	 */
 	protected JQueryAjaxBehavior newOnActivatingAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
+		return new OnActivatingAjaxBehavior(source);
+	}
 
-			private static final long serialVersionUID = 1L;
+	// Ajax classes //
 
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"),
-						CallbackParameter.context("ui"),
-						CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')"),
-				};
-			}
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnActivateAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
 
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ActivatingEvent();
-			}
-		};
+		public OnActivateAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ActivateEvent();
+		}
+	}
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnActivatingAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnActivatingAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')"), };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ActivatingEvent();
+		}
 	}
 
 	// Event objects //

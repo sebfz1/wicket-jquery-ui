@@ -185,8 +185,7 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 
 	// Factories //
 	/**
-	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.<br/>
-	 * This method may be overridden to provide additional behaviors
+	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.
 	 *
 	 * @param source the {@link IJQueryAjaxAware} source
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
@@ -202,22 +201,7 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	 */
 	protected JQueryAjaxBehavior newOnDefaultCloseAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public String getCallbackFunction()
-			{
-				return "function(event, ui) { if (event.button == 0) { " + this.getCallbackScript() + " } }";
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new CloseEvent();
-			}
-		};
+		return new OnDefaultCloseAjaxBehavior(source);
 	}
 
 	/**
@@ -228,25 +212,63 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	 */
 	protected JQueryAjaxBehavior newOnEscapeCloseAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public String getCallbackFunction()
-			{
-				return "function(event, ui) { if (event.keyCode == $.ui.keyCode.ESCAPE) { " + this.getCallbackScript() + " } }";
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new CloseEvent();
-			}
-		};
+		return new OnEscapeCloseAjaxBehavior(source);
 	}
 
-	// Event class //
+	// Ajax class //
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnDefaultCloseAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnDefaultCloseAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		public String getCallbackFunction()
+		{
+			return "function(event, ui) { if (event.button == 0) { " + this.getCallbackScript() + " } }";
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new CloseEvent();
+		}
+	}
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnEscapeCloseAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnEscapeCloseAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		public String getCallbackFunction()
+		{
+			return "function(event, ui) { if (event.keyCode == $.ui.keyCode.ESCAPE) { " + this.getCallbackScript() + " } }";
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new CloseEvent();
+		}
+	}
+
+	// Event objects //
+
 	/**
 	 * An event object that will be broadcasted when the user clicks on the X-icon
 	 */

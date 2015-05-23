@@ -254,22 +254,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("index", "jQuery(e.item).index()") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new SelectEvent();
-			}
-		};
+		return new OnSelectAjaxBehavior(source);
 	}
 
 	/**
@@ -280,22 +265,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected JQueryAjaxBehavior newOnActivateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("index", "jQuery(e.item).index()") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ActivateEvent();
-			}
-		};
+		return new OnActivateAjaxBehavior(source);
 	}
 
 	/**
@@ -306,22 +276,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected JQueryAjaxBehavior newOnExpandAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("index", "jQuery(e.item).index()") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ExpandEvent();
-			}
-		};
+		return new OnExpandAjaxBehavior(source);
 	}
 
 	/**
@@ -332,22 +287,113 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected JQueryAjaxBehavior newOnCollapseAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
+		return new OnCollapseAjaxBehavior(source);
+	}
 
-			private static final long serialVersionUID = 1L;
+	// Ajax classes //
 
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("index", "jQuery(e.item).index()") };
-			}
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
 
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new CollapseEvent();
-			}
-		};
+		public OnSelectAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("index", "jQuery(e.item).index()") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new SelectEvent();
+		}
+	}
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnActivateAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnActivateAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("index", "jQuery(e.item).index()") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ActivateEvent();
+		}
+	}
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnExpandAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnExpandAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("index", "jQuery(e.item).index()") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ExpandEvent();
+		}
+	}
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnCollapseAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnCollapseAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("index", "jQuery(e.item).index()") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new CollapseEvent();
+		}
 	}
 
 	// Event objects //

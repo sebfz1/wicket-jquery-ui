@@ -119,24 +119,38 @@ public abstract class MenuBehavior extends JQueryUIBehavior implements IJQueryAj
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), CallbackParameter.resolved("hash", "ui.item.context.id") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new SelectEvent();
-			}
-		};
+		return new OnSelectAjaxBehavior(source);
 	}
 
+	// Ajax classes //
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnSelectAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("hash", "ui.item.context.id") }; // lf
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new SelectEvent();
+		}
+	}
+
+	// TODO rename 'Event classes' by 'Event objects' everywhere
 	// Event objects //
 
 	/**

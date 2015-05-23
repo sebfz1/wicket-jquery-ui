@@ -175,12 +175,12 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		this.setOption("autoBind", true);
 
 		// events //
+		this.setOption("navigate", this.onNavigateAjaxBehavior.getCallbackFunction());
+
 		if (this.onEditAjaxBehavior != null)
 		{
 			this.setOption("edit", this.onEditAjaxBehavior.getCallbackFunction());
 		}
-
-		this.setOption("navigate", this.onNavigateAjaxBehavior.getCallbackFunction());
 
 		// data-source //
 		this.setOption("dataSource", this.dataSource.getName());
@@ -234,65 +234,6 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	// Factories //
 
 	/**
-	 * Gets the ajax behavior that will be triggered when when an event is edited
-	 *
-	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
-	 */
-	protected JQueryAjaxBehavior newOnEditAjaxBehavior(IJQueryAjaxAware source)
-	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				List<CallbackParameter> parameters = new ArrayList<CallbackParameter>();
-
-				parameters.add(CallbackParameter.context("e"));
-
-				// event //
-				parameters.add(CallbackParameter.resolved("id", "e.event.id")); // retrieved
-				parameters.add(CallbackParameter.resolved("title", "e.event.title")); // retrieved
-				parameters.add(CallbackParameter.resolved("description", "e.event.description")); // retrieved
-
-				parameters.add(CallbackParameter.resolved("start", "e.event.start.getTime()")); // retrieved
-				parameters.add(CallbackParameter.resolved("end", "e.event.end.getTime()")); // retrieved
-				parameters.add(CallbackParameter.resolved("isAllDay", "e.event.isAllDay")); // retrieved
-
-				// recurrence //
-				parameters.add(CallbackParameter.resolved("recurrenceId", "e.event.recurrenceId")); // retrieved
-				parameters.add(CallbackParameter.resolved("recurrenceRule", "e.event.recurrenceRule")); // retrieved
-				parameters.add(CallbackParameter.resolved("recurrenceException", "e.event.recurrenceException")); // retrieved
-
-				// resources //
-				for (String field : SchedulerBehavior.this.getResourceListModel().getFields())
-				{
-					parameters.add(CallbackParameter.resolved(field, String.format("jQuery.makeArray(e.event.%s)", field))); // retrieved
-				}
-
-				parameters.add(CallbackParameter.resolved("view", "e.sender.view().name")); // retrieved
-
-				// view //
-				return parameters.toArray(new CallbackParameter[] {});
-			}
-
-			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... extraParameters)
-			{
-				return super.getCallbackFunctionBody(extraParameters) + " e.preventDefault();"; // avoid propagation of KendoUIs edit-event on client-side
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new EditEvent(SchedulerBehavior.this.getResourceListModel());
-			}
-		};
-	}
-
-	/**
 	 * Gets the ajax behavior that will be triggered when is navigating in the scheduler
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
@@ -300,20 +241,25 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	 */
 	protected JQueryAjaxBehavior newOnNavigateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
+		return new OnNavigateAjaxBehavior(source);
+	}
+
+	/**
+	 * Gets the ajax behavior that will be triggered when when an event is edited
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	protected JQueryAjaxBehavior newOnEditAjaxBehavior(IJQueryAjaxAware source)
+	{
+		return new OnEditAjaxBehavior(source) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("view", "e.sender.view().name") };
-			}
-
-			@Override
 			protected JQueryEvent newEvent()
 			{
-				return new NavigateEvent();
+				return new EditEvent(SchedulerBehavior.this.getResourceListModel());
 			}
 		};
 	}
@@ -378,12 +324,90 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		};
 	}
 
-	// Event classes //
+	// Ajax classes //
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnNavigateAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnNavigateAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("view", "e.sender.view().name") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new NavigateEvent();
+		}
+	}
+
+	/**
+	 * TODO javadoc
+	 */
+	protected abstract class OnEditAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnEditAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			List<CallbackParameter> parameters = new ArrayList<CallbackParameter>();
+
+			parameters.add(CallbackParameter.context("e"));
+
+			// event //
+			parameters.add(CallbackParameter.resolved("id", "e.event.id")); // retrieved
+			parameters.add(CallbackParameter.resolved("title", "e.event.title")); // retrieved
+			parameters.add(CallbackParameter.resolved("description", "e.event.description")); // retrieved
+
+			parameters.add(CallbackParameter.resolved("start", "e.event.start.getTime()")); // retrieved
+			parameters.add(CallbackParameter.resolved("end", "e.event.end.getTime()")); // retrieved
+			parameters.add(CallbackParameter.resolved("isAllDay", "e.event.isAllDay")); // retrieved
+
+			// recurrence //
+			parameters.add(CallbackParameter.resolved("recurrenceId", "e.event.recurrenceId")); // retrieved
+			parameters.add(CallbackParameter.resolved("recurrenceRule", "e.event.recurrenceRule")); // retrieved
+			parameters.add(CallbackParameter.resolved("recurrenceException", "e.event.recurrenceException")); // retrieved
+
+			// resources //
+			for (String field : SchedulerBehavior.this.getResourceListModel().getFields())
+			{
+				parameters.add(CallbackParameter.resolved(field, String.format("jQuery.makeArray(e.event.%s)", field))); // retrieved
+			}
+
+			parameters.add(CallbackParameter.resolved("view", "e.sender.view().name")); // retrieved
+
+			// view //
+			return parameters.toArray(new CallbackParameter[] {});
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			return super.getCallbackFunctionBody(parameters) + " e.preventDefault();"; // avoid propagation of KendoUIs edit-event on client-side
+		}
+	}
 
 	/**
 	 * Base class for data-source's ajax behavior
 	 */
-	private abstract class DataSourceAjaxBehavior extends JQueryAjaxBehavior
+	protected abstract class DataSourceAjaxBehavior extends JQueryAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -423,12 +447,17 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		}
 
 		@Override
-		public CharSequence getCallbackFunctionBody(CallbackParameter... extraParameters)
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
 		{
-			return super.getCallbackFunctionBody(extraParameters) + " e.success();";
+			return super.getCallbackFunctionBody(parameters) + " e.success();";
 		}
 	}
 
+	// Event objects //
+
+	/**
+	 * TODO javadoc
+	 */
 	protected static class NavigateEvent extends JQueryEvent
 	{
 		private SchedulerViewType view = null;

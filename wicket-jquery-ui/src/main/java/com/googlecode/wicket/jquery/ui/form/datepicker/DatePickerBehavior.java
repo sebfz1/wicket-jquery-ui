@@ -132,7 +132,7 @@ public abstract class DatePickerBehavior extends JQueryUIBehavior implements IJQ
 		}
 	}
 
-	// Event classes //
+	// Event objects //
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxPostBehavior} select callback
 	 */

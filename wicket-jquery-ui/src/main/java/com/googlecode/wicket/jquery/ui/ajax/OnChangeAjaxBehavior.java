@@ -57,7 +57,7 @@ public class OnChangeAjaxBehavior extends JQueryAjaxPostBehavior
 		return new ChangeEvent();
 	}
 
-	// Event Object //
+	// Event objects //
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnChangeAjaxBehavior}

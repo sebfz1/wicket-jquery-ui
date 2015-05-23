@@ -161,25 +161,7 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	 */
 	protected JQueryAjaxBehavior newOnActionAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				// function(e) { }
-				return new CallbackParameter[] { // lf
-						CallbackParameter.context("e"), // lf
-						CallbackParameter.resolved("action", "jQuery(e.target).attr('class').match(/k-i-(\\w+)/)[1]") // lf
-				};
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ActionEvent();
-			}
-		};
+		return new OnActionAjaxBehavior(source);
 	}
 
 	/**
@@ -190,27 +172,69 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	 */
 	protected JQueryAjaxBehavior newOnCloseAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public String getCallbackFunction()
-			{
-				// prevent a dual call to #onClose if called manually
-				return "function(e) { if (e.userTriggered) { " + this.getCallbackScript() + " } }";
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new CloseEvent();
-			}
-		};
+		return new OnCloseAjaxBehavior(source);
 	}
 
-	// Event class //
+	// Ajax classes //
 
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnActionAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnActionAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("action", "jQuery(e.target).attr('class').match(/k-i-(\\w+)/)[1]") // lf
+			};
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ActionEvent();
+		}
+	}
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnCloseAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnCloseAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		public String getCallbackFunction()
+		{
+			// prevent a dual call to #onClose if called manually
+			return "function(e) { if (e.userTriggered) { " + this.getCallbackScript() + " } }";
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new CloseEvent();
+		}
+	}
+
+	// Event objects //
+
+	/**
+	 * TODO javadoc
+	 */
 	protected static class ActionEvent extends JQueryEvent
 	{
 		private final String action;

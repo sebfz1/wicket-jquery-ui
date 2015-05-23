@@ -76,7 +76,7 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	{
 		this(null, options);
 	}
-	
+
 	/**
 	 * Constructor
 	 * 
@@ -186,29 +186,7 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	 */
 	protected JQueryAjaxBehavior newOnDragStartAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"), // lf
-						CallbackParameter.context("ui"), // lf
-						CallbackParameter.resolved("top", "ui.position.top"), // lf
-						CallbackParameter.resolved("left", "ui.position.left"), // lf
-						CallbackParameter.resolved("offsetTop", "ui.offset.top | 0"), // cast to int, no rounding
-						CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0")  // cast to int, no rounding
-				};
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new DragStartEvent();
-			}
-		};
+		return new OnDragStartAjaxBehavior(source);
 	}
 
 	/**
@@ -219,32 +197,74 @@ public abstract class DraggableBehavior extends JQueryUIBehavior implements IJQu
 	 */
 	protected JQueryAjaxBehavior newOnDragStopAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] {
-						CallbackParameter.context("event"), // lf
-						CallbackParameter.context("ui"), // lf
-						CallbackParameter.resolved("top", "ui.position.top"), // lf
-						CallbackParameter.resolved("left", "ui.position.left"), // lf
-						CallbackParameter.resolved("offsetTop", "ui.offset.top | 0"), // cast to int, no rounding
-						CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0")  // cast to int, no rounding
-				};
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new DragStopEvent();
-			}
-		};
+		return new OnDragStopAjaxBehavior(source);
 	}
 
-	// Events classes //
+	// Ajax classes //
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnDragStartAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnDragStartAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("top", "ui.position.top"), // lf
+					CallbackParameter.resolved("left", "ui.position.left"), // lf
+					CallbackParameter.resolved("offsetTop", "ui.offset.top | 0"), // cast to int, no rounding
+					CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0") // cast to int, no rounding
+			};
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new DragStartEvent();
+		}
+	}
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnDragStopAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnDragStopAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("top", "ui.position.top"), // lf
+					CallbackParameter.resolved("left", "ui.position.left"), // lf
+					CallbackParameter.resolved("offsetTop", "ui.offset.top | 0"), // cast to int, no rounding
+					CallbackParameter.resolved("offsetLeft", "ui.offset.left | 0") // cast to int, no rounding
+			};
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new DragStopEvent();
+		}
+	}
+
+	// Event objects //
 
 	/**
 	 * Provides a base class for draggable event object

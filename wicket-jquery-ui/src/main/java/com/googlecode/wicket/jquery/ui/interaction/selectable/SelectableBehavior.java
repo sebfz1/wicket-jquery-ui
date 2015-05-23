@@ -49,6 +49,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 
 	/**
 	 * Constructor
+	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public SelectableBehavior(String selector)
@@ -58,6 +59,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 
 	/**
 	 * Constructor
+	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
@@ -65,7 +67,6 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	{
 		super(selector, METHOD, options);
 	}
-
 
 	// Properties //
 	/**
@@ -111,7 +112,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 			List<T> items = new ArrayList<T>();
 			List<T> list = this.getItemList();
 
-			for (int index : ((StopEvent)event).getIndexes())
+			for (int index : ((StopEvent) event).getIndexes())
 			{
 				// defensive, if the item-selector is miss-configured, this can result in an OutOfBoundException
 				if (index < list.size())
@@ -133,35 +134,48 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	 */
 	protected JQueryAjaxBehavior newOnStopAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { CallbackParameter.resolved("indexes", "indexes") };
-			}
-
-			@Override
-			public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
-			{
-				//build indexes array, ie: 'indexes=[1,2,3]'
-				String selector = String.format("%s %s", SelectableBehavior.this.selector, SelectableBehavior.this.getItemSelector());
-				String indexes = "var indexes=[]; jQuery('.ui-selected', this).each( function() { indexes.push(jQuery('" + selector + "').index(this)); } ); ";
-
-				return indexes + super.getCallbackFunctionBody(parameters);
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new StopEvent();
-			}
-		};
+		return new OnStopAjaxBehavior(source);
 	}
 
-	// Event Objects //
+	// Ajax classes //
+
+	/**
+	 * TODO javadoc
+	 */
+	protected class OnStopAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnStopAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.resolved("indexes", "indexes") };
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			// build indexes array, ie: 'indexes=[1,2,3]'
+			String selector = String.format("%s %s", SelectableBehavior.this.selector, SelectableBehavior.this.getItemSelector());
+			String indexes = "var indexes=[]; jQuery('.ui-selected', this).each(function() { indexes.push(jQuery('" + selector + "').index(this)); }); ";
+
+			return indexes + super.getCallbackFunctionBody(parameters);
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new StopEvent();
+		}
+	}
+
+	// Event objects //
+
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'stop' callback
 	 */

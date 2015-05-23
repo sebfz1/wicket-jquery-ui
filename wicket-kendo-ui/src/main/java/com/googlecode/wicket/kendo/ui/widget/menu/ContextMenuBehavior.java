@@ -106,12 +106,11 @@ public abstract class ContextMenuBehavior extends MenuBehavior implements IConte
 		return new OnOpenAjaxBehavior(source);
 	}
 
-	// Ajax class //
+	// Ajax classes //
 
 	/**
 	 * Default {@link JQueryAjaxBehavior} implementation for {@link ContextMenuBehavior#newOnOpenAjaxBehavior(IJQueryAjaxAware)}
 	 */
-	// TODO: introduce OnXxxAjaxBehavior classes everywhere
 	public static class OnOpenAjaxBehavior extends JQueryAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
@@ -128,7 +127,7 @@ public abstract class ContextMenuBehavior extends MenuBehavior implements IConte
 		}
 	}
 
-	// Event class //
+	// Event objects //
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'open' callback

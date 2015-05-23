@@ -127,28 +127,7 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 	 */
 	protected JQueryAjaxBehavior newOnResizeStartAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { // lf
-						CallbackParameter.context("event"), // lf
-						CallbackParameter.context("ui"), // lf
-						CallbackParameter.resolved("top", "ui.position.top"), // lf
-						CallbackParameter.resolved("left", "ui.position.left"), // lf
-						CallbackParameter.resolved("width", "ui.size.width"), // lf
-						CallbackParameter.resolved("height", "ui.size.height") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ResizeStartEvent();
-			}
-		};
+		return new OnResizeStartAjaxBehavior(source);
 	}
 
 	/**
@@ -159,31 +138,73 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 	 */
 	protected JQueryAjaxBehavior newOnResizeStopAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new JQueryAjaxBehavior(source) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected CallbackParameter[] getCallbackParameters()
-			{
-				return new CallbackParameter[] { // lf
-						CallbackParameter.context("event"), // lf
-						CallbackParameter.context("ui"), // lf
-						CallbackParameter.resolved("top", "ui.position.top"), // lf
-						CallbackParameter.resolved("left", "ui.position.left"), // lf
-						CallbackParameter.resolved("width", "ui.size.width"), // lf
-						CallbackParameter.resolved("height", "ui.size.height") };
-			}
-
-			@Override
-			protected JQueryEvent newEvent()
-			{
-				return new ResizeStopEvent();
-			}
-		};
+		return new OnResizeStopAjaxBehavior(source);
 	}
 
-	// Event Objects //
+	// Ajax classes //
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnResizeStartAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnResizeStartAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("top", "ui.position.top"), // lf
+					CallbackParameter.resolved("left", "ui.position.left"), // lf
+					CallbackParameter.resolved("width", "ui.size.width"), // lf
+					CallbackParameter.resolved("height", "ui.size.height") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ResizeStartEvent();
+		}
+	}
+
+	/**
+	 * TODO javadoc
+	 */
+	protected static class OnResizeStopAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnResizeStopAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
+					CallbackParameter.context("ui"), // lf
+					CallbackParameter.resolved("top", "ui.position.top"), // lf
+					CallbackParameter.resolved("left", "ui.position.left"), // lf
+					CallbackParameter.resolved("width", "ui.size.width"), // lf
+					CallbackParameter.resolved("height", "ui.size.height") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ResizeStopEvent();
+		}
+	}
+
+	// Event objects //
+
 	/**
 	 * Provides a base class for resize event object
 	 */
