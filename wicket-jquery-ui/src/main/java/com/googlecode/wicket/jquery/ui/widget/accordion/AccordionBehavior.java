@@ -171,10 +171,10 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'activate' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnActivateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnActivateAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -184,7 +184,7 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	// Ajax classes //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'activate' event
 	 */
 	protected static class OnActivateAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -213,7 +213,7 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	// Events classes //
 
 	/**
-	 * Base class for accordion event objects
+	 * Provides an event object that will be broadcasted by the {@link OnActivateAjaxBehavior} callback
 	 */
 	protected static class ActivateEvent extends JQueryEvent
 	{

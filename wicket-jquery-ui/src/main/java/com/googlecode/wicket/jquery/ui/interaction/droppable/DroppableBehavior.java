@@ -136,10 +136,10 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'drop' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'drop' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnDropAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDropAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -147,10 +147,10 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'over' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'over' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnOverAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnOverAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -158,10 +158,10 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'exit' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'exit' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnExitAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnExitAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -171,7 +171,7 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	// Ajax classes //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'drop' event
 	 */
 	protected static class OnDropAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -196,7 +196,7 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'over' event
 	 */
 	protected static class OnOverAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -221,7 +221,7 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'exit' event
 	 */
 	protected static class OnExitAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -248,21 +248,21 @@ public abstract class DroppableBehavior extends JQueryUIBehavior implements IJQu
 	// Event objects //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'drop' callback
+	 * Provides an event object that will be broadcasted by the {@link OnDropAjaxBehavior} callback
 	 */
 	protected static class DropEvent extends JQueryEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'over' callback
+	 * Provides an event object that will be broadcasted by the {@link OnOverAjaxBehavior} callback
 	 */
 	protected static class OverEvent extends JQueryEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'exit' callback
+	 * Provides an event object that will be broadcasted by the {@link OnExitAjaxBehavior} callback
 	 */
 	protected static class ExitEvent extends JQueryEvent
 	{

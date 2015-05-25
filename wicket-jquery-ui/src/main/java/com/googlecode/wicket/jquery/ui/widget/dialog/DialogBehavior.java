@@ -194,10 +194,10 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	protected abstract ButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, DialogButton button);
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the user clicks on the X-icon
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'close' event, triggered when the user clicks on the X-icon
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnDefaultCloseAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDefaultCloseAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -205,10 +205,10 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	}
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the user press the escape key
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'beforeClose' event, triggered when the user presses the escape key
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnEscapeCloseAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnEscapeCloseAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -218,7 +218,8 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	// Ajax class //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'close' event<br/>
+	 * Underlying callback will be triggered when the user clicks on the X-icon
 	 */
 	protected static class OnDefaultCloseAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -243,7 +244,8 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'beforeClose' event<br/>
+	 * Underlying callback will be triggered when the user presses the escape key
 	 */
 	protected static class OnEscapeCloseAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -270,7 +272,7 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	// Event objects //
 
 	/**
-	 * An event object that will be broadcasted when the user clicks on the X-icon
+	 * Provides an event object that will be broadcasted by the {@link OnDefaultCloseAjaxBehavior} and the {@link OnEscapeCloseAjaxBehavior} callbacks
 	 */
 	protected static class CloseEvent extends JQueryEvent
 	{

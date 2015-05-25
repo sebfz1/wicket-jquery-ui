@@ -69,6 +69,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	}
 
 	// Properties //
+
 	/**
 	 * Gets the reference list of all selectable items.
 	 *
@@ -85,6 +86,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	protected abstract String getItemSelector();
 
 	// Methods //
+
 	@Override
 	public void bind(Component component)
 	{
@@ -95,6 +97,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	}
 
 	// Events //
+
 	@Override
 	public void onConfigure(Component component)
 	{
@@ -126,11 +129,12 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	}
 
 	// Factories //
+
 	/**
-	 * Gets the ajax behavior that will be triggered when the user has selected items
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'stop' event, triggered when the user has selected items
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnStopAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnStopAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -140,7 +144,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	// Ajax classes //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'stop' event
 	 */
 	protected class OnStopAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -177,7 +181,7 @@ public abstract class SelectableBehavior<T extends Serializable> extends JQueryU
 	// Event objects //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'stop' callback
+	 * Provides an event object that will be broadcasted by the {@link OnStopAjaxBehavior} callback
 	 */
 	protected static class StopEvent extends JQueryEvent
 	{

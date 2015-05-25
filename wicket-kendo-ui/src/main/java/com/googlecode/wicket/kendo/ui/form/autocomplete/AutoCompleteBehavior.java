@@ -112,10 +112,10 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'select' javascript method
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnSelectAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -125,7 +125,7 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	// Ajax classes //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
 	 */
 	protected static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -154,8 +154,7 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	// Event objects //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} select callback
-	 *
+	 * Provides an event object that will be broadcasted by the {@link OnSelectAjaxBehavior} callback
 	 */
 	protected static class SelectEvent extends JQueryEvent
 	{

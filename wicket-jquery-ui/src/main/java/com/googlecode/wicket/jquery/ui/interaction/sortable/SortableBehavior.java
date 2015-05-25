@@ -199,10 +199,10 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	// Factories //
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the user has selected items
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'update' event, triggered when the user stopped sorting
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnUpdateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -210,10 +210,10 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	}
 
 	/**
-	 * Gets the ajax behavior that will be triggered when a connected sortable list has received an item from another list.
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'receive' event, triggered when a connected sortable list has received an item from another list.
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnReceiveAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnReceiveAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -221,10 +221,10 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	}
 
 	/**
-	 * Gets the ajax behavior that will be triggered when a sortable item has been dragged out from the list and into another.
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'remove' event, triggered when a sortable item has been dragged out from the list and into another.
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnRemoveAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnRemoveAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -234,7 +234,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	// Ajax classes //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'update' event
 	 */
 	protected static class OnUpdateAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -262,7 +262,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'receive' event
 	 */
 	protected static class OnReceiveAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -290,7 +290,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'remove' event
 	 */
 	protected static class OnRemoveAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -319,7 +319,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	// Event objects //
 
 	/**
-	 * A base event object for sortable
+	 * Provides a base class for {@link SortableBehavior} event objects
 	 */
 	protected static class SortableEvent extends JQueryEvent
 	{
@@ -354,21 +354,21 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'update' callback
+	 * Provides an event object that will be broadcasted by the {@link OnUpdateAjaxBehavior} callback
 	 */
 	protected static class UpdateEvent extends SortableEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'receive' callback
+	 * Provides an event object that will be broadcasted by the {@link OnReceiveAjaxBehavior} callback
 	 */
 	protected static class ReceiveEvent extends SortableEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'remove' callback
+	 * Provides an event object that will be broadcasted by the {@link OnRemoveAjaxBehavior} callback
 	 */
 	protected static class RemoveEvent extends SortableEvent
 	{

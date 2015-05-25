@@ -154,10 +154,10 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'expand' callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'expand' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnExpandAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnExpandAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -165,10 +165,10 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'collapse' callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'collapse' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnCollapseAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnCollapseAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -178,7 +178,7 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	// Ajax classes //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'expand' event
 	 */
 	protected static class OnExpandAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -192,7 +192,8 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("id", "e.pane.id") };
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("id", "e.pane.id") };
 		}
 
 		@Override
@@ -202,9 +203,8 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 		}
 	}
 
-
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'collapse' event
 	 */
 	protected static class OnCollapseAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -232,7 +232,7 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	// Event objects //
 
 	/**
-	 * An event object that will be broadcasted when a panes expands
+	 * Provides an event object that will be broadcasted by the {@link OnExpandAjaxBehavior} callback
 	 */
 	protected static class ExpandEvent extends JQueryEvent
 	{
@@ -257,7 +257,7 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	}
 
 	/**
-	 * An event object that will be broadcasted when a panes collapses
+	 * Provides an event object that will be broadcasted by the {@link OnCollapseAjaxBehavior} callback
 	 */
 	protected static class CollapseEvent extends JQueryEvent
 	{

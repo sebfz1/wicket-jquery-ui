@@ -205,10 +205,10 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragstart' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'dragstart' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnDragStartAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragStartAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -216,10 +216,10 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragend' javascript event
-	 * 
-	 * @param source {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'dragend' event
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@link OnDragStopAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragStopAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -227,10 +227,10 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragend' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'dragcancel' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnDragCancelAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragCancelAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -240,7 +240,7 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	// Ajax classes //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'dragstart' event
 	 */
 	protected static class OnDragStartAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -275,7 +275,7 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'dragend' event
 	 */
 	protected static class OnDragStopAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -310,7 +310,7 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'dragcancel' event
 	 */
 	protected static class OnDragCancelAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -347,7 +347,7 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	// Event objects //
 
 	/**
-	 * Provides a base class for draggable event object
+	 * Provides a base class for {@link DraggableBehavior} event objects
 	 */
 	protected static class DraggableEvent extends JQueryEvent
 	{
@@ -385,21 +385,21 @@ public abstract class DraggableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'dragstart' callback
+	 * Provides an event object that will be broadcasted by the {@link OnDragStartAjaxBehavior} callback
 	 */
 	protected static class DragStartEvent extends DraggableEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'dragend' callback
+	 * Provides an event object that will be broadcasted by the {@link OnDragStopAjaxBehavior} callback
 	 */
 	protected static class DragStopEvent extends DraggableEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'dragcancel' callback
+	 * Provides an event object that will be broadcasted by the {@link OnDragCancelAjaxBehavior} callback
 	 */
 	protected static class DragCancelEvent extends DraggableEvent
 	{

@@ -154,10 +154,10 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	// Factories //
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the user clicks on an action icon
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'a.k-window-action click' event, triggered when the user clicks on an action icon
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnActionAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnActionAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -165,10 +165,10 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	}
 
 	/**
-	 * Gets the ajax behavior that will be triggered when the user clicks on the X-icon
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'close' event, triggered when the user clicks on the X-icon
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnCloseAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnCloseAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -178,7 +178,7 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	// Ajax classes //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'a.k-window-action click' event
 	 */
 	protected static class OnActionAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -205,7 +205,7 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'close' event
 	 */
 	protected static class OnCloseAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -233,7 +233,7 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	// Event objects //
 
 	/**
-	 * TODO javadoc
+	 * Provides an event object that will be broadcasted by the {@link OnActionAjaxBehavior} callback
 	 */
 	protected static class ActionEvent extends JQueryEvent
 	{
@@ -251,7 +251,7 @@ public abstract class WindowBehavior extends KendoUIBehavior implements IJQueryA
 	}
 
 	/**
-	 * An event object that will be broadcasted when the user clicks on the X-icon
+	 * Provides an event object that will be broadcasted by the {@link OnCloseAjaxBehavior} callback
 	 */
 	protected static class CloseEvent extends JQueryEvent
 	{

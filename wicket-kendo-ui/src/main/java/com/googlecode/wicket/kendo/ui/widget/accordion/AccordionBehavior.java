@@ -247,10 +247,10 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'select' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnSelectAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -258,10 +258,10 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'activate' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnActivateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnActivateAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -269,10 +269,10 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'expand' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'expand' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnExpandAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnExpandAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -280,10 +280,10 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'collapse' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'collapse' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnCollapseAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnCollapseAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -293,7 +293,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	// Ajax classes //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
 	 */
 	protected static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -319,7 +319,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'activate' event
 	 */
 	protected static class OnActivateAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -345,7 +345,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'expand' event
 	 */
 	protected static class OnExpandAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -371,7 +371,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'collapse' event
 	 */
 	protected static class OnCollapseAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -399,7 +399,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	// Event objects //
 
 	/**
-	 * Provides a base event object that will be broadcasted by the {@link JQueryAjaxBehavior} callbacks
+	 * Provides a base class for {@link AccordionBehavior} event objects
 	 */
 	protected abstract static class AbtractTabEvent extends JQueryEvent
 	{
@@ -427,28 +427,28 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'select' callback
+	 * Provides an event object that will be broadcasted by the {@link OnSelectAjaxBehavior} callback
 	 */
 	protected static class SelectEvent extends AbtractTabEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'activate' callback
+	 * Provides an event object that will be broadcasted by the {@link OnActivateAjaxBehavior} callback
 	 */
 	protected static class ActivateEvent extends AbtractTabEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'expand' callback
+	 * Provides an event object that will be broadcasted by the {@link OnExpandAjaxBehavior} callback
 	 */
 	protected static class ExpandEvent extends AbtractTabEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'collapse' callback
+	 * Provides an event object that will be broadcasted by the {@link OnCollapseAjaxBehavior} callback
 	 */
 	protected static class CollapseEvent extends AbtractTabEvent
 	{

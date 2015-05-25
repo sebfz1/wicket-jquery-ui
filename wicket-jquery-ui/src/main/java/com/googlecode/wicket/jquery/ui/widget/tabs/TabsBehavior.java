@@ -191,10 +191,10 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'activate' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnActivateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnActivateAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -202,10 +202,10 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'beforeActivate' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'beforeActivate' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnActivateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnActivatingAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -215,7 +215,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	// Ajax classes //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'activate' event
 	 */
 	protected static class OnActivateAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -242,7 +242,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'beforeActivate' event
 	 */
 	protected static class OnActivatingAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -271,7 +271,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	// Event objects //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'activate' callback
+	 * Provides an event object that will be broadcasted by the {@link OnActivateAjaxBehavior} callback
 	 */
 	protected static class ActivateEvent extends JQueryEvent
 	{
@@ -299,7 +299,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'beforeActivate' callback
+	 * Provides an event object that will be broadcasted by the {@link OnActivatingAjaxBehavior} callback
 	 */
 	protected static class ActivatingEvent extends ActivateEvent
 	{

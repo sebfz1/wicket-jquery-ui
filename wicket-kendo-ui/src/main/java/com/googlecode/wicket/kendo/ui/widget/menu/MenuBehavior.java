@@ -133,10 +133,10 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'select' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnSelectAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -146,7 +146,7 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 	// Ajax classes //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
 	 */
 	protected  static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -174,7 +174,7 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 	// Event objects //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'select' callback
+	 * Provides an event object that will be broadcasted by the {@link OnSelectAjaxBehavior} callback
 	 */
 	protected static class SelectEvent extends JQueryEvent
 	{

@@ -120,10 +120,10 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'start' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'start' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnResizeStartAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnResizeStartAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -131,10 +131,10 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'stop' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'stop' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnResizeStopAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnResizeStopAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -144,7 +144,7 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 	// Ajax classes //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'start' event
 	 */
 	protected static class OnResizeStartAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -174,7 +174,7 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'stop' event
 	 */
 	protected static class OnResizeStopAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -206,7 +206,7 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 	// Event objects //
 
 	/**
-	 * Provides a base class for resize event object
+	 * Provides a base class for {@link ResizableBehavior} event objects
 	 */
 	protected static class ResizeEvent extends JQueryEvent
 	{
@@ -268,14 +268,14 @@ public abstract class ResizableBehavior extends JQueryUIBehavior implements IJQu
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'start' callback
+	 * Provides an event object that will be broadcasted by the {@link OnResizeStartAjaxBehavior} callback
 	 */
 	protected static class ResizeStartEvent extends ResizeEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'stop' callback
+	 * Provides an event object that will be broadcasted by the {@link OnResizeStopAjaxBehavior} callback
 	 */
 	protected static class ResizeStopEvent extends ResizeEvent
 	{

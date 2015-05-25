@@ -234,10 +234,10 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	// Factories //
 
 	/**
-	 * Gets the ajax behavior that will be triggered when is navigating in the scheduler
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'navigate' event, triggered when the user is navigating in the scheduler
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnNavigateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnNavigateAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -245,10 +245,10 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets the ajax behavior that will be triggered when when an event is edited
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'edit' event, triggered when an event is edited
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnNavigateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnEditAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -265,10 +265,10 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets the data-source's ajax behavior that will be triggered when an event is created
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'create' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link DataSourceAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnCreateAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -285,10 +285,10 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets the data-source's ajax behavior that will be triggered when an event is updated
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'update' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link DataSourceAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -305,10 +305,10 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets the data-source's ajax behavior that will be triggered when an event is deleted
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'delete' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link DataSourceAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDeleteAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -327,7 +327,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	// Ajax classes //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'navigate' event
 	 */
 	protected static class OnNavigateAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -353,7 +353,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'edit' event
 	 */
 	protected abstract class OnEditAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -405,7 +405,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Base class for data-source's ajax behavior
+	 * Provides a {@link JQueryAjaxBehavior} for handling datasource operations
 	 */
 	protected abstract class DataSourceAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -456,7 +456,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	// Event objects //
 
 	/**
-	 * TODO javadoc
+	 * Provides an event object that will be broadcasted by the {@link OnNavigateAjaxBehavior} callback
 	 */
 	protected static class NavigateEvent extends JQueryEvent
 	{
@@ -479,7 +479,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Base class for scheduler event payload
+	 * Provides a base class for {@link SchedulerBehavior} event objects
 	 */
 	protected static class SchedulerPayload extends JQueryEvent
 	{
@@ -557,6 +557,9 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		}
 	}
 
+	/**
+	 * Provides an event object that will be broadcasted by the {@link OnEditAjaxBehavior} callback
+	 */
 	protected static class EditEvent extends SchedulerPayload
 	{
 		public EditEvent(ResourceListModel listModel)
@@ -566,7 +569,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * An event object that will be broadcasted when a scheduler event is created
+	 * Provides an event object that will be broadcasted by {@link SchedulerBehavior#newOnCreateAjaxBehavior(IJQueryAjaxAware)} callback
 	 */
 	protected static class CreateEvent extends SchedulerPayload
 	{
@@ -577,7 +580,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * An event object that will be broadcasted when a scheduler event is updated
+	 * Provides an event object that will be broadcasted by {@link SchedulerBehavior#newOnUpdateAjaxBehavior(IJQueryAjaxAware)} callback
 	 */
 	protected static class UpdateEvent extends SchedulerPayload
 	{
@@ -588,7 +591,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * An event object that will be broadcasted when a scheduler event is deleted
+	 * Provides an event object that will be broadcasted by {@link SchedulerBehavior#newOnDeleteAjaxBehavior(IJQueryAjaxAware)} callback
 	 */
 	protected static class DeleteEvent extends SchedulerPayload
 	{

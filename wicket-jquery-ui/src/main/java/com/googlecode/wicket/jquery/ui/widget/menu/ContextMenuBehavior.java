@@ -101,10 +101,10 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	// Factories //
 
 	/**
-	 * Gets the ajax behavior that will be triggered on context-menu click
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'contextmenu' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnContextMenuAjaxBehavior} by default
 	 */
 	private JQueryAjaxBehavior newOnContextMenuAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -114,7 +114,7 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	// Ajax classes //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'contextmenu' event
 	 */
 	public static class OnContextMenuAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -151,7 +151,7 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	// Event objects //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'contextmenu' callback
+	 * Provides an event object that will be broadcasted by the {@link OnContextMenuAjaxBehavior} callback
 	 */
 	protected static class ContextMenuEvent extends JQueryEvent
 	{

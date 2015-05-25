@@ -177,11 +177,11 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragenter' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'dragenter' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
 	 * @param statement the statement to execute just before the ajax call
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnDragEnterAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragEnterAjaxBehavior(IJQueryAjaxAware source, String statement)
 	{
@@ -189,11 +189,11 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dragleave' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'dragleave' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
 	 * @param statement the statement to execute just before the ajax call
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnDragLeaveAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDragLeaveAjaxBehavior(IJQueryAjaxAware source, String statement)
 	{
@@ -201,11 +201,11 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'drop' javascript event
-	 * 
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'drop' event
+	 *
 	 * @param source the {@link IJQueryAjaxAware}
 	 * @param statement the statement to execute just before the ajax call
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnDropAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDropAjaxBehavior(IJQueryAjaxAware source, String statement)
 	{
@@ -215,7 +215,7 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	// Ajax classes //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'dragenter' event
 	 */
 	protected static class OnDragEnterAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -250,7 +250,7 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'dragleave' event
 	 */
 	protected static class OnDragLeaveAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -285,7 +285,7 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'drop' event
 	 */
 	protected static class OnDropAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -322,21 +322,21 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	// Event objects //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'over' callback
+	 * Provides an event object that will be broadcasted by the {@link OnDragEnterAjaxBehavior} callback
 	 */
 	protected static class DragEnterEvent extends JQueryEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'exit' callback
+	 * Provides an event object that will be broadcasted by the {@link OnDragLeaveAjaxBehavior} callback
 	 */
 	protected static class DragLeaveEvent extends JQueryEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'drop' callback
+	 * Provides an event object that will be broadcasted by the {@link OnDropAjaxBehavior} callback
 	 */
 	protected static class DropEvent extends JQueryEvent
 	{

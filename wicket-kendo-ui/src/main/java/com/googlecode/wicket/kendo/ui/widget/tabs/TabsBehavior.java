@@ -214,10 +214,10 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	// Factories //
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'select' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnSelectAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -225,10 +225,10 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'show' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'show' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnShowAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnShowAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -236,10 +236,10 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'activate' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
+	 * @return a new {@link OnActivateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnActivateAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -249,7 +249,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	// Ajax classes //
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
 	 */
 	protected static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -275,7 +275,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'show' event
 	 */
 	protected static class OnShowAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -301,7 +301,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	}
 
 	/**
-	 * TODO javadoc
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'activate' event
 	 */
 	protected static class OnActivateAjaxBehavior extends JQueryAjaxBehavior
 	{
@@ -329,7 +329,7 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	// Event objects //
 
 	/**
-	 * Provides a base event object that will be broadcasted by the {@link JQueryAjaxBehavior} callbacks
+	 * Provides a base class for {@link TabsBehavior} event objects
 	 */
 	protected abstract static class AbtractTabEvent extends JQueryEvent
 	{
@@ -357,21 +357,21 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'select' callback
+	 * Provides an event object that will be broadcasted by the {@link OnSelectAjaxBehavior} callback
 	 */
 	protected static class SelectEvent extends AbtractTabEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'show' callback
+	 * Provides an event object that will be broadcasted by the {@link OnShowAjaxBehavior} callback
 	 */
 	protected static class ShowEvent extends AbtractTabEvent
 	{
 	}
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'activate' callback
+	 * Provides an event object that will be broadcasted by the {@link OnActivateAjaxBehavior} callback
 	 */
 	protected static class ActivateEvent extends AbtractTabEvent
 	{
