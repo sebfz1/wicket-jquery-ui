@@ -73,7 +73,8 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets the javascript statement that will we executed on 'dragenter' event The event variable is {@code 'e'}
+	 * Gets the javascript statement that will we executed on 'dragenter' event<br/>
+	 * The event variable is {@code 'e'}
 	 * 
 	 * @return the javascript statement
 	 */
@@ -83,7 +84,8 @@ public abstract class DroppableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets the javascript statement that will we executed on 'dragleave' event The event variable is {@code 'e'}
+	 * Gets the javascript statement that will we executed on 'dragleave' event<br/>
+	 * The event variable is {@code 'e'}
 	 * 
 	 * @return the javascript statement
 	 */
