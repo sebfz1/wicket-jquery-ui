@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.kendo.ui.KendoDestroyListener.IDestroyable;
 import com.googlecode.wicket.kendo.ui.settings.KendoUILibrarySettings;
 
 /**
@@ -38,7 +39,7 @@ import com.googlecode.wicket.kendo.ui.settings.KendoUILibrarySettings;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class KendoUIBehavior extends JQueryBehavior
+public class KendoUIBehavior extends JQueryBehavior implements IDestroyable
 {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(KendoUIBehavior.class);
@@ -153,15 +154,15 @@ public class KendoUIBehavior extends JQueryBehavior
 	{
 		return String.format("jQuery('%s').data('%s')", this.selector, method);
 	}
-	
-	/**
-	 * Prepares the widget for safe removal from the DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
-	 * 
-	 * @param target the {@link AjaxRequestTarget}
-	 */
+
+	@Override
 	public void destroy(AjaxRequestTarget target)
 	{
+		// TODO: remove log
+		target.prependJavaScript(String.format("console.info('destroying %s (%s)...')", this.method, this.selector));
 		target.prependJavaScript(this.widget() + ".destroy();");
+
+		this.onDestroy(target);
 	}
 
 	// Events //
@@ -175,5 +176,16 @@ public class KendoUIBehavior extends JQueryBehavior
 		{
 			LOG.warn("Application > MarkupSettings > StripWicketTags: setting is currently set to false. It is highly recommended to set it to true to prevent widget misbehaviors.");
 		}
+	}
+
+	/**
+	 * Called when the widget is about to be destroyed
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @see #destroy(AjaxRequestTarget)
+	 */
+	protected void onDestroy(AjaxRequestTarget target)
+	{
+		// noop
 	}
 }
