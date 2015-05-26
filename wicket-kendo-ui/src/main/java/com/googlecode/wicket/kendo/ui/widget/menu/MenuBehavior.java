@@ -148,7 +148,7 @@ public abstract class MenuBehavior extends KendoUIBehavior implements IJQueryAja
 	/**
 	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
 	 */
-	protected  static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
+	protected static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
