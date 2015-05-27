@@ -20,27 +20,24 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.AjaxRequestTarget.IJavaScriptResponse;
-import org.apache.wicket.ajax.AjaxRequestTarget.IListener;
-import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.AjaxRequestTarget.AbstractListener;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 import org.apache.wicket.util.visit.Visits;
 
 /**
  * INTERNAL USE<br/>
- * Provides an {@link IListener} for {@link KendoUIBehavior}{@code s} that destroys widgets about to be repainted.
+ * Provides an {@code IListener} for {@link KendoUIBehavior}{@code s} that destroys widgets about to be repainted.
  * 
  * @author Sebastien Briquet - sebfz1
  */
-public class KendoDestroyListener implements IListener
+public class KendoDestroyListener extends AbstractListener
 {
 	/**
 	 * Specifies that a widgets can be automatically destroyed
 	 */
-	public static interface IDestroyable
+	public interface IDestroyable
 	{
 		/**
 		 * Prepares the widget for safe removal from the DOM.<br/>
@@ -52,14 +49,6 @@ public class KendoDestroyListener implements IListener
 		void destroy(AjaxRequestTarget target);
 	}
 
-	// Methods //
-
-	@Override
-	public void updateAjaxAttributes(AbstractDefaultAjaxBehavior behavior, AjaxRequestAttributes attributes)
-	{
-		// noop
-	}
-
 	// Events //
 
 	@Override
@@ -69,11 +58,6 @@ public class KendoDestroyListener implements IListener
 		{
 			Visits.visitPostOrder(entry.getValue(), this.newBeforeRespondVisitor(target));
 		}
-	}
-
-	@Override
-	public void onAfterRespond(Map<String, Component> map, IJavaScriptResponse response)
-	{
 	}
 
 	// Factories //
@@ -92,10 +76,7 @@ public class KendoDestroyListener implements IListener
 			{
 				for (KendoUIBehavior behavior : component.getBehaviors(KendoUIBehavior.class))
 				{
-					if (behavior instanceof IDestroyable)
-					{
-						((IDestroyable) behavior).destroy(target);
-					}
+					behavior.destroy(target);
 				}
 			}
 		};
