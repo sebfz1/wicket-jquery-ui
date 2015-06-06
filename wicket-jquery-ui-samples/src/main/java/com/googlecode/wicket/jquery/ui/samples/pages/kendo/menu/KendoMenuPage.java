@@ -12,6 +12,7 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.form.NumberTextField;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
@@ -133,7 +134,8 @@ public class KendoMenuPage extends AbstractMenuPage
 			Form<Void> form = new MenuItemForm<Void>("form");
 			this.add(form);
 
-			final NumberTextField<Integer> textField = new NumberTextField<Integer>("position", new PropertyModel<Integer>(menuItem, "position"));
+			Options options = new Options("format", Options.asString("n0")); // integer format, no floating points
+			final NumberTextField<Integer> textField = new NumberTextField<Integer>("position", new PropertyModel<Integer>(menuItem, "position"), options);
 			final AjaxButton button = new MenuItemAjaxButton("moveToPositionBtn");
 
 			form.add(textField, button);
