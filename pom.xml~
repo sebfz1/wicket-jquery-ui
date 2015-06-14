@@ -57,7 +57,7 @@
 	<repositories>
 		<repository>
 			<id>Apache Nexus Snapshot</id>
-			<url>https://repository.apache.org/content/repositories/snapshots</url>
+			<url>https://repository.apache.org/content/repositories/snapshots/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>

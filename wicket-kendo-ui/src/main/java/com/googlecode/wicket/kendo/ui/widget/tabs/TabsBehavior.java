@@ -45,10 +45,10 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 {
 	private static final long serialVersionUID = 1L;
 
-	static final String METHOD = "kendoTabStrip";
-	private static final int DEFAULT_TAB = 0;
+	public static final String METHOD = "kendoTabStrip";
+	public static final int DEFAULT_TAB_INDEX = 0;
 
-	int activeTab = DEFAULT_TAB;
+	int tabIndex = DEFAULT_TAB_INDEX;
 
 	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
 	private JQueryAjaxBehavior onShowAjaxBehavior = null;
@@ -137,7 +137,8 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 		super.renderHead(component, response);
 
 		// selects (& expands) the active tab (this is not a default behavior)
-		response.render(JavaScriptHeaderItem.forScript(String.format("jQuery(function() { %s.select(%d); } );", this.widget(), this.activeTab), this.getToken() + "-select"));
+		// FIXME: it does not select the tab on reload!
+		response.render(JavaScriptHeaderItem.forScript(String.format("jQuery(function() { %s.select(%d); });", this.widget(), this.tabIndex), this.getToken() + "-select"));
 	}
 
 	/**
@@ -148,9 +149,9 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	 */
 	public void select(int index, AjaxRequestTarget target)
 	{
-		this.activeTab = index;
+		this.tabIndex = index;
 
-		target.appendJavaScript(String.format("%s.select(%d);", this.widget(), this.activeTab));
+		target.appendJavaScript(String.format("%s.select(%d);", this.widget(), this.tabIndex));
 	}
 
 	// Events //
@@ -179,9 +180,9 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
-		if (event instanceof AbtractTabEvent)
+		if (event instanceof AbstractTabEvent)
 		{
-			int index = ((AbtractTabEvent) event).getIndex();
+			int index = ((AbstractTabEvent) event).getIndex();
 			final List<ITab> tabs = this.getVisibleTabs();
 
 			if (-1 < index && index < tabs.size()) /* index could be unknown depending on options and user action */
@@ -331,14 +332,14 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	/**
 	 * Provides a base class for {@link TabsBehavior} event objects
 	 */
-	protected abstract static class AbtractTabEvent extends JQueryEvent
+	protected abstract static class AbstractTabEvent extends JQueryEvent
 	{
 		private final int index;
 
 		/**
 		 * Constructor
 		 */
-		public AbtractTabEvent()
+		public AbstractTabEvent()
 		{
 			super();
 
@@ -359,21 +360,21 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnSelectAjaxBehavior} callback
 	 */
-	protected static class SelectEvent extends AbtractTabEvent
+	protected static class SelectEvent extends AbstractTabEvent
 	{
 	}
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnShowAjaxBehavior} callback
 	 */
-	protected static class ShowEvent extends AbtractTabEvent
+	protected static class ShowEvent extends AbstractTabEvent
 	{
 	}
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnActivateAjaxBehavior} callback
 	 */
-	protected static class ActivateEvent extends AbtractTabEvent
+	protected static class ActivateEvent extends AbstractTabEvent
 	{
 	}
 }
