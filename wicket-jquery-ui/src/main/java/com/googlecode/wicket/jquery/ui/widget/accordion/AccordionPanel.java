@@ -244,7 +244,7 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	{
 		// noop
 	}
-
+	
 	// Factories //
 
 	/**
