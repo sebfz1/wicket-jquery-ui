@@ -107,6 +107,7 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 	}
 
 	// IDatePickerListener //
+
 	@Override
 	public final boolean isOnSelectEventEnabled()
 	{
@@ -114,6 +115,7 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 	}
 
 	// Events //
+
 	@Override
 	public final void onSelect(AjaxRequestTarget target, String date)
 	{
@@ -122,6 +124,7 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 	}
 
 	// IValueChangedListener //
+
 	@Override
 	public void onValueChanged(AjaxRequestTarget target)
 	{

@@ -95,7 +95,7 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	/**
 	 * Gets the min value
 	 *
-	 * @return the 'min' value specified in the options or {@value #MIN} if unspecified
+	 * @return the 'min' value specified in the options or {@link #MIN} if unspecified
 	 */
 	public int getMin()
 	{
@@ -107,7 +107,7 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IPro
 	/**
 	 * Gets the max value
 	 *
-	 * @return the 'max' value specified in the options or {@value #MAX} if unspecified
+	 * @return the 'max' value specified in the options or {@link #MAX} if unspecified
 	 */
 	public int getMax()
 	{

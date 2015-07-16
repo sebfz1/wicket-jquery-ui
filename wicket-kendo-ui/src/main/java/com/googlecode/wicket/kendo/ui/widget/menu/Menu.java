@@ -118,16 +118,6 @@ public class Menu extends JQueryPanel implements IMenuListener
 	}
 
 	/**
-	 * Prepares the widget for safe removal from the DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
-	 *
-	 * @param target The {@link AjaxRequestTarget}
-	 */
-	public void destroy(AjaxRequestTarget target)
-	{
-		this.widgetBehavior.destroy(target);
-	}
-
-	/**
 	 * Refreshes the {@link Menu}
 	 * 
 	 * @param target the {@link AjaxRequestTarget}

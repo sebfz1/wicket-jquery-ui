@@ -42,7 +42,8 @@ public class KendoDestroyListener extends AbstractListener
 		/**
 		 * Prepares the widget for safe removal from the DOM.<br/>
 		 * Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks.<br/>
-		 * Calls destroy method of any child Kendo widgets.
+		 * Calls destroy method of any child Kendo widgets.<br/>
+		 * This method is automatically called on ajax request. In case of web socket requests, this may be called manually. 
 		 * 
 		 * @param target the {@link AjaxRequestTarget}
 		 */

@@ -177,7 +177,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	/**
 	 * Gets the orientation of the group headers
 	 *
-	 * @return {@value GroupOrientation#horizontal} by default
+	 * @return {@link GroupOrientation#horizontal} by default
 	 */
 	protected GroupOrientation getGroupOrientation()
 	{

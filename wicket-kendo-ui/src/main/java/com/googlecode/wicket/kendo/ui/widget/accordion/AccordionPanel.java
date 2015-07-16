@@ -144,8 +144,8 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	 * <b>Warning:</b> the index is related to visible tabs only<br/>
 	 * <b>Warning:</b> invoking this method results to a dual client-server round-trip.
 	 *
-	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the visible tab's index to activate
+	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void setTabIndex(int index, AjaxRequestTarget target)
 	{

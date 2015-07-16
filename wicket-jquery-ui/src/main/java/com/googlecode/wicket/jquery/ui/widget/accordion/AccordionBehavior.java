@@ -121,8 +121,8 @@ public abstract class AccordionBehavior extends JQueryUIBehavior implements IJQu
 	/**
 	 * Activates the selected tab, identified by the index
 	 *
-	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index
+	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void activate(int index, AjaxRequestTarget target)
 	{

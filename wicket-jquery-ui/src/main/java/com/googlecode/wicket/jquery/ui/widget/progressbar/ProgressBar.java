@@ -159,11 +159,6 @@ public class ProgressBar extends JQueryGenericContainer<Integer> implements IJQu
 		}
 	}
 
-	/**
-	 * Triggered when the value changed
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 */
 	@Override
 	public void onValueChanged(AjaxRequestTarget target)
 	{

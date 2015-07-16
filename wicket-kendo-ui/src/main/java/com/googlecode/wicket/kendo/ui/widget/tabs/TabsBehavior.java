@@ -144,8 +144,8 @@ public abstract class TabsBehavior extends KendoUIBehavior implements IJQueryAja
 	/**
 	 * Selects (and activates) a tab, identified by the index
 	 *
-	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index
+	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void select(int index, AjaxRequestTarget target)
 	{

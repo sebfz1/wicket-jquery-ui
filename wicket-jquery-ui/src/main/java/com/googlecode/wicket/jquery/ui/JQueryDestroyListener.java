@@ -40,7 +40,8 @@ public class JQueryDestroyListener extends AbstractListener
 	public interface IDestroyable
 	{
 		/**
-		 * Removes the widget functionality completely. This will return the element back to its pre-init state. 
+		 * Removes the widget functionality completely. This will return the element back to its pre-init state.<br/>
+		 * This method is automatically called on ajax request. In case of web socket requests, this may be called manually. 
 		 * 
 		 * @param target the {@link AjaxRequestTarget}
 		 */

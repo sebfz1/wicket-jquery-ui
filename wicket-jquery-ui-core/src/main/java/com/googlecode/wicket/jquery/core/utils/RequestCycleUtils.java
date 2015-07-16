@@ -24,7 +24,7 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.StringValue;
 
 /**
- * Utility class for retrieving request parameters
+ * Utility class for {@link RequestCycle}
  *
  * @author Sebastien Briquet - sebfz1
  *

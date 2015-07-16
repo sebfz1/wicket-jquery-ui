@@ -55,6 +55,13 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 	}
 
 	// Methods //
+
+	/**
+	 * Plays the specified effect.
+	 * 
+	 * @param handler the {@link AjaxRequestTarget}
+	 * @param effect the effect to be played
+	 */
 	public void play(AjaxRequestTarget target, Effect effect)
 	{
 		if (effect != null)

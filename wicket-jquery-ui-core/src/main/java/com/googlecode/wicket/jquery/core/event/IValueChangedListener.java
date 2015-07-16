@@ -19,7 +19,7 @@ package com.googlecode.wicket.jquery.core.event;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * Specifies that a widget handles a value-changed AJAX behavior
+ * Specifies that a widget handles a value-changed ajax/websocket behavior
  *
  * @author Sebastien Briquet - sebfz1
  */

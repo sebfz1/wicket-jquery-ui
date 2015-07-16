@@ -205,6 +205,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{

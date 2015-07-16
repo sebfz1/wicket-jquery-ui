@@ -88,8 +88,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 
 	// Events //
 	/**
-	 * {@inheritDoc}
-	 * <br/>
+	 * {@inheritDoc} <br/>
 	 * <i>Not intended to be overridden</i>
 	 */
 	@Override

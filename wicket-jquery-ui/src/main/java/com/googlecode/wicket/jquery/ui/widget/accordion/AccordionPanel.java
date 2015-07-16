@@ -142,8 +142,8 @@ public class AccordionPanel extends JQueryGenericPanel<List<ITab>> implements IA
 	 * Activates the selected tab<br/>
 	 * <b>Warning: </b> invoking this method results to a dual client-server round-trip. Use this method if you cannot use {@link #setActiveTab(int)} followed by {@code target.add(myTabbedPannel)}
 	 *
-	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the tab's index to activate
+	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void setActiveTab(int index, AjaxRequestTarget target)
 	{
