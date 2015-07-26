@@ -30,7 +30,7 @@ public class AjaxRangeSliderPage extends AbstractSliderPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Sliders //
-		final Label label = new Label("label", form.getModel()); //the supplied model allows the initial display
+		final Label label = new Label("label", form.getModel()); // the supplied model allows the initial display
 		form.add(label);
 
 		form.add(new AjaxRangeSlider("slider", form.getModel(), label) {
@@ -48,7 +48,7 @@ public class AjaxRangeSliderPage extends AbstractSliderPage
 
 	private void info(Component component, Form<?> form)
 	{
-		RangeValue value = (RangeValue) form.getModelObject(); //need to cast because 'form' argument is generic with ?
+		RangeValue value = (RangeValue) form.getModelObject(); // need to cast because 'form' argument is generic with ?
 
 		this.info(component.getMarkupId() + " has been slided");
 		this.info(String.format("lower value is %d and upper value is %d", value.getLower(), value.getUpper()));

@@ -56,8 +56,8 @@ public class SliderProgressBarPage extends AbstractProgressBarPage
 			@Override
 			public void onValueChanged(AjaxRequestTarget target)
 			{
-				//no need to set the model object to the progressbar's model; they already share the same model
-				//but we still need to inform the progressbar its model changed.
+				// no need to set the model object to the progressbar's model; they already share the same model
+				// but we still need to inform the progressbar its model changed.
 				progressbar.modelChanged();
 				progressbar.refresh(target);
 			}

@@ -139,7 +139,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 * @param script the {@link JavaScriptHeaderItem}
 	 * @param response the {@link IHeaderResponse}
 	 */
-	// XXX: renamed #renderScript to #renderOnDomReadyScript - **API BREAK**
 	protected void renderOnDomReadyScript(String script, IHeaderResponse response)
 	{
 		response.render(OnDomReadyHeaderItem.forScript(script));
@@ -169,7 +168,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 *
 	 * @return statement like 'jQuery(function() { ... });'
 	 */
-	// XXX: warning, not called anymore by #renderHead, check if overridden!
 	@Override
 	public String toString()
 	{

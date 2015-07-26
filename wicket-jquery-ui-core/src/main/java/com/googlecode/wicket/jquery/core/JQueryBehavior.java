@@ -23,7 +23,6 @@ import java.util.Map.Entry;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.util.lang.Args;
 
 /**
@@ -104,16 +103,14 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 		// renders javascript events
 		if (this.events != null)
 		{
-			StringBuilder statements = new StringBuilder("jQuery(function() { ");
+			StringBuilder statements = new StringBuilder();
 
 			for (String event : this.events)
 			{
 				statements.append(event);
 			}
 
-			statements.append(" });");
-
-			response.render(JavaScriptHeaderItem.forScript(statements, this.getToken() + "-events"));
+			this.renderOnDomReadyScript(statements.toString(), response);
 		}
 	}
 
@@ -286,10 +283,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	{
 		if (this.events == null)
 		{
-			synchronized (this)
-			{
-				this.events = new ArrayList<String>();
-			}
+			this.events = new ArrayList<String>();
 		}
 
 		this.events.add(statement);

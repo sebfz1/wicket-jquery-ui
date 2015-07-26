@@ -32,7 +32,7 @@ public class AjaxSliderPage extends AbstractSliderPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Sliders //
-		final Label label = new Label("label", this.model); //the supplied model allows the initial display
+		final Label label = new Label("label", this.model); // the supplied model allows the initial display
 		form.add(label);
 
 		form.add(new AjaxSlider("slider", this.model, label) {

@@ -71,7 +71,6 @@ public class ColorPickerPage extends AbstractSliderPage
 		this.info("The model object is: " + this.model.getObject());
 	}
 
-
 	/**
 	 * A FormComponentFragment would have been perfect here, but... it does not exists :s
 	 *
@@ -79,9 +78,9 @@ public class ColorPickerPage extends AbstractSliderPage
 	abstract class ColorPicker extends Fragment
 	{
 		private static final long serialVersionUID = 1L;
-		private static final int INDEX_R = 1;	//#RRxxxx
-		private static final int INDEX_G = 3;	//#xxGGxx
-		private static final int INDEX_B = 5;	//#xxxxBB
+		private static final int INDEX_R = 1; // #RRxxxx
+		private static final int INDEX_G = 3; // #xxGGxx
+		private static final int INDEX_B = 5; // #xxxxBB
 
 		private final IModel<Integer> modelR;
 		private final IModel<Integer> modelG;
@@ -107,8 +106,8 @@ public class ColorPickerPage extends AbstractSliderPage
 
 		/**
 		 * Updates the model with the new color.
-		 * @param target
-		 * @param form
+		 * 
+		 * @param target the {@link AjaxRequestTarget}
 		 */
 		private void changeColor(AjaxRequestTarget target)
 		{
@@ -123,6 +122,7 @@ public class ColorPickerPage extends AbstractSliderPage
 		// Events //
 		/**
 		 * Event which will be fired when the color has been changed.
+		 * 
 		 * @param target the {@link AjaxRequestTarget}
 		 */
 		protected abstract void onColorChanged(AjaxRequestTarget target);
@@ -130,6 +130,7 @@ public class ColorPickerPage extends AbstractSliderPage
 		// Factories //
 		/**
 		 * Gets a new {@link AjaxSlider} for the specified color model
+		 * 
 		 * @param id the markup id
 		 * @param model the (R|G|B) color model
 		 * @return the {@link AjaxSlider}
@@ -161,4 +162,3 @@ public class ColorPickerPage extends AbstractSliderPage
 		}
 	}
 }
-
