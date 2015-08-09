@@ -29,6 +29,7 @@ import java.util.Set;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.io.IClusterable;
 
+import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.jquery.core.utils.DateUtils;
 
 /**
@@ -128,34 +129,6 @@ public class Options implements IClusterable
 		}
 
 		return builder.toString();
-	}
-
-	/**
-	 * Helper method that adds a key/value JSON pair to the specified builder<br/>
-	 * If the supplied value is null, "null" is returned
-	 *
-	 * @param builder the {@link StringBuilder}
-	 * @param key the key
-	 * @param value the object
-	 */
-	// FIXME: replace where appropriate
-	// TODO: move to OptionsUtils
-	public static void append(StringBuilder builder, String key, Object value)
-	{
-		builder.append(Options.QUOTE).append(key).append(Options.QUOTE).append(": ").append(String.valueOf(value));
-	}
-
-	/**
-	 * Helper method that adds a key/value JSON pair to the specified builder
-	 *
-	 * @param builder the {@link StringBuilder}
-	 * @param key the key
-	 * @param value the value
-	 */
-	// TODO: move to OptionsUtils
-	public static void append(StringBuilder builder, String key, String value)
-	{
-		builder.append(Options.QUOTE).append(key).append(Options.QUOTE).append(": ").append(JSONObject.quote(value));
 	}
 
 	private final Map<String, Object> map;
@@ -269,7 +242,7 @@ public class Options implements IClusterable
 	 * <pre>
 	 * Options o = new Options();
 	 * o.set("foo", new Options("foo1", "value1"), new Options("foo2", Options.asString("value2")));
-	 *
+	 * 
 	 * results in json:
 	 * { "foo": [
 	 *            { "foo1": value1 },
@@ -298,7 +271,7 @@ public class Options implements IClusterable
 	 * <pre>
 	 * Options o = new Options();
 	 * o.set("foo", new Options("foo1", "value1"), new Options("foo2", Options.asString("value2")));
-	 *
+	 * 
 	 * results in json:
 	 * { "foo": [
 	 *            { "foo1": value1 },
@@ -344,7 +317,7 @@ public class Options implements IClusterable
 				builder.append(", ");
 			}
 
-			builder.append(QUOTE).append(entry.getKey()).append(QUOTE).append(": ").append(entry.getValue());
+			BuilderUtils.append(builder, entry.getKey(), entry.getValue());
 		}
 
 		return builder.append(" }").toString();

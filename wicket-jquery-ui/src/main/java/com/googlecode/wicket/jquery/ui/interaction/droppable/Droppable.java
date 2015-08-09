@@ -83,47 +83,11 @@ public abstract class Droppable<T> extends JQueryGenericContainer<T> implements 
 		// noop
 	}
 
-	@Override
-	public abstract void onDrop(AjaxRequestTarget target, Component component);
-
 	// IJQueryWidget //
 
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new DroppableBehavior(selector) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isOverEventEnabled()
-			{
-				return Droppable.this.isOverEventEnabled();
-			}
-
-			@Override
-			public boolean isExitEventEnabled()
-			{
-				return Droppable.this.isExitEventEnabled();
-			}
-
-			@Override
-			public void onDrop(AjaxRequestTarget target, Component component)
-			{
-				Droppable.this.onDrop(target, component);
-			}
-
-			@Override
-			public void onOver(AjaxRequestTarget target, Component component)
-			{
-				Droppable.this.onOver(target, component);
-			}
-
-			@Override
-			public void onExit(AjaxRequestTarget target, Component component)
-			{
-				Droppable.this.onExit(target, component);
-			}
-		};
+		return new DroppableBehavior(selector, this);
 	}
 }

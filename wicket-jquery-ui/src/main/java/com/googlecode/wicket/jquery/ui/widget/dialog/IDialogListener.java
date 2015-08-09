@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.ui.widget.dialog;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Event listener shared by the {@link AbstractDialog} widget and the {@link DialogBehavior}
@@ -24,7 +25,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  *
  */
-interface IDialogListener
+public interface IDialogListener extends IClusterable
 {
 	/**
 	 * Indicates whether the default close event (the click on the X-icon) is enabled

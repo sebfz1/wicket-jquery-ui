@@ -17,13 +17,14 @@
 package com.googlecode.wicket.jquery.core.event;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Specifies that a widget handles a value-changed ajax/websocket behavior
  *
  * @author Sebastien Briquet - sebfz1
  */
-public interface IValueChangedListener
+public interface IValueChangedListener extends IClusterable
 {
 	/**
 	 * Triggers when the value has changed

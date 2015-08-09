@@ -21,12 +21,14 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.ColumnAjaxBehavior.ClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.ToolbarAjaxBehavior.ToolbarClickEvent;
@@ -38,25 +40,27 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class DataTableBehavior extends KendoUIBehavior implements IJQueryAjaxAware, IDataTableListener
+public abstract class DataTableBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 
 	public static final String METHOD = "kendoGrid";
 
-	protected final List<? extends IColumn> columns;
-
+	private final IDataTableListener listener;
 	private JQueryAjaxBehavior onToolbarClickAjaxBehavior; // toolbar buttons
+
+	protected final List<? extends IColumn> columns;
 
 	/**
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param columns the list of {@link IColumn}
+	 * @param listener the {@link IDataTableListener}
 	 */
-	public DataTableBehavior(String selector, List<? extends IColumn> columns)
+	public DataTableBehavior(String selector, List<? extends IColumn> columns, IDataTableListener listener)
 	{
-		this(selector, new Options(), columns);
+		this(selector, new Options(), columns, listener);
 	}
 
 	/**
@@ -65,11 +69,13 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 * @param columns the list of {@link IColumn}
+	 * @param listener the {@link IDataTableListener}
 	 */
-	public DataTableBehavior(String selector, Options options, List<? extends IColumn> columns)
+	public DataTableBehavior(String selector, Options options, List<? extends IColumn> columns, IDataTableListener listener)
 	{
 		super(selector, METHOD, options);
 
+		this.listener = Args.notNull(listener, "listener");
 		this.columns = columns;
 	}
 
@@ -206,12 +212,15 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 					}
 
 					builder.append("{ ");
-					builder.append("'name': '").append(button.getName()).append("', ");
-					builder.append("'text': '").append(button.toString()).append("', ");
+					BuilderUtils.append(builder, "name", button.getName());
+					builder.append(", ");
+					BuilderUtils.append(builder, "text", button.toString());
+					builder.append(", ");
 
 					if (!Strings.isEmpty(css)) /* important */
 					{
-						builder.append("'className': '").append(css).append("', ");
+						BuilderUtils.append(builder, "className", css);
+						builder.append(", ");
 					}
 
 					builder.append("'click': ").append(behavior.getCallbackFunction());
@@ -235,12 +244,12 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 			ClickEvent e = (ClickEvent) event;
 			e.getButton().onClick(target, e.getValue());
 
-			this.onClick(target, e.getButton(), e.getValue());
+			this.listener.onClick(target, e.getButton(), e.getValue());
 		}
 		else if (event instanceof ToolbarClickEvent)
 		{
 			ToolbarClickEvent e = (ToolbarClickEvent) event;
-			this.onClick(target, e.getButton(), e.getValues());
+			this.listener.onClick(target, e.getButton(), e.getValues());
 		}
 	}
 
@@ -255,8 +264,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	protected abstract JQueryAjaxBehavior newToolbarClickAjaxBehavior(IJQueryAjaxAware source);
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called by a table's button.
-	 * This method may be overridden to provide additional behaviors
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called by a table's button. This method may be overridden to provide additional behaviors
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}

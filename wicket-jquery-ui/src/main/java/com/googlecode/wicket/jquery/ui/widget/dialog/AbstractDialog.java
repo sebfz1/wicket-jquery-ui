@@ -401,38 +401,14 @@ public abstract class AbstractDialog<T extends Serializable> extends GenericPane
 	@Override
 	public DialogBehavior newWidgetBehavior(String selector)
 	{
-		return new DialogBehavior(selector) {
+		return new DialogBehavior(selector, this) {
 
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isDefaultCloseEventEnabled()
-			{
-				return AbstractDialog.this.isDefaultCloseEventEnabled();
-			}
-
-			@Override
-			public boolean isEscapeCloseEventEnabled()
-			{
-				return AbstractDialog.this.isEscapeCloseEventEnabled();
-			}
 
 			@Override
 			protected List<DialogButton> getButtons()
 			{
 				return AbstractDialog.this.getButtons();
-			}
-
-			@Override
-			public void onClick(AjaxRequestTarget target, DialogButton button)
-			{
-				AbstractDialog.this.internalOnClick(target, button);
-			}
-
-			@Override
-			public void onClose(AjaxRequestTarget target, DialogButton button)
-			{
-				AbstractDialog.this.onClose(target, button);
 			}
 
 			@Override

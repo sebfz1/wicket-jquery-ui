@@ -24,7 +24,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Sebastien Briquet - sebfz1
  * @since 6.20.0
  */
-interface IContextMenuListener
+interface IContextMenuListener extends IMenuListener
 {
 	/**
 	 * Indicates whether the 'open' event is enabled.<br />

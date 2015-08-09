@@ -24,6 +24,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 
 /**
  * Base class for {@link IColumn}{@code s} implementation
@@ -224,17 +225,17 @@ public abstract class AbstractColumn implements IColumn
 	{
 		StringBuilder builder = new StringBuilder();
 
-		builder.append(Options.QUOTE).append("title").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(this.getTitle()).append(Options.QUOTE);
+		BuilderUtils.append(builder, "title", this.getTitle());
 		builder.append(", ");
-		builder.append(Options.QUOTE).append("field").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(this.getField()).append(Options.QUOTE);
+		BuilderUtils.append(builder, "field", this.getField());
 
 		builder.append(", ");
-		builder.append(Options.QUOTE).append("hidden").append(Options.QUOTE).append(": ").append(!this.isVisible());
+		BuilderUtils.append(builder, "hidden", !this.isVisible());
 
 		if (this.getWidth() > 0)
 		{
 			builder.append(", ");
-			builder.append(Options.QUOTE).append("width").append(Options.QUOTE).append(": ").append(this.getWidth());
+			BuilderUtils.append(builder, "width", this.getWidth());
 		}
 
 		// nullable options (string) //
@@ -242,25 +243,25 @@ public abstract class AbstractColumn implements IColumn
 		if (this.getFormat() != null)
 		{
 			builder.append(", ");
-			builder.append(Options.QUOTE).append("format").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(this.getFormat()).append(Options.QUOTE);
+			BuilderUtils.append(builder, "format", this.getFormat());
 		}
 
 		if (this.getTemplate() != null)
 		{
 			builder.append(", ");
-			builder.append(Options.QUOTE).append("template").append(Options.QUOTE).append(": ").append(this.getTemplate());
+			BuilderUtils.append(builder, "template", this.getTemplate());
 		}
 
 		if (this.getGroupHeaderTemplate() != null)
 		{
 			builder.append(", ");
-			builder.append(Options.QUOTE).append("groupHeaderTemplate").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(this.getGroupHeaderTemplate()).append(Options.QUOTE);
+			BuilderUtils.append(builder, "groupHeaderTemplate", this.getGroupHeaderTemplate());
 		}
 
 		if (this.getGroupFooterTemplate() != null)
 		{
 			builder.append(", ");
-			builder.append(Options.QUOTE).append("groupFooterTemplate").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(this.getGroupFooterTemplate()).append(Options.QUOTE);
+			BuilderUtils.append(builder, "groupFooterTemplate", this.getGroupFooterTemplate());
 		}
 
 		// nullable options (object) //

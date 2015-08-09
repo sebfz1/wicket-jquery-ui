@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.widget.splitter;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -33,22 +34,24 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAware, ISplitterListener
+public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "kendoSplitter";
 
-	private JQueryAjaxBehavior onExpandAjaxBehavior;
-	private JQueryAjaxBehavior onCollapseAjaxBehavior;
+	private final ISplitterListener listener;
+	private JQueryAjaxBehavior onExpandAjaxBehavior = null;
+	private JQueryAjaxBehavior onCollapseAjaxBehavior = null;
 
 	/**
 	 * Constructor
 	 * 
 	 * @param selector the html selector (ie: "#myId")
+	 * @param listener the {@link ISplitterListener}
 	 */
-	public SplitterBehavior(String selector)
+	public SplitterBehavior(String selector, ISplitterListener listener)
 	{
-		this(selector, new Options());
+		this(selector, new Options(), listener);
 	}
 
 	/**
@@ -56,10 +59,13 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	 * 
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
+	 * @param listener the {@link ISplitterListener}
 	 */
-	public SplitterBehavior(String selector, Options options)
+	public SplitterBehavior(String selector, Options options, ISplitterListener listener)
 	{
 		super(selector, METHOD, options);
+
+		this.listener = Args.notNull(listener, "listener");
 	}
 
 	// Methods //
@@ -69,11 +75,17 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	{
 		super.bind(component);
 
-		this.onExpandAjaxBehavior = this.newOnExpandAjaxBehavior(this);
-		component.add(this.onExpandAjaxBehavior);
+		if (this.listener.isExpandEventEnabled())
+		{
+			this.onExpandAjaxBehavior = this.newOnExpandAjaxBehavior(this);
+			component.add(this.onExpandAjaxBehavior);
+		}
 
-		this.onCollapseAjaxBehavior = this.newOnCollapseAjaxBehavior(this);
-		component.add(this.onCollapseAjaxBehavior);
+		if (this.listener.isCollapseEventEnabled())
+		{
+			this.onCollapseAjaxBehavior = this.newOnCollapseAjaxBehavior(this);
+			component.add(this.onCollapseAjaxBehavior);
+		}
 	}
 
 	/**
@@ -100,20 +112,6 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 		target.appendJavaScript(String.format("$('%s').data('%s').collapse('%s');", this.selector, METHOD, pane));
 	}
 
-	// Properties //
-
-	@Override
-	public boolean isExpandEventEnabled()
-	{
-		return false;
-	}
-
-	@Override
-	public boolean isCollapseEventEnabled()
-	{
-		return false;
-	}
-
 	// Events //
 
 	@Override
@@ -121,8 +119,15 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	{
 		super.onConfigure(component);
 
-		this.setOption("expand", this.onExpandAjaxBehavior.getCallbackFunction());
-		this.setOption("collapse", this.onCollapseAjaxBehavior.getCallbackFunction());
+		if (this.onExpandAjaxBehavior != null)
+		{
+			this.setOption("expand", this.onExpandAjaxBehavior.getCallbackFunction());
+		}
+
+		if (this.onCollapseAjaxBehavior != null)
+		{
+			this.setOption("collapse", this.onCollapseAjaxBehavior.getCallbackFunction());
+		}
 	}
 
 	@Override
@@ -130,25 +135,13 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	{
 		if (event instanceof ExpandEvent)
 		{
-			this.onExpand(target, ((ExpandEvent) event).getPaneId());
+			this.listener.onExpand(target, ((ExpandEvent) event).getPaneId());
 		}
 
 		if (event instanceof CollapseEvent)
 		{
-			this.onCollapse(target, ((CollapseEvent) event).getPaneId());
+			this.listener.onCollapse(target, ((CollapseEvent) event).getPaneId());
 		}
-	}
-
-	@Override
-	public void onExpand(AjaxRequestTarget target, String paneId)
-	{
-		// noop
-	}
-
-	@Override
-	public void onCollapse(AjaxRequestTarget target, String paneId)
-	{
-		// noop
 	}
 
 	// Factories //

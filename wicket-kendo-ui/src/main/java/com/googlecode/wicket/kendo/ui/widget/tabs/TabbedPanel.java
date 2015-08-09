@@ -163,7 +163,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	public int getLastTabIndex()
 	{
 		int index = -1;
-		
+
 		for (ITab tab : this.getModelObject())
 		{
 			if (tab.isVisible())
@@ -305,7 +305,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	@Override
 	public TabsBehavior newWidgetBehavior(String selector)
 	{
-		return new TabsBehavior(selector, this.options) {
+		return new TabsBehavior(selector, this.options, this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -313,42 +313,6 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 			protected List<ITab> getTabs()
 			{
 				return TabbedPanel.this.getModelObject();
-			}
-
-			@Override
-			public boolean isSelectEventEnabled()
-			{
-				return TabbedPanel.this.isSelectEventEnabled();
-			}
-
-			@Override
-			public boolean isShowEventEnabled()
-			{
-				return TabbedPanel.this.isShowEventEnabled();
-			}
-
-			@Override
-			public boolean isActivateEventEnabled()
-			{
-				return TabbedPanel.this.isActivateEventEnabled();
-			}
-
-			@Override
-			public void onSelect(AjaxRequestTarget target, int index, ITab tab)
-			{
-				TabbedPanel.this.onSelect(target, index, tab);
-			}
-
-			@Override
-			public void onShow(AjaxRequestTarget target, int index, ITab tab)
-			{
-				TabbedPanel.this.onShow(target, index, tab);
-			}
-
-			@Override
-			public void onActivate(AjaxRequestTarget target, int index, ITab tab)
-			{
-				TabbedPanel.this.onActivate(target, index, tab);
 			}
 		};
 	}

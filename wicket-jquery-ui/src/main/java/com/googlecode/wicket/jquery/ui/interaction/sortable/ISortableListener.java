@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.ui.interaction.sortable;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Event listener shared by the {@link Sortable} widget and the {@link SortableBehavior}
@@ -24,19 +25,21 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-interface ISortableListener<T>
+public interface ISortableListener<T> extends IClusterable
 {
 	/**
 	 * Indicates whether the 'receive' event is enabled.<br />
 	 * If true, the {@link #onReceive(AjaxRequestTarget, Object, int)} event will be triggered.
-	 * @return true or false
+	 * 
+	 * @return false by default
 	 */
 	boolean isOnReceiveEnabled();
 
 	/**
 	 * Indicates whether the 'remove' event is enabled.<br />
 	 * If true, the {@link #onRemove(AjaxRequestTarget, Object)} event will be triggered.
-	 * @return true or false
+	 * 
+	 * @return false by default
 	 */
 	boolean isOnRemoveEnabled();
 
@@ -51,6 +54,7 @@ interface ISortableListener<T>
 
 	/**
 	 * Triggered when a connected sortable list has received an item from another list.
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param item the item that has been received
 	 * @param index the item's new index (zero based)
@@ -59,6 +63,7 @@ interface ISortableListener<T>
 
 	/**
 	 * Triggered when a sortable item has been dragged out from the list and into another.
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param item the item that has been received
 	 */

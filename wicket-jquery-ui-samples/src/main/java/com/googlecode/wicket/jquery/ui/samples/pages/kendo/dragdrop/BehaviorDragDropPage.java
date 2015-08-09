@@ -6,9 +6,12 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 
 import com.googlecode.wicket.kendo.ui.console.Console;
 import com.googlecode.wicket.kendo.ui.interaction.draggable.DraggableBehavior;
+import com.googlecode.wicket.kendo.ui.interaction.draggable.IDraggableListener;
+import com.googlecode.wicket.kendo.ui.interaction.droppable.DroppableAdaper;
 import com.googlecode.wicket.kendo.ui.interaction.droppable.DroppableBehavior;
+import com.googlecode.wicket.kendo.ui.interaction.droppable.IDroppableListener;
 
-public class BehaviorDragDropPage extends AbstractDragDropPage
+public class BehaviorDragDropPage extends AbstractDragDropPage implements IDraggableListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -22,85 +25,14 @@ public class BehaviorDragDropPage extends AbstractDragDropPage
 
 		// draggable //
 		WebMarkupContainer container = new WebMarkupContainer("draggable");
-		container.add(this.newDraggableBehavior());
+		container.add(new DraggableBehavior(this));
 		this.add(container);
 
 		// droppable //
-		this.add(this.newDroppableBehavior("#wrapper-panel-frame"));
+		this.add(new DroppableBehavior("#wrapper-panel-frame", this.newDroppableListener()));
 	}
 
-	private DraggableBehavior newDraggableBehavior()
-	{
-		return new DraggableBehavior() {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isCancelEventEnabled()
-			{
-				// not enabled to prevent unnecessary server round-trips.
-				return false;
-			}
-
-			@Override
-			public void onDragStart(AjaxRequestTarget target, int top, int left)
-			{
-				info(target, String.format("Draggable: onDragStart, position [%d, %d]", top, left));
-			}
-
-			@Override
-			public void onDragStop(AjaxRequestTarget target, int top, int left)
-			{
-				info(target, String.format("Draggable: onDragStop, position [%d, %d]", top, left));
-			}
-
-			@Override
-			public void onDragCancel(AjaxRequestTarget target, int top, int left)
-			{
-				// noop
-			}
-		};
-	}
-
-	private DroppableBehavior newDroppableBehavior(String selector)
-	{
-		return new DroppableBehavior(selector) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isDragEnterEventEnabled()
-			{
-				// not enabled to prevent unnecessary server round-trips.
-				return false;
-			}
-
-			@Override
-			public boolean isDragLeaveEventEnabled()
-			{
-				// not enabled to prevent unnecessary server round-trips.
-				return false;
-			}
-
-			@Override
-			public void onDragEnter(AjaxRequestTarget target, Component component)
-			{
-				// noop 
-			}
-
-			@Override
-			public void onDragLeave(AjaxRequestTarget target, Component component)
-			{
-				// noop
-			}
-
-			@Override
-			public void onDrop(AjaxRequestTarget target, Component component)
-			{
-				info(target, "Droppable: onDrop", component);
-			}
-		};
-	}
+	// Methods //
 
 	protected void info(AjaxRequestTarget target, String message)
 	{
@@ -110,5 +42,48 @@ public class BehaviorDragDropPage extends AbstractDragDropPage
 	protected void info(AjaxRequestTarget target, String message, Component component)
 	{
 		this.console.info(target, String.format("%s - %s", message, component.getMarkupId()));
+	}
+
+	// IDraggableListener //
+
+	@Override
+	public boolean isCancelEventEnabled()
+	{
+		// not enabled to prevent unnecessary server round-trips.
+		return false;
+	}
+
+	@Override
+	public void onDragStart(AjaxRequestTarget target, int top, int left)
+	{
+		this.info(target, String.format("Draggable: onDragStart, position [%d, %d]", top, left));
+	}
+
+	@Override
+	public void onDragStop(AjaxRequestTarget target, int top, int left)
+	{
+		this.info(target, String.format("Draggable: onDragStop, position [%d, %d]", top, left));
+	}
+
+	@Override
+	public void onDragCancel(AjaxRequestTarget target, int top, int left)
+	{
+		// noop
+	}
+
+	// IDroppableListener //
+
+	private IDroppableListener newDroppableListener()
+	{
+		return new DroppableAdaper() {
+
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public void onDrop(AjaxRequestTarget target, Component component)
+			{
+				info(target, "Droppable: onDrop", component);
+			}
+		};
 	}
 }
