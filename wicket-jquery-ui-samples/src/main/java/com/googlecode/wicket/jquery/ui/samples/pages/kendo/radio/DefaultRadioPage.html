@@ -7,7 +7,29 @@
 </head>
 <body>
 <wicket:extend>
+	<ul wicket:id="radiogroup">
+		<li>
+			<input wicket:id="radio1" type="radio"/>
+			<label wicket:id="label1">[label]</label>
+		</li>
+		
+		<li>
+			<input wicket:id="radio11" type="radio"/>
+			<label wicket:id="label11">[label]</label>
+		</li>
+
+		<li>
+			<input wicket:id="radio2" type="radio"/>
+			<label wicket:id="label2">[label]</label>
+		</li>
+	</ul>
+	<br/>
 	
+	<form wicket:id="form">
+		<button wicket:id="show">Show</button>
+	</form>	
+	<br/>
+	<div wicket:id="feedback"></div>
 </wicket:extend>
 </body>
 </html>
