@@ -60,16 +60,16 @@ public class DefaultRadioPage extends AbstractRadioPage
         Label label1 = new Label("label1", "My radio 1", radio1);
         group.add(label1);
 
-        Radio<String> radio11 = new Radio<String>("radio2", Model.of("My radio 2"), group);
-        group.add(radio11);
-        Label label11 = new Label("label2", "My radio 2", radio11);
-        group.add(label11);
-
-        Radio<String> radio2 = new Radio<String>("radio3", Model.of("My radio 3"), group);
-        group.add(radio2.setEnabled(false));
-
-        Label label2 = new Label("label3", "My radio 3", radio2);
+        Radio<String> radio2 = new Radio<String>("radio2", Model.of("My radio 2"), group);
+        group.add(radio2);
+        Label label2 = new Label("label2", "My radio 2", radio2);
         group.add(label2);
+
+        Radio<String> radio3 = new Radio<String>("radio3", Model.of("My radio 3"), group);
+        group.add(radio3.setEnabled(false));
+
+        Label label3 = new Label("label3", "My radio 3", radio3);
+        group.add(label3);
 
     }
 

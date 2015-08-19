@@ -34,7 +34,6 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget;
  * @author Tedlabs46
  *
  */
-// TODO: add sample for Radio
 public class Radio<T> extends org.apache.wicket.markup.html.form.Radio<T>
 {
 	private static final long serialVersionUID = 1L;
