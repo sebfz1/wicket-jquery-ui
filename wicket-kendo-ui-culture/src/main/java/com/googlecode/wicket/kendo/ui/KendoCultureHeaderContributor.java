@@ -4,15 +4,12 @@ import java.util.Locale;
 
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.IHeaderContributor;
+import org.apache.wicket.util.lang.Args;
 
 /**
- * IHeaderContributor to easily add {@link KendoCultureHeaderItem} to each page by using
- * 
- * <pre>
- * org.apache.wicket.Application#getHeaderContributorListeners().add(new KendoCultureHeaderContributor(Locale locale))
- * </pre>
+ * {@link IHeaderContributor} to easily add {@link KendoCultureHeaderItem} to each page by using {@code org.apache.wicket.Application#getHeaderContributorListeners().add(new KendoCultureHeaderContributor(locale))} <br/>
  * Usage:
- *
+ * 
  * <pre>
  * <code>
  * public class MyApplication extends WebApplication
@@ -20,9 +17,9 @@ import org.apache.wicket.markup.html.IHeaderContributor;
  * 	public void init()
  * 	{
  * 		super.init();
- * 
- * 		getHeaderContributorListenerCollection().add(new KendoCultureHeaderContributor(Locale locale));
- *
+ * 		
+ * 		Locale locale = Locale.GERMANY;
+ * 		getHeaderContributorListenerCollection().add(new KendoCultureHeaderContributor(locale));
  * 	}
  * }
  * </code>
@@ -31,17 +28,25 @@ import org.apache.wicket.markup.html.IHeaderContributor;
  * @author Patrick Davids - Patrick1701
  *
  */
-public class KendoCultureHeaderContributor implements IHeaderContributor {
+public class KendoCultureHeaderContributor implements IHeaderContributor
+{
 	private static final long serialVersionUID = 1L;
-	
+
 	private final Locale locale;
-	
-	public KendoCultureHeaderContributor(Locale locale) {
-		this.locale = locale;
-	}
-	
-	public void renderHead(IHeaderResponse response) {
-		response.render(new KendoCultureHeaderItem(this.locale));
+
+	/**
+	 * Constructor
+	 * 
+	 * @param locale the {@link Locale}
+	 */
+	public KendoCultureHeaderContributor(Locale locale)
+	{
+		this.locale = Args.notNull(locale, "locale");
 	}
 
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		response.render(new KendoCultureHeaderItem(this.locale));
+	}
 }

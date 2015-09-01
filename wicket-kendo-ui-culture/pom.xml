@@ -19,17 +19,11 @@
 	
 	<dependencies>
 	
-		<!-- PROJECT DEPENDENCIES -->
-		<dependency>
-			<groupId>com.googlecode.wicket-jquery-ui</groupId>
-			<artifactId>wicket-jquery-ui-core</artifactId>
-			<version>6.20.1-SNAPSHOT</version>
-		</dependency>
+		<!-- KENDO-UI DEPENDENCIES -->
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>wicket-kendo-ui</artifactId>
 			<version>6.20.1-SNAPSHOT</version>
-			<type>bundle</type>
 		</dependency>
 
 		<!-- WICKET DEPENDENCIES -->
