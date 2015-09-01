@@ -51,10 +51,10 @@ public class KendoCultureHeaderItem extends JavaScriptContentHeaderItem {
 	public Iterable<? extends HeaderItem> getDependencies() {
 		List<HeaderItem> dependencies = new ArrayList<HeaderItem>();
 		
-		//depence on
+		//depends on
 		dependencies.add(JavaScriptHeaderItem.forReference(KendoUILibrarySettings.get().getJavaScriptReference()));
 
-		//depence on
+		//depends on
 		dependencies.add(JavaScriptHeaderItem.forReference(new KendoGlobalizeResourceReference(this.locale)));
 		return dependencies;
 	}
