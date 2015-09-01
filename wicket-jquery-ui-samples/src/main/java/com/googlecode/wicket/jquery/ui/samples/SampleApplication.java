@@ -105,7 +105,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/kendo/multiselect", DefaultMultiSelectPage.class);
 		this.mountPackage("/kendo/notification", DefaultNotificationPage.class);
 		this.mountPackage("/kendo/progressbar", KendoProgressBarPage.class);
-        this.mountPackage("/kendo/radio", DefaultRadioPage.class);
+		this.mountPackage("/kendo/radio", DefaultRadioPage.class);
 		this.mountPackage("/kendo/scheduler", DefaultSchedulerPage.class);
 		this.mountPackage("/kendo/splitter", DefaultSplitterPage.class);
 		this.mountPackage("/kendo/tabs", KendoTabsPage.class);
