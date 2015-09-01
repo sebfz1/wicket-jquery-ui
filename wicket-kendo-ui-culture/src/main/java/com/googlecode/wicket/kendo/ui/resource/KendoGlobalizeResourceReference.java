@@ -16,17 +16,21 @@
  */
 package com.googlecode.wicket.kendo.ui.resource;
 
+import java.util.List;
 import java.util.Locale;
 
+import org.apache.wicket.markup.head.HeaderItem;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
+import org.apache.wicket.util.lang.Generics;
 
-import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 import com.googlecode.wicket.kendo.ui.KendoCulture;
+import com.googlecode.wicket.kendo.ui.settings.KendoUILibrarySettings;
 
 /**
  * The resource reference for the Kendo Globalize javascript library.<br/>
  * <br/>
- * <b>Warning:</b> When globalize.js is registered before Kendo scripts, then Kendo will use globalize.js features instead of Kendo Globalization.
+ * <b>Warning:</b> When (jQuery) globalize.js is registered before Kendo scripts, then Kendo will use globalize.js features instead of Kendo Globalization.
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -44,7 +48,7 @@ public class KendoGlobalizeResourceReference extends JQueryPluginResourceReferen
 	 */
 	public KendoGlobalizeResourceReference(Locale locale)
 	{
-		this(LocaleUtils.getLangageCode(locale));
+		this(locale.toLanguageTag()); // java7
 	}
 
 	/**
@@ -65,5 +69,20 @@ public class KendoGlobalizeResourceReference extends JQueryPluginResourceReferen
 	public KendoGlobalizeResourceReference(String culture)
 	{
 		super(KendoGlobalizeResourceReference.class, String.format(FILENAME_PATTERN, culture));
+	}
+
+	@Override
+	public List<HeaderItem> getDependencies()
+	{
+		List<HeaderItem> dependencies = Generics.newArrayList();
+
+		for (HeaderItem headerItem : super.getDependencies())
+		{
+			dependencies.add(headerItem);
+		}
+
+		dependencies.add(JavaScriptHeaderItem.forReference(KendoUILibrarySettings.get().getJavaScriptReference()));
+
+		return dependencies;
 	}
 }
