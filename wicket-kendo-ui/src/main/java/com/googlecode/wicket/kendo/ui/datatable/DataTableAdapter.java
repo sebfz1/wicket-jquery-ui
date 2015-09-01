@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.datatable;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.json.JSONObject;
 
 /**
  * Adapter class for {@link IDataTableListener}
@@ -30,14 +31,38 @@ public class DataTableAdapter implements IDataTableListener
 	private static final long serialVersionUID = 1L;
 
 	@Override
+	public void onClick(AjaxRequestTarget target, CommandButton button, String value)
+	{
+		// noop
+	}
+	
+	@Override
 	public void onClick(AjaxRequestTarget target, String button, List<String> values)
 	{
 		// noop
 	}
 
 	@Override
-	public void onClick(AjaxRequestTarget target, ColumnButton button, String value)
+	public void onCancel(AjaxRequestTarget target)
+	{
+		// noop		
+	}
+
+	@Override
+	public void onCreate(AjaxRequestTarget target, JSONObject object)
+	{
+		// noop		
+	}
+
+	@Override
+	public void onUpdate(AjaxRequestTarget target, JSONObject object)
 	{
 		// noop
+	}
+
+	@Override
+	public void onDelete(AjaxRequestTarget target, JSONObject object)
+	{
+		// noop		
 	}
 }

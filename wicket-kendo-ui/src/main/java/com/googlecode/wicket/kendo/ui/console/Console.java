@@ -72,8 +72,8 @@ public class Console extends AbstractConsole
 	 * Helper method that logs an info message
 	 *
 	 * @param message the message to log
-	 * @deprecated too confusing with {@link #info(Serializable)}, use {@link #log(Serializable, boolean)} or {@link #info(AjaxRequestTarget, Serializable)} instead
-	 * TODO: 6.22.0/7.1.0 remove
+	 * @deprecated too confusing with {@link #info(Serializable)}, use {@link #log(Serializable, boolean)} or {@link #info(IPartialPageRequestHandler, Serializable)} instead
+	 * TODO: 6.22.0/7.1.0 - remove
 	 */
 	@Deprecated
 	public void info(String message)

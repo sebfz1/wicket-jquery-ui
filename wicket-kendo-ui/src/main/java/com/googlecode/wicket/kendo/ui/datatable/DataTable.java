@@ -20,12 +20,15 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -33,7 +36,9 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
-import com.googlecode.wicket.kendo.ui.datatable.ColumnAjaxBehavior.ClickEvent;
+import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
+import com.googlecode.wicket.kendo.ui.datatable.CommandAjaxBehavior.ClickEvent;
+import com.googlecode.wicket.kendo.ui.datatable.behavior.DataBoundBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 
 /**
@@ -47,10 +52,10 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	private static final long serialVersionUID = 1L;
 
 	/** The behavior that ajax-loads data */
-	private AbstractAjaxBehavior sourceBehavior;
+	private AbstractAjaxBehavior providerBehavior;
 
 	private final Options options;
-	private final List<? extends IColumn> columns;
+	private final IModel<List<IColumn>> columns;
 	private final IDataProvider<T> provider;
 	private final long rows;
 
@@ -62,7 +67,34 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @param provider the {@link IDataProvider}
 	 * @param rows the number of rows per page to be displayed
 	 */
-	public DataTable(String id, final List<? extends IColumn> columns, final IDataProvider<T> provider, final long rows)
+	public DataTable(String id, final List<IColumn> columns, final IDataProvider<T> provider, final long rows)
+	{
+		this(id, new ListModel<IColumn>(columns), provider, rows, new Options());
+	}
+
+	/**
+	 * Main constructor
+	 *
+	 * @param id the markup id
+	 * @param columns the list of {@link IColumn}
+	 * @param provider the {@link IDataProvider}
+	 * @param rows the number of rows per page to be displayed
+	 * @param options the {@link Options}
+	 */
+	public DataTable(String id, final List<IColumn> columns, final IDataProvider<T> provider, final long rows, Options options)
+	{
+		this(id, new ListModel<IColumn>(columns), provider, rows, options);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param columns the list of {@link IColumn}
+	 * @param provider the {@link IDataProvider}
+	 * @param rows the number of rows per page to be displayed
+	 */
+	public DataTable(String id, final IModel<List<IColumn>> columns, final IDataProvider<T> provider, final long rows)
 	{
 		this(id, columns, provider, rows, new Options());
 	}
@@ -76,7 +108,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @param rows the number of rows per page to be displayed
 	 * @param options the {@link Options}
 	 */
-	public DataTable(String id, final List<? extends IColumn> columns, final IDataProvider<T> provider, final long rows, Options options)
+	public DataTable(String id, final IModel<List<IColumn>> columns, final IDataProvider<T> provider, final long rows, Options options)
 	{
 		super(id);
 
@@ -89,13 +121,13 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	// Methods //
 
 	/**
-	 * Gets the Kendo (jQuery) object
+	 * Gets the Kendo UI widget
 	 *
 	 * @return the jQuery object
 	 */
 	protected String widget()
-	{
-		return String.format("jQuery('%s').data('%s')", JQueryWidget.getSelector(this), DataTableBehavior.METHOD);
+	{	
+		return KendoUIBehavior.widget(this, DataTableBehavior.METHOD);
 	}
 
 	/**
@@ -123,13 +155,34 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	/**
-	 * Reloads data and refreshes the {@link DataTable}
+	 * Resets the dataSource to the first page
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public void reset(AjaxRequestTarget target)
+	{
+		target.appendJavaScript(String.format("var $w = %s; if ($w) { $w.dataSource.page(1); }", this.widget()));
+	}
+
+	/**
+	 * Reloads the {@link DataTable}<br/>
+	 * Equivalent to {@code target.add(table);}
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public void reload(AjaxRequestTarget target)
+	{
+		target.add(this);
+	}
+
+	/**
+	 * Reloads current data and refreshes the {@link DataTable}
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void refresh(AjaxRequestTarget target)
 	{
-		target.appendJavaScript(String.format("var grid = %s; grid.dataSource.read(); grid.refresh();", this.widget()));
+		target.appendJavaScript(String.format("var $w = %s; if ($w) { $w.dataSource.read(); }", this.widget()));
 	}
 
 	// Properties //
@@ -159,39 +212,19 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 *
 	 * @return the {@link List} of {@link IColumn}{@code s}
 	 */
-	public final List<? extends IColumn> getColumns()
+	public final List<IColumn> getColumns()
 	{
-		return Collections.unmodifiableList(this.columns);
+		return Collections.unmodifiableList(this.columns.getObject());
 	}
 
 	/**
-	 * Get the JSON model of the datasource's schema
+	 * Gets the data-provider behavior's url
 	 *
-	 * @return the model, as JSON object
+	 * @return the data-provider behavior's url
 	 */
-	protected Options getSchemaModel()
+	protected final CharSequence getProviderCallbackUrl()
 	{
-		Options fields = new Options();
-
-		for (IColumn column : this.getColumns())
-		{
-			if (column.getType() != null)
-			{
-				fields.set(column.getField(), new Options("type", Options.asString(column.getType())));
-			}
-		}
-
-		return new Options("fields", fields);
-	}
-
-	/**
-	 * Gets the data-source behavior's url
-	 *
-	 * @return the data-source behavior's url
-	 */
-	protected final CharSequence getSourceCallbackUrl()
-	{
-		return this.sourceBehavior.getCallbackUrl();
+		return this.providerBehavior.getCallbackUrl();
 	}
 
 	// Events //
@@ -201,9 +234,9 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	{
 		super.onInitialize();
 
-		this.sourceBehavior = this.newDataSourceBehavior(this.columns, this.provider);
-		this.add(this.sourceBehavior);
-		
+		this.providerBehavior = this.newDataProviderBehavior(this.columns, this.provider);
+		this.add(this.providerBehavior);
+
 		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
 	}
 
@@ -211,6 +244,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	public void onConfigure(JQueryBehavior behavior)
 	{
 		behavior.setOption("sortable", this.provider instanceof ISortStateLocator<?>);
+		behavior.setOption("autoBind", this.getBehaviors(DataBoundBehavior.class).isEmpty()); // false if DataBoundBehavior is added
 	}
 
 	@Override
@@ -246,13 +280,37 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	@Override
-	public void onClick(AjaxRequestTarget target, ColumnButton button, String value)
+	public void onClick(AjaxRequestTarget target, String button, List<String> values)
 	{
 		// noop
 	}
 
 	@Override
-	public void onClick(AjaxRequestTarget target, String button, List<String> values)
+	public void onClick(AjaxRequestTarget target, CommandButton button, String value)
+	{
+		// noop
+	}
+
+	@Override
+	public void onCancel(AjaxRequestTarget target)
+	{
+		// noop
+	}
+
+	@Override
+	public void onCreate(AjaxRequestTarget target, JSONObject object)
+	{
+		// noop
+	}
+
+	@Override
+	public void onUpdate(AjaxRequestTarget target, JSONObject object)
+	{
+		// noop
+	}
+
+	@Override
+	public void onDelete(AjaxRequestTarget target, JSONObject object)
 	{
 		// noop
 	}
@@ -275,15 +333,9 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 			}
 
 			@Override
-			protected Options getSchemaModel()
+			protected CharSequence getProviderCallbackUrl()
 			{
-				return DataTable.this.getSchemaModel();
-			}
-
-			@Override
-			protected CharSequence getSourceCallbackUrl()
-			{
-				return DataTable.this.getSourceCallbackUrl();
+				return DataTable.this.getProviderCallbackUrl();
 			}
 
 			// Factories //
@@ -295,7 +347,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 			}
 
 			@Override
-			protected JQueryAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
+			protected JQueryAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, CommandButton button)
 			{
 				return DataTable.this.newColumnAjaxBehavior(source, button);
 			}
@@ -305,15 +357,15 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	// Factories //
 
 	/**
-	 * Gets a new {@link DataSourceBehavior}
+	 * Gets a new {@link DataProviderBehavior}
 	 *
 	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
 	 * @return the {@link AbstractAjaxBehavior}
 	 */
-	protected AbstractAjaxBehavior newDataSourceBehavior(final List<? extends IColumn> columns, final IDataProvider<T> provider)
+	protected AbstractAjaxBehavior newDataProviderBehavior(final IModel<List<IColumn>> columns, final IDataProvider<T> provider)
 	{
-		return new DataSourceBehavior<T>(columns, provider);
+		return new DataProviderBehavior<T>(columns, provider);
 	}
 
 	/**
@@ -335,8 +387,8 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newColumnAjaxBehavior(IJQueryAjaxAware source, ColumnButton button)
+	protected JQueryAjaxBehavior newColumnAjaxBehavior(IJQueryAjaxAware source, CommandButton button)
 	{
-		return new ColumnAjaxBehavior(source, button);
+		return new CommandAjaxBehavior(source, button);
 	}
 }

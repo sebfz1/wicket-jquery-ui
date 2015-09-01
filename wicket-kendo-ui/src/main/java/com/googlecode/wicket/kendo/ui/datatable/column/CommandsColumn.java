@@ -16,23 +16,21 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable.column;
 
-import java.util.List;
-
 import org.apache.wicket.model.IModel;
 
-import com.googlecode.wicket.kendo.ui.datatable.ColumnButton;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 
 /**
  * Provides a commands column for a {@link DataTable}
  *
  * @author Sebastien Briquet - sebfz1
+ * @deprecated renamed CommandsColumn to CommandColumn
+ * TODO: 6.23.0/7.2.0 - remove
  */
-public abstract class CommandsColumn extends AbstractColumn
+@Deprecated
+public abstract class CommandsColumn extends CommandColumn
 {
 	private static final long serialVersionUID = 1L;
-
-	private List<ColumnButton> buttons = null;
 
 	/**
 	 * Constructor
@@ -74,27 +72,5 @@ public abstract class CommandsColumn extends AbstractColumn
 	public CommandsColumn(IModel<String> title, int width)
 	{
 		super(title, width);
-	}
-
-	/**
-	 * Gets a new {@link List} a {@link ColumnButton}
-	 *
-	 * @return a new {@link List} a {@link ColumnButton}
-	 */
-	protected abstract List<ColumnButton> newButtons();
-
-	/**
-	 * Gets the list of {@link ColumnButton}
-	 *
-	 * @return the list of {@link ColumnButton}
-	 */
-	public final synchronized List<ColumnButton> getButtons()
-	{
-		if (this.buttons == null)
-		{
-			this.buttons = this.newButtons();
-		}
-
-		return this.buttons;
 	}
 }
