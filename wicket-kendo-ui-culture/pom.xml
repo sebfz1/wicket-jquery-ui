@@ -39,7 +39,12 @@
 			<version>${wicket.version}</version>
 			<scope>provided</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>com.googlecode.wicket-jquery-ui</groupId>
+			<artifactId>wicket-kendo-ui</artifactId>
+			<version>${wicket.version}</version>
+			<type>bundle</type>
+		</dependency>
 	</dependencies>
 
     <build>
