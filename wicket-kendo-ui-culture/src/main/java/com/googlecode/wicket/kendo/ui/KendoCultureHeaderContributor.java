@@ -6,6 +6,8 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.PriorityHeaderItem;
 import org.apache.wicket.markup.html.IHeaderContributor;
 
+import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
+
 /**
  * {@link IHeaderContributor} to easily add {@link KendoCultureHeaderItem} to each page by using {@code org.apache.wicket.Application#getHeaderContributorListeners().add(new KendoCultureHeaderContributor(locale))} <br/>
  * Usage:
@@ -40,7 +42,7 @@ public class KendoCultureHeaderContributor implements IHeaderContributor
 	 */
 	public KendoCultureHeaderContributor(Locale locale)
 	{
-		this(locale.toLanguageTag()); // java7
+		this(LocaleUtils.getLangageCode(locale));
 	}
 
 	/**

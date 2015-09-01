@@ -8,6 +8,7 @@ import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.util.lang.Generics;
 
+import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 import com.googlecode.wicket.kendo.ui.resource.KendoGlobalizeResourceReference;
 
 /**
@@ -48,7 +49,7 @@ public class KendoCultureHeaderItem extends JavaScriptContentHeaderItem
 	 */
 	public KendoCultureHeaderItem(Locale locale)
 	{
-		this(locale.toLanguageTag()); // java7
+		this(LocaleUtils.getLangageCode(locale));
 	}
 
 	/**

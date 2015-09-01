@@ -24,6 +24,7 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
 import org.apache.wicket.util.lang.Generics;
 
+import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 import com.googlecode.wicket.kendo.ui.KendoCulture;
 import com.googlecode.wicket.kendo.ui.settings.KendoUILibrarySettings;
 
@@ -48,7 +49,7 @@ public class KendoGlobalizeResourceReference extends JQueryPluginResourceReferen
 	 */
 	public KendoGlobalizeResourceReference(Locale locale)
 	{
-		this(locale.toLanguageTag()); // java7
+		this(LocaleUtils.getLangageCode(locale));
 	}
 
 	/**
