@@ -9,7 +9,7 @@ import org.apache.wicket.markup.html.IHeaderContributor;
  * IHeaderContributor to easily add {@link KendoCultureHeaderItem} to each page by using
  * 
  * <pre>
- * org.apache.wicket.Application#getHeaderContributorListeners().add(new KendoCultureHeaderContributor())
+ * org.apache.wicket.Application#getHeaderContributorListeners().add(new KendoCultureHeaderContributor(Locale locale))
  * </pre>
  * Usage:
  *
@@ -21,7 +21,7 @@ import org.apache.wicket.markup.html.IHeaderContributor;
  * 	{
  * 		super.init();
  * 
- * 		getHeaderContributorListenerCollection().add(new KendoCultureHeaderContributor());
+ * 		getHeaderContributorListenerCollection().add(new KendoCultureHeaderContributor(Locale locale));
  *
  * 	}
  * }
