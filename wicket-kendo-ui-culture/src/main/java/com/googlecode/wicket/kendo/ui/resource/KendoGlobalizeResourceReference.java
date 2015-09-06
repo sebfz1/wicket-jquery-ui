@@ -73,7 +73,7 @@ public class KendoGlobalizeResourceReference extends JQueryPluginResourceReferen
 	}
 
 	@Override
-	public List<HeaderItem> getDependencies()
+	public Iterable<? extends HeaderItem> getDependencies()
 	{
 		List<HeaderItem> dependencies = Generics.newArrayList();
 
