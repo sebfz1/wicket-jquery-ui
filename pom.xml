@@ -3,17 +3,12 @@
 
 	<name>wicket-jquery-ui pom</name>
 	<description>parent pom</description>
+	<url>https://github.com/sebfz1/wicket-jquery-ui</url>
 
 	<organization>
 		<name>7thWeb</name>
 		<url>http://www.7thweb.net/wicket-jquery-ui/</url>
 	</organization>
-
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-	</parent>
 
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-jquery-ui-parent</artifactId>
@@ -34,37 +29,140 @@
 			<name>Sebastien Briquet</name>
 			<email>sebfz1@gmail.com</email>
 		</developer>
+		<developer>
+			<id>martingrigorov</id>
+			<name>Martin Grigorov</name>
+			<email>mgrigorov@apache.org</email>
+		</developer>
 	</developers>
 
 	<scm>
 		<url>git@github.com:sebfz1/wicket-jquery-ui.git</url>
 		<connection>scm:git:git@github.com:sebfz1/wicket-jquery-ui.git</connection>
 		<developerConnection>scm:git:git@github.com:sebfz1/wicket-jquery-ui.git</developerConnection>
+		<tag>HEAD</tag>
 	</scm>
 
 	<properties>
 		<wicket.version>6.19.0</wicket.version>
 		<junit.version>4.12</junit.version>
 		<jetty.version>8.1.16.v20140903</jetty.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<repositories>
 		<repository>
 			<id>Apache Nexus Snapshot</id>
-			<url>https://repository.apache.org/content/repositories/snapshots/</url>
+			<url>https://repository.apache.org/content/repositories/snapshots</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
 		<repository>
 			<id>Wicket Nexus Staging</id>
-			<url>https://repository.apache.org/content/repositories/orgapachewicket-1033/</url>
+			<url>https://repository.apache.org/content/repositories/orgapachewicket-1038</url>
 		</repository>
 	</repositories>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</repository>
+	</distributionManagement>
 
 	<build>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<extensions>true</extensions>
+					<version>2.5.3</version>
+					<executions>
+						<execution>
+							<id>bundle-manifest</id>
+							<phase>process-classes</phase>
+							<goals>
+								<goal>manifest</goal>
+							</goals>
+							<configuration>
+								<instructions>
+									<Bundle-Version>${project.version}</Bundle-Version>
+									<Bundle-SymbolicName>${bundle.namespace}</Bundle-SymbolicName>
+									<Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
+									<Export-Package>${bundle.namespace}.*;version="${project.version}"</Export-Package>
+								</instructions>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.4</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.10.3</version>
+					<configuration>
+						<quiet>true</quiet>
+						<links>
+							<link>http://docs.oracle.com/javase/6/docs/api/</link>
+							<link>http://junit-team.github.io/junit/javadoc/latest/</link>
+							<link>http://www.slf4j.org/apidocs/</link>
+						</links>
+						<additionalJOptions>
+							<additionalJOption>-J-Xmx256m</additionalJOption>
+						</additionalJOptions>
+					</configuration>
+					<executions>
+						<execution>
+							<id>default-jar</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.2</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.6</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -108,30 +206,6 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
-
-				<plugin>
-					<groupId>org.apache.felix</groupId>
-					<artifactId>maven-bundle-plugin</artifactId>
-					<extensions>true</extensions>
-					<version>2.4.0</version>
-					<executions>
-						<execution>
-							<id>bundle-manifest</id>
-							<phase>process-classes</phase>
-							<goals>
-								<goal>manifest</goal>
-							</goals>
-							<configuration>
-								<instructions>
-				                    <Bundle-Version>${project.version}</Bundle-Version>
-									<Bundle-SymbolicName>${bundle.namespace}</Bundle-SymbolicName>
-				                    <Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
-									<Export-Package>${bundle.namespace}.*;version="${project.version}"</Export-Package>
-								</instructions>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -139,7 +213,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.0</version>
+				<version>3.3</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
@@ -148,17 +222,25 @@
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1.2</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.2</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<releaseProfiles>release</releaseProfiles>
+					<goals>deploy</goals>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.5</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>false</autoReleaseAfterClose>
+				</configuration>
 			</plugin>
 		</plugins>
 
@@ -195,6 +277,44 @@
 			</testResource>
 		</testResources>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>snapshot</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<modules>
 		<module>wicket-jquery-ui-core</module>
