@@ -27,8 +27,6 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -37,8 +35,11 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.datatable.CommandAjaxBehavior.ClickEvent;
 import com.googlecode.wicket.kendo.ui.datatable.behavior.DataBoundBehavior;
+import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior;
+import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior.ClickEvent;
+import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
+import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 
 /**
@@ -55,9 +56,34 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	private AbstractAjaxBehavior providerBehavior;
 
 	private final Options options;
-	private final IModel<List<IColumn>> columns;
+	private List<IColumn> columns;
 	private final IDataProvider<T> provider;
 	private final long rows;
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param provider the {@link IDataProvider}
+	 * @param rows the number of rows per page to be displayed
+	 */
+	public DataTable(String id, final IDataProvider<T> provider, final long rows)
+	{
+		this(id, null, provider, rows, new Options());
+	}
+
+	/**
+	 * Main constructor
+	 *
+	 * @param id the markup id
+	 * @param provider the {@link IDataProvider}
+	 * @param rows the number of rows per page to be displayed
+	 * @param options the {@link Options}
+	 */
+	public DataTable(String id, final IDataProvider<T> provider, final long rows, Options options)
+	{
+		this(id, null, provider, rows, options);
+	}
 
 	/**
 	 * Constructor
@@ -68,33 +94,6 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @param rows the number of rows per page to be displayed
 	 */
 	public DataTable(String id, final List<IColumn> columns, final IDataProvider<T> provider, final long rows)
-	{
-		this(id, new ListModel<IColumn>(columns), provider, rows, new Options());
-	}
-
-	/**
-	 * Main constructor
-	 *
-	 * @param id the markup id
-	 * @param columns the list of {@link IColumn}
-	 * @param provider the {@link IDataProvider}
-	 * @param rows the number of rows per page to be displayed
-	 * @param options the {@link Options}
-	 */
-	public DataTable(String id, final List<IColumn> columns, final IDataProvider<T> provider, final long rows, Options options)
-	{
-		this(id, new ListModel<IColumn>(columns), provider, rows, options);
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id the markup id
-	 * @param columns the list of {@link IColumn}
-	 * @param provider the {@link IDataProvider}
-	 * @param rows the number of rows per page to be displayed
-	 */
-	public DataTable(String id, final IModel<List<IColumn>> columns, final IDataProvider<T> provider, final long rows)
 	{
 		this(id, columns, provider, rows, new Options());
 	}
@@ -108,7 +107,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @param rows the number of rows per page to be displayed
 	 * @param options the {@link Options}
 	 */
-	public DataTable(String id, final IModel<List<IColumn>> columns, final IDataProvider<T> provider, final long rows, Options options)
+	public DataTable(String id, final List<IColumn> columns, final IDataProvider<T> provider, final long rows, Options options)
 	{
 		super(id);
 
@@ -126,7 +125,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @return the jQuery object
 	 */
 	protected String widget()
-	{	
+	{
 		return KendoUIBehavior.widget(this, DataTableBehavior.METHOD);
 	}
 
@@ -169,9 +168,28 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * Equivalent to {@code target.add(table);}
 	 *
 	 * @param target the {@link AjaxRequestTarget}
+	 * @see DataTable#resetAjaxRequestTarget)
 	 */
 	public void reload(AjaxRequestTarget target)
 	{
+		this.reload(target, false);
+	}
+
+	/**
+	 * Reloads the {@link DataTable}<br/>
+	 * If {@code reset} is {@code true}, equivalent to {@code #reset(AjaxRequestTarget)} + {@code handler.add(table)}
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param reset whether to call reset or not
+	 * @see DataTable#reset(IPartialPageRequestHandler)
+	 */
+	public void reload(AjaxRequestTarget target, boolean reset)
+	{
+		if (reset)
+		{
+			this.reset(target);
+		}
+
 		target.add(this);
 	}
 
@@ -214,7 +232,12 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 */
 	public final List<IColumn> getColumns()
 	{
-		return Collections.unmodifiableList(this.columns.getObject());
+		if (this.columns == null)
+		{
+			this.columns = this.newColumnList();
+		}
+
+		return Collections.unmodifiableList(this.columns);
 	}
 
 	/**
@@ -227,6 +250,16 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 		return this.providerBehavior.getCallbackUrl();
 	}
 
+	/**
+	 * Gets the {@code List} of {@link ToolbarButton}{@code s}
+	 * 
+	 * @return the {@code List} of {@code ToolbarButton}{@code s}
+	 */
+	protected List<ToolbarButton> getToolbarButtons()
+	{
+		return Collections.emptyList();
+	}
+
 	// Events //
 
 	@Override
@@ -234,7 +267,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	{
 		super.onInitialize();
 
-		this.providerBehavior = this.newDataProviderBehavior(this.columns, this.provider);
+		this.providerBehavior = this.newDataProviderBehavior(this.getColumns(), this.getDataProvider());
 		this.add(this.providerBehavior);
 
 		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
@@ -243,7 +276,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	@Override
 	public void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOption("sortable", this.provider instanceof ISortStateLocator<?>);
+		behavior.setOption("sortable", this.getDataProvider() instanceof ISortStateLocator<?>);
 		behavior.setOption("autoBind", this.getBehaviors(DataBoundBehavior.class).isEmpty()); // false if DataBoundBehavior is added
 	}
 
@@ -280,13 +313,13 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	}
 
 	@Override
-	public void onClick(AjaxRequestTarget target, String button, List<String> values)
+	public void onClick(AjaxRequestTarget target, CommandButton button, String value)
 	{
 		// noop
 	}
 
 	@Override
-	public void onClick(AjaxRequestTarget target, CommandButton button, String value)
+	public void onClick(AjaxRequestTarget target, ToolbarButton button, List<String> values)
 	{
 		// noop
 	}
@@ -320,7 +353,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new DataTableBehavior(selector, this.options, this.columns, this) {
+		return new DataTableBehavior(selector, this.options, this.getColumns(), this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -338,23 +371,33 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 				return DataTable.this.getProviderCallbackUrl();
 			}
 
+			@Override
+			protected List<ToolbarButton> getToolbarButtons()
+			{
+				return DataTable.this.getToolbarButtons();
+			}
+
 			// Factories //
 
 			@Override
-			protected JQueryAjaxBehavior newToolbarClickAjaxBehavior(IJQueryAjaxAware source)
+			protected JQueryAjaxBehavior newCommandAjaxBehavior(IJQueryAjaxAware source, CommandButton button)
 			{
-				return DataTable.this.newToolbarAjaxBehavior(source);
-			}
-
-			@Override
-			protected JQueryAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, CommandButton button)
-			{
-				return DataTable.this.newColumnAjaxBehavior(source, button);
+				return DataTable.this.newCommandAjaxBehavior(source, button);
 			}
 		};
 	}
 
 	// Factories //
+
+	/**
+	 * TODO javadoc
+	 * 
+	 * @return
+	 */
+	protected List<IColumn> newColumnList()
+	{
+		return Collections.emptyList();
+	}
 
 	/**
 	 * Gets a new {@link DataProviderBehavior}
@@ -363,20 +406,9 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @param provider the {@link IDataProvider}
 	 * @return the {@link AbstractAjaxBehavior}
 	 */
-	protected AbstractAjaxBehavior newDataProviderBehavior(final IModel<List<IColumn>> columns, final IDataProvider<T> provider)
+	protected AbstractAjaxBehavior newDataProviderBehavior(final List<IColumn> columns, final IDataProvider<T> provider)
 	{
 		return new DataProviderBehavior<T>(columns, provider);
-	}
-
-	/**
-	 * Gets the {@link JQueryAjaxBehavior} that will be called when the user clicks a toolbar button
-	 *
-	 * @param source the {@link IJQueryAjaxAware}
-	 * @return the {@link JQueryAjaxBehavior}
-	 */
-	protected JQueryAjaxBehavior newToolbarAjaxBehavior(IJQueryAjaxAware source)
-	{
-		return null;
 	}
 
 	/**
@@ -387,7 +419,7 @@ public class DataTable<T> extends WebComponent implements IJQueryWidget, IDataTa
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newColumnAjaxBehavior(IJQueryAjaxAware source, CommandButton button)
+	protected JQueryAjaxBehavior newCommandAjaxBehavior(IJQueryAjaxAware source, CommandButton button)
 	{
 		return new CommandAjaxBehavior(source, button);
 	}

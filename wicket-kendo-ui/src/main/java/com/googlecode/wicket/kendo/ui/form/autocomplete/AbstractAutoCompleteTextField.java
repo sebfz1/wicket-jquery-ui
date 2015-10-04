@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.form.autocomplete;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -48,11 +49,11 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	private static final long serialVersionUID = 1L;
 
 	/** cache of current choices, needed to retrieve the user selected object */
-	private List<C> choices;
+	private List<C> choices = null;
 	private ChoiceModelBehavior<C> choiceModelBehavior;
 
 	/** the data-source renderer */
-	protected final ITextRenderer<? super C> renderer;
+	final ITextRenderer<? super C> renderer;
 
 	/** the template */
 	private final IJQueryTemplate template;
@@ -68,7 +69,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 */
 	public AbstractAutoCompleteTextField(String id)
 	{
-		this(id, new TextRenderer<C>());
+		this(id, new TextRenderer<C>(), null);
 	}
 
 	/**
@@ -79,7 +80,30 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 */
 	public AbstractAutoCompleteTextField(String id, ITextRenderer<? super C> renderer)
 	{
-		super(id);
+		this(id, renderer, null);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param type type for field validation
+	 */
+	public AbstractAutoCompleteTextField(String id, Class<T> type)
+	{
+		this(id, new TextRenderer<C>(), type);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param renderer the {@link ChoiceRenderer}
+	 * @param type type for field validation
+	 */
+	public AbstractAutoCompleteTextField(String id, ITextRenderer<? super C> renderer, Class<T> type)
+	{
+		super(id, type);
 
 		this.renderer = renderer;
 		this.template = this.newTemplate();
@@ -93,7 +117,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 */
 	public AbstractAutoCompleteTextField(String id, IModel<T> model)
 	{
-		this(id, model, new TextRenderer<C>());
+		this(id, model, new TextRenderer<C>(), null);
 	}
 
 	/**
@@ -105,7 +129,32 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 */
 	public AbstractAutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super C> renderer)
 	{
-		super(id, model);
+		this(id, model, renderer, null);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param type type for field validation
+	 */
+	public AbstractAutoCompleteTextField(String id, IModel<T> model, Class<T> type)
+	{
+		this(id, model, new TextRenderer<C>(), type);
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param renderer the {@link ChoiceRenderer}
+	 * @param type type for field validation
+	 */
+	public AbstractAutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super C> renderer, Class<T> type)
+	{
+		super(id, model, type);
 
 		this.renderer = renderer;
 		this.template = this.newTemplate();
@@ -159,6 +208,16 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 		this.choices = this.getChoices(input);
 
 		return this.choices;
+	}
+
+	public List<C> getChoices()
+	{
+		if (this.choices != null)
+		{
+			return this.choices;
+		}
+
+		return Collections.emptyList();
 	}
 
 	protected abstract List<C> getChoices(String input);

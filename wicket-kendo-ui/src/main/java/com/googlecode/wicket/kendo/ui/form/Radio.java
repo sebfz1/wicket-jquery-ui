@@ -101,7 +101,7 @@ public class Radio<T> extends org.apache.wicket.markup.html.form.Radio<T>
 	}
 
 	/**
-	 * Provides the label for the radio.<br/>
+	 * Provides the label for the {@link Radio}.<br/>
 	 * It should be applied on a {@code label} tag
 	 */
 	public static class Label extends org.apache.wicket.markup.html.basic.Label

@@ -162,6 +162,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	}
 
 	// Properties //
+
 	/**
 	 * Gets the (inner) list width.
 	 *

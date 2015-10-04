@@ -23,7 +23,7 @@ import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
- * Provides a Kendo UI ComboBox behavior
+ * Provides a {@value #METHOD} behavior
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -51,7 +51,7 @@ public abstract class ComboBoxBehavior extends KendoUIBehavior
 		this.dataSource = new KendoDataSource("datasource" + this.selector);
 		this.add(this.dataSource);
 	}
-	
+
 	// Properties //
 
 	protected abstract CharSequence getChoiceCallbackUrl();

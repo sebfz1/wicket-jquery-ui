@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.form.autocomplete;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -67,6 +68,33 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	 * Constructor
 	 *
 	 * @param id the markup id
+	 * @param type type for field validation
+	 */
+	public AutoCompleteTextField(String id, Class<T> type)
+	{
+		super(id, type);
+
+		this.converter = this.newConverter();
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param renderer the {@link ChoiceRenderer}
+	 * @param type type for field validation
+	 */
+	public AutoCompleteTextField(String id, ITextRenderer<? super T> renderer, Class<T> type)
+	{
+		super(id, renderer, type);
+
+		this.converter = this.newConverter();
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
 	public AutoCompleteTextField(String id, IModel<T> model)
@@ -90,6 +118,32 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 		this.converter = this.newConverter();
 	}
 
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 */
+	public AutoCompleteTextField(String id, IModel<T> model, Class<T> type)
+	{
+		super(id, model, type);
+
+		this.converter = this.newConverter();
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 */
+	public AutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super T> renderer, Class<T> type)
+	{
+		super(id, model, renderer, type);
+
+		this.converter = this.newConverter();
+	}
+
 	// Properties //
 
 	@Override
@@ -102,12 +156,10 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 	@SuppressWarnings("unchecked")
 	public <C> IConverter<C> getConverter(Class<C> type)
 	{
-		if (!String.class.isAssignableFrom(this.getType())) /* TODO: manage String (property)model object in a better way */
+		// TODO add/verify sample with property (string) model
+		if (type != null && type.isAssignableFrom(this.getType()))
 		{
-			if (type != null && type.isAssignableFrom(this.getType()))
-			{
-				return (IConverter<C>) this.converter;
-			}
+			return (IConverter<C>) this.converter;
 		}
 
 		return super.getConverter(type);
@@ -148,18 +200,40 @@ public abstract class AutoCompleteTextField<T> extends AbstractAutoCompleteTextF
 			@Override
 			public T convertToObject(String value, Locale locale)
 			{
-				if (value != null && value.equals(AutoCompleteTextField.this.getModelValue()))
+				if (value != null)
 				{
-					return AutoCompleteTextField.this.getModelObject();
+					if (value.equals(getModelValue()))
+					{
+						// the value already corresponds to the model object, no conversion to be done
+						return getModelObject();
+					}
+					else
+					{
+						// the value has been entered manually; try getting the object...
+						List<T> choices = getChoices(value);
+
+						if (!choices.isEmpty())
+						{
+							for (T choice : choices)
+							{
+								if (renderer.getText(choice).equals(value))
+								{
+									return choice;
+								}
+							}
+						}
+					}
 				}
 
-				return null; // if the TextField value (string) does not corresponds to the current object model (ie: user specific value), returns null.
+				// the string value does not corresponds to the current object model (ie: user specific value)
+				// and has not been found in the latest list of choice
+				return null;
 			}
 
 			@Override
 			public String convertToString(T value, Locale locale)
 			{
-				return AutoCompleteTextField.this.renderer.getText(value);
+				return renderer.getText(value);
 			}
 		};
 	}

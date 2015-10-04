@@ -19,16 +19,16 @@
 	<head>
 		<wicket:head>
 			<style type="text/css">
+				.abstractWizard .feedback {
+					margin-bottom: 1em;
+				}
+
 				.abstractWizard .wicketExtensionsWizardHeaderTitle {
 					font-weight: bold;
 				}
 
 				.abstractWizard .wicketExtensionsWizardHeaderSummary {
 					font-style: italic;
-					margin-bottom: 1em;
-				}
-
-				.abstractWizard .feedbackPanel {
 					margin-bottom: 1em;
 				}
 			</style>
@@ -38,7 +38,7 @@
 		<wicket:panel>
 			<form wicket:id="form" class="abstractWizard">
 				<div wicket:id="header">[title + summary]</div>
-				<div wicket:id="feedback">[feedback]</div>
+				<div wicket:id="feedback" class="feedback"></div>
 				<div wicket:id="view">[step view]</div>
 			</form>
 		</wicket:panel>

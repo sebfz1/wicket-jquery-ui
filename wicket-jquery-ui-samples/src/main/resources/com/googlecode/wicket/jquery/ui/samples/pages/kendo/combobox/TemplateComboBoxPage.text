@@ -20,6 +20,7 @@ protected IJQueryTemplate newTemplate()
 		@Override
 		public List<String> getTextProperties()
 		{
+			// should be specified, unless already part of the IChoiceRenderer
 			return Arrays.asList("name");
 		}
 	};

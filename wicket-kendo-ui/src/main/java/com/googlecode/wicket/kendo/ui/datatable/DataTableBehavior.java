@@ -24,9 +24,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
-import org.apache.wicket.util.string.Strings;
+import org.apache.wicket.util.lang.Generics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,12 +33,15 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
-import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.datatable.CommandAjaxBehavior.ClickEvent;
-import com.googlecode.wicket.kendo.ui.datatable.ToolbarAjaxBehavior.ToolbarClickEvent;
+import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior;
+import com.googlecode.wicket.kendo.ui.datatable.button.CommandAjaxBehavior.ClickEvent;
+import com.googlecode.wicket.kendo.ui.datatable.button.CommandButton;
+import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarAjaxBehavior;
+import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarAjaxBehavior.ToolbarClickEvent;
+import com.googlecode.wicket.kendo.ui.datatable.button.ToolbarButton;
 import com.googlecode.wicket.kendo.ui.datatable.column.CommandColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 import com.googlecode.wicket.kendo.ui.datatable.column.IdPropertyColumn;
@@ -57,7 +59,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	public static final String METHOD = "kendoGrid";
 
 	private final IDataTableListener listener;
-	private final IModel<List<IColumn>> columns;
+	private final List<IColumn> columns;
 	private final KendoDataSource dataSource;
 
 	// TODO: private JQueryAjaxBehavior onEditAjaxBehavior;
@@ -65,7 +67,6 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	private JQueryAjaxBehavior onCreateAjaxBehavior;
 	private JQueryAjaxBehavior onUpdateAjaxBehavior;
 	private JQueryAjaxBehavior onDeleteAjaxBehavior;
-	private JQueryAjaxBehavior onToolbarClickAjaxBehavior; // toolbar buttons
 
 	/**
 	 * Constructor
@@ -74,7 +75,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @param columns the list of {@link IColumn}
 	 * @param listener the {@link IDataTableListener}
 	 */
-	public DataTableBehavior(String selector, IModel<List<IColumn>> columns, IDataTableListener listener)
+	public DataTableBehavior(String selector, List<IColumn> columns, IDataTableListener listener)
 	{
 		this(selector, new Options(), columns, listener);
 	}
@@ -87,7 +88,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @param columns the list of {@link IColumn}
 	 * @param listener the {@link IDataTableListener}
 	 */
-	public DataTableBehavior(String selector, Options options, IModel<List<IColumn>> columns, IDataTableListener listener)
+	public DataTableBehavior(String selector, Options options, List<IColumn> columns, IDataTableListener listener)
 	{
 		super(selector, METHOD, options);
 
@@ -120,18 +121,22 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		this.onDeleteAjaxBehavior = this.newOnDeleteAjaxBehavior(this);
 		component.add(this.onDeleteAjaxBehavior);
 
+		// toolbar buttons //
+		for (ToolbarButton button : this.getToolbarButtons())
+		{
+			if (!button.isBuiltIn())
+			{
+				component.add(this.newToolbarAjaxBehavior(this, button));
+			}
+		}
+
 		// column buttons //
 		for (CommandButton button : this.getCommandButtons())
 		{
-			component.add(this.newButtonAjaxBehavior(this, button));
-		}
-
-		// toolbar buttons //
-		this.onToolbarClickAjaxBehavior = this.newToolbarClickAjaxBehavior(this);
-
-		if (this.onToolbarClickAjaxBehavior != null)
-		{
-			component.add(this.onToolbarClickAjaxBehavior);
+			if (!button.isBuiltIn())
+			{
+				component.add(this.newCommandAjaxBehavior(this, button));
+			}
 		}
 	}
 
@@ -163,13 +168,54 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
+	 * Gets the {@code List} of {@link ToolbarButton}{@code s}
+	 * 
+	 * @return the {@code List} of {@code ToolbarButton}{@code s}
+	 */
+	protected List<ToolbarButton> getToolbarButtons()
+	{
+		return Collections.emptyList();
+	}
+
+	/**
+	 * Indicates whether toolbar buttons are supplied.<br/>
+	 * <b>Note:</b> if false, the {@code toolbar} option can be used (for built-in buttons only)
+	 * 
+	 * @return {@code true} or {@code false}
+	 */
+	private boolean hasVisibleToolbarButtons()
+	{
+		return !this.getToolbarButtons().isEmpty();
+	}
+
+	/**
+	 * Gets the {@code List} of visible {@link ToolbarButton}{@code s}
+	 * 
+	 * @return the {@code List} of visible {@code ToolbarButton}{@code s}
+	 */
+	protected List<ToolbarButton> getVisibleToolbarButtons()
+	{
+		List<ToolbarButton> buttons = Generics.newArrayList();
+
+		for (ToolbarButton button : this.getToolbarButtons())
+		{
+			if (button.isVisible())
+			{
+				buttons.add(button);
+			}
+		}
+
+		return buttons;
+	}
+
+	/**
 	 * Gets the read-only {@link List} of {@link CommandButton}
 	 *
 	 * @return the {@link List} of {@link CommandButton}
 	 */
 	private List<CommandButton> getCommandButtons()
 	{
-		for (IColumn column : this.columns.getObject())
+		for (IColumn column : this.columns)
 		{
 			if (column instanceof CommandColumn)
 			{
@@ -181,7 +227,51 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets the {@code List} of {@link IColumn}{@code s} as string
+	 * Gets the {@code List} of visible {@link CommandButton}{@code s} as json string
+	 * 
+	 * @param column the {@code CommandColumn}, containing the {@code CommandButton}{@code s}
+	 * @param behaviors the {@code List} of {@code CommandAjaxBehavior}{@code s} which may be bound to buttons
+	 * @return the {@code List} of visible {@code CommandButton} as json string
+	 */
+	private List<String> getCommandButtonsAsString(CommandColumn column, List<CommandAjaxBehavior> behaviors)
+	{
+		List<String> list = Generics.newArrayList();
+
+		for (CommandButton button : column.getButtons())
+		{
+			if (button.isVisible())
+			{
+				JQueryAjaxBehavior behavior = this.getCommandAjaxBehavior(button, behaviors);
+
+				list.add(button.toString(behavior));
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Gets the {@link CommandAjaxBehavior} associated to the {@link CommandButton}, if any
+	 * 
+	 * @param behaviors the {@code List} of {@code CommandAjaxBehavior}
+	 * @param button the {@code CommandButton}
+	 * @return {@code null} if no {@code CommandAjaxBehavior} if associated to the button
+	 */
+	private JQueryAjaxBehavior getCommandAjaxBehavior(CommandButton button, List<CommandAjaxBehavior> behaviors)
+	{
+		for (CommandAjaxBehavior behavior : behaviors)
+		{
+			if (button.equals(behavior.getButton()))
+			{
+				return behavior;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Gets the {@code List} of {@link IColumn}{@code s} as json string
 	 * 
 	 * @param columns the {@code List} of {@link IColumn}{@code s}
 	 * @param behaviors the the {@code List} of {@link CommandAjaxBehavior}{@code s} associated to {@link CommandButton}{@code s}
@@ -208,42 +298,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 				// buttons //
 				builder.append(", ");
 				builder.append(Options.QUOTE).append("command").append(Options.QUOTE).append(": ");
-				builder.append("[ ");
-
-				int n = 0;
-				for (CommandAjaxBehavior behavior : behaviors)
-				{
-					CommandButton button = behavior.getButton();
-					String css = button.getCSSClass();
-
-					if (n++ > 0)
-					{
-						builder.append(", ");
-					}
-
-					builder.append("{ ");
-					BuilderUtils.append(builder, "name", button.getName());
-					builder.append(", ");
-					BuilderUtils.append(builder, "text", button.toString());
-					builder.append(", ");
-
-					if (!Strings.isEmpty(css)) /* important */
-					{
-						BuilderUtils.append(builder, "className", css);
-						builder.append(", ");
-					}
-
-					String function = behavior.getCallbackFunction(); // function will be null for built-in commands
-
-					if (function != null)
-					{
-						builder.append("'click': ").append(function);
-					}
-
-					builder.append(" }");
-				}
-
-				builder.append(" ]");
+				builder.append(this.getCommandButtonsAsString((CommandColumn) column, behaviors));
 			}
 
 			builder.append(" }");
@@ -270,26 +325,23 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	{
 		super.onConfigure(component);
 
-		List<IColumn> columns = this.columns.getObject();
-
-		// events //
-		if (this.onToolbarClickAjaxBehavior != null)
-		{
-			// FIXME: registered on each reload (target.add)
-			this.on(this.selector + " .k-grid-toolbar .k-button", "click", this.onToolbarClickAjaxBehavior.getCallbackFunction());
-		}
-
 		// this.setOption("edit", this.onEditAjaxBehavior.getCallbackFunction());
 		this.setOption("cancel", this.onCancelAjaxBehavior.getCallbackFunction());
 
+		// toolbar //
+		if (this.hasVisibleToolbarButtons())
+		{
+			this.setOption("toolbar", this.getVisibleToolbarButtons());
+		}
+
 		// columns //
-		this.setOption("columns", this.getColumnsAsString(columns, component.getBehaviors(CommandAjaxBehavior.class)));
+		this.setOption("columns", this.getColumnsAsString(this.columns, component.getBehaviors(CommandAjaxBehavior.class)));
 
 		// schema //
 		Options schema = new Options();
 		schema.set("data", Options.asString("results"));
 		schema.set("total", Options.asString("__count"));
-		schema.set("model", this.newSchemaModelOptions(columns));
+		schema.set("model", this.newSchemaModelOptions(this.columns));
 
 		// data-source //
 		this.setOption("dataSource", this.dataSource.getName());
@@ -303,6 +355,15 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		this.dataSource.setTransportCreate(this.onCreateAjaxBehavior.getCallbackFunction());
 		this.dataSource.setTransportUpdate(this.onUpdateAjaxBehavior.getCallbackFunction());
 		this.dataSource.setTransportDelete(this.onDeleteAjaxBehavior.getCallbackFunction());
+
+		// ajax //
+		for (ToolbarAjaxBehavior behavior : component.getBehaviors(ToolbarAjaxBehavior.class))
+		{
+			String selector = String.format("%s .k-grid-toolbar .k-grid-%s", this.getSelector(), behavior.getButtonName());
+
+			this.off(selector, "click");
+			this.on(selector, "click", behavior.getCallbackFunction());
+		}
 	}
 
 	@Override
@@ -480,9 +541,13 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * Gets the {@link JQueryAjaxBehavior} that will be called when the user clicks a toolbar button
 	 *
 	 * @param source {@link IJQueryAjaxAware}
+	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ToolbarClickEvent}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected abstract JQueryAjaxBehavior newToolbarClickAjaxBehavior(IJQueryAjaxAware source);
+	protected JQueryAjaxBehavior newToolbarAjaxBehavior(DataTableBehavior behavior, final ToolbarButton button)
+	{
+		return new ToolbarAjaxBehavior(behavior, button);
+	}
 
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called by a table's button. This method may be overridden to provide additional behaviors
@@ -491,7 +556,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	protected abstract JQueryAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, CommandButton button);
+	protected abstract JQueryAjaxBehavior newCommandAjaxBehavior(IJQueryAjaxAware source, CommandButton button);
 
 	// Ajax classes //
 

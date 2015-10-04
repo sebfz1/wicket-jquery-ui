@@ -29,7 +29,7 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
- * Provides a Kendo UI window behavior.
+ * Provides a {@value #METHOD} behavior
  *
  * @author Sebastien Briquet - sebfz1
  * @since 6.17.0
@@ -64,7 +64,7 @@ public class WindowBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 	public WindowBehavior(String selector, Options options, IWindowListener listener)
 	{
 		super(selector, METHOD, options);
-		
+
 		this.listener = Args.notNull(listener, "listener");
 	}
 
@@ -134,7 +134,8 @@ public class WindowBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 
 		if (this.onActionAjaxBehavior != null)
 		{
-			this.on(String.format("%s.wrapper.find('a.k-window-action').click(%s);", this.widget(), this.onActionAjaxBehavior.getCallbackFunction()));
+			// TODO verify if registred multiple times
+			this.register(String.format("%s.wrapper.find('a.k-window-action').click(%s);", this.widget(), this.onActionAjaxBehavior.getCallbackFunction()));
 		}
 
 		if (this.onCloseAjaxBehavior != null)

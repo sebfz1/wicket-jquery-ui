@@ -150,26 +150,22 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	}
 
 	@Override
-	protected Collection<T> convertValue(String[] values)
+	public void convertInput()
 	{
 		List<T> list = new ArrayList<T>();
 
-		if (values != null && this.choices != null)
+		for (String value : this.getInputAsArray())
 		{
-			for (T object : this.choices)
+			for (T choice : this.choices)
 			{
-				for (String value : values)
+				if (this.renderer.getValue(choice).equals(value))
 				{
-					if (value.equals(this.renderer.getText(object)))
-					{
-						list.add(object);
-						break;
-					}
+					list.add(choice);
 				}
 			}
 		}
 
-		return list;
+		this.setConvertedInput(list);
 	}
 
 	@Override
@@ -207,6 +203,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 
 		if (this.template != null)
 		{
+			// TODO: add sample for template
 			this.templateBehavior = new KendoTemplateBehavior(this.template);
 			this.add(this.templateBehavior);
 		}

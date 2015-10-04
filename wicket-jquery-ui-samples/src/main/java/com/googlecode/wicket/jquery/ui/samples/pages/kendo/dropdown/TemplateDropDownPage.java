@@ -12,7 +12,7 @@ import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.GenresDAO;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
-import com.googlecode.wicket.kendo.ui.form.dropdown.DropDownList;
+import com.googlecode.wicket.kendo.ui.form.dropdown.lazy.DropDownList;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
 public class TemplateDropDownPage extends AbstractDropDownPage
@@ -32,6 +32,14 @@ public class TemplateDropDownPage extends AbstractDropDownPage
 		final DropDownList<Genre> combobox = new DropDownList<Genre>("select", new Model<Genre>(), GenresDAO.all()) {
 
 			private static final long serialVersionUID = 1L;
+			
+			@Override
+			protected void onInitialize()
+			{
+				super.onInitialize();
+				
+				this.setListWidth(200);
+			}
 
 			@Override
 			protected IJQueryTemplate newTemplate()
@@ -43,16 +51,16 @@ public class TemplateDropDownPage extends AbstractDropDownPage
 					@Override
 					public String getText()
 					{
-						return  "<table style='width: 100%'>\n" +
-							" <tr>\n" +
-							"  <td>\n" +
-							"   <img src='${ data.coverUrl }' width='50px' />\n" +
-							"  </td>\n" +
-							"  <td>\n" +
-							"   ${ data.name }\n" +
-							"  </td>\n" +
-							" </tr>\n" +
-							"</table>\n";
+						return  "\n<table style='width: 100%'>" +
+							"\n <tr>" +
+							"\n  <td>" +
+							"\n   <img src='#:data.coverUrl#' width='50px' />" +
+							"\n  </td>" +
+							"\n  <td>" +
+							"\n   #:data.name#" +
+							"\n  </td>" +
+							"\n </tr>" +
+							"\n</table>";
 					}
 
 					@Override
@@ -64,7 +72,7 @@ public class TemplateDropDownPage extends AbstractDropDownPage
 			}
 		};
 
-		form.add(combobox.setListWidth(200));
+		form.add(combobox);
 
 		// Buttons //
 		form.add(new Button("submit") {
