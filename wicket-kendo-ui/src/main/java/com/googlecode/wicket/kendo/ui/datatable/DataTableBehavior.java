@@ -24,6 +24,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Generics;
 import org.slf4j.Logger;
@@ -59,7 +60,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	public static final String METHOD = "kendoGrid";
 
 	private final IDataTableListener listener;
-	private final List<IColumn> columns;
+	private final IModel<List<IColumn>> columns;
 	private final KendoDataSource dataSource;
 
 	// TODO: private JQueryAjaxBehavior onEditAjaxBehavior;
@@ -75,7 +76,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @param columns the list of {@link IColumn}
 	 * @param listener the {@link IDataTableListener}
 	 */
-	public DataTableBehavior(String selector, List<IColumn> columns, IDataTableListener listener)
+	public DataTableBehavior(String selector, IModel<List<IColumn>> columns, IDataTableListener listener)
 	{
 		this(selector, new Options(), columns, listener);
 	}
@@ -88,7 +89,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @param columns the list of {@link IColumn}
 	 * @param listener the {@link IDataTableListener}
 	 */
-	public DataTableBehavior(String selector, Options options, List<IColumn> columns, IDataTableListener listener)
+	public DataTableBehavior(String selector, Options options, IModel<List<IColumn>> columns, IDataTableListener listener)
 	{
 		super(selector, METHOD, options);
 
@@ -215,7 +216,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 */
 	private List<CommandButton> getCommandButtons()
 	{
-		for (IColumn column : this.columns)
+		for (IColumn column : this.columns.getObject())
 		{
 			if (column instanceof CommandColumn)
 			{
@@ -324,6 +325,8 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	public void onConfigure(Component component)
 	{
 		super.onConfigure(component);
+		
+		List<IColumn> columns = this.columns.getObject();
 
 		// this.setOption("edit", this.onEditAjaxBehavior.getCallbackFunction());
 		this.setOption("cancel", this.onCancelAjaxBehavior.getCallbackFunction());
@@ -335,13 +338,13 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		}
 
 		// columns //
-		this.setOption("columns", this.getColumnsAsString(this.columns, component.getBehaviors(CommandAjaxBehavior.class)));
+		this.setOption("columns", this.getColumnsAsString(columns, component.getBehaviors(CommandAjaxBehavior.class)));
 
 		// schema //
 		Options schema = new Options();
 		schema.set("data", Options.asString("results"));
 		schema.set("total", Options.asString("__count"));
-		schema.set("model", this.newSchemaModelOptions(this.columns));
+		schema.set("model", this.newSchemaModelOptions(columns));
 
 		// data-source //
 		this.setOption("dataSource", this.dataSource.getName());
