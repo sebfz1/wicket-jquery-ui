@@ -29,7 +29,7 @@ import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -101,7 +101,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	 */
 	public DataTable(String id, final List<IColumn> columns, final IDataProvider<T> provider, final long rows)
 	{
-		this(id, Model.ofList(columns), provider, rows, new Options());
+		this(id, new ListModel<IColumn>(columns), provider, rows, new Options());
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	 */
 	public DataTable(String id, final List<IColumn> columns, final IDataProvider<T> provider, final long rows, Options options)
 	{
-		this(id, Model.ofList(columns), provider, rows, options);
+		this(id, new ListModel<IColumn>(columns), provider, rows, options);
 	}
 
 	/**
