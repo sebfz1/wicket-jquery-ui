@@ -49,8 +49,8 @@ import com.googlecode.wicket.kendo.ui.datatable.column.IdPropertyColumn;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerBehavior;
 
 /**
- * Provides the Kendo UI data-table behavior
- *
+ * Provides a {@value #METHOD} behavior<br/>
+ * 
  * @author Sebastien Briquet - sebfz1
  */
 public abstract class DataTableBehavior extends KendoUIBehavior implements IJQueryAjaxAware
@@ -325,7 +325,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	public void onConfigure(Component component)
 	{
 		super.onConfigure(component);
-		
+
 		List<IColumn> columns = this.columns.getObject();
 
 		// this.setOption("edit", this.onEditAjaxBehavior.getCallbackFunction());
@@ -347,6 +347,8 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		schema.set("model", this.newSchemaModelOptions(columns));
 
 		// data-source //
+		this.onConfigure(this.dataSource);
+
 		this.setOption("dataSource", this.dataSource.getName());
 
 		this.dataSource.set("pageSize", this.getRowCount());
@@ -369,20 +371,31 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		}
 	}
 
+	/**
+	 * Configure the {@link KendoDataSource} with additional options
+	 * 
+	 * @param dataSource the {@link KendoDataSource}
+	 */
+	protected void onConfigure(KendoDataSource dataSource)
+	{
+		// noop
+	}
+
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
 		if (event instanceof ClickEvent)
 		{
 			ClickEvent e = (ClickEvent) event;
-			e.getButton().onClick(target, e.getValue());
 
+			e.getButton().onClick(target, e.getValue());
 			this.listener.onClick(target, e.getButton(), e.getValue());
 		}
 
 		if (event instanceof ToolbarClickEvent)
 		{
 			ToolbarClickEvent e = (ToolbarClickEvent) event;
+
 			this.listener.onClick(target, e.getButton(), e.getValues());
 		}
 

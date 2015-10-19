@@ -14,29 +14,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui;
+package com.googlecode.wicket.kendo.ui.datatable.editor;
 
 
 /**
- * Specifies a Kendo UI data-source
- *
+ * Provides a simple {@link IKendoEditor} editor, based on a textarea
+ * 
  * @author Sebastien Briquet - sebfz1
- *
+ * @see KendoEditorHeaderItem
  */
-public interface IKendoDataSource
+public class TextAreaEditor implements IKendoEditor
 {
-	/**
-	 * Gets the unique token that acts as the script id.
-	 *
-	 * @return the token
-	 */
-	String getToken();
+	protected final String name;
 
 	/**
-	 * Gets the data-source jQuery statement.
-	 *
-	 * @return the jQuery statement
+	 * Constructor, for inline inclusion
 	 */
-	String toScript();
+	public TextAreaEditor()
+	{
+		this("");
+	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param name the name of the function
+	 */
+	public TextAreaEditor(String name)
+	{
+		this.name = name;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "function " + this.name + "(container, options) { " // lf
+				+ "$('<textarea class=\"k-textbox\" data-bind=\"value:' + options.field + '\"></textarea>')" // lf
+				+ ".appendTo(container); " // lf
+				+ "}";
+	}
 }

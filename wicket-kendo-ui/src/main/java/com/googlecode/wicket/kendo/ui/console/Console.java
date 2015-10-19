@@ -72,19 +72,6 @@ public class Console extends AbstractConsole
 	 * Helper method that logs an info message
 	 *
 	 * @param message the message to log
-	 * @deprecated too confusing with {@link #info(Serializable)}, use {@link #log(Serializable, boolean)} or {@link #info(AjaxRequestTarget, Serializable)} instead
-	 * TODO: 6.22.0/7.1.0 - remove
-	 */
-	@Deprecated
-	public void info(String message)
-	{
-		this.log(message, false);
-	}
-
-	/**
-	 * Helper method that logs an info message
-	 *
-	 * @param message the message to log
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void info(AjaxRequestTarget target, Serializable message)
@@ -92,18 +79,6 @@ public class Console extends AbstractConsole
 		this.log(message, false);
 
 		target.appendJavaScript(this.consoleBehavior.$(message, false));
-	}
-
-	/**
-	 * Helper method that logs an error message
-	 *
-	 * @param message the message to log
-	 * @deprecated too confusing with error(Serializable), use log(Serializable, true) or error(AjaxRequestTarget, Serializable)
-	 */
-	@Deprecated
-	public void error(String message)
-	{
-		this.log(message, true);
 	}
 
 	/**

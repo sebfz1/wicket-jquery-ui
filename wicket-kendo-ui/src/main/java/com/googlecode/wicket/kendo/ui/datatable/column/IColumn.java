@@ -21,6 +21,7 @@ import java.util.List;
 import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
+import com.googlecode.wicket.kendo.ui.datatable.editor.IKendoEditor;
 
 /**
  * Specifies the column definition of a {@link DataTable}
@@ -46,14 +47,21 @@ public interface IColumn extends IClusterable
 	/**
 	 * TODO javadoc, implement & use
 	 */
-//	void getDefaultValue();
-	
+	// void getDefaultValue();
+
 	/**
 	 * Gets the desired width of the column.
 	 *
 	 * @return the column's width
 	 */
 	int getWidth();
+
+	/**
+	 * Provides a way to specify a custom editing UI for the column.
+	 * 
+	 * @return a {@code function} or {@code null} if it does not apply
+	 */
+	IKendoEditor getEditor();
 
 	/**
 	 * The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a standard number format, custom number format, standard date format or a custom date format.
@@ -67,13 +75,21 @@ public interface IColumn extends IClusterable
 	String getFormat();
 
 	/**
-	 * The template or javascript function which renders the column content.<br/>
-	 * If the template is a string (not a function), it should itself be enclosed into double quotes, ie:<br/>
-	 * {@code return Options.asString("&lt;a href='?id=#:data.id#'&gt;#:data.id#&lt;/a&gt;");}
+	 * The template which renders the column content.<br/>
+	 * ie: {@code return "<a href='?id=#:data.id#'>#:data.id#</a>"}<br/>
+	 * TODO: make it work for function(?)
 	 *
 	 * @return the template or {@code null} if it does not apply
 	 */
 	String getTemplate();
+
+	/**
+	 * The template which renders the footer table cell for the column.
+	 * 
+	 * @return
+	 * @see <a href="http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.footerTemplate">columns.footerTemplate</a>
+	 */
+	String getFooterTemplate();
 
 	/**
 	 * If set to true a filter menu will be displayed for this column when filtering is enabled.<br/>
@@ -134,10 +150,10 @@ public interface IColumn extends IClusterable
 	Boolean isNullable();
 
 	/**
-	 * Get the field's type
+	 * Get the field's type<br/>
+	 * Available options are "string", "number", "boolean", "date".
 	 *
 	 * @return the the field's type
 	 */
 	String getType();
-
 }

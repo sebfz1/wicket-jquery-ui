@@ -14,29 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui;
-
+package com.googlecode.wicket.kendo.ui.datatable.editor;
 
 /**
- * Specifies a Kendo UI data-source
- *
+ * Specifies a kendoGrid editor
+ * 
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IKendoDataSource
+public interface IKendoEditor
 {
-	/**
-	 * Gets the unique token that acts as the script id.
-	 *
-	 * @return the token
-	 */
-	String getToken();
-
-	/**
-	 * Gets the data-source jQuery statement.
-	 *
-	 * @return the jQuery statement
-	 */
-	String toScript();
 
 }

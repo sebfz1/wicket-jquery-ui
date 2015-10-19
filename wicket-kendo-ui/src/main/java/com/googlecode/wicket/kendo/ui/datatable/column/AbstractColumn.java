@@ -25,6 +25,7 @@ import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
+import com.googlecode.wicket.kendo.ui.datatable.editor.IKendoEditor;
 
 /**
  * Base class for {@link IColumn}{@code s} implementation
@@ -158,6 +159,12 @@ public abstract class AbstractColumn implements IColumn
 	}
 
 	@Override
+	public IKendoEditor getEditor()
+	{
+		return null;
+	}
+
+	@Override
 	public String getFormat()
 	{
 		return null;
@@ -165,6 +172,12 @@ public abstract class AbstractColumn implements IColumn
 
 	@Override
 	public String getTemplate()
+	{
+		return null;
+	}
+
+	@Override
+	public String getFooterTemplate()
 	{
 		return null;
 	}
@@ -192,7 +205,7 @@ public abstract class AbstractColumn implements IColumn
 	 *
 	 * @return the list of <tt>aggregates<tt> as json array
 	 */
-	protected String getAggregatesAsString()
+	protected final String getAggregatesAsString()
 	{
 		List<String> aggregates = new ArrayList<String>();
 
@@ -254,6 +267,12 @@ public abstract class AbstractColumn implements IColumn
 
 		// nullable options (string) //
 
+		if (this.getField() != null)
+		{
+			builder.append(", ");
+			BuilderUtils.append(builder, "field", this.getField());
+		}
+
 		if (this.getFormat() != null)
 		{
 			builder.append(", ");
@@ -264,6 +283,12 @@ public abstract class AbstractColumn implements IColumn
 		{
 			builder.append(", ");
 			BuilderUtils.append(builder, "template", this.getTemplate());
+		}
+
+		if (this.getFooterTemplate() != null)
+		{
+			builder.append(", ");
+			BuilderUtils.append(builder, "footerTemplate", this.getFooterTemplate());
 		}
 
 		if (this.getGroupHeaderTemplate() != null)
@@ -278,13 +303,15 @@ public abstract class AbstractColumn implements IColumn
 			BuilderUtils.append(builder, "groupFooterTemplate", this.getGroupFooterTemplate());
 		}
 
-		// nullable options (object) //
+		// nullable options (function) //
 
-		if (this.getField() != null)
+		if (this.getEditor() != null)
 		{
 			builder.append(", ");
-			BuilderUtils.append(builder, "field", this.getField());
+			builder.append(Options.QUOTE).append("editor").append(Options.QUOTE).append(": ").append(this.getEditor());
 		}
+
+		// nullable options (object) //
 
 		if (this.getMenu() != null)
 		{
