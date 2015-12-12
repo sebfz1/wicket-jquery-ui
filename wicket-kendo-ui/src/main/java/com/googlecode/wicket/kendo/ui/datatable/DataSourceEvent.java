@@ -38,7 +38,7 @@ public class DataSourceEvent extends JQueryEvent
 
 	public DataSourceEvent()
 	{
-		String data = RequestCycleUtils.getQueryParameterValue("data").toString();
+		String data = RequestCycleUtils.getQueryParameterValue("data").toString("{}");
 
 		try
 		{
@@ -53,5 +53,27 @@ public class DataSourceEvent extends JQueryEvent
 	public JSONObject getObject()
 	{
 		return this.object;
+	}
+
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link DataSourceAjaxBehavior} 'create' callback
+	 */
+	public static class CreateEvent extends DataSourceEvent
+	{
+	}
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link DataSourceAjaxBehavior} 'update' callback
+	 */
+	public static class UpdateEvent extends DataSourceEvent
+	{
+	}
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link DataSourceAjaxBehavior} 'delete' callback
+	 */
+	public static class DeleteEvent extends DataSourceEvent
+	{
 	}
 }

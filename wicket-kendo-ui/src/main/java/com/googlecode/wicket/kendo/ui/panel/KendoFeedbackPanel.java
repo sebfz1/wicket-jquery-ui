@@ -48,6 +48,8 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	private final Options options;
 	private NotificationBehavior widgetBehavior;
 
+	private final IFeedbackMessageFilter filter;
+
 	/**
 	 * Constructor
 	 *
@@ -55,7 +57,27 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	 */
 	public KendoFeedbackPanel(String id)
 	{
-		this(id, new Options());
+		this(id, null, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 */
+	public KendoFeedbackPanel(String id, IFeedbackMessageFilter filter)
+	{
+		this(id, filter, new Options());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 */
+	public KendoFeedbackPanel(String id, Options options)
+	{
+		this(id, null, options);
 	}
 
 	/**
@@ -64,10 +86,11 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	 * @param id the markup id
 	 * @param options the {@link Options}
 	 */
-	public KendoFeedbackPanel(String id, Options options)
+	public KendoFeedbackPanel(String id, IFeedbackMessageFilter filter, Options options)
 	{
 		super(id);
 
+		this.filter = filter;
 		this.options = Args.notNull(options, "options");
 	}
 
@@ -76,7 +99,7 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	@Override
 	protected IModel<?> initModel()
 	{
-		return this.newFeedbackMessagesModel();
+		return this.newFeedbackMessagesModel(this.filter);
 	}
 
 	/**
@@ -200,13 +223,13 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 	// Factories //
 
 	/**
-	 * Gets a new instance of the FeedbackMessagesModel to use.<br/>
-	 * This method can be overridden to provide a {@link IFeedbackMessageFilter}
-	 *
+	 * Gets a new instance of the FeedbackMessagesModel to use.
+	 * 
+	 * @param filter the {@link IFeedbackMessageFilter}
 	 * @return a new {@link FeedbackMessagesModel}
 	 */
-	protected FeedbackMessagesModel newFeedbackMessagesModel()
+	protected FeedbackMessagesModel newFeedbackMessagesModel(IFeedbackMessageFilter filter)
 	{
-		return new FeedbackMessagesModel(this);
+		return new FeedbackMessagesModel(this).setFilter(filter);
 	}
 }
