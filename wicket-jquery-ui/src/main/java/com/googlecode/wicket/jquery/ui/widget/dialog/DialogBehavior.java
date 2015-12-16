@@ -113,6 +113,9 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	public void open(AjaxRequestTarget target)
 	{
 		target.appendJavaScript(this.$(Options.asString("open")));
+		
+		// feature request #213
+		//target.prependJavaScript(this.$(Options.asString("open")));
 	}
 
 	/**
