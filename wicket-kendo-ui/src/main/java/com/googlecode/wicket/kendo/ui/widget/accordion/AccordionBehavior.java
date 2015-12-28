@@ -78,7 +78,7 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	public AccordionBehavior(String selector, Options options, IAccordionListener listener)
 	{
 		super(selector, METHOD, options);
-		
+
 		this.listener = listener;
 	}
 
@@ -212,9 +212,9 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
-		if (event instanceof AbstractTabEvent)
+		if (event instanceof TabEvent)
 		{
-			int index = ((AbstractTabEvent) event).getIndex();
+			int index = ((TabEvent) event).getIndex();
 			final List<ITab> tabs = this.getVisibleTabs();
 
 			if (-1 < index && index < tabs.size()) /* index could be unknown depending on options and user action */
@@ -298,13 +298,13 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	// Ajax classes //
 
 	/**
-	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
+	 * Provides an abstract {@link JQueryAjaxBehavior} that aims to be wired to the {@code TabsBehavior} events
 	 */
-	protected static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
+	abstract static class TabAjaxBehavior extends JQueryAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
-		public OnSelectAjaxBehavior(IJQueryAjaxAware source)
+		public TabAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
 		}
@@ -312,8 +312,20 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-					CallbackParameter.resolved("index", "jQuery(e.item).index()") };
+			return new CallbackParameter[] { CallbackParameter.context("e"), CallbackParameter.resolved("index", "jQuery(e.item).index()") };
+		}
+	}
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
+	 */
+	protected static class OnSelectAjaxBehavior extends TabAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnSelectAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
 		}
 
 		@Override
@@ -326,20 +338,13 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'activate' event
 	 */
-	protected static class OnActivateAjaxBehavior extends JQueryAjaxBehavior
+	protected static class OnActivateAjaxBehavior extends TabAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
 		public OnActivateAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
-		}
-
-		@Override
-		protected CallbackParameter[] getCallbackParameters()
-		{
-			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-					CallbackParameter.resolved("index", "jQuery(e.item).index()") };
 		}
 
 		@Override
@@ -352,20 +357,13 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'expand' event
 	 */
-	protected static class OnExpandAjaxBehavior extends JQueryAjaxBehavior
+	protected static class OnExpandAjaxBehavior extends TabAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
 		public OnExpandAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
-		}
-
-		@Override
-		protected CallbackParameter[] getCallbackParameters()
-		{
-			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-					CallbackParameter.resolved("index", "jQuery(e.item).index()") };
 		}
 
 		@Override
@@ -378,20 +376,13 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'collapse' event
 	 */
-	protected static class OnCollapseAjaxBehavior extends JQueryAjaxBehavior
+	protected static class OnCollapseAjaxBehavior extends TabAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
 		public OnCollapseAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
-		}
-
-		@Override
-		protected CallbackParameter[] getCallbackParameters()
-		{
-			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-					CallbackParameter.resolved("index", "jQuery(e.item).index()") };
 		}
 
 		@Override
@@ -406,14 +397,14 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Provides a base class for {@link AccordionBehavior} event objects
 	 */
-	protected abstract static class AbstractTabEvent extends JQueryEvent
+	abstract static class TabEvent extends JQueryEvent
 	{
 		private final int index;
 
 		/**
 		 * Constructor
 		 */
-		public AbstractTabEvent()
+		public TabEvent()
 		{
 			super();
 
@@ -434,28 +425,28 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnSelectAjaxBehavior} callback
 	 */
-	protected static class SelectEvent extends AbstractTabEvent
+	protected static class SelectEvent extends TabEvent
 	{
 	}
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnActivateAjaxBehavior} callback
 	 */
-	protected static class ActivateEvent extends AbstractTabEvent
+	protected static class ActivateEvent extends TabEvent
 	{
 	}
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnExpandAjaxBehavior} callback
 	 */
-	protected static class ExpandEvent extends AbstractTabEvent
+	protected static class ExpandEvent extends TabEvent
 	{
 	}
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnCollapseAjaxBehavior} callback
 	 */
-	protected static class CollapseEvent extends AbstractTabEvent
+	protected static class CollapseEvent extends TabEvent
 	{
 	}
 }

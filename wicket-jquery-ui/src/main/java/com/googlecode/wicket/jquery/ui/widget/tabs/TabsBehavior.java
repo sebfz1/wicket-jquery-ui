@@ -221,13 +221,13 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	// Ajax classes //
 
 	/**
-	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'activate' event
+	 * Provides an abstract {@link JQueryAjaxBehavior} that aims to be wired to the {@code TabsBehavior} events
 	 */
-	protected static class OnActivateAjaxBehavior extends JQueryAjaxBehavior
+	abstract static class TabAjaxBehavior extends JQueryAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
-		public OnActivateAjaxBehavior(IJQueryAjaxAware source)
+		public TabAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
 		}
@@ -235,9 +235,21 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 		@Override
 		protected CallbackParameter[] getCallbackParameters()
 		{
-			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
-					CallbackParameter.context("ui"), // lf
+			return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui"), // lf
 					CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')") };
+		}
+	}
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'activate' event
+	 */
+	protected static class OnActivateAjaxBehavior extends TabAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnActivateAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
 		}
 
 		@Override
@@ -250,21 +262,13 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	/**
 	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'beforeActivate' event
 	 */
-	protected static class OnActivatingAjaxBehavior extends JQueryAjaxBehavior
+	protected static class OnActivatingAjaxBehavior extends TabAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
 		public OnActivatingAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
-		}
-
-		@Override
-		protected CallbackParameter[] getCallbackParameters()
-		{
-			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
-					CallbackParameter.context("ui"), // lf
-					CallbackParameter.resolved("index", "jQuery(event.target).tabs('option', 'active')"), };
 		}
 
 		@Override
@@ -277,16 +281,16 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	// Event objects //
 
 	/**
-	 * Provides an event object that will be broadcasted by the {@link OnActivateAjaxBehavior} callback
+	 * Provides a base class for {@link TabsBehavior} event objects
 	 */
-	protected static class ActivateEvent extends JQueryEvent
+	abstract static class TabEvent extends JQueryEvent
 	{
 		private final int index;
 
 		/**
 		 * Constructor
 		 */
-		public ActivateEvent()
+		public TabEvent()
 		{
 			super();
 
@@ -305,9 +309,16 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	}
 
 	/**
+	 * Provides an event object that will be broadcasted by the {@link OnActivateAjaxBehavior} callback
+	 */
+	protected static class ActivateEvent extends TabEvent
+	{
+	}
+
+	/**
 	 * Provides an event object that will be broadcasted by the {@link OnActivatingAjaxBehavior} callback
 	 */
-	protected static class ActivatingEvent extends ActivateEvent
+	protected static class ActivatingEvent extends TabEvent
 	{
 	}
 }
