@@ -17,69 +17,54 @@
 package com.googlecode.wicket.kendo.ui.resource;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
 import org.apache.wicket.util.lang.Generics;
 
-import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
-import com.googlecode.wicket.kendo.ui.KendoCulture;
+import com.googlecode.wicket.kendo.ui.KendoMessage;
 import com.googlecode.wicket.kendo.ui.settings.KendoUILibrarySettings;
 
 /**
- * The resource reference for the Kendo Globalize javascript library.<br/>
- * <br/>
- * <b>Warning:</b> When (jQuery) globalize.js is registered before Kendo scripts, then Kendo will use globalize.js features instead of Kendo Globalization.
+ * The resource reference for the Kendo Message javascript library.
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class KendoGlobalizeResourceReference extends JQueryPluginResourceReference
+public class KendoMessageResourceReference extends JQueryPluginResourceReference
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final String FILENAME_PATTERN = "kendo.culture.%s.js";
+	public static final String FILENAME_PATTERN = "messages/kendo.messages.%s.js";
 
 	/**
 	 * Constructor
 	 *
-	 * @param locale the {@link Locale}
+	 * @param message the {@link KendoMessage}
 	 */
-	public KendoGlobalizeResourceReference(Locale locale)
+	public KendoMessageResourceReference(KendoMessage message)
 	{
-		this(LocaleUtils.getLangageCode(locale));
+		this(message.toString());
 	}
 
 	/**
 	 * Constructor
 	 *
-	 * @param culture the {@link KendoCulture}
+	 * @param language the language, ie: 'fr-FR'
 	 */
-	public KendoGlobalizeResourceReference(KendoCulture culture)
+	public KendoMessageResourceReference(String language)
 	{
-		this(culture.toString());
+		super(KendoMessageResourceReference.class, String.format(FILENAME_PATTERN, language));
 	}
 
-	/**
-	 * Constructor
-	 *
-	 * @param culture the culture, ie: 'fr' or 'fr-FR'
-	 */
-	public KendoGlobalizeResourceReference(String culture)
-	{
-		super(KendoGlobalizeResourceReference.class, String.format(FILENAME_PATTERN, culture));
-	}
-
-	@Override
 	public Iterable<? extends HeaderItem> getDependencies()
 	{
 		List<HeaderItem> dependencies = Generics.newArrayList();
 
-		for (HeaderItem headerItem : super.getDependencies())
+		for (HeaderItem item : super.getDependencies())
 		{
-			dependencies.add(headerItem);
+			dependencies.add(item);
 		}
 
 		dependencies.add(JavaScriptHeaderItem.forReference(KendoUILibrarySettings.get().getJavaScriptReference()));

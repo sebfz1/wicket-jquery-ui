@@ -20,7 +20,7 @@ import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
  * 	{
  * 		super.init();
  * 		
- * 		getHeaderContributorListenerCollection().add(new KendoCultureHeaderContributor(Locale.GERMANY));
+ * 		this.getHeaderContributorListenerCollection().add(new KendoCultureHeaderContributor(Locale.GERMANY));
  * 	}
  * }
  * </code>

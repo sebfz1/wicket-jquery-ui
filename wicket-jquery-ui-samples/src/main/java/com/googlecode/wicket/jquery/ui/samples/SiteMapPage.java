@@ -140,10 +140,10 @@ import com.googlecode.wicket.jquery.ui.samples.pages.sortable.CustomSortablePage
 import com.googlecode.wicket.jquery.ui.samples.pages.sortable.DefaultSortablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.sortable.SelectableSortablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.spinner.DefaultSpinnerPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.spinner.CultureSpinnerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.tabs.AdvancedTabsPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.tabs.DefaultTabsPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.tabs.TabbedPanelPage;
-import com.googlecode.wicket.jquery.ui.samples.pages.test.OptionSpinnerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.test.PalettePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.test.TestPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.test.editor.EditorPage;
@@ -158,7 +158,7 @@ public class SiteMapPage extends WebPage
 
 	private static final String BASE_URL = "http://www.7thweb.net/wicket-jquery-ui/";
 	private static final Pattern PATTERN = Pattern.compile("^\\./");
-	private static final String LASTMOD = "2015-05-16";
+	private static final String LASTMOD = "2016-01-03";
 
 	@SuppressWarnings("unchecked")
 	private static final List<? extends Class<? extends WebPage>> LIST = Arrays.asList(
@@ -272,7 +272,7 @@ public class SiteMapPage extends WebPage
 			ObjectCalendarPage.class,
 			OptionSliderPage.class,
 			OptionSnippetPage.class,
-			OptionSpinnerPage.class,
+			CultureSpinnerPage.class,
 			PalettePage.class,
 			PatternDatePickerPage.class,
 			PatternDateTimePickerPage.class,

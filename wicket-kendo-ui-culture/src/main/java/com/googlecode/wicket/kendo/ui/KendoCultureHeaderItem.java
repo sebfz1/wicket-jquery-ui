@@ -9,7 +9,7 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
-import com.googlecode.wicket.kendo.ui.resource.KendoGlobalizeResourceReference;
+import com.googlecode.wicket.kendo.ui.resource.KendoCultureResourceReference;
 
 /**
  * {@link HeaderItem} in charge of setting the {@code kendo.culture} and adding relevant dependencies <br/>
@@ -23,12 +23,12 @@ import com.googlecode.wicket.kendo.ui.resource.KendoGlobalizeResourceReference;
  * 	response.render(new KendoCultureHeaderItem(KendoCulture.FR_FR));
  * }
  * <br/>
- * This will result to:
+ * This will results to:
  * <code>
  * <pre>
- * &lt;script type="text/javascript" src="./resource/com.googlecode.wicket.kendo.ui.resource.KendoGlobalizeResourceReference/kendo.culture.de-DE.js"&gt;&lt;/script&gt;
+ * &lt;script type="text/javascript" src="./resource/com.googlecode.wicket.kendo.ui.resource.KendoCultureResourceReference/cultures/kendo.culture.fr-FR.js"&gt;&lt;/script&gt;
  * &lt;script type="text/javascript" id="kendo-culture"&gt;
- * 	kendo.culture('de-DE');
+ * 	kendo.culture('fr-FR');
  * &lt;/script&gt;
  * </pre>
  * </code>
@@ -84,7 +84,7 @@ public class KendoCultureHeaderItem extends JavaScriptContentHeaderItem
 			dependencies.add(item);
 		}
 
-		dependencies.add(JavaScriptHeaderItem.forReference(new KendoGlobalizeResourceReference(this.culture)));
+		dependencies.add(JavaScriptHeaderItem.forReference(new KendoCultureResourceReference(this.culture)));
 
 		return dependencies;
 	}
