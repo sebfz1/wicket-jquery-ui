@@ -18,7 +18,6 @@ package com.googlecode.wicket.kendo.ui.widget.window;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -243,7 +242,7 @@ public abstract class InputWindow<T> extends Window<T>
 	 */
 	protected KendoFeedbackPanel newFeedbackPanel(String id)
 	{
-		return new KendoFeedbackPanel(id, new ContainerFeedbackMessageFilter(this));
+		return new KendoFeedbackPanel(id, this);
 	}
 
 	/**
