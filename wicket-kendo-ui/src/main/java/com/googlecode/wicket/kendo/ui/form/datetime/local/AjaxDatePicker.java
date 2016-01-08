@@ -128,7 +128,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public AjaxDatePicker(String id, IModel<LocalDate> model, Options options)
 	{
@@ -153,7 +153,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public AjaxDatePicker(String id, IModel<LocalDate> model, String pattern, Options options)
 	{

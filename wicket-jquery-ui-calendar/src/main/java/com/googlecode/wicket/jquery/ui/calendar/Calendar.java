@@ -47,7 +47,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param options {@link Options}. Note that 'selectable' and 'selectHelper' options are set by overriding {@link #isSelectable()} (default is false)
+	 * @param options the {@link Options}. Note that 'selectable' and 'selectHelper' options are set by overriding {@link #isSelectable()} (default is false)
 	 */
 	public Calendar(String id, Options options)
 	{
@@ -72,7 +72,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	 *
 	 * @param id the markup id
 	 * @param model the {@link CalendarModel}
-	 * @param options {@link Options}. Note that 'selectable' and 'selectHelper' options are set by overriding {@link #isSelectable()} (default is false)
+	 * @param options the {@link Options}. Note that 'selectable' and 'selectHelper' options are set by overriding {@link #isSelectable()} (default is false)
 	 */
 	public Calendar(String id, CalendarModel model, Options options)
 	{

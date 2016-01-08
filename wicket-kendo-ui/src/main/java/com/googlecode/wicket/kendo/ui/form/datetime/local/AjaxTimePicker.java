@@ -128,7 +128,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public AjaxTimePicker(String id, IModel<LocalTime> model, Options options)
 	{
@@ -153,7 +153,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param pattern a {@code SimpleDateFormat} pattern
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public AjaxTimePicker(String id, IModel<LocalTime> model, String pattern, Options options)
 	{
