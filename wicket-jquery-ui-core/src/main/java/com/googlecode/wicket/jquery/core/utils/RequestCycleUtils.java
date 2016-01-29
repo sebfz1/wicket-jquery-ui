@@ -19,7 +19,9 @@ package com.googlecode.wicket.jquery.core.utils;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPageClassRequestHandler;
 import org.apache.wicket.request.IRequestParameters;
+import org.apache.wicket.request.component.IRequestablePage;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.StringValue;
 
@@ -39,6 +41,23 @@ public class RequestCycleUtils
 	public static AjaxRequestTarget getAjaxRequestTarget()
 	{
 		return RequestCycle.get().find(AjaxRequestTarget.class);
+	}
+
+	/**
+	 * Gets the page class of the current request cycle
+	 * 
+	 * @return the {@link IRequestablePage} class
+	 */
+	public static Class<? extends IRequestablePage> getPageClass()
+	{
+		IPageClassRequestHandler handler = RequestCycle.get().find(IPageClassRequestHandler.class);
+
+		if (handler != null)
+		{
+			return handler.getPageClass();
+		}
+
+		return null;
 	}
 
 	/**

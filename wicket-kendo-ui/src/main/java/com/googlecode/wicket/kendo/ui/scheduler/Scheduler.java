@@ -49,13 +49,16 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	private final Options options;
+	private SchedulerEventFactory factory;
 	private SchedulerModelBehavior modelBehavior; // load events
 
 	private final ResourceListModel resourceListModel;
 
-	// template //
-	private final IJQueryTemplate template;
-	private KendoTemplateBehavior templateBehavior = null;
+	// templates //
+	private IJQueryTemplate editTemplate;
+	private IJQueryTemplate eventTemplate;
+	private KendoTemplateBehavior editTemplateBehavior = null;
+	private KendoTemplateBehavior eventTemplateBehavior = null;
 
 	/**
 	 * Constructor
@@ -152,7 +155,6 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 
 		this.resourceListModel = resourceListModel;
 		this.options = Args.notNull(options, "options");
-		this.template = this.newTemplate();
 	}
 
 	// Methods //
@@ -206,9 +208,24 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	{
 		return (SchedulerModel) this.getDefaultModel();
 	}
-	
+
 	/**
-	 * Gets the sheduler's {@link ResourceListModel} 
+	 * Gets the {@link SchedulerEventFactory}
+	 * 
+	 * @return the {@code SchedulerEventFactory}
+	 */
+	private SchedulerEventFactory getSchedulerEventFactory()
+	{
+		if (this.factory == null)
+		{
+			this.factory = this.newSchedulerEventFactory();
+		}
+
+		return this.factory;
+	}
+
+	/**
+	 * Gets the sheduler's {@link ResourceListModel}
 	 *
 	 * @return the {@link ResourceListModel}
 	 */
@@ -234,13 +251,25 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	{
 		super.onInitialize();
 
-		this.modelBehavior = this.newSchedulerModelBehavior(this.getModel());
+		this.modelBehavior = this.newSchedulerModelBehavior(this.getModel(), this.getSchedulerEventFactory());
 		this.add(this.modelBehavior);
 
-		if (this.template != null)
+		// templates //
+
+		this.editTemplate = this.newEditTemplate();
+
+		if (this.editTemplate != null)
 		{
-			this.templateBehavior = new KendoTemplateBehavior(this.template);
-			this.add(this.templateBehavior);
+			this.editTemplateBehavior = new KendoTemplateBehavior(this.editTemplate);
+			this.add(this.editTemplateBehavior);
+		}
+
+		this.eventTemplate = this.newEventTemplate();
+
+		if (this.eventTemplate != null)
+		{
+			this.eventTemplateBehavior = new KendoTemplateBehavior(this.eventTemplate);
+			this.add(this.eventTemplateBehavior);
 		}
 	}
 
@@ -262,11 +291,26 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			behavior.setOption("group", options);
 		}
 
-		// set template (if any) //
-		if (this.templateBehavior != null)
+		// set templates (if any) //
+		if (this.editTemplateBehavior != null)
 		{
-			behavior.setOption("eventTemplate", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
+			behavior.setOption("editable", String.format("{ template: jQuery('#%s').html() }", this.editTemplateBehavior.getToken()));
 		}
+
+		if (this.eventTemplateBehavior != null)
+		{
+			behavior.setOption("eventTemplate", String.format("jQuery('#%s').html()", this.eventTemplateBehavior.getToken()));
+		}
+	}
+
+	/**
+	 * Configure the {@link SchedulerDataSource} with additional options
+	 * 
+	 * @param dataSource the {@link SchedulerDataSource}
+	 */
+	protected void onConfigure(SchedulerDataSource dataSource)
+	{
+		// noop
 	}
 
 	@Override
@@ -307,9 +351,11 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new SchedulerBehavior(selector, this.options, this) {
+		return new SchedulerBehavior(selector, this.options, this.getSchedulerEventFactory(), this) {
 
 			private static final long serialVersionUID = 1L;
+
+			// Properties //
 
 			@Override
 			protected CharSequence getDataSourceUrl()
@@ -322,30 +368,61 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			{
 				return Scheduler.this.resourceListModel;
 			}
+
+			// Events //
+
+			@Override
+			protected void onConfigure(SchedulerDataSource dataSource)
+			{
+				Scheduler.this.onConfigure(dataSource);
+			}
 		};
 	}
 
 	// Factory methods //
 
 	/**
+	 * Gets a new {@link IJQueryTemplate} to customize the built-in edit window
+	 * 
+	 * @return null by default
+	 * @see <a href="http://docs.telerik.com/kendo-ui/controls/scheduling/scheduler/how-to/custom-edit-and-event-templates">http://docs.telerik.com/kendo-ui/controls/scheduling/scheduler/how-to/custom-edit-and-event-templates</a>
+	 */
+	protected IJQueryTemplate newEditTemplate()
+	{
+		return null;
+	}
+
+	/**
 	 * Gets a new {@link IJQueryTemplate} to customize the event rendering
 	 * 
 	 * @return null by default
+	 * @see <a href="http://docs.telerik.com/kendo-ui/controls/scheduling/scheduler/how-to/custom-edit-and-event-templates">http://docs.telerik.com/kendo-ui/controls/scheduling/scheduler/how-to/custom-edit-and-event-templates</a>
 	 */
 	// TODO: add ISchedulerTemplate? (#getTextProperties seems to be useless, to be double checked)
-	protected IJQueryTemplate newTemplate()
+	protected IJQueryTemplate newEventTemplate()
 	{
 		return null;
+	}
+
+	/**
+	 * Gets a new {@link SchedulerEventFactory}
+	 * 
+	 * @return a new {@code SchedulerEventFactory}
+	 */
+	protected SchedulerEventFactory newSchedulerEventFactory()
+	{
+		return new SchedulerEventFactory();
 	}
 
 	/**
 	 * Gets a new {@link SchedulerModelBehavior}
 	 *
 	 * @param model the {@link SchedulerModel}
+	 * @param schedulerEventFactory
 	 * @return the {@link SchedulerModelBehavior}
 	 */
-	protected SchedulerModelBehavior newSchedulerModelBehavior(final SchedulerModel model)
+	protected SchedulerModelBehavior newSchedulerModelBehavior(final SchedulerModel model, SchedulerEventFactory factory)
 	{
-		return new SchedulerModelBehavior(model);
+		return new SchedulerModelBehavior(model, factory);
 	}
 }

@@ -58,7 +58,7 @@ public class DefaultDropDownPage extends AbstractDropDownPage
 
 	private void info(DropDownList<String> dropdown)
 	{
-		String choice =  dropdown.getModelObject();
+		String choice = dropdown.getModelObject();
 
 		this.info(choice != null ? choice : "no choice");
 	}

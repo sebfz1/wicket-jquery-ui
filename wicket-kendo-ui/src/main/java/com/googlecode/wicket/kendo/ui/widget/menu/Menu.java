@@ -54,7 +54,6 @@ public class Menu extends JQueryPanel implements IMenuListener
 
 	/** Keep a reference to the {@link MenuItem}{@code s} hash */
 	private Map<String, IMenuItem> map = new HashMap<String, IMenuItem>();
-	private MenuBehavior widgetBehavior;
 
 	/**
 	 * Constructor
@@ -144,8 +143,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 	{
 		super.onInitialize();
 
-		this.widgetBehavior = JQueryWidget.newWidgetBehavior(this, this.root);
-		this.add(this.widgetBehavior);
+		this.add(JQueryWidget.newWidgetBehavior(this, this.root));
 	}
 
 	@Override
