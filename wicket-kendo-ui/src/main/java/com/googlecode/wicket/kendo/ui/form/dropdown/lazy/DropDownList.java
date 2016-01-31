@@ -166,7 +166,7 @@ public class DropDownList<T> extends TextField<T> implements IJQueryWidget
 	@Override
 	protected final String getModelValue()
 	{
-		return this.renderer.getText(this.getModelObject()); // renderer cannot be null.
+		return this.renderer.getValue(this.getModelObject()); // renderer cannot be null.
 	}
 
 	/**

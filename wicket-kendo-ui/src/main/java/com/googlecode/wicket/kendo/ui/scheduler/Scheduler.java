@@ -160,12 +160,11 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	// Methods //
 
 	/**
-	 * Adds a {@link ResourceList} to the internal {@link ListModel} of {@link ResourceList}{@code s}
+	 * Adds a {@link ResourceList} to the internal {@link ResourceListModel}
 	 * 
 	 * @param resourceList the {@code ResourceList}
-	 * @deprecated use {@link #getResourceListModel()}
+	 * @see #getResourceListModel()
 	 */
-	@Deprecated
 	public void add(ResourceList resourceList)
 	{
 		this.resourceListModel.add(resourceList);
@@ -214,7 +213,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 * 
 	 * @return the {@code SchedulerEventFactory}
 	 */
-	private SchedulerEventFactory getSchedulerEventFactory()
+	protected final SchedulerEventFactory getSchedulerEventFactory()
 	{
 		if (this.factory == null)
 		{

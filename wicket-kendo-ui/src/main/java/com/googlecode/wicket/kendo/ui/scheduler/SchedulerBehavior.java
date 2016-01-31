@@ -476,7 +476,6 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 		public SchedulerPayload()
 		{
-
 			String data = RequestCycleUtils.getQueryParameterValue("data").toString();
 
 			try
