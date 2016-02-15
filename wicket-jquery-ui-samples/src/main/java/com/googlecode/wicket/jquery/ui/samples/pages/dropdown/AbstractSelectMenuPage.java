@@ -19,9 +19,9 @@ abstract class AbstractSelectMenuPage extends SamplePage
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Arrays.asList(
-				new DemoLink(DefaultSelectMenuPage.class, "DropDownChoice (SelectMenu)"),
-				new DemoLink(AjaxSelectMenuPage.class, "AjaxDropDownChoice (SelectMenu)"),
-				new DemoLink(RendererSelectMenuPage.class, "DropDownChoice (SelectMenu): custom renderer")
+				new DemoLink(DefaultSelectMenuPage.class, "DropDownChoice"),
+				new DemoLink(AjaxSelectMenuPage.class, "AjaxDropDownChoice"),
+				new DemoLink(RendererSelectMenuPage.class, "DropDownChoice: custom renderer")
 			);
 	}
 }

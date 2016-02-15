@@ -28,7 +28,7 @@ public class RendererSelectMenuPage extends AbstractSelectMenuPage
 		// SelectMenu //
 		final DropDownChoice<Genre> dropdown = new DropDownChoice<Genre>("select", new Model<Genre>(), GenresDAO.all(), new ChoiceRenderer<Genre>("name", "id"));
 		form.add(dropdown);
-		
+
 		// Buttons //
 		form.add(new Button("submit") {
 
@@ -56,7 +56,7 @@ public class RendererSelectMenuPage extends AbstractSelectMenuPage
 
 	private void info(DropDownChoice<Genre> dropdown)
 	{
-		Genre choice =  dropdown.getModelObject();
+		Genre choice = dropdown.getModelObject();
 
 		this.info(choice != null ? choice : "no choice");
 	}
