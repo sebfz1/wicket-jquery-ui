@@ -198,9 +198,6 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		this.dataSource.setTransportUpdate(this.onUpdateAjaxBehavior.getCallbackFunction());
 		this.dataSource.setTransportDelete(this.onDeleteAjaxBehavior.getCallbackFunction());
 
-		// schema //
-		// this.setOption("schema", new Options("timezone", Options.asString("Etc/UTC")));
-
 		// resource //
 		this.setOption("resources", this.getResourceListModel());
 	}
@@ -395,7 +392,8 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
 		{
 			String statement = "";
-			// we need to convert to timestamp before sending (probably an issue)
+
+			// convert to timestamp before sending
 			statement += "e.sender.start = e.sender.start.getTime();";
 			statement += "e.sender.end = e.sender.end.getTime();";
 			statement += super.getCallbackFunctionBody(parameters);
@@ -429,7 +427,8 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
 		{
 			String statement = "";
-			// we need to convert to timestamp before sending (probably an issue)
+
+			// convert to timestamp before sending
 			statement += "e.data.start = e.data.start.getTime();";
 			statement += "e.data.end = e.data.end.getTime();";
 			statement += super.getCallbackFunctionBody(parameters);

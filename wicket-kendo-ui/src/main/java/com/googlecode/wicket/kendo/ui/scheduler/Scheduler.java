@@ -187,6 +187,8 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	public void refresh(AjaxRequestTarget target)
 	{
 		target.appendJavaScript(String.format("var widget = %s; widget.dataSource.read(); widget.refresh();", this.widget()));
+
+		this.onRefresh(target);
 	}
 
 	// Properties //
@@ -307,6 +309,16 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 * @param dataSource the {@link SchedulerDataSource}
 	 */
 	protected void onConfigure(SchedulerDataSource dataSource)
+	{
+		// noop
+	}
+
+	/**
+	 * Triggered when {@link #refresh(AjaxRequestTarget)} has been called
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	protected void onRefresh(AjaxRequestTarget target)
 	{
 		// noop
 	}
