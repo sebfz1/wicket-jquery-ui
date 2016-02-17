@@ -28,43 +28,43 @@ import org.slf4j.LoggerFactory;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class TreeViewNodeFactory<T> implements IClusterable
+public class TreeNodeFactory<T> implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = LoggerFactory.getLogger(TreeViewNodeFactory.class);
+	private static final Logger LOG = LoggerFactory.getLogger(TreeNodeFactory.class);
 
 	public static final String ID_FIELD = "id";
 	public static final String TEXT_FIELD = "text";
 
-	private final String idField;
-	private final String textField;
+	// private final String idField;
+	// private final String textField;
 
 	/**
 	 * Factory class
 	 */
-	public TreeViewNodeFactory()
+	public TreeNodeFactory()
 	{
-//		this(ID_FIELD, TEXT_FIELD);
+		// this(ID_FIELD, TEXT_FIELD);
 	}
 
-//	/**
-//	 * Factory class
-//	 */
-//	public TreeViewNodeFactory(String idField, String textField)
-//	{
-//		this.idField = idField;
-//		this.textField = textField;
-//	}
-//
-//	public String getIdField()
-//	{
-//		return this.idField;
-//	}
-//
-//	public String getTextField()
-//	{
-//		return this.textField;
-//	}
+	// /**
+	// * Factory class
+	// */
+	// public TreeViewNodeFactory(String idField, String textField)
+	// {
+	// this.idField = idField;
+	// this.textField = textField;
+	// }
+	//
+	// public String getIdField()
+	// {
+	// return this.idField;
+	// }
+	//
+	// public String getTextField()
+	// {
+	// return this.textField;
+	// }
 
 	/**
 	 * Converts a {@link TreeViewEvent} to a {@link JSONObject}
@@ -80,8 +80,8 @@ public class TreeViewNodeFactory<T> implements IClusterable
 
 			if (object != null)
 			{
-				json.put(ID_FIELD, object.hashCode());
-				json.put(TEXT_FIELD, object.toString());
+				json.put(ID_FIELD, this.getId(object));
+				json.put(TEXT_FIELD, this.getText(object));
 			}
 
 			return json;
@@ -92,5 +92,15 @@ public class TreeViewNodeFactory<T> implements IClusterable
 		}
 
 		return null;
+	}
+
+	protected long getId(T object)
+	{
+		return object.hashCode();
+	}
+
+	protected String getText(T object)
+	{
+		return String.valueOf(object);
 	}
 }

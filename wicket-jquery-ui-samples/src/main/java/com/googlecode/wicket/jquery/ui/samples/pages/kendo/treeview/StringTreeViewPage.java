@@ -17,25 +17,7 @@ public class StringTreeViewPage extends AbstractTreeViewPage
 		options.set("animation", false);
 		options.set("select", "function(e) { e.preventDefault(); }");
 
-		this.add(new TreeView<String>("treeview", newTreeViewModel(), options) {
-
-			private static final long serialVersionUID = 1L;
-
-			// @Override
-			// protected void onConfigure(TreeViewDataSource dataSource)
-			// {
-			// super.onConfigure(dataSource);
-			//
-			// }
-			//
-			//// newSchemaOptions()
-			//
-			// @Override
-			// protected TreeViewNodeFactory<String> newTreeViewNodeFactory()
-			// {
-			// return new TreeViewNodeFactory();
-			// }
-		});
+		this.add(new TreeView<String>("treeview", newTreeViewModel(), options));
 	}
 
 	private static TreeViewModel<String> newTreeViewModel()
@@ -45,9 +27,8 @@ public class StringTreeViewPage extends AbstractTreeViewPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected List<String> load(String id)
+			protected List<String> load(long id)
 			{
-				System.out.println("id: " + id); // TODO remove
 				return Arrays.asList("1", "2", "3");
 			}
 		};

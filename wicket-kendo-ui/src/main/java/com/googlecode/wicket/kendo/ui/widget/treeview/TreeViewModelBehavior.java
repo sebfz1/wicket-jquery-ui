@@ -38,14 +38,14 @@ public class TreeViewModelBehavior<T> extends AbstractAjaxBehavior
 	private static final long serialVersionUID = 1L;
 
 	private final TreeViewModel<T> model;
-	private final TreeViewNodeFactory<T> factory;
+	private final TreeNodeFactory<T> factory;
 
 	/**
 	 * Constructor
 	 *
 	 * @param model the {@link TreeViewModel}
 	 */
-	public TreeViewModelBehavior(final TreeViewModel<T> model, TreeViewNodeFactory<T> factory)
+	public TreeViewModelBehavior(final TreeViewModel<T> model, TreeNodeFactory<T> factory)
 	{
 		this.model = model;
 		this.factory = Args.notNull(factory, "factory");
@@ -60,12 +60,12 @@ public class TreeViewModelBehavior<T> extends AbstractAjaxBehavior
 	 * @param model the {@link TreeViewModel}
 	 * @param date the timestamp
 	 */
-	protected void setModelNode(TreeViewModel<T> model, String node)
+	protected void setModelNode(TreeViewModel<T> model, long nodeId)
 	{
-		model.setNode(node);
+		model.setNodeId(nodeId);
 	}
 
-	public TreeViewNodeFactory<T> getFactory()
+	public TreeNodeFactory<T> getFactory()
 	{
 		return this.factory;
 	}
@@ -78,7 +78,7 @@ public class TreeViewModelBehavior<T> extends AbstractAjaxBehavior
 		final RequestCycle requestCycle = RequestCycle.get();
 		IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
 
-		this.setModelNode(this.model, parameters.getParameterValue(factory.getIdField()).toOptionalString());
+		this.setModelNode(this.model, parameters.getParameterValue(TreeNodeFactory.ID_FIELD).toLong(0L));
 
 		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler());
 	}

@@ -39,7 +39,7 @@ public abstract class TreeViewModel<T> extends LoadableDetachableModel<List<T>>
 	private static final long serialVersionUID = 1L;
 
 	/** root node */
-	private String node = null;
+	private long node = 0;
 
 	/**
 	 * Constructor
@@ -55,15 +55,15 @@ public abstract class TreeViewModel<T> extends LoadableDetachableModel<List<T>>
 		return this.load(this.node);
 	}
 
-	protected abstract List<T> load(String node);
+	protected abstract List<T> load(long node);
 
 	/**
 	 * Sets the start date.
 	 *
 	 * @param date the start date
 	 */
-	public void setNode(String node)
+	public void setNodeId(long nodeId)
 	{
-		this.node = node;
+		this.node = nodeId;
 	}
 }

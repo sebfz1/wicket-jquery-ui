@@ -138,7 +138,7 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	{
 		super.onInitialize();
 
-		this.modelBehavior = this.newTreeViewModelBehavior(this.getModel(), this.newTreeViewNodeFactory());
+		this.modelBehavior = this.newTreeViewModelBehavior(this.getModel(), this.newTreeNodeFactory());
 		this.add(this.modelBehavior);
 
 		// templates //
@@ -157,7 +157,7 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	{
 		super.onConfigure(behavior);
 
-		behavior.setOption("dataTextField", Options.asString(this.modelBehavior.getFactory().getTextField())); // 'text'
+		behavior.setOption("dataTextField", Options.asString(TreeNodeFactory.TEXT_FIELD)); // 'text'
 
 		// set templates (if any) //
 		if (this.templateBehavior != null)
@@ -173,7 +173,7 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	 */
 	protected void onConfigure(TreeViewDataSource dataSource)
 	{
-		dataSource.set("schema", String.format("{ model: { id: '%s', hasChildren: true } }", this.modelBehavior.getFactory().getIdField()));
+		dataSource.set("schema", String.format("{ model: { id: '%s', text: '%s', hasChildren: true } }", TreeNodeFactory.ID_FIELD, TreeNodeFactory.TEXT_FIELD));
 	}
 
 	/**
@@ -233,9 +233,9 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	 * 
 	 * @return a new {@code SchedulerEventFactory}
 	 */
-	protected TreeViewNodeFactory<T> newTreeViewNodeFactory()
+	protected TreeNodeFactory<T> newTreeNodeFactory()
 	{
-		return new TreeViewNodeFactory<T>();
+		return new TreeNodeFactory<T>();
 	}
 
 	/**
@@ -244,7 +244,7 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	 * @param model the {@link TreeViewModel}
 	 * @return the {@link TreeViewModelBehavior}
 	 */
-	protected TreeViewModelBehavior<T> newTreeViewModelBehavior(final TreeViewModel<T> model, final TreeViewNodeFactory<T> factory)
+	protected TreeViewModelBehavior<T> newTreeViewModelBehavior(final TreeViewModel<T> model, final TreeNodeFactory<T> factory)
 	{
 		return new TreeViewModelBehavior<T>(model, factory);
 	}
