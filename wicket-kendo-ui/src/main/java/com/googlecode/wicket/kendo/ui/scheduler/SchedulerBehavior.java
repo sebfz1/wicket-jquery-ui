@@ -253,7 +253,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'navigate' event, triggered when the user is navigating in the scheduler
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnNavigateAjaxBehavior} by default
+	 * @return a new {@code OnNavigateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnNavigateAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -264,7 +264,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'edit' event, triggered when an event is edited
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnNavigateAjaxBehavior} by default
+	 * @return a new {@code OnNavigateAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnEditAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -284,7 +284,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'create' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link DataSourceAjaxBehavior} by default
+	 * @return a new {@code DataSourceAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnCreateAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -304,7 +304,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'update' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link DataSourceAjaxBehavior} by default
+	 * @return a new {@code DataSourceAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -324,7 +324,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'delete' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link DataSourceAjaxBehavior} by default
+	 * @return a new {@code DataSourceAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDeleteAjaxBehavior(IJQueryAjaxAware source)
 	{
