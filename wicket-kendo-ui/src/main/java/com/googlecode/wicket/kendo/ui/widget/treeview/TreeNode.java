@@ -25,7 +25,7 @@ public class TreeNode<T> implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final long ROOT = 0;
+	public static final long ROOT = 0L;
 
 	private static int sequence = 1;
 
@@ -88,6 +88,11 @@ public class TreeNode<T> implements IClusterable
 	public static <T> TreeNode<T> of(T object)
 	{
 		return new TreeNode<T>(object);
+	}
+
+	public static <T> TreeNode<T> of(long parentId, T object)
+	{
+		return new TreeNode<T>(parentId, object);
 	}
 
 	// Children Classes //

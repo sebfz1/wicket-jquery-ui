@@ -60,7 +60,7 @@ public class TreeViewModelBehavior extends AbstractAjaxBehavior
 	 * @param model the {@link TreeViewModel}
 	 * @param date the timestamp
 	 */
-	protected void setModelNode(TreeViewModel model, long nodeId)
+	protected void setModelNodeId(TreeViewModel model, long nodeId)
 	{
 		model.setNodeId(nodeId);
 	}
@@ -78,7 +78,7 @@ public class TreeViewModelBehavior extends AbstractAjaxBehavior
 		final RequestCycle requestCycle = RequestCycle.get();
 		IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
 
-		this.setModelNode(this.model, parameters.getParameterValue(TreeNodeFactory.ID_FIELD).toLong(0L));
+		this.setModelNodeId(this.model, parameters.getParameterValue(TreeNodeFactory.ID_FIELD).toLong(TreeNode.ROOT));
 
 		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler());
 	}

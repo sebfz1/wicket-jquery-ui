@@ -37,9 +37,9 @@ import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEvent;
 public abstract class TreeViewModel extends LoadableDetachableModel<List<? extends TreeNode<?>>>
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	/** root node */
-	private long parentId = TreeNode.ROOT;
+	private long nodeId = TreeNode.ROOT;
 
 	/**
 	 * Constructor
@@ -52,10 +52,16 @@ public abstract class TreeViewModel extends LoadableDetachableModel<List<? exten
 	@Override
 	protected final List<? extends TreeNode<?>> load()
 	{
-		return this.load(this.parentId);
+		return this.load(this.nodeId);
 	}
 
-	protected abstract List<? extends TreeNode<?>> load(long parentId);
+	/**
+	 * Loads children nodes of specified {@code nodeId}
+	 * 
+	 * @param nodeId the (parent) node-id
+	 * @return the list of children {@code TreeNode}
+	 */
+	protected abstract List<? extends TreeNode<?>> load(long nodeId);
 
 	/**
 	 * Sets the start date.
@@ -64,6 +70,6 @@ public abstract class TreeViewModel extends LoadableDetachableModel<List<? exten
 	 */
 	public void setNodeId(long nodeId)
 	{
-		this.parentId = nodeId;
+		this.nodeId = nodeId;
 	}
 }

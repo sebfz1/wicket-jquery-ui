@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Band;
-import com.googlecode.wicket.jquery.ui.samples.data.bean.BandTreeNode;
 import com.googlecode.wicket.kendo.ui.utils.TreeNodeUtils;
 import com.googlecode.wicket.kendo.ui.widget.treeview.TreeNode;
 
@@ -358,5 +357,27 @@ public class BandsDAO
 	public static List<? extends TreeNode<?>> get(long parentId)
 	{
 		return TreeNodeUtils.getChildren(parentId, get().list);
+	}
+	
+	static class BandTreeNode extends TreeNode<Band>
+	{
+		private static final long serialVersionUID = 1L;
+
+		public BandTreeNode(long countryId, Band band)
+		{
+			super(countryId, band);
+		}
+
+		@Override
+		public String getText()
+		{
+			return this.getObject().getName();
+		}
+
+		@Override
+		public boolean hasChildren()
+		{
+			return false;
+		}
 	}
 }

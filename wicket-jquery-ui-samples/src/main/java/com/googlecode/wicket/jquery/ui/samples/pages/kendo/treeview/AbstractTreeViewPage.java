@@ -20,8 +20,7 @@ abstract class AbstractTreeViewPage extends SamplePage
 	{
 		return Arrays.asList(
 				new DemoLink(DefaultTreeViewPage.class, "Behavior (static html)"),
-				new DemoLink(StringTreeViewPage.class, "TreeView (simple content)"),
-				new DemoLink(CustomTreeViewPage.class, "AjaxTreeView (custom beans)")
+				new DemoLink(AjaxTreeViewPage.class, "AjaxTreeView (custom beans)")
 			);
 	}
 }

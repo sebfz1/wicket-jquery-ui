@@ -39,15 +39,35 @@ public class TreeNodeUtils
 	 * @param nodes
 	 * @return
 	 */
-	public static List<? extends TreeNode<?>> getChildren(long id, List<TreeNode<?>> nodes)
+	public static TreeNode<?> get(long id, List<TreeNode<?>> nodes)
+	{
+		for (TreeNode<?> node : nodes)
+		{
+			if (node.getId() == id)
+			{
+				return node;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * TODO javadoc
+	 * 
+	 * @param parentId
+	 * @param nodes
+	 * @return
+	 */
+	public static List<? extends TreeNode<?>> getChildren(long parentId, List<TreeNode<?>> nodes)
 	{
 		List<TreeNode<?>> list = Generics.newArrayList();
 
 		for (TreeNode<?> node : nodes)
 		{
-			if (node.getId() == id)
+			if (node.getParentId() == parentId)
 			{
-				nodes.add(node);
+				list.add(node);
 			}
 		}
 

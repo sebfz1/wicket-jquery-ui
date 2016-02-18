@@ -17,12 +17,12 @@ import com.googlecode.wicket.kendo.ui.widget.treeview.TreeNode;
 import com.googlecode.wicket.kendo.ui.widget.treeview.TreeNodeFactory;
 import com.googlecode.wicket.kendo.ui.widget.treeview.TreeViewModel;
 
-public class CustomTreeViewPage extends AbstractTreeViewPage
+public class AjaxTreeViewPage extends AbstractTreeViewPage
 {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = LoggerFactory.getLogger(CustomTreeViewPage.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AjaxTreeViewPage.class);
 
-	public CustomTreeViewPage()
+	public AjaxTreeViewPage()
 	{
 		Options options = new Options();
 		options.set("animation", false);
@@ -47,7 +47,7 @@ public class CustomTreeViewPage extends AbstractTreeViewPage
 					@Override
 					public String getText()
 					{
-						return "#= item.text # # if(typeof item.desc != 'undefined') { # <i>#= item.desc #<i/> # } #";
+						return "#= item.text # # if(typeof item.desc != 'undefined') { # : <i>#= item.desc #</i> # } #";
 					}
 				};
 			}
