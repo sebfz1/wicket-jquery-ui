@@ -33,19 +33,19 @@ import org.apache.wicket.util.lang.Args;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class TreeViewModelBehavior<T> extends AbstractAjaxBehavior
+public class TreeViewModelBehavior extends AbstractAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 
-	private final TreeViewModel<T> model;
-	private final TreeNodeFactory<T> factory;
+	private final TreeViewModel model;
+	private final TreeNodeFactory factory;
 
 	/**
 	 * Constructor
 	 *
 	 * @param model the {@link TreeViewModel}
 	 */
-	public TreeViewModelBehavior(final TreeViewModel<T> model, TreeNodeFactory<T> factory)
+	public TreeViewModelBehavior(final TreeViewModel model, TreeNodeFactory factory)
 	{
 		this.model = model;
 		this.factory = Args.notNull(factory, "factory");
@@ -60,12 +60,12 @@ public class TreeViewModelBehavior<T> extends AbstractAjaxBehavior
 	 * @param model the {@link TreeViewModel}
 	 * @param date the timestamp
 	 */
-	protected void setModelNode(TreeViewModel<T> model, long nodeId)
+	protected void setModelNode(TreeViewModel model, long nodeId)
 	{
 		model.setNodeId(nodeId);
 	}
 
-	public TreeNodeFactory<T> getFactory()
+	public TreeNodeFactory getFactory()
 	{
 		return this.factory;
 	}
@@ -113,7 +113,7 @@ public class TreeViewModelBehavior<T> extends AbstractAjaxBehavior
 
 			if (model != null)
 			{
-				List<? extends TreeNode<T>> objects = model.getObject(); // calls load()
+				List<? extends TreeNode<?>> objects = model.getObject(); // calls load()
 
 				if (objects != null)
 				{
@@ -121,7 +121,7 @@ public class TreeViewModelBehavior<T> extends AbstractAjaxBehavior
 
 					for (int index = 0; index < objects.size(); index++)
 					{
-						TreeNode<T> object = objects.get(index);
+						TreeNode<?> object = objects.get(index);
 
 						// if (model instanceof ISchedulerVisitor)
 						// {

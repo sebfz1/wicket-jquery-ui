@@ -14,17 +14,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.widget.treeview;
+package com.googlecode.wicket.kendo.ui.utils;
 
-import org.apache.wicket.util.io.IClusterable;
+import java.util.List;
 
-/**
- * Event listener shared by the {@link AjaxTreeView} widget and the {@link AjaxTreeViewBehavior}
- *
- * @author Sebastien Briquet - sebfz1
- *
- */
-public interface ITreeViewListener extends IClusterable
+import org.apache.wicket.util.lang.Generics;
+
+import com.googlecode.wicket.kendo.ui.widget.treeview.TreeNode;
+
+public class TreeNodeUtils
 {
-	//onSelect
+	/**
+	 * Utility class
+	 */
+	private TreeNodeUtils()
+	{
+		// noop
+	}
+
+	/**
+	 * TODO javadoc
+	 * 
+	 * @param id
+	 * @param nodes
+	 * @return
+	 */
+	public static List<? extends TreeNode<?>> getChildren(long id, List<TreeNode<?>> nodes)
+	{
+		List<TreeNode<?>> list = Generics.newArrayList();
+
+		for (TreeNode<?> node : nodes)
+		{
+			if (node.getId() == id)
+			{
+				nodes.add(node);
+			}
+		}
+
+		return list;
+	}
 }

@@ -30,17 +30,17 @@ import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEventFactory;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceListModel;
 
 /**
- * Provides the Kendo UI Scheduler
+ * Provides the Kendo UI TreeView
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class TreeView<T> extends JQueryContainer implements ITreeViewListener
+public class AjaxTreeView<T> extends JQueryContainer implements ITreeViewListener
 {
 	private static final long serialVersionUID = 1L;
 
 	private final Options options;
-	private TreeViewModelBehavior<T> modelBehavior; // load events
+	private TreeViewModelBehavior modelBehavior; // load events
 
 	// templates //
 	private IJQueryTemplate template;
@@ -51,7 +51,7 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	 *
 	 * @param id the markup id
 	 */
-	public TreeView(String id)
+	public AjaxTreeView(String id)
 	{
 		this(id, null, new Options());
 	}
@@ -62,7 +62,7 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	 * @param id the markup id
 	 * @param options the {@link Options}
 	 */
-	public TreeView(String id, Options options)
+	public AjaxTreeView(String id, Options options)
 	{
 		this(id, null, options);
 	}
@@ -74,7 +74,7 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	 * @param model the {@link TreeViewModel}
 	 * @param resourceListModel the {@link ResourceListModel}
 	 */
-	public TreeView(String id, TreeViewModel<T> model)
+	public AjaxTreeView(String id, TreeViewModel model)
 	{
 		this(id, model, new Options());
 	}
@@ -87,7 +87,7 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	 * @param resourceListModel the {@link ResourceListModel}
 	 * @param options the {@link Options}
 	 */
-	public TreeView(String id, TreeViewModel<T> model, Options options)
+	public AjaxTreeView(String id, TreeViewModel model, Options options)
 	{
 		super(id, model);
 
@@ -103,7 +103,7 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	 */
 	public String widget()
 	{
-		return KendoUIBehavior.widget(this, TreeViewBehavior.METHOD);
+		return KendoUIBehavior.widget(this, AjaxTreeViewBehavior.METHOD);
 	}
 
 	/**
@@ -125,10 +125,9 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	 *
 	 * @return the {@link TreeViewModel}
 	 */
-	@SuppressWarnings("unchecked")
-	public TreeViewModel<T> getModel()
+	public TreeViewModel getModel()
 	{
-		return (TreeViewModel<T>) this.getDefaultModel();
+		return (TreeViewModel) this.getDefaultModel();
 	}
 
 	// Events //
@@ -163,7 +162,7 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 		// set templates (if any) //
 		if (this.templateBehavior != null)
 		{
-			behavior.setOption("editable", String.format("{ template: jQuery('#%s').html() }", this.templateBehavior.getToken()));
+			behavior.setOption("template", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
 		}
 	}
 
@@ -174,11 +173,7 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	 */
 	protected void onConfigure(TreeViewDataSource dataSource)
 	{
-		dataSource.set("schema", String.format("{ model: { id: '%s', hasChildren: true } }", TreeNodeFactory.ID_FIELD));
-		// url: '%s',
-		// TreeNodeFactory.URL_FIELD,
-//		text: '%s', 
-//		, TreeNodeFactory.TEXT_FIELD
+		dataSource.set("schema", String.format("{ model: { id: '%s' } }", TreeNodeFactory.ID_FIELD));
 	}
 
 	/**
@@ -199,7 +194,7 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new TreeViewBehavior(selector, this.options, this) {
+		return new AjaxTreeViewBehavior(selector, this.options, this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -208,7 +203,7 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 			@Override
 			protected CharSequence getDataSourceUrl()
 			{
-				return TreeView.this.modelBehavior.getCallbackUrl();
+				return AjaxTreeView.this.modelBehavior.getCallbackUrl();
 			}
 
 			// Events //
@@ -216,7 +211,7 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 			@Override
 			protected void onConfigure(TreeViewDataSource dataSource)
 			{
-				TreeView.this.onConfigure(dataSource);
+				AjaxTreeView.this.onConfigure(dataSource);
 			}
 		};
 	}
@@ -238,9 +233,9 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	 * 
 	 * @return a new {@code SchedulerEventFactory}
 	 */
-	protected TreeNodeFactory<T> newTreeNodeFactory()
+	protected TreeNodeFactory newTreeNodeFactory()
 	{
-		return new TreeNodeFactory<T>();
+		return new TreeNodeFactory();
 	}
 
 	/**
@@ -249,8 +244,8 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	 * @param model the {@link TreeViewModel}
 	 * @return the {@link TreeViewModelBehavior}
 	 */
-	protected TreeViewModelBehavior<T> newTreeViewModelBehavior(final TreeViewModel<T> model, final TreeNodeFactory<T> factory)
+	protected TreeViewModelBehavior newTreeViewModelBehavior(final TreeViewModel model, final TreeNodeFactory factory)
 	{
-		return new TreeViewModelBehavior<T>(model, factory);
+		return new TreeViewModelBehavior(model, factory);
 	}
 }

@@ -19,7 +19,7 @@ package com.googlecode.wicket.kendo.ui.widget.treeview;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 
 /**
- * Provide the data-source for the {@link TreeView}
+ * Provide the data-source for the {@link AjaxTreeView}
  *
  * @author Sebastien Briquet - sebfz1
  */

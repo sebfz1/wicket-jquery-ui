@@ -30,7 +30,7 @@ import com.googlecode.wicket.kendo.ui.widget.treeview.TreeNode.UrlTreeNode;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class TreeNodeFactory<T> implements IClusterable
+public class TreeNodeFactory implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(TreeNodeFactory.class);
@@ -38,13 +38,7 @@ public class TreeNodeFactory<T> implements IClusterable
 	public static final String ID_FIELD = "id";
 	public static final String URL_FIELD = "url";
 	public static final String TEXT_FIELD = "text";
-
-	/**
-	 * Factory class
-	 */
-	public TreeNodeFactory()
-	{
-	}
+	public static final String CHILDREN_FIELD = "hasChildren";
 
 	/**
 	 * Converts a {@link TreeViewEvent} to a {@link JSONObject}
@@ -52,7 +46,7 @@ public class TreeNodeFactory<T> implements IClusterable
 	 * @param event the {@code TreeViewEvent}
 	 * @return the {@code JSONObject}
 	 */
-	public JSONObject toJson(int index, TreeNode<T> node)
+	public JSONObject toJson(int index, TreeNode<?> node)
 	{
 		try
 		{
@@ -62,6 +56,7 @@ public class TreeNodeFactory<T> implements IClusterable
 			{
 				json.put(ID_FIELD, node.getId());
 				json.put(TEXT_FIELD, node.getText());
+				json.put(CHILDREN_FIELD, node.hasChildren());
 
 				if (node instanceof UrlTreeNode<?>)
 				{

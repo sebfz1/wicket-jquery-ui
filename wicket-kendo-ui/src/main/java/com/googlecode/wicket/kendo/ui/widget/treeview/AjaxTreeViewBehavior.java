@@ -28,7 +28,7 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class TreeViewBehavior extends KendoUIBehavior
+public abstract class AjaxTreeViewBehavior extends KendoUIBehavior
 {
 	private static final long serialVersionUID = 1L;
 
@@ -45,7 +45,7 @@ public abstract class TreeViewBehavior extends KendoUIBehavior
 	 * @param factory the {@link TreeViewNodeFactory}
 	 * @param listener the {@link ITreeViewListener}
 	 */
-	public TreeViewBehavior(final String selector, ITreeViewListener listener)
+	public AjaxTreeViewBehavior(final String selector, ITreeViewListener listener)
 	{
 		this(selector, new Options(), listener);
 	}
@@ -58,7 +58,7 @@ public abstract class TreeViewBehavior extends KendoUIBehavior
 	 * @param factory the {@link TreeViewNodeFactory}
 	 * @param listener the {@link ITreeViewListener}
 	 */
-	public TreeViewBehavior(final String selector, Options options, ITreeViewListener listener)
+	public AjaxTreeViewBehavior(final String selector, Options options, ITreeViewListener listener)
 	{
 		super(selector, METHOD, options);
 
