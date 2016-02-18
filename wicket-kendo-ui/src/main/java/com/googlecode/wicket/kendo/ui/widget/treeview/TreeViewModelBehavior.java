@@ -113,7 +113,7 @@ public class TreeViewModelBehavior<T> extends AbstractAjaxBehavior
 
 			if (model != null)
 			{
-				List<T> objects = model.getObject(); // calls load()
+				List<? extends TreeNode<T>> objects = model.getObject(); // calls load()
 
 				if (objects != null)
 				{
@@ -121,7 +121,7 @@ public class TreeViewModelBehavior<T> extends AbstractAjaxBehavior
 
 					for (int index = 0; index < objects.size(); index++)
 					{
-						T object = objects.get(index);
+						TreeNode<T> object = objects.get(index);
 
 						// if (model instanceof ISchedulerVisitor)
 						// {

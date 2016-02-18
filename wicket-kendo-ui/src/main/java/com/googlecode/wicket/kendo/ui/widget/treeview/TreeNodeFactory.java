@@ -22,6 +22,8 @@ import org.apache.wicket.util.io.IClusterable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.wicket.kendo.ui.widget.treeview.TreeNode.UrlTreeNode;
+
 /**
  * Provides a factory for building {@link TreeViewEvent}{@code s} as JSON, and vice-versa
  * 
@@ -34,37 +36,15 @@ public class TreeNodeFactory<T> implements IClusterable
 	private static final Logger LOG = LoggerFactory.getLogger(TreeNodeFactory.class);
 
 	public static final String ID_FIELD = "id";
+	public static final String URL_FIELD = "url";
 	public static final String TEXT_FIELD = "text";
-
-	// private final String idField;
-	// private final String textField;
 
 	/**
 	 * Factory class
 	 */
 	public TreeNodeFactory()
 	{
-		// this(ID_FIELD, TEXT_FIELD);
 	}
-
-	// /**
-	// * Factory class
-	// */
-	// public TreeViewNodeFactory(String idField, String textField)
-	// {
-	// this.idField = idField;
-	// this.textField = textField;
-	// }
-	//
-	// public String getIdField()
-	// {
-	// return this.idField;
-	// }
-	//
-	// public String getTextField()
-	// {
-	// return this.textField;
-	// }
 
 	/**
 	 * Converts a {@link TreeViewEvent} to a {@link JSONObject}
@@ -72,16 +52,21 @@ public class TreeNodeFactory<T> implements IClusterable
 	 * @param event the {@code TreeViewEvent}
 	 * @return the {@code JSONObject}
 	 */
-	public JSONObject toJson(int index, T object)
+	public JSONObject toJson(int index, TreeNode<T> node)
 	{
 		try
 		{
 			JSONObject json = new JSONObject();
 
-			if (object != null)
+			if (node != null)
 			{
-				json.put(ID_FIELD, this.getId(object));
-				json.put(TEXT_FIELD, this.getText(object));
+				json.put(ID_FIELD, node.getId());
+				json.put(TEXT_FIELD, node.getText());
+
+				if (node instanceof UrlTreeNode<?>)
+				{
+					json.put(URL_FIELD, ((UrlTreeNode<?>) node).getUrl());
+				}
 			}
 
 			return json;
@@ -92,15 +77,5 @@ public class TreeNodeFactory<T> implements IClusterable
 		}
 
 		return null;
-	}
-
-	protected long getId(T object)
-	{
-		return object.hashCode();
-	}
-
-	protected String getText(T object)
-	{
-		return String.valueOf(object);
 	}
 }

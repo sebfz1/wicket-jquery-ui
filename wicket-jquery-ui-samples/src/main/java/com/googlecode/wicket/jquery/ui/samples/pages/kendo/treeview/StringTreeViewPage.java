@@ -1,9 +1,11 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.treeview;
 
-import java.util.Arrays;
 import java.util.List;
 
+import org.apache.wicket.util.lang.Generics;
+
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.kendo.ui.widget.treeview.TreeNode;
 import com.googlecode.wicket.kendo.ui.widget.treeview.TreeView;
 import com.googlecode.wicket.kendo.ui.widget.treeview.TreeViewModel;
 
@@ -27,9 +29,14 @@ public class StringTreeViewPage extends AbstractTreeViewPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected List<String> load(long id)
+			protected List<? extends TreeNode<String>> load(long id)
 			{
-				return Arrays.asList("1", "2", "3");
+				List<TreeNode<String>> list = Generics.newArrayList();
+				list.add(TreeNode.of("1"));
+				list.add(TreeNode.of("2"));
+				list.add(TreeNode.of("3"));
+				
+				return list;
 			}
 		};
 	}

@@ -157,6 +157,7 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	{
 		super.onConfigure(behavior);
 
+		behavior.setOption("dataUrlField", Options.asString(TreeNodeFactory.URL_FIELD)); // 'url'
 		behavior.setOption("dataTextField", Options.asString(TreeNodeFactory.TEXT_FIELD)); // 'text'
 
 		// set templates (if any) //
@@ -173,7 +174,11 @@ public class TreeView<T> extends JQueryContainer implements ITreeViewListener
 	 */
 	protected void onConfigure(TreeViewDataSource dataSource)
 	{
-		dataSource.set("schema", String.format("{ model: { id: '%s', text: '%s', hasChildren: true } }", TreeNodeFactory.ID_FIELD, TreeNodeFactory.TEXT_FIELD));
+		dataSource.set("schema", String.format("{ model: { id: '%s', hasChildren: true } }", TreeNodeFactory.ID_FIELD));
+		// url: '%s',
+		// TreeNodeFactory.URL_FIELD,
+//		text: '%s', 
+//		, TreeNodeFactory.TEXT_FIELD
 	}
 
 	/**
