@@ -35,7 +35,9 @@ public class TreeNodeFactory implements IClusterable
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(TreeNodeFactory.class);
 
-	public static final String ID_FIELD = "id";
+	/** node-id (also identifies the request parameter on ajax call */
+	public static final String ID_FIELD = "nid";
+
 	public static final String URL_FIELD = "url";
 	public static final String TEXT_FIELD = "text";
 	public static final String CHILDREN_FIELD = "hasChildren";

@@ -365,7 +365,7 @@ public class BandsDAO
 
 		public BandTreeNode(long countryId, Band band)
 		{
-			super(countryId, band);
+			super(nextSequence(), countryId, band);
 		}
 
 		@Override

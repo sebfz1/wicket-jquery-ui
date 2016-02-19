@@ -31,9 +31,9 @@ public class AjaxTreeViewPage extends AbstractTreeViewPage
 		this.add(this.newTreeView("treeview", newTreeViewModel(), options));
 	}
 
-	private AjaxTreeView<String> newTreeView(String id, TreeViewModel model, Options options)
+	private AjaxTreeView newTreeView(String id, TreeViewModel model, Options options)
 	{
-		return new AjaxTreeView<String>(id, model, options) {
+		return new AjaxTreeView(id, model, options) {
 
 			private static final long serialVersionUID = 1L;
 

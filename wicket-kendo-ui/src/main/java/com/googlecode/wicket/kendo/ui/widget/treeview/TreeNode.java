@@ -33,14 +33,14 @@ public class TreeNode<T> implements IClusterable
 	private final long pid;
 	private final T wrapped;
 
-	public TreeNode(T object)
+	public TreeNode(long id, T object)
 	{
-		this(ROOT, object);
+		this(id, ROOT, object);
 	}
 
-	public TreeNode(long parentId, T object)
+	public TreeNode(long id, long parentId, T object)
 	{
-		this.uid = nextSequence();
+		this.uid = id;
 		this.pid = parentId;
 		this.wrapped = object;
 	}
@@ -80,19 +80,19 @@ public class TreeNode<T> implements IClusterable
 	 *
 	 * @return 0x00000000 to 0x7FFFFFFF
 	 */
-	private static synchronized int nextSequence()
+	public static synchronized int nextSequence()
 	{
 		return TreeNode.sequence++ % Integer.MAX_VALUE;
 	}
 
 	public static <T> TreeNode<T> of(T object)
 	{
-		return new TreeNode<T>(object);
+		return new TreeNode<T>(TreeNode.nextSequence(), object);
 	}
 
 	public static <T> TreeNode<T> of(long parentId, T object)
 	{
-		return new TreeNode<T>(parentId, object);
+		return new TreeNode<T>(TreeNode.nextSequence(), parentId, object);
 	}
 
 	// Children Classes //
@@ -102,43 +102,43 @@ public class TreeNode<T> implements IClusterable
 		private static final long serialVersionUID = 1L;
 		private final CharSequence url;
 
-		public UrlTreeNode(T object, CharSequence url)
+		public UrlTreeNode(long id, T object, CharSequence url)
 		{
-			super(object);
+			super(id, object);
 
 			this.url = url;
 		}
 
-		public UrlTreeNode(T object, Class<? extends Page> pageClass)
+		public UrlTreeNode(long id, T object, Class<? extends Page> pageClass)
 		{
-			this(object, pageClass, new PageParameters());
+			this(id, object, pageClass, new PageParameters());
 		}
 
-		public UrlTreeNode(T object, Class<? extends Page> pageClass, PageParameters parameters)
+		public UrlTreeNode(long id, T object, Class<? extends Page> pageClass, PageParameters parameters)
 		{
-			this(object, RequestCycle.get().urlFor(pageClass, parameters));
+			this(id, object, RequestCycle.get().urlFor(pageClass, parameters));
 		}
 
-		public UrlTreeNode(long parentId, T object)
+		public UrlTreeNode(long id, long parentId, T object)
 		{
-			this(parentId, object, (CharSequence) null);
+			this(id, parentId, object, (CharSequence) null);
 		}
 
-		public UrlTreeNode(long parentId, T object, CharSequence url)
+		public UrlTreeNode(long id, long parentId, T object, CharSequence url)
 		{
-			super(parentId, object);
+			super(id, parentId, object);
 
 			this.url = url;
 		}
 
-		public UrlTreeNode(long parentId, T object, Class<? extends Page> pageClass)
+		public UrlTreeNode(long id, long parentId, T object, Class<? extends Page> pageClass)
 		{
-			this(parentId, object, pageClass, new PageParameters());
+			this(id, parentId, object, pageClass, new PageParameters());
 		}
 
-		public UrlTreeNode(long parentId, T object, Class<? extends Page> pageClass, PageParameters parameters)
+		public UrlTreeNode(long id, long parentId, T object, Class<? extends Page> pageClass, PageParameters parameters)
 		{
-			this(parentId, object, RequestCycle.get().urlFor(pageClass, parameters));
+			this(id, parentId, object, RequestCycle.get().urlFor(pageClass, parameters));
 		}
 
 		public CharSequence getUrl()

@@ -26,5 +26,11 @@ import org.apache.wicket.util.io.IClusterable;
  */
 public interface ITreeViewListener extends IClusterable
 {
-	//onSelect
+//	boolean isSelectEventEnabled();
+//
+//	void onSelect(AjaxRequestTarget target, int nodeId);
+//
+//	boolean isExpandEventEnabled();
+//
+//	void onExpand(AjaxRequestTarget target, int nodeId);
 }

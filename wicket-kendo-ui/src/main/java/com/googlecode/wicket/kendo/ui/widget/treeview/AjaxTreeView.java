@@ -35,7 +35,7 @@ import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceListModel;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class AjaxTreeView<T> extends JQueryContainer implements ITreeViewListener
+public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 {
 	private static final long serialVersionUID = 1L;
 
