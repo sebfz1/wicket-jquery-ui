@@ -17,9 +17,15 @@
 package com.googlecode.wicket.kendo.ui.widget.treeview;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.util.lang.Args;
 
+import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
+import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
@@ -28,15 +34,17 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class AjaxTreeViewBehavior extends KendoUIBehavior
+public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 
 	public static final String METHOD = "kendoTreeView";
 
-	@SuppressWarnings("unused")
 	private final ITreeViewListener listener;
 	private final TreeViewDataSource dataSource;
+
+	private JQueryAjaxBehavior onExpandAjaxBehavior = null;
+	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
 
 	/**
 	 * Constructor
@@ -67,6 +75,28 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior
 		this.add(this.dataSource);
 	}
 
+	// Methods //
+
+	@Override
+	public void bind(Component component)
+	{
+		super.bind(component);
+
+		// behaviors //
+
+		if (this.listener.isExpandEventEnabled())
+		{
+			this.onExpandAjaxBehavior = this.newOnExpandAjaxBehavior(this);
+			component.add(this.onExpandAjaxBehavior);
+		}
+
+		if (this.listener.isSelectEventEnabled())
+		{
+			this.onSelectAjaxBehavior = this.newOnSelectAjaxBehavior(this);
+			component.add(this.onSelectAjaxBehavior);
+		}
+	}
+
 	// Properties //
 
 	/**
@@ -87,10 +117,21 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior
 		this.setOption("autoBind", true);
 		this.setOption("loadOnDemand", true); // ajax
 
+		// events //
+
+		if (this.onExpandAjaxBehavior != null)
+		{
+			this.setOption("expand", this.onExpandAjaxBehavior.getCallbackFunction());
+		}
+
+		if (this.onSelectAjaxBehavior != null)
+		{
+			this.setOption("change", this.onSelectAjaxBehavior.getCallbackFunction());
+		}
+
 		// data-source //
 		this.onConfigure(this.dataSource);
 		this.setOption("dataSource", this.dataSource.getName());
-
 		this.dataSource.setTransportRead(Options.asString(this.getDataSourceUrl()));
 	}
 
@@ -102,5 +143,180 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior
 	protected void onConfigure(TreeViewDataSource dataSource)
 	{
 		// noop
+	}
+
+	@Override
+	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
+	{
+		if (event instanceof ExpandEvent)
+		{
+			this.listener.onExpand(target, ((ExpandEvent) event).getNodeId());
+		}
+
+		if (event instanceof SelectEvent)
+		{
+			SelectEvent payload = (SelectEvent) event;
+			this.listener.onSelect(target, payload.getNodeId(), payload.getNodePath());
+		}
+	}
+
+	// Factories //
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'expand' event, triggered when a node is expanded
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@code JQueryAjaxBehavior} by default
+	 */
+	protected JQueryAjaxBehavior newOnExpandAjaxBehavior(IJQueryAjaxAware source)
+	{
+		return new OnExpandAjaxBehavior(source) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new ExpandEvent();
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'change' event, triggered when a node is selected
+	 *
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@code JQueryAjaxBehavior} by default
+	 */
+	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
+	{
+		return new OnSelectAjaxBehavior(source) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new SelectEvent();
+			}
+		};
+	}
+
+	// Ajax classes //
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'expand' event
+	 */
+	protected static class OnExpandAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnExpandAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("nodeId", String.format("this.dataItem(e.node).%s", TreeNodeFactory.ID_FIELD)) };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new ExpandEvent();
+		}
+	}
+
+	/**
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'select' event
+	 */
+	protected static class OnSelectAjaxBehavior extends JQueryAjaxBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnSelectAjaxBehavior(IJQueryAjaxAware source)
+		{
+			super(source);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+					CallbackParameter.resolved("nodeId", String.format("this.dataItem(this.select()).%s", TreeNodeFactory.ID_FIELD)), // lf
+					CallbackParameter.resolved("nodePath", "path") };
+		}
+
+		@Override
+		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
+		{
+			// http://jsfiddle.net/bZXnR/1/
+			//TODO temp
+			String statement = "" // lf
+					+ "var $treeview = this;" // lf
+					+ "var $node = this.select();" // lf
+					+ "var items = jQuery($node).add(jQuery($node).parentsUntil('.k-treeview', '.k-item'));" // lf
+					+ "var paths = jQuery.map(items, function(item) { " // lf
+					+ "    var node = jQuery(item).find('> div span.k-in');" // lf
+					+ "    return $treeview.dataItem(node)." + TreeNodeFactory.ID_FIELD + ";" // lf
+					+ "});" // lf
+					+ "var path = '[' + paths.join(',') + ']';";
+
+			return statement + super.getCallbackFunctionBody(parameters);
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new SelectEvent();
+		}
+	}
+
+	// Event objects //
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link OnExpandAjaxBehavior} callback
+	 */
+	protected static class ExpandEvent extends JQueryEvent
+	{
+		private final int nodeId;
+
+		public ExpandEvent()
+		{
+			this.nodeId = RequestCycleUtils.getQueryParameterValue("nodeId").toInt(0);
+		}
+
+		public int getNodeId()
+		{
+			return this.nodeId;
+		}
+	}
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@link OnSelectAjaxBehavior} callback
+	 */
+	protected static class SelectEvent extends JQueryEvent
+	{
+		private final int nodeId;
+		private final String nodePath;
+
+		public SelectEvent()
+		{
+			this.nodeId = RequestCycleUtils.getQueryParameterValue("nodeId").toInt(0);
+			this.nodePath = RequestCycleUtils.getQueryParameterValue("nodePath").toString();
+		}
+
+		public int getNodeId()
+		{
+			return this.nodeId;
+		}
+
+		public String getNodePath()
+		{
+			return this.nodePath;
+		}
 	}
 }

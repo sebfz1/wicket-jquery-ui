@@ -25,7 +25,6 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.scheduler.SchedulerDataSource;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEventFactory;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceListModel;
 
@@ -45,27 +44,6 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	// templates //
 	private IJQueryTemplate template;
 	private KendoTemplateBehavior templateBehavior = null;
-
-	/**
-	 * Constructor
-	 *
-	 * @param id the markup id
-	 */
-	public AjaxTreeView(String id)
-	{
-		this(id, null, new Options());
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id the markup id
-	 * @param options the {@link Options}
-	 */
-	public AjaxTreeView(String id, Options options)
-	{
-		this(id, null, options);
-	}
 
 	/**
 	 * Constructor
@@ -130,6 +108,28 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 		return (TreeViewModel) this.getDefaultModel();
 	}
 
+	/**
+	 * Gets the {@link TreeViewModelBehavior} callback url
+	 * 
+	 * @return the {@code TreeViewModelBehavior} callback url
+	 */
+	protected CharSequence getCallbackUrl()
+	{
+		return this.modelBehavior.getCallbackUrl();
+	}
+
+	@Override
+	public boolean isSelectEventEnabled()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isExpandEventEnabled()
+	{
+		return false;
+	}
+
 	// Events //
 
 	@Override
@@ -167,9 +167,9 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	}
 
 	/**
-	 * Configure the {@link SchedulerDataSource} with additional options
+	 * Configure the {@link TreeViewDataSource} with additional options
 	 * 
-	 * @param dataSource the {@link SchedulerDataSource}
+	 * @param dataSource the {@link TreeViewDataSource}
 	 */
 	protected void onConfigure(TreeViewDataSource dataSource)
 	{
@@ -182,6 +182,18 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	protected void onRefresh(AjaxRequestTarget target)
+	{
+		// noop
+	}
+
+	@Override
+	public void onExpand(AjaxRequestTarget target, int nodeId)
+	{
+		// noop
+	}
+
+	@Override
+	public void onSelect(AjaxRequestTarget target, int nodeId, String nodePath)
 	{
 		// noop
 	}
@@ -203,7 +215,7 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 			@Override
 			protected CharSequence getDataSourceUrl()
 			{
-				return AjaxTreeView.this.modelBehavior.getCallbackUrl();
+				return AjaxTreeView.this.getCallbackUrl();
 			}
 
 			// Events //

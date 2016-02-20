@@ -2,6 +2,7 @@ package com.googlecode.wicket.jquery.ui.samples.pages.kendo.treeview;
 
 import java.util.List;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.slf4j.Logger;
@@ -26,7 +27,7 @@ public class AjaxTreeViewPage extends AbstractTreeViewPage
 	{
 		Options options = new Options();
 		options.set("animation", false);
-		options.set("select", "function(e) { e.preventDefault(); }");
+//		options.set("select", "function(e) { e.preventDefault(); }");
 
 		this.add(this.newTreeView("treeview", newTreeViewModel(), options));
 	}
@@ -36,6 +37,31 @@ public class AjaxTreeViewPage extends AbstractTreeViewPage
 		return new AjaxTreeView(id, model, options) {
 
 			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public boolean isExpandEventEnabled()
+			{
+				return true;
+			}
+			
+			@Override
+			public boolean isSelectEventEnabled()
+			{
+				return true;
+			}
+			
+			@Override
+			public void onExpand(AjaxRequestTarget target, int nodeId)
+			{
+				System.out.println("expanded nodeId: " + nodeId);
+			}
+
+			@Override
+			public void onSelect(AjaxRequestTarget target, int nodeId, String nodePath)
+			{
+				System.out.println("selected nodeId: " + nodeId);
+				System.out.println("selected nodePath: " + nodePath);
+			}
 
 			@Override
 			protected IJQueryTemplate newTemplate()
@@ -90,7 +116,7 @@ public class AjaxTreeViewPage extends AbstractTreeViewPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected List<? extends TreeNode<?>> load(long parentId)
+			protected List<? extends TreeNode<?>> load(int parentId)
 			{
 				return BandsDAO.get(parentId);
 			}

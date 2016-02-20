@@ -287,7 +287,7 @@ public class AjaxTimePicker extends TimePicker implements IJQueryAjaxAware, IVal
 		 *
 		 * @param source the {@link IJQueryAjaxAware}
 		 * @param component the bound {@link Component}
-		 * @return a new {@link OnChangeAjaxBehavior} by default
+		 * @return a new {@code OnChangeAjaxBehavior} by default
 		 */
 		protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source, FormComponent<?> component)
 		{

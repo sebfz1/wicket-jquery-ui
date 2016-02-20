@@ -22,10 +22,8 @@ import org.apache.wicket.util.io.IClusterable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.googlecode.wicket.kendo.ui.widget.treeview.TreeNode.UrlTreeNode;
-
 /**
- * Provides a factory for building {@link TreeViewEvent}{@code s} as JSON, and vice-versa
+ * Provides a factory for building {@link TreeNode}{@code s} as JSON
  * 
  * @author Sebastien Briquet - sebfz1
  *
@@ -43,9 +41,9 @@ public class TreeNodeFactory implements IClusterable
 	public static final String CHILDREN_FIELD = "hasChildren";
 
 	/**
-	 * Converts a {@link TreeViewEvent} to a {@link JSONObject}
+	 * Converts a {@link TreeNode} to a {@link JSONObject}
 	 *
-	 * @param event the {@code TreeViewEvent}
+	 * @param event the {@code TreeNode}
 	 * @return the {@code JSONObject}
 	 */
 	public JSONObject toJson(int index, TreeNode<?> node)
@@ -60,9 +58,9 @@ public class TreeNodeFactory implements IClusterable
 				json.put(TEXT_FIELD, node.getText());
 				json.put(CHILDREN_FIELD, node.hasChildren());
 
-				if (node instanceof UrlTreeNode<?>)
+				if (node.hasUrl())
 				{
-					json.put(URL_FIELD, ((UrlTreeNode<?>) node).getUrl());
+					json.put(URL_FIELD, node.getUrl());
 				}
 			}
 

@@ -354,7 +354,7 @@ public class BandsDAO
 		return instance;
 	}
 
-	public static List<? extends TreeNode<?>> get(long parentId)
+	public static List<? extends TreeNode<?>> get(int parentId)
 	{
 		return TreeNodeUtils.getChildren(parentId, get().list);
 	}
@@ -363,7 +363,7 @@ public class BandsDAO
 	{
 		private static final long serialVersionUID = 1L;
 
-		public BandTreeNode(long countryId, Band band)
+		public BandTreeNode(int countryId, Band band)
 		{
 			super(nextSequence(), countryId, band);
 		}

@@ -20,17 +20,10 @@ import java.util.List;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-import com.googlecode.wicket.kendo.ui.scheduler.Scheduler;
-import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEvent;
-
 /**
- * Model of {@link SchedulerEvent}{@code s} for the {@link Scheduler}<br/>
- * The inheriting class should be able to {@link #load()} events depending on {@link #getStart()} and {@link #getEnd()} dates.
+ * Model of {@link TreeNode}{@code s} for the {@link TreeView}
  * 
- * Nodes are any type of object
- * 
- * @see TreeViewNodeFactory
- *
+ * @see TreeNodeFactory
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -39,7 +32,7 @@ public abstract class TreeViewModel extends LoadableDetachableModel<List<? exten
 	private static final long serialVersionUID = 1L;
 
 	/** root node */
-	private long nodeId = TreeNode.ROOT;
+	private int nodeId = TreeNode.ROOT;
 
 	/**
 	 * Constructor
@@ -61,14 +54,14 @@ public abstract class TreeViewModel extends LoadableDetachableModel<List<? exten
 	 * @param nodeId the (parent) node-id
 	 * @return the list of children {@code TreeNode}
 	 */
-	protected abstract List<? extends TreeNode<?>> load(long nodeId);
+	protected abstract List<? extends TreeNode<?>> load(int nodeId);
 
 	/**
 	 * Sets the start date.
 	 *
 	 * @param date the start date
 	 */
-	public void setNodeId(long nodeId)
+	public void setNodeId(int nodeId)
 	{
 		this.nodeId = nodeId;
 	}

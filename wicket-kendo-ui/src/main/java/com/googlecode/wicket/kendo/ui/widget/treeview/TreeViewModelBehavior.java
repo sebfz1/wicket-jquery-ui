@@ -28,7 +28,7 @@ import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.lang.Args;
 
 /**
- * Provides the behavior that loads {@link SchedulerEvent}{@code s} according to {@link TreeViewModel} start &amp; end dates
+ * Provides the behavior that loads {@link TreeNode}{@code s}
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -44,6 +44,7 @@ public class TreeViewModelBehavior extends AbstractAjaxBehavior
 	 * Constructor
 	 *
 	 * @param model the {@link TreeViewModel}
+	 * @param factory the {@link TreeNodeFactory}
 	 */
 	public TreeViewModelBehavior(final TreeViewModel model, TreeNodeFactory factory)
 	{
@@ -54,17 +55,10 @@ public class TreeViewModelBehavior extends AbstractAjaxBehavior
 	// Properties //
 
 	/**
-	 * Sets the start date to the model<br/>
-	 * This can be overridden to perform additional operation on date before the assignment.
-	 *
-	 * @param model the {@link TreeViewModel}
-	 * @param date the timestamp
+	 * Gets the {@link TreeNodeFactory}
+	 * 
+	 * @return the {@code TreeNodeFactory}
 	 */
-	protected void setModelNodeId(TreeViewModel model, long nodeId)
-	{
-		model.setNodeId(nodeId);
-	}
-
 	public TreeNodeFactory getFactory()
 	{
 		return this.factory;
@@ -78,7 +72,7 @@ public class TreeViewModelBehavior extends AbstractAjaxBehavior
 		final RequestCycle requestCycle = RequestCycle.get();
 		IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
 
-		this.setModelNodeId(this.model, parameters.getParameterValue(TreeNodeFactory.ID_FIELD).toLong(TreeNode.ROOT));
+		this.model.setNodeId(parameters.getParameterValue(TreeNodeFactory.ID_FIELD).toInt(TreeNode.ROOT));
 
 		requestCycle.scheduleRequestHandlerAfterCurrent(this.newRequestHandler());
 	}
@@ -86,7 +80,7 @@ public class TreeViewModelBehavior extends AbstractAjaxBehavior
 	// Factories //
 
 	/**
-	 * Gets the new {@link IRequestHandler} that will respond the list of {@link SchedulerEvent} in a JSON format
+	 * Gets the new {@link IRequestHandler} that will respond the list of {@link TreeNode}{@code s} in a JSON format
 	 *
 	 * @return the {@link IRequestHandler}
 	 */
@@ -122,11 +116,6 @@ public class TreeViewModelBehavior extends AbstractAjaxBehavior
 					for (int index = 0; index < objects.size(); index++)
 					{
 						TreeNode<?> object = objects.get(index);
-
-						// if (model instanceof ISchedulerVisitor)
-						// {
-						// event.accept((ISchedulerVisitor) model); // last chance to set options
-						// }
 
 						if (index > 0)
 						{

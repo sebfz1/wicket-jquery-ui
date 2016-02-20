@@ -33,13 +33,13 @@ public class TreeNodeUtils
 	}
 
 	/**
-	 * TODO javadoc
+	 * Retrieves a {@link TreeNode} with a {@code List}
 	 * 
-	 * @param id
-	 * @param nodes
-	 * @return
+	 * @param id the node-id
+	 * @param nodes the {@code List} of nodes
+	 * @return the node with the specified id or {@code null} is not found
 	 */
-	public static TreeNode<?> get(long id, List<TreeNode<?>> nodes)
+	public static TreeNode<?> get(int id, List<TreeNode<?>> nodes)
 	{
 		for (TreeNode<?> node : nodes)
 		{
@@ -53,13 +53,13 @@ public class TreeNodeUtils
 	}
 
 	/**
-	 * TODO javadoc
+	 * Retrieves children {@link TreeNode}{@code s} for a specified parent node
 	 * 
-	 * @param parentId
-	 * @param nodes
-	 * @return
+	 * @param parentId the node parent id
+	 * @param nodes the {@code List} of nodes
+	 * @return the children nodes
 	 */
-	public static List<? extends TreeNode<?>> getChildren(long parentId, List<TreeNode<?>> nodes)
+	public static List<? extends TreeNode<?>> getChildren(int parentId, List<TreeNode<?>> nodes)
 	{
 		List<TreeNode<?>> list = Generics.newArrayList();
 

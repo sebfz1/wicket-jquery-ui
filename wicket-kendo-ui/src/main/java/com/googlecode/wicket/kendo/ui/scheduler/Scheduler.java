@@ -210,6 +210,16 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	/**
+	 * Gets the {@link SchedulerModelBehavior} callback url
+	 * 
+	 * @return the {@code SchedulerModelBehavior} callback url
+	 */
+	protected CharSequence getCallbackUrl()
+	{
+		return this.modelBehavior.getCallbackUrl();
+	}
+
+	/**
 	 * Gets the {@link SchedulerEventFactory}
 	 * 
 	 * @return the {@code SchedulerEventFactory}
@@ -370,7 +380,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			@Override
 			protected CharSequence getDataSourceUrl()
 			{
-				return Scheduler.this.modelBehavior.getCallbackUrl();
+				return Scheduler.this.getCallbackUrl();
 			}
 
 			@Override

@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.widget.treeview;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.io.IClusterable;
 
 /**
@@ -26,11 +27,36 @@ import org.apache.wicket.util.io.IClusterable;
  */
 public interface ITreeViewListener extends IClusterable
 {
-//	boolean isSelectEventEnabled();
-//
-//	void onSelect(AjaxRequestTarget target, int nodeId);
-//
-//	boolean isExpandEventEnabled();
-//
-//	void onExpand(AjaxRequestTarget target, int nodeId);
+	/**
+	 * Indicates whether the 'expand' event is enabled.<br />
+	 * If true, the {@link #onExpand(AjaxRequestTarget, int)} event will be triggered
+	 *
+	 * @return false by default
+	 */
+	boolean isExpandEventEnabled();
+
+	/**
+	 * Indicates whether the 'select' event is enabled.<br />
+	 * If true, the {@link #onSelect(AjaxRequestTarget, int, String)} event will be triggered
+	 *
+	 * @return false by default
+	 */
+	boolean isSelectEventEnabled();
+
+	/**
+	 * Triggered when a node is expanding
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param nodeId the node-id
+	 */
+	void onExpand(AjaxRequestTarget target, int nodeId);
+
+	/**
+	 * Triggered when a node is selected
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param nodeId the node-id
+	 * @param nodePath the node path as array, ie [1,2,3]
+	 */
+	void onSelect(AjaxRequestTarget target, int nodeId, String nodePath);
 }
