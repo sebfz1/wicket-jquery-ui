@@ -17,6 +17,8 @@
 package com.googlecode.wicket.kendo.ui.widget.treeview;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -82,6 +84,28 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	public String widget()
 	{
 		return KendoUIBehavior.widget(this, AjaxTreeViewBehavior.METHOD);
+	}
+
+	/**
+	 * TODO jadavoc
+	 * 
+	 * @param response
+	 * @param path [1, 2, 3]
+	 */
+	public void expandPath(IHeaderResponse response, String path)
+	{
+		response.render(OnDomReadyHeaderItem.forScript(String.format("%s.expandPath(%s)", this.widget(), path)));
+	}
+
+	/**
+	 * TODO jadavoc
+	 * 
+	 * @param response
+	 * @param path [1, 2, 3]
+	 */
+	public void expandPath(AjaxRequestTarget response, String path)
+	{
+		response.appendJavaScript(String.format("%s.expandPath(%s)", this.widget(), path));
 	}
 
 	/**
