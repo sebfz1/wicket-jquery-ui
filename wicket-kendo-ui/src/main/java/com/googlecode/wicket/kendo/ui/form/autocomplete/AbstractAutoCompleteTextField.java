@@ -292,6 +292,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 */
 	protected void onSelected(AjaxRequestTarget target, C choice)
 	{
+		// noop
 	}
 
 	// IJQueryWidget //

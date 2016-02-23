@@ -187,6 +187,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 	}
 
 	// Events //
+
 	/**
 	 * {@inheritDoc} <br/>
 	 * <i>Not intended to be overridden</i>

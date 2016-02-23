@@ -22,7 +22,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
@@ -41,7 +40,7 @@ import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
  *
  * @param <T> the type of the model object
  */
-public class AjaxDropDownList<T> extends DropDownList<T> implements IJQueryWidget, IJQueryAjaxAware, ISelectionChangedListener
+public class AjaxDropDownList<T> extends DropDownList<T> implements IJQueryAjaxAware, ISelectionChangedListener
 {
 	private static final long serialVersionUID = 1L;
 	

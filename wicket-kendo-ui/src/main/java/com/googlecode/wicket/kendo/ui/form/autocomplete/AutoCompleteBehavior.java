@@ -116,8 +116,6 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 		}
 	}
 
-	// IJQueryAjaxAware //
-
 	@Override
 	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{

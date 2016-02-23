@@ -161,7 +161,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	}
 
 	@Override
-	public JQueryBehavior newWidgetBehavior(String selector)
+	public final JQueryBehavior newWidgetBehavior(String selector)
 	{
 		return new AjaxDropDownListBehavior(selector, new ISelectionChangedListener() {
 
