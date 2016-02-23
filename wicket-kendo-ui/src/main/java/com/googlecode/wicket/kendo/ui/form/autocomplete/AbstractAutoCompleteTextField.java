@@ -163,6 +163,16 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	// Properties //
 
 	/**
+	 * Gets the {@link ChoiceModelBehavior} callback url
+	 * 
+	 * @return the {@code ChoiceModelBehavior} callback url
+	 */
+	protected CharSequence getCallbackUrl()
+	{
+		return this.choiceModelBehavior.getCallbackUrl();
+	}
+
+	/**
 	 * Gets the (inner) list width.
 	 *
 	 * @return the list width
@@ -305,9 +315,9 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected CharSequence getChoiceCallbackUrl()
+			protected CharSequence getDataSourceUrl()
 			{
-				return choiceModelBehavior.getCallbackUrl();
+				return AbstractAutoCompleteTextField.this.getCallbackUrl();
 			}
 		};
 	}
@@ -328,7 +338,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	/**
 	 * Gets a new {@link ChoiceModelBehavior}
 	 *
-	 * @return a new {@link ChoiceModelBehavior}
+	 * @return a new {@code ChoiceModelBehavior}
 	 */
 	protected ChoiceModelBehavior<C> newChoiceModelBehavior()
 	{

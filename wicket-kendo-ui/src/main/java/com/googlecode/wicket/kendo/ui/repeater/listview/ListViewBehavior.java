@@ -130,7 +130,7 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	 *
 	 * @return the data-provider behavior's url
 	 */
-	protected abstract CharSequence getProviderCallbackUrl();
+	protected abstract CharSequence getProviderUrl();
 
 	/**
 	 * Indicates whether the read function should use cache
@@ -151,7 +151,7 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	 */
 	private String getReadCallbackFunction()
 	{
-		return KendoDataSource.getReadCallbackFunction(this.getProviderCallbackUrl(), this.useCache());
+		return KendoDataSource.getReadCallbackFunction(this.getProviderUrl(), this.useCache());
 	}
 
 	// Events //
@@ -218,7 +218,7 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'create' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link DataSourceAjaxBehavior} by default
+	 * @return a new {@code DataSourceAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnCreateAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -238,7 +238,7 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'update' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link DataSourceAjaxBehavior} by default
+	 * @return a new {@code DataSourceAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -258,7 +258,7 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'delete' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link DataSourceAjaxBehavior} by default
+	 * @return a new {@code DataSourceAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnDeleteAjaxBehavior(IJQueryAjaxAware source)
 	{
@@ -279,7 +279,7 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
 	 * @param datasource the datasource name
-	 * @return a new {@link OnChangeAjaxBehavior} by default
+	 * @return a new {@code OnChangeAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source, String datasource)
 	{

@@ -95,7 +95,7 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 		return component.isEnabledInHierarchy();
 	}
 
-	protected abstract CharSequence getChoiceCallbackUrl();
+	protected abstract CharSequence getDataSourceUrl();
 
 	// Events //
 
@@ -112,7 +112,7 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 		// data source //
 		if (this.isEnabled(component))
 		{
-			this.dataSource.setTransportRead(Options.asString(this.getChoiceCallbackUrl()));
+			this.dataSource.setTransportRead(Options.asString(this.getDataSourceUrl()));
 		}
 	}
 
@@ -131,7 +131,7 @@ public abstract class AutoCompleteBehavior extends KendoUIBehavior implements IJ
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'select' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@link OnSelectAjaxBehavior} by default
+	 * @return a new {@code OnSelectAjaxBehavior} by default
 	 */
 	protected JQueryAjaxBehavior newOnSelectAjaxBehavior(IJQueryAjaxAware source)
 	{

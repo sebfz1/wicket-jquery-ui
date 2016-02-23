@@ -29,6 +29,7 @@ public interface IProgressBarListener extends IValueChangedListener
 {
 	/**
 	 * Triggers when the value has changed
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	void onComplete(AjaxRequestTarget target);
