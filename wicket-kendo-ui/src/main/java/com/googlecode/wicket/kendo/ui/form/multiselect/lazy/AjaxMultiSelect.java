@@ -19,9 +19,7 @@ package com.googlecode.wicket.kendo.ui.form.multiselect.lazy;
 import java.util.Collection;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -29,20 +27,23 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
-import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
+import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
 import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
  * Provides a Kendo UI MultiSelect widget.<br/>
- * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
- *
+ * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called. TODO javadoc
+ * 
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class AjaxMultiSelect<T> extends MultiSelect<T> implements IValueChangedListener
+public abstract class AjaxMultiSelect<T> extends MultiSelect<T> implements IJQueryAjaxAware, ISelectionChangedListener
 {
 	private static final long serialVersionUID = 1L;
+
+	/** AjaxBehavior, exceptionally hold in component */
+	private JQueryAjaxBehavior onChangeAjaxBehavior;
 
 	public AjaxMultiSelect(String id)
 	{
@@ -67,97 +68,44 @@ public abstract class AjaxMultiSelect<T> extends MultiSelect<T> implements IValu
 	// Events //
 
 	@Override
-	public void onValueChanged(AjaxRequestTarget target)
+	protected void onInitialize()
 	{
-		// noop
+		super.onInitialize();
+
+		this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this);
+		this.add(this.onChangeAjaxBehavior);
 	}
 
-	// IJQueryWidget //
+	@Override
+	public void onConfigure(JQueryBehavior behavior)
+	{
+		super.onConfigure(behavior);
+
+		behavior.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
+	}
 
 	@Override
-	public JQueryBehavior newWidgetBehavior(String selector)
+	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
 	{
-		return new AjaxMultiSelectBehavior(selector) {
-
-			private static final long serialVersionUID = 1L;
-
-			// Events //
-
-			@Override
-			public void onValueChanged(AjaxRequestTarget target)
-			{
-				AjaxMultiSelect.this.processInput();
-				AjaxMultiSelect.this.onValueChanged(target);
-			}
-
-			// Properties //
-
-			@Override
-			protected CharSequence getDataSourceUrl()
-			{
-				return AjaxMultiSelect.this.getCallbackUrl();
-			}
-		};
+		if (event instanceof ChangeEvent)
+		{
+			this.onSelectionChanged();
+			this.onSelectionChanged(target);
+		}
 	}
 
 	/**
-	 * Provides a Ajax {@link MultiSelectBehavior}
+	 * Triggers when the selection has changed
 	 */
-	protected abstract static class AjaxMultiSelectBehavior extends MultiSelectBehavior implements IJQueryAjaxAware, IValueChangedListener
+	public final void onSelectionChanged()
 	{
-		private static final long serialVersionUID = 1L;
+		this.convertInput();
+		this.updateModel();
+	}
 
-		private JQueryAjaxBehavior onChangeAjaxBehavior = null;
-
-		/**
-		 * Constructor
-		 *
-		 * @param selector the html selector (ie: "#myId")
-		 */
-		public AjaxMultiSelectBehavior(String selector)
-		{
-			super(selector);
-		}
-
-		// Methods //
-
-		@Override
-		public void bind(Component component)
-		{
-			super.bind(component);
-
-			if (component instanceof FormComponent<?>)
-			{
-				this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this, (FormComponent<?>) component);
-				component.add(this.onChangeAjaxBehavior);
-			}
-			else
-			{
-				throw new WicketRuntimeException(new IllegalArgumentException("'component' should be an intance of FormComponent"));
-			}
-		}
-
-		// Events //
-
-		@Override
-		public void onConfigure(Component component)
-		{
-			super.onConfigure(component);
-
-			if (this.onChangeAjaxBehavior != null)
-			{
-				this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
-			}
-		}
-
-		@Override
-		public void onAjax(AjaxRequestTarget target, JQueryEvent event)
-		{
-			if (event instanceof ChangeEvent)
-			{
-				System.out.println("value: " + ((ChangeEvent) event).getValue()); // TODO remove
-				this.onValueChanged(target);
-			}
-		}
+	@Override
+	public void onSelectionChanged(AjaxRequestTarget target)
+	{
+		// noop
 	}
 }

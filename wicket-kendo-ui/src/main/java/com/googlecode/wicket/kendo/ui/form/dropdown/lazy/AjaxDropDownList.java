@@ -19,7 +19,6 @@ package com.googlecode.wicket.kendo.ui.form.dropdown.lazy;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -150,7 +149,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements IJQueryAjaxA
 	{
 		super.onInitialize();
 		
-		this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this, (FormComponent<?>) this);
+		this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this);
 		this.add(this.onChangeAjaxBehavior);		
 	}
 
