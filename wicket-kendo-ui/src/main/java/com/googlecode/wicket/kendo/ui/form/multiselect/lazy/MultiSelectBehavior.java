@@ -70,12 +70,24 @@ public abstract class MultiSelectBehavior extends KendoUIBehavior
 		super.onConfigure(component);
 
 		this.setOption("autoBind", true); // immutable
+
+		// data-source //
+		this.onConfigure(this.dataSource);
 		this.setOption("dataSource", this.dataSource.getName());
 
-		// data source //
 		if (this.isEnabled(component))
 		{		
 			this.dataSource.setTransportRead(Options.asString(this.getDataSourceUrl()));
 		}
 	}
+	
+	/**
+	 * Configure the {@link KendoDataSource} with additional options
+	 * 
+	 * @param dataSource the {@link KendoDataSource}
+	 */
+	protected void onConfigure(KendoDataSource dataSource)
+	{
+		// noop
+	}	
 }

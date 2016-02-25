@@ -32,6 +32,7 @@ import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
@@ -271,6 +272,18 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 		}
 	}
 
+	// Events //
+
+	/**
+	 * Configure the {@link KendoDataSource} with additional options
+	 * 
+	 * @param dataSource the {@link KendoDataSource}
+	 */
+	protected void onConfigure(KendoDataSource dataSource)
+	{
+		// noop
+	}	
+
 	@Override
 	public void onBeforeRender(JQueryBehavior behavior)
 	{
@@ -314,11 +327,21 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 
 			private static final long serialVersionUID = 1L;
 
+			// Properties //
+			
 			@Override
 			protected CharSequence getDataSourceUrl()
 			{
 				return AbstractAutoCompleteTextField.this.getCallbackUrl();
 			}
+			
+			// Events //
+
+			@Override
+			protected void onConfigure(KendoDataSource dataSource)
+			{
+				AbstractAutoCompleteTextField.this.onConfigure(dataSource);
+			}			
 		};
 	}
 

@@ -227,7 +227,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	}
 
 	/**
-	 * Reloads current data and refreshes the {@link DataTable}
+	 * Refreshes the widget by reading from the datasource
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */

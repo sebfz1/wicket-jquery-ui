@@ -28,9 +28,9 @@ import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
+import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
-import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
  * Provides a Kendo UI MultiSelect widget.<br/>
@@ -55,12 +55,12 @@ public abstract class AjaxMultiSelect<T> extends MultiSelect<T> implements IJQue
 		super(id, model);
 	}
 
-	public AjaxMultiSelect(String id, ChoiceRenderer<? super T> renderer)
+	public AjaxMultiSelect(String id, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, renderer);
 	}
 
-	public AjaxMultiSelect(String id, IModel<? extends Collection<T>> model, ChoiceRenderer<? super T> renderer)
+	public AjaxMultiSelect(String id, IModel<? extends Collection<T>> model, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, model, renderer);
 	}

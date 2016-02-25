@@ -109,14 +109,14 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	}
 
 	/**
-	 * Refreshes the events currently available in the selected view.
+	 * Refreshes the widget by reading from the datasource
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void refresh(AjaxRequestTarget target)
 	{
-		target.appendJavaScript(String.format("var widget = %s; widget.dataSource.read(); widget.refresh();", this.widget()));
-
+		target.appendJavaScript(String.format("var $w = %s; if ($w) { $w.dataSource.read(); $w.refresh(); }", this.widget()));
+		// TODO verify if #refresh() is needed
 		this.onRefresh(target);
 	}
 
