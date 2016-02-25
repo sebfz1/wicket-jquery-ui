@@ -26,7 +26,6 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
 import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
-import com.googlecode.wicket.kendo.ui.form.dropdown.lazy.DropDownListBehavior;
 import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
@@ -125,7 +124,7 @@ public abstract class AjaxMultiSelect<T> extends MultiSelect<T> implements ISele
 			}
 		};
 
-		return new DropDownListBehavior(selector, listener) {
+		return new MultiSelectBehavior(selector, listener) {
 
 			private static final long serialVersionUID = 1L;
 
