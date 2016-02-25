@@ -29,6 +29,7 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.behavior.ChoiceModelBehavior;
 import com.googlecode.wicket.jquery.core.data.IChoiceProvider;
+import com.googlecode.wicket.jquery.core.event.SelectionChangedAdapter;
 import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
@@ -76,6 +77,17 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 * Constructor
 	 *
 	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 */
+	public MultiSelect(String id, IModel<? extends Collection<T>> model)
+	{
+		this(id, model, new ChoiceRenderer<T>());
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
 	 * @param renderer the {@link ChoiceRenderer}
 	 */
 	public MultiSelect(String id, IChoiceRenderer<? super T> renderer)
@@ -84,17 +96,6 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 
 		this.renderer = renderer;
 		this.template = this.newTemplate();
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param id the markup id
-	 * @param model the {@link IModel}
-	 */
-	public MultiSelect(String id, IModel<? extends Collection<T>> model)
-	{
-		this(id, model, new ChoiceRenderer<T>());
 	}
 
 	/**
@@ -284,7 +285,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new MultiSelectBehavior(selector) {
+		return new MultiSelectBehavior(selector, new SelectionChangedAdapter()) {
 
 			private static final long serialVersionUID = 1L;
 

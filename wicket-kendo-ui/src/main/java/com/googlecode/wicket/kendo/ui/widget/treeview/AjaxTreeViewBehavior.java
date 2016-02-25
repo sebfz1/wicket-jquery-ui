@@ -253,19 +253,19 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 		@Override
 		public CharSequence getCallbackFunctionBody(CallbackParameter... parameters)
 		{
-			// http://jsfiddle.net/bZXnR/1/
-			//TODO temp
-			String statement = "" // lf
-					+ "var $treeview = this;" // lf
-					+ "var $node = this.select();" // lf
-					+ "var items = jQuery($node).add(jQuery($node).parentsUntil('.k-treeview', '.k-item'));" // lf
-					+ "var paths = jQuery.map(items, function(item) { " // lf
-					+ "    var node = jQuery(item).find('> div span.k-in');" // lf
-					+ "    return $treeview.dataItem(node)." + TreeNodeFactory.ID_FIELD + ";" // lf
-					+ "});" // lf
-					+ "var path = '[' + paths.join(',') + ']';";
+			// computes the node path 
+			// from http://jsfiddle.net/bZXnR/1/
+			StringBuilder builder = new StringBuilder();
+			builder.append("var $treeview = this;");
+			builder.append("var $node = this.select();");
+			builder.append("var items = jQuery($node).add(jQuery($node).parentsUntil('.k-treeview', '.k-item'));");
+			builder.append("var paths = jQuery.map(items, function(item) { ");
+			builder.append("    var node = jQuery(item).find('> div span.k-in');");
+			builder.append("    return $treeview.dataItem(node).").append(TreeNodeFactory.ID_FIELD).append(";");
+			builder.append("});");
+			builder.append("var path = '[' + paths.join(',') + ']';");
 
-			return statement + super.getCallbackFunctionBody(parameters);
+			return builder.toString() + super.getCallbackFunctionBody(parameters);
 		}
 
 		@Override

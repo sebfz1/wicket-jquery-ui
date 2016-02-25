@@ -26,6 +26,7 @@ import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.behavior.ChoiceModelBehavior;
+import com.googlecode.wicket.jquery.core.event.SelectionChangedAdapter;
 import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
@@ -268,7 +269,7 @@ public class DropDownList<T> extends TextField<T> implements IJQueryWidget
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new DropDownListBehavior(selector) {
+		return new DropDownListBehavior(selector, new SelectionChangedAdapter()) {
 
 			private static final long serialVersionUID = 1L;
 

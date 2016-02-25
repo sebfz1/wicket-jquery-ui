@@ -117,14 +117,23 @@ public class Menu extends JQueryPanel implements IMenuListener
 	}
 
 	/**
-	 * Refreshes the {@link Menu}
+	 * Reloads the {@link Menu}
 	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 */
-	// TODO rename to reload
-	public void refresh(AjaxRequestTarget target)
+	public void reload(AjaxRequestTarget target)
 	{
 		target.add(this);
+	}
+
+	/**
+	 * 
+	 * @deprecated use {@link #reload(AjaxRequestTarget)} instead
+	 */
+	// XXX 6.24.0 / 7.4.0 to remove
+	public void refresh(AjaxRequestTarget target)
+	{
+		this.reload(target);
 	}
 
 	/**

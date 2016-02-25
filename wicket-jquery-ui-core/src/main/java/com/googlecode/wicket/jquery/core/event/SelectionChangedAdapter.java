@@ -14,49 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.widget.dialog;
+package com.googlecode.wicket.jquery.core.event;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.util.lang.Args;
 
 /**
- * Wrapper/Delegate class for {@link IDialogListener}
+ * Adapter class for {@link ISelectionChangedListener}
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class DialogListenerWrapper implements IDialogListener
+public class SelectionChangedAdapter implements ISelectionChangedListener
 {
 	private static final long serialVersionUID = 1L;
 
-	private final IDialogListener listener;
-	
-	public DialogListenerWrapper(IDialogListener listener)
+	@Override
+	public boolean isSelectionChangedEventEnabled()
 	{
-		this.listener = Args.notNull(listener, "listener");
+		return false;
 	}
 
 	@Override
-	public boolean isDefaultCloseEventEnabled()
+	public void onSelectionChanged(AjaxRequestTarget target)
 	{
-		return this.listener.isDefaultCloseEventEnabled();
-	}
-
-	@Override
-	public boolean isEscapeCloseEventEnabled()
-	{
-		return this.listener.isEscapeCloseEventEnabled();
-	}
-
-	@Override
-	public void onClick(AjaxRequestTarget target, DialogButton button)
-	{
-		this.listener.onClick(target, button);
-	}
-
-	@Override
-	public void onClose(AjaxRequestTarget handler, DialogButton button)
-	{
-		this.listener.onClose(handler, button);
+		// noop
 	}
 }

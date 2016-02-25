@@ -24,7 +24,7 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
+import com.googlecode.wicket.jquery.core.event.SelectionChangedAdapter;
 
 /**
  * Provides a Kendo UI DropDownList widget. It extends built-in {@link DropDownChoice}<br/>
@@ -189,6 +189,7 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 		// set list-width //
 		if (this.getListWidth() > 0)
 		{
+			//TODO should now be configurable on widget initialization
 			behavior.setOption("open", String.format("function(e) { e.sender.list.width(%d); }", this.getListWidth()));
 		}
 	}
@@ -204,6 +205,6 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new KendoUIBehavior(selector, DropDownList.METHOD);
+		return new DropDownListBehavior(selector, new SelectionChangedAdapter());
 	}
 }

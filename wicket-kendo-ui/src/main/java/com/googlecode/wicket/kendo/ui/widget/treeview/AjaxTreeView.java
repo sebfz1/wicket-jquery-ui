@@ -87,10 +87,11 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	}
 
 	/**
-	 * TODO jadavoc
+	 * Expand the {@link AjaxTreeView} to the specified path
 	 * 
-	 * @param response
-	 * @param path [1, 2, 3]
+	 * @param response the {@link IHeaderResponse}
+	 * @param path the path to the node, as an id-array, ie: [1, 2, 3]
+	 * @see AjaxTreeView#renderHead(org.apache.wicket.Component, IHeaderResponse)
 	 */
 	public void expandPath(IHeaderResponse response, String path)
 	{
@@ -98,10 +99,10 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	}
 
 	/**
-	 * TODO jadavoc
+	 * Expand the {@link AjaxTreeView} to the specified path
 	 * 
-	 * @param response
-	 * @param path [1, 2, 3]
+	 * @param response the {@link IHeaderResponse}
+	 * @param path the path to the node, as an id-array, ie: [1, 2, 3]
 	 */
 	public void expandPath(AjaxRequestTarget response, String path)
 	{

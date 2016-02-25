@@ -23,76 +23,75 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.JQueryEvent;
-import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
-import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
 import com.googlecode.wicket.jquery.core.renderer.IChoiceRenderer;
-import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
-import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
+import com.googlecode.wicket.kendo.ui.form.dropdown.lazy.DropDownListBehavior;
+import com.googlecode.wicket.kendo.ui.renderer.ChoiceRenderer;
 
 /**
  * Provides a Kendo UI MultiSelect widget.<br/>
- * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called. TODO javadoc
+ * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
  * 
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class AjaxMultiSelect<T> extends MultiSelect<T> implements IJQueryAjaxAware, ISelectionChangedListener
+public abstract class AjaxMultiSelect<T> extends MultiSelect<T> implements ISelectionChangedListener
 {
 	private static final long serialVersionUID = 1L;
 
-	/** AjaxBehavior, exceptionally hold in component */
-	private JQueryAjaxBehavior onChangeAjaxBehavior;
-
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 */
 	public AjaxMultiSelect(String id)
 	{
 		super(id);
 	}
 
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 */
 	public AjaxMultiSelect(String id, IModel<? extends Collection<T>> model)
 	{
 		super(id, model);
 	}
 
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param renderer the {@link ChoiceRenderer}
+	 */
 	public AjaxMultiSelect(String id, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, renderer);
 	}
 
+	/**
+	 * Constructor
+	 *
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param renderer the {@link ChoiceRenderer}
+	 */
 	public AjaxMultiSelect(String id, IModel<? extends Collection<T>> model, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, model, renderer);
 	}
 
+	// Properties //
+
+	@Override
+	public boolean isSelectionChangedEventEnabled()
+	{
+		return true;
+	}
+
 	// Events //
-
-	@Override
-	protected void onInitialize()
-	{
-		super.onInitialize();
-
-		this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this);
-		this.add(this.onChangeAjaxBehavior);
-	}
-
-	@Override
-	public void onConfigure(JQueryBehavior behavior)
-	{
-		super.onConfigure(behavior);
-
-		behavior.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
-	}
-
-	@Override
-	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
-	{
-		if (event instanceof ChangeEvent)
-		{
-			this.onSelectionChanged();
-			this.onSelectionChanged(target);
-		}
-	}
 
 	/**
 	 * Triggers when the selection has changed
@@ -107,5 +106,34 @@ public abstract class AjaxMultiSelect<T> extends MultiSelect<T> implements IJQue
 	public void onSelectionChanged(AjaxRequestTarget target)
 	{
 		// noop
+	}
+
+	// IJQueryWidget //
+
+	@Override
+	public final JQueryBehavior newWidgetBehavior(String selector)
+	{
+		final ISelectionChangedListener listener = new SelectionChangedListenerWrapper(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onSelectionChanged(AjaxRequestTarget target)
+			{
+				AjaxMultiSelect.this.onSelectionChanged(); // updates the model
+				AjaxMultiSelect.this.onSelectionChanged(target);
+			}
+		};
+
+		return new DropDownListBehavior(selector, listener) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CharSequence getDataSourceUrl()
+			{
+				return AjaxMultiSelect.this.getCallbackUrl();
+			}
+		};
 	}
 }

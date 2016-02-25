@@ -210,17 +210,27 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	}
 
 	/**
-	 * Refreshes the wizard, by calling {@link #onConfigure(AjaxRequestTarget)} and re-attaching the form<br/>
+	 * Reloads the wizard, by calling {@link #onConfigure(AjaxRequestTarget)} and re-attaching the form<br/>
 	 * This method is called when, for instance, the wizard opens or the step changes.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
-	protected void refresh(AjaxRequestTarget target)
+	protected void reload(AjaxRequestTarget target)
 	{
 		this.onConfigure(target);
 
 		// update form //
 		target.add(this.form);
+	}
+
+	/**
+	 * 
+	 * @deprecated use {@link #reload(AjaxRequestTarget)} instead
+	 */
+	// XXX 6.24.0 / 7.4.0 to remove
+	public void refresh(AjaxRequestTarget target)
+	{
+		this.reload(target);
 	}
 
 	// Properties //
@@ -310,7 +320,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		super.onOpen(target);
 
 		this.wizardModel.reset(); // reset model to prepare for action
-		this.refresh(target);
+		this.reload(target);
 	}
 
 	/**
@@ -357,7 +367,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 			}
 
 			// reconfigure buttons and refresh the form //
-			this.refresh(target);
+			this.reload(target);
 		}
 	}
 

@@ -14,101 +14,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.form.multiselect.lazy;
+package com.googlecode.wicket.kendo.ui.form.dropdown;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.lang.Args;
 
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
-import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.event.ISelectionChangedListener;
-import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.ajax.OnChangeAjaxBehavior.ChangeEvent;
 
 /**
- * Provides a {@value #METHOD} behavior
- *
+ * Provides a Kendo UI DropDownList {@link JQueryBehavior}
+ * 
  * @author Sebastien Briquet - sebfz1
- *
  */
-public abstract class MultiSelectBehavior extends KendoUIBehavior implements IJQueryAjaxAware
+public class DropDownListBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
-	public static final String METHOD = "kendoMultiSelect";
 
 	private final ISelectionChangedListener listener;
-	private KendoDataSource dataSource;
-
 	private JQueryAjaxBehavior onChangeAjaxBehavior;
 
-	public MultiSelectBehavior(String selector, ISelectionChangedListener listener)
+	public DropDownListBehavior(String selector, ISelectionChangedListener listener)
 	{
-		super(selector, METHOD);
+		this(selector, DropDownList.METHOD, listener);
+	}
+
+	public DropDownListBehavior(String selector, String method, ISelectionChangedListener listener)
+	{
+		super(selector, method);
 
 		this.listener = Args.notNull(listener, "listener");
 	}
-
-	// Methods //
 
 	@Override
 	public void bind(Component component)
 	{
 		super.bind(component);
 
-		// events //
 		this.onChangeAjaxBehavior = new OnChangeAjaxBehavior(this);
 		component.add(this.onChangeAjaxBehavior);
-
-		// data-source //
-		this.dataSource = new KendoDataSource("datasource" + this.selector);
-		this.add(this.dataSource);
 	}
-
-	// Properties //
-
-	@Override
-	public boolean isEnabled(Component component)
-	{
-		return component.isEnabledInHierarchy();
-	}
-
-	protected abstract CharSequence getDataSourceUrl();
-
-	// Events //
 
 	@Override
 	public void onConfigure(Component component)
 	{
 		super.onConfigure(component);
 
-		this.setOption("autoBind", true); // immutable
-
-		// events //
 		this.setOption("change", this.onChangeAjaxBehavior.getCallbackFunction());
-
-		// data-source //
-		this.onConfigure(this.dataSource);
-		this.setOption("dataSource", this.dataSource.getName());
-
-		if (this.isEnabled(component))
-		{
-			this.dataSource.setTransportRead(Options.asString(this.getDataSourceUrl()));
-		}
-	}
-
-	/**
-	 * Configure the {@link KendoDataSource} with additional options
-	 * 
-	 * @param dataSource the {@link KendoDataSource}
-	 */
-	protected void onConfigure(KendoDataSource dataSource)
-	{
-		// noop
 	}
 
 	@Override
