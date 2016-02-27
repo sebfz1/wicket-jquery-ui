@@ -43,7 +43,8 @@ public class TreeNodeFactory implements IClusterable
 	/**
 	 * Converts a {@link TreeNode} to a {@link JSONObject}
 	 *
-	 * @param event the {@code TreeNode}
+	 * @param index the node's index
+	 * @param node the {@code TreeNode}
 	 * @return the {@code JSONObject}
 	 */
 	public JSONObject toJson(int index, TreeNode<?> node)

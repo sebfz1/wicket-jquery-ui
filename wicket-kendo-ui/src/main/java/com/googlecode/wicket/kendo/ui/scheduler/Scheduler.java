@@ -437,9 +437,9 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	/**
 	 * Gets a new {@link SchedulerModelBehavior}
 	 *
-	 * @param model the {@link SchedulerModel}
-	 * @param schedulerEventFactory
-	 * @return the {@link SchedulerModelBehavior}
+	 * @param model the {@code SchedulerModel}
+	 * @param factory the {@code SchedulerEventFactory}
+	 * @return the {@code SchedulerModelBehavior}
 	 */
 	protected SchedulerModelBehavior newSchedulerModelBehavior(final SchedulerModel model, final SchedulerEventFactory factory)
 	{

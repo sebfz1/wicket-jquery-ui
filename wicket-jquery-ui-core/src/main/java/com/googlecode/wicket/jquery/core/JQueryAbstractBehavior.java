@@ -67,8 +67,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 	/**
 	 * Constructor.
-	 *
-	 * @param name the name of the behavior. It is used in the token so the behavior can be identified in the generated page.
 	 */
 	public JQueryAbstractBehavior()
 	{

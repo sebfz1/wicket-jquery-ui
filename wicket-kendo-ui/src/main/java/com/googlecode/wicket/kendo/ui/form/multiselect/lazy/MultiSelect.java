@@ -16,13 +16,13 @@
  */
 package com.googlecode.wicket.kendo.ui.form.multiselect.lazy;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -88,7 +88,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param renderer the {@link ChoiceRenderer}
+	 * @param renderer the {@link IChoiceRenderer}
 	 */
 	public MultiSelect(String id, IChoiceRenderer<? super T> renderer)
 	{
@@ -167,7 +167,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	@Override
 	public void convertInput()
 	{
-		List<T> list = new ArrayList<T>();
+		List<T> list = Generics.newArrayList();
 
 		for (String value : this.getInputAsArray())
 		{
@@ -214,7 +214,7 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 	@Override
 	protected String getModelValue()
 	{
-		List<String> values = new ArrayList<String>();
+		List<String> values = Generics.newArrayList();
 
 		for (T value : this.getModelObject())
 		{

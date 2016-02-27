@@ -21,7 +21,7 @@ import java.util.List;
 import org.apache.wicket.model.LoadableDetachableModel;
 
 /**
- * Model of {@link TreeNode}{@code s} for the {@link TreeView}
+ * Model of {@link TreeNode}{@code s} for the {@link AjaxTreeView}
  * 
  * @see TreeNodeFactory
  * @author Sebastien Briquet - sebfz1
@@ -57,9 +57,9 @@ public abstract class TreeViewModel extends LoadableDetachableModel<List<? exten
 	protected abstract List<? extends TreeNode<?>> load(int nodeId);
 
 	/**
-	 * Sets the start date.
+	 * Sets the node-id
 	 *
-	 * @param date the start date
+	 * @param nodeId the node-id
 	 */
 	public void setNodeId(int nodeId)
 	{

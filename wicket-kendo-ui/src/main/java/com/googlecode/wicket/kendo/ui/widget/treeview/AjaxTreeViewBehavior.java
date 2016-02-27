@@ -50,7 +50,6 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 	 * Constructor
 	 *
 	 * @param selector the html selector (ie: "#myId")
-	 * @param factory the {@link TreeViewNodeFactory}
 	 * @param listener the {@link ITreeViewListener}
 	 */
 	public AjaxTreeViewBehavior(final String selector, ITreeViewListener listener)
@@ -63,7 +62,6 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
-	 * @param factory the {@link TreeViewNodeFactory}
 	 * @param listener the {@link ITreeViewListener}
 	 */
 	public AjaxTreeViewBehavior(final String selector, Options options, ITreeViewListener listener)

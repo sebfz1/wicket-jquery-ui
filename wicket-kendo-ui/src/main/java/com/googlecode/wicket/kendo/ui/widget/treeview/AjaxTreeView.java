@@ -28,7 +28,6 @@ import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEventFactory;
-import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceListModel;
 
 /**
  * Provides the Kendo UI TreeView
@@ -52,7 +51,6 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	 *
 	 * @param id the markup id
 	 * @param model the {@link TreeViewModel}
-	 * @param resourceListModel the {@link ResourceListModel}
 	 */
 	public AjaxTreeView(String id, TreeViewModel model)
 	{
@@ -64,7 +62,6 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	 *
 	 * @param id the markup id
 	 * @param model the {@link TreeViewModel}
-	 * @param resourceListModel the {@link ResourceListModel}
 	 * @param options the {@link Options}
 	 */
 	public AjaxTreeView(String id, TreeViewModel model, Options options)
@@ -101,12 +98,12 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	/**
 	 * Expand the {@link AjaxTreeView} to the specified path
 	 * 
-	 * @param response the {@link IHeaderResponse}
+	 * @param target the {@link AjaxRequestTarget}
 	 * @param path the path to the node, as an id-array, ie: [1, 2, 3]
 	 */
-	public void expandPath(AjaxRequestTarget response, String path)
+	public void expandPath(AjaxRequestTarget target, String path)
 	{
-		response.appendJavaScript(String.format("%s.expandPath(%s)", this.widget(), path));
+		target.appendJavaScript(String.format("%s.expandPath(%s)", this.widget(), path));
 	}
 
 	/**

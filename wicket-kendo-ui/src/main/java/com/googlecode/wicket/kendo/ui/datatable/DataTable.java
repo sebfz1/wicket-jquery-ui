@@ -201,7 +201,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	 * Equivalent to {@code target.add(table);}
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @see DataTable#resetAjaxRequestTarget)
+	 * @see DataTable#reset(AjaxRequestTarget)
 	 */
 	public void reload(AjaxRequestTarget target)
 	{
@@ -214,7 +214,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param reset whether to call reset or not
-	 * @see DataTable#reset(IPartialPageRequestHandler)
+	 * @see DataTable#reset(AjaxRequestTarget)
 	 */
 	public void reload(AjaxRequestTarget target, boolean reset)
 	{
