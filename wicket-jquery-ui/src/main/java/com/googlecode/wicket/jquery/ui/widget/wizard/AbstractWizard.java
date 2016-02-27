@@ -211,17 +211,27 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	}
 
 	/**
-	 * Refreshes the wizard, by calling {@link #onConfigure(IPartialPageRequestHandler)} and re-attaching the form<br/>
+	 * Reloads the wizard, by calling {@link #onConfigure(IPartialPageRequestHandler)} and re-attaching the form<br/>
 	 * This method is called when, for instance, the wizard opens or the step changes.
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	protected void refresh(IPartialPageRequestHandler handler)
+	protected void reload(IPartialPageRequestHandler handler)
 	{
 		this.onConfigure(handler);
 
 		// update form //
 		handler.add(this.form);
+	}
+
+	/**
+	 * 
+	 * @deprecated use {@link #reload(IPartialPageRequestHandler)} instead
+	 */
+	// XXX 6.24.0 / 7.4.0 to remove
+	public void refresh(IPartialPageRequestHandler handler)
+	{
+		this.reload(handler);
 	}
 
 	// Properties //
@@ -358,7 +368,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 			}
 
 			// reconfigure buttons and refresh the form //
-			this.refresh(target);
+			this.reload(target);
 		}
 	}
 

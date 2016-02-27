@@ -228,7 +228,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	}
 
 	/**
-	 * Reloads current data and refreshes the {@link DataTable}
+	 * Refreshes the widget by reading from the datasource
 	 *
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
@@ -305,7 +305,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	 *
 	 * @return the data-provider behavior's url
 	 */
-	protected final CharSequence getProviderCallbackUrl()
+	protected final CharSequence getCallbackUrl()
 	{
 		return this.providerBehavior.getCallbackUrl();
 	}
@@ -436,9 +436,9 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 			}
 
 			@Override
-			protected CharSequence getProviderCallbackUrl()
+			protected CharSequence getProviderUrl()
 			{
-				return DataTable.this.getProviderCallbackUrl();
+				return DataTable.this.getCallbackUrl();
 			}
 
 			@Override

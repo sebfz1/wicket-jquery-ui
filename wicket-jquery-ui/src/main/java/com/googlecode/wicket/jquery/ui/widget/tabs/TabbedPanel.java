@@ -183,13 +183,13 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	}
 
 	/**
-	 * Refreshes the {@link TabbedPanel}<br/>
+	 * Reloads the {@link TabbedPanel}<br/>
 	 * <br/>
 	 * <b>Note:</b> This method should be used instead of {@code target.add(tabbedPanel)} if the underlying model is-a {@link TabListModel}
 	 * 
 	 * @param handler the {@link IPartialPageRequestHandler}
 	 */
-	public void refresh(IPartialPageRequestHandler handler)
+	public void reload(IPartialPageRequestHandler handler)
 	{
 		IModel<?> model = this.getModel();
 
@@ -199,6 +199,16 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 		}
 
 		handler.add(this);
+	}
+
+	/**
+	 * 
+	 * @deprecated use {@link #reload(IPartialPageRequestHandler)} instead
+	 */
+	// XXX 6.24.0 / 7.4.0 to remove
+	public void refresh(IPartialPageRequestHandler handler)
+	{
+		this.reload(handler);
 	}
 
 	// Events //

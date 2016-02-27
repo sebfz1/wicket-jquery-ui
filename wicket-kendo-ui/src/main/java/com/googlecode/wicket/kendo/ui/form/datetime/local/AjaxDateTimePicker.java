@@ -18,7 +18,6 @@ package com.googlecode.wicket.kendo.ui.form.datetime.local;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
@@ -129,7 +128,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 					}
 
 					@Override
-					protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source, FormComponent<?> component)
+					protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
 					{
 						return new OnChangeAjaxBehavior(source, AjaxDateTimePicker.this.datePicker, AjaxDateTimePicker.this.timePicker);
 					}
@@ -159,7 +158,7 @@ public class AjaxDateTimePicker extends DateTimePicker implements IJQueryAjaxAwa
 					}
 
 					@Override
-					protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source, FormComponent<?> component)
+					protected JQueryAjaxPostBehavior newOnChangeAjaxBehavior(IJQueryAjaxAware source)
 					{
 						return new OnChangeAjaxBehavior(source, AjaxDateTimePicker.this.datePicker, AjaxDateTimePicker.this.timePicker);
 					}
