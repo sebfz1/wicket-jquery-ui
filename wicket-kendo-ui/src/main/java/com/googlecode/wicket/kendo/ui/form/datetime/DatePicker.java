@@ -243,6 +243,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{

@@ -118,6 +118,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 	}
 
 	// IDatePickerListener //
+
 	@Override
 	public boolean isOnSelectEventEnabled()
 	{
@@ -125,6 +126,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
@@ -152,6 +154,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 	}
 
 	// IJQueryWidget //
+
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{

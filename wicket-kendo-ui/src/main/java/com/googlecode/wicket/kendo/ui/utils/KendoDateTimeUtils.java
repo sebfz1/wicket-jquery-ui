@@ -35,6 +35,13 @@ public class KendoDateTimeUtils
 	static final int chars_lenth = j_chars.length();
 
 	/**
+	 * Utility class
+	 */
+	private KendoDateTimeUtils()
+	{
+	}
+
+	/**
 	 * Converts a java datetime pattern to a kendo-ui datetime pattern
 	 *
 	 * @param pattern the java pattern
@@ -74,12 +81,5 @@ public class KendoDateTimeUtils
 	public static String toString(Date date)
 	{
 		return new SimpleDateFormat(PATTERN_TZ).format(date);
-	}
-
-	/**
-	 * Utility class
-	 */
-	private KendoDateTimeUtils()
-	{
 	}
 }
