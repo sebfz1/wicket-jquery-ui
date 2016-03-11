@@ -222,7 +222,7 @@ public class AjaxDatePicker extends DatePicker implements IJQueryAjaxAware, IVal
 	/**
 	 * Provides a jQuery datepicker behavior
 	 */
-//TODO make IDatePickerListener
+	// TODO: make IDatePickerListener
 	protected abstract static class DatePickerBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 	{
 		private static final long serialVersionUID = 1L;

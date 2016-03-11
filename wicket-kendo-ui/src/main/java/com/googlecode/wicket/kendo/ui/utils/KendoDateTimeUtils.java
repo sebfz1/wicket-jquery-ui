@@ -19,6 +19,10 @@ package com.googlecode.wicket.kendo.ui.utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
+
 /**
  * Utility class for Kendo UI datetime formats
  *
@@ -33,6 +37,13 @@ public class KendoDateTimeUtils
 	static final String j_chars = "GyYMwWDdFEuaHkKhmsSzZX";
 	static final String k_chars = "GyYMwWDdFdutHkKhmsfzZX"; // S > f, a > t, E > d
 	static final int chars_lenth = j_chars.length();
+
+	/**
+	 * Utility class
+	 */
+	private KendoDateTimeUtils()
+	{
+	}
 
 	/**
 	 * Converts a java datetime pattern to a kendo-ui datetime pattern
@@ -77,9 +88,24 @@ public class KendoDateTimeUtils
 	}
 
 	/**
-	 * Utility class
+	 * Converts a {@link Date} to a compatible kendo-ui date-string format (with timezone)
+	 *
+	 * @param date the date
+	 * @return the compatible kendo ui date string
 	 */
-	private KendoDateTimeUtils()
+	public static String toString(LocalDate date)
 	{
+		return date.format(DateTimeFormatter.ISO_LOCAL_DATE);
+	}
+
+	/**
+	 * Converts a {@link Date} to a compatible kendo-ui date-string format (with timezone)
+	 *
+	 * @param date the date
+	 * @return the compatible kendo ui date string
+	 */
+	public static String toString(LocalDateTime date)
+	{
+		return date.format(DateTimeFormatter.ofPattern(PATTERN_TZ));
 	}
 }

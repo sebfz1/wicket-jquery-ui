@@ -321,7 +321,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		super.onOpen(handler);
 
 		this.wizardModel.reset(); // reset model to prepare for action
-		this.refresh(handler);
+		this.reload(handler);
 	}
 
 	/**
