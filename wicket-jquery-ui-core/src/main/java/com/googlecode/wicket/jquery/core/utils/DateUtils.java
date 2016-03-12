@@ -22,6 +22,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import org.threeten.bp.Instant;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.LocalTime;
+import org.threeten.bp.ZoneId;
+import org.threeten.bp.ZonedDateTime;
+
 /**
  * Utility class for {@link Date}({@code s})
  *
@@ -33,15 +40,28 @@ public class DateUtils
 	public static final String ISO8601 = "yyyy-MM-dd'T'HH:mm:ss.SSS";
 	public static final String ISO8601_TZ = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 	public static final String ISO8601_UTC = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-	
+
 	/** default java date pattern */
-	public static final String DATE_PATTERN = "MM/dd/yyyy"; 
+	public static final String DATE_PATTERN = "MM/dd/yyyy";
 
 	/** default java time pattern */
 	public static final String TIME_PATTERN = "h:mm aa";
 
+	/** default java 8 date pattern */
+	public static final String LOCAL_DATE_PATTERN = DATE_PATTERN;
 
+	/** default java 8 time pattern */
+	public static final String LOCAL_TIME_PATTERN = "h:mm a";
+
+	/** UTC timezone */
 	public static final TimeZone UTC = TimeZone.getTimeZone("UTC");
+
+	/**
+	 * Utility class
+	 */
+	private DateUtils()
+	{
+	}
 
 	/**
 	 * Gets the current UTC date
@@ -169,10 +189,117 @@ public class DateUtils
 		return calendar.getTime();
 	}
 
+	// java8 date handling & conversion //
+
 	/**
-	 * Utility class
+	 * Gets a new {@link Date} according to the first date (which represents the date) and the second date (which represents the time)
+	 * 
+	 * @param date the date
+	 * @param time the time
+	 * @return a new {@code Date}
 	 */
-	private DateUtils()
+	public static Date dateOf(Date date, Date time)
 	{
+		return DateUtils.toDate(DateUtils.toLocalDate(date), DateUtils.toLocalTime(time));
+	}
+
+	/**
+	 * Gets a new {@link Date} according to the supplied {@link LocalDate} & {@link LocalTime}
+	 * 
+	 * @param date the {@code LocalDate}
+	 * @param time the {@code LocalTime}
+	 * @return a new {@code Date}
+	 */
+	public static Date toDate(LocalDate date, LocalTime time)
+	{
+		return DateUtils.toDate(LocalDateTime.of(date, time != null ? time : LocalTime.MIDNIGHT));
+	}
+
+	/**
+	 * Gets a new {@link Date} according to the supplied {@link LocalDateTime}
+	 * 
+	 * @param datetime the {@code LocalDateTime}
+	 * @return a new {@code Date}
+	 */
+	public static Date toDate(LocalDateTime datetime)
+	{
+		return DateUtils.toDate(datetime.atZone(ZoneId.systemDefault()).toInstant());
+	}
+
+	/**
+	 * Gets a new {@link Date} according to the supplied {@link Instant}
+	 * 
+	 * @param instant the {@code Instant}
+	 * @return a new {@code Date}
+	 */
+	public static Date toDate(Instant instant)
+	{
+		return new Date(instant.toEpochMilli());
+	}
+
+	/**
+	 * Converts an {@link Date} to a {@link LocalDate}
+	 * 
+	 * @param date the {@code Date}
+	 * @return a new {@code LocalDate}
+	 */
+	public static LocalDate toLocalDate(Date date)
+	{
+		return DateUtils.toLocalDate(date.getTime());
+	}
+
+	/**
+	 * Converts a timestamp to a {@link LocalDate}
+	 * 
+	 * @param timestamp the timestamp
+	 * @return a new {@code LocalDate}
+	 */
+	public static LocalDate toLocalDate(long timestamp)
+	{
+		return DateUtils.toLocalDate(Instant.ofEpochMilli(timestamp));
+	}
+
+	/**
+	 * Converts an {@link Instant} to a {@link LocalDate}
+	 * 
+	 * @param instant the {@code Instant}
+	 * @return a new {@code LocalDate}
+	 */
+	public static LocalDate toLocalDate(Instant instant)
+	{
+		return ZonedDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
+	}
+
+	/**
+	 * Converts an {@link Date} to a {@link LocalTime}
+	 * 
+	 * @param time the {@code Date}
+	 * @return a new {@code LocalTime}
+	 */
+	public static LocalTime toLocalTime(Date time)
+	{
+		return DateUtils.toLocalTime(time.getTime());
+	}
+
+	/**
+	 * Converts a timestamp to a {@link LocalTime}
+	 * 
+	 * @param timestamp the timestamp
+	 * @return a new {@code LocalTime}
+	 */
+	public static LocalTime toLocalTime(long timestamp)
+	{
+		return DateUtils.toLocalTime(Instant.ofEpochMilli(timestamp));
+	}
+
+	/**
+	 * Converts an {@link Instant} to a {@link LocalTime}
+	 * 
+	 * @param instant the {@code Instant}
+	 * @return a new {@code LocalTime}
+	 */
+	public static LocalTime toLocalTime(Instant instant)
+	{
+		return ZonedDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalTime();
 	}
 }

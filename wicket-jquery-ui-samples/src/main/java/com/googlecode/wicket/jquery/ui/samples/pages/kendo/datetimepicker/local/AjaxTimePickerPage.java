@@ -1,23 +1,23 @@
-package com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker;
-
-import java.util.Calendar;
+package com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker.local;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
+import org.threeten.bp.LocalTime;
 
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
-import com.googlecode.wicket.kendo.ui.form.datetime.DateTimePicker;
+import com.googlecode.wicket.kendo.ui.form.datetime.local.AjaxTimePicker;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
-public class DateTimePickerPage extends AbstractTimePickerPage
+public class AjaxTimePickerPage extends AbstractTimePickerPage
 {
 	private static final long serialVersionUID = 1L;
 
-	public DateTimePickerPage()
+	public AjaxTimePickerPage()
 	{
-		Form<Void> form = new Form<Void>("form");
+		Form<?> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //
@@ -25,11 +25,20 @@ public class DateTimePickerPage extends AbstractTimePickerPage
 		form.add(feedback);
 
 		// TimePicker //
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(2013, 5, 27, 2, 0);
+		final AjaxTimePicker timepicker = new AjaxTimePicker("timepicker", Model.of(LocalTime.NOON)) {
 
-		final DateTimePicker datetimepicker = new DateTimePicker("datetimepicker", Model.of(calendar.getTime()));
-		form.add(datetimepicker);
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onValueChanged(IPartialPageRequestHandler handler)
+			{
+				this.info("Value Changed: " + this.getModelObject());
+
+				handler.add(feedback);
+			}
+		};
+
+		form.add(timepicker);
 
 		// Buttons //
 		form.add(new Button("submit") {
@@ -39,7 +48,7 @@ public class DateTimePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info("Date & Time: " + datetimepicker.getModelObject()); //warning, model object can be null
+				this.info("Time: " + timepicker.getModelObject()); // warning, model object can be null
 			}
 		});
 
@@ -50,7 +59,7 @@ public class DateTimePickerPage extends AbstractTimePickerPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				this.info("Date & Time: " + datetimepicker.getModelObject()); //warning, model object can be null
+				this.info("Time: " + timepicker.getModelObject()); // warning, model object can be null
 				target.add(feedback);
 			}
 
@@ -59,6 +68,6 @@ public class DateTimePickerPage extends AbstractTimePickerPage
 			{
 				target.add(feedback);
 			}
-		});
+		});		
 	}
 }
