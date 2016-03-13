@@ -335,7 +335,7 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	protected static class ChangeEvent extends JQueryEvent
 	{
 		private final Logger LOG = LoggerFactory.getLogger(ChangeEvent.class);
-		
+
 		/** simple json object pattern */
 		private static final Pattern PATTERN = Pattern.compile("(\\{.*?\\})");
 

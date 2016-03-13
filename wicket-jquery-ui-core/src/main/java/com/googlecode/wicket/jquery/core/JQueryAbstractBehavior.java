@@ -80,7 +80,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 * @deprecated name is no longer required, use {@link #JQueryAbstractBehavior()} instead.
 	 */
 	@Deprecated
-	// XXX: 7.3.0 remove
+	// XXX: 6.23.0 / 7.3.0 remove
 	public JQueryAbstractBehavior(String name)
 	{
 		this();

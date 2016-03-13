@@ -19,6 +19,8 @@ package com.googlecode.wicket.kendo.ui.datatable.column;
 import java.util.Date;
 
 import org.apache.wicket.model.IModel;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
 
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 import com.googlecode.wicket.kendo.ui.utils.KendoDateTimeUtils;
@@ -119,6 +121,16 @@ public class DatePropertyColumn extends PropertyColumn
 		if (date instanceof Date)
 		{
 			return KendoDateTimeUtils.toString((Date) date);
+		}
+
+		if (date instanceof LocalDate)
+		{
+			return KendoDateTimeUtils.toString((LocalDate) date);
+		}
+
+		if (date instanceof LocalDateTime)
+		{
+			return KendoDateTimeUtils.toString((LocalDateTime) date);
 		}
 
 		return null;

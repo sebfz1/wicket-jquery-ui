@@ -19,6 +19,10 @@ package com.googlecode.wicket.kendo.ui.utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
+
 /**
  * Utility class for Kendo UI datetime formats
  *
@@ -51,6 +55,13 @@ public class KendoDateTimeUtils
 	{
 		String converted = pattern;
 
+		// realign kendo pattern:
+		// single 't' is *not* allowed in kendo, whereas 'a' is allowed in java date and and 'aa' is *not* allowed in LocalTime pattern
+		if (converted.contains("a") && !converted.contains("aa"))
+		{
+			converted = converted.replace("a", "aa");
+		}
+
 		for (int i = 0; i < chars_lenth; i++)
 		{
 			char j = j_chars.charAt(i);
@@ -60,13 +71,6 @@ public class KendoDateTimeUtils
 			{
 				converted = converted.replace(j, k);
 			}
-		}
-
-		// realign kendo pattern:
-		// single 't' is *not* allowed in kendo, whereas 'a' is allowed in java date and and 'aa' is *not* allowed in LocalTime pattern
-		if (converted.contains("t") && !converted.contains("tt"))
-		{
-			converted = converted.replace("t", "tt");
 		}
 
 		return converted;
@@ -81,5 +85,27 @@ public class KendoDateTimeUtils
 	public static String toString(Date date)
 	{
 		return new SimpleDateFormat(PATTERN_TZ).format(date);
+	}
+
+	/**
+	 * Converts a {@link Date} to a compatible kendo-ui date-string format (with timezone)
+	 *
+	 * @param date the date
+	 * @return the compatible kendo ui date string
+	 */
+	public static String toString(LocalDate date)
+	{
+		return date.format(DateTimeFormatter.ISO_LOCAL_DATE);
+	}
+
+	/**
+	 * Converts a {@link Date} to a compatible kendo-ui date-string format (with timezone)
+	 *
+	 * @param date the date
+	 * @return the compatible kendo ui date string
+	 */
+	public static String toString(LocalDateTime date)
+	{
+		return date.format(DateTimeFormatter.ofPattern(PATTERN_TZ));
 	}
 }
