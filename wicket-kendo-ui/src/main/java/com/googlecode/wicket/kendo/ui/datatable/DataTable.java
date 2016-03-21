@@ -293,7 +293,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	{
 		if (this.getModelObject() != null)
 		{
-			Collections.unmodifiableList(this.getModelObject());
+			return Collections.unmodifiableList(this.getModelObject());
 		}
 
 		return Collections.emptyList();
