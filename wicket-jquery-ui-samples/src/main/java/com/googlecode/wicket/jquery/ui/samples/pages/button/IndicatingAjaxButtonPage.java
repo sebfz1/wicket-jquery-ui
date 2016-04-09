@@ -8,6 +8,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.form.button.IndicatingAjaxButton;
 import com.googlecode.wicket.jquery.ui.form.button.IndicatingAjaxButton.Position;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -32,6 +33,12 @@ public class IndicatingAjaxButtonPage extends AbstractButtonPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			protected String getIcon()
+			{
+				return JQueryIcon.PLAY;
+			}
+				
+			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				try
@@ -47,7 +54,7 @@ public class IndicatingAjaxButtonPage extends AbstractButtonPage
 				}
 
 				IndicatingAjaxButtonPage.this.info(this);
-				target.add(form);
+				target.add(feedbackPanel);
 			}
 		};
 
@@ -56,6 +63,18 @@ public class IndicatingAjaxButtonPage extends AbstractButtonPage
 		form.add(new IndicatingAjaxButton("button2") {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected String getIcon()
+			{
+				return JQueryIcon.PLAY;
+			}
+
+			@Override
+			protected boolean isDisabledOnClick()
+			{
+				return true;
+			}
 
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
@@ -73,7 +92,7 @@ public class IndicatingAjaxButtonPage extends AbstractButtonPage
 				}
 
 				IndicatingAjaxButtonPage.this.info(this);
-				target.add(form);
+				target.add(feedbackPanel);
 			}
 		}.setPosition(Position.RIGHT));
 	}
