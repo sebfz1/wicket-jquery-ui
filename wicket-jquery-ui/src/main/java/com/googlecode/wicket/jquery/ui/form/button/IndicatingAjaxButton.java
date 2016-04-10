@@ -23,7 +23,7 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a jQuery button based on the built-in AjaxButton, with an ajax indicator the time the {@link #onSubmit()} process.
+ * Provides a jQuery button based on the {@link AjaxButton}, with an ajax indicator the time the {@link #onSubmit()} process.
  *
  * @since 6.0
  * @author Sebastien Briquet - sebfz1

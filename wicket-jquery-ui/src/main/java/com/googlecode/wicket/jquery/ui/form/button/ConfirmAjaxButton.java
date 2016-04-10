@@ -24,7 +24,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
-import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
+import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButtons;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogIcon;
@@ -84,38 +84,13 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	{
 		super.onInitialize();
 
-		final AbstractFormDialog<?> dialog = this.newFormDialog("dialog", titleModel, this.getModel());
+		final AbstractDialog<?> dialog = this.newDialog("dialog", this.titleModel, this.getModel());
 		this.add(dialog);
 
-		final AjaxButton button = new AjaxButton("button") {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onInitialize()
-			{
-				super.onInitialize();
-
-				// does not validate the form before the window is being displayed
-				this.setDefaultFormProcessing(false);
-			}
-
-			@Override
-			protected String getIcon()
-			{
-				return ConfirmAjaxButton.this.getIcon();
-			}
-
-			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
-			{
-				dialog.open(target);
-			}
-		};
-
+		final AjaxButton button = this.newAjaxButton("button", dialog);
 		this.add(button);
 
-		button.add(new Label("label", labelModel).setRenderBodyOnly(true));
+		button.add(new Label("label", this.labelModel).setRenderBodyOnly(true));
 	}
 
 	/**
@@ -144,7 +119,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	}
 
 	// Properties //
-	
+
 	/**
 	 * Gets the icon being displayed in the button
 	 *
@@ -158,7 +133,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	// Factories //
 
 	/**
-	 * Create the dialog instance<br/>
+	 * Creates the dialog instance<br/>
 	 * <b>Warning:</b> to be overridden with care!
 	 *
 	 * @param id the markupId
@@ -166,7 +141,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	 * @param message the message to be displayed
 	 * @return the dialog instance
 	 */
-	protected AbstractFormDialog<?> newFormDialog(String id, IModel<String> title, IModel<String> message)
+	protected AbstractDialog<?> newDialog(String id, IModel<String> title, IModel<String> message)
 	{
 		return new MessageFormDialog(id, title, message, DialogButtons.OK_CANCEL, DialogIcon.WARN) {
 
@@ -196,6 +171,42 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 			protected void onSubmit(AjaxRequestTarget target)
 			{
 				ConfirmAjaxButton.this.onSubmit(target, this.getForm());
+			}
+		};
+	}
+
+	/**
+	 * Gets the new {@link AjaxButton} that will open the supplied dialog
+	 * 
+	 * @param id the markupId
+	 * @param dialog the {@link AbstractDialog}
+	 * @return the new {@code AjaxButton}
+	 */
+	protected AjaxButton newAjaxButton(String id, final AbstractDialog<?> dialog)
+	{
+		return new AjaxButton(id) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onInitialize()
+			{
+				super.onInitialize();
+
+				// does not validate the form before the window is being displayed
+				this.setDefaultFormProcessing(false);
+			}
+
+			@Override
+			protected String getIcon()
+			{
+				return ConfirmAjaxButton.this.getIcon();
+			}
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			{
+				dialog.open(target);
 			}
 		};
 	}
