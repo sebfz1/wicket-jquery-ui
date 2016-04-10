@@ -74,9 +74,10 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 	protected String $()
 	{
 		// configure the busy indicator start & stop //
+		// caution: in specific cases, #getSelector may return a different selector that this.selector
 		StringBuilder builder = new StringBuilder(super.$());
 
-		builder.append("jQuery('").append(this.selector).append("')").append(".click(function() { ");
+		builder.append("jQuery('").append(this.getSelector()).append("')").append(".click(function() { ");
 		builder.append($(this.newOnClickOptions()));
 		builder.append("}); ");
 
@@ -94,7 +95,7 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 	 *
 	 * @return the {@link HeaderItem}
 	 */
-	private static HeaderItem newIndicatorCssHeaderItem()
+	public static HeaderItem newIndicatorCssHeaderItem()
 	{
 		IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
 		String css = String.format(".ui-icon.ui-icon-indicator { background-image: url(%s) !important; background-position: 0 0; }", RequestCycle.get().urlFor(handler));

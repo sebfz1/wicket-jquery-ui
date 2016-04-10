@@ -16,15 +16,22 @@
  */
 package com.googlecode.wicket.jquery.ui.form.button;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
+import com.googlecode.wicket.jquery.ui.form.button.IndicatingAjaxButton.Position;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
+import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogBehavior;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButtons;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogIcon;
@@ -47,6 +54,9 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 
 	private final IModel<String> labelModel;
 	private final IModel<String> titleModel;
+
+	private AjaxButton button;
+	private AbstractFormDialog<?> dialog;
 
 	/**
 	 * Constructor
@@ -84,13 +94,19 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	{
 		super.onInitialize();
 
-		final AbstractDialog<?> dialog = this.newDialog("dialog", this.titleModel, this.getModel());
-		this.add(dialog);
+		this.dialog = this.newDialog("dialog", this.titleModel, this.getModel());
+		this.add(this.dialog);
 
-		final AjaxButton button = this.newAjaxButton("button", dialog);
-		this.add(button);
+		this.button = this.newAjaxButton("button", dialog);
+		this.add(this.button);
 
-		button.add(new Label("label", this.labelModel).setRenderBodyOnly(true));
+		this.button.add(new Label("label", this.labelModel).setRenderBodyOnly(true));
+
+		// behaviors //
+		if (ConfirmAjaxButton.this.isIndicating())
+		{
+			this.add(this.newAjaxIndicatingButtonBehavior());
+		}
 	}
 
 	/**
@@ -130,6 +146,17 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 		return JQueryIcon.ALERT;
 	}
 
+	/**
+	 * Indicates whether the button will display the ajax-indicator on submit<br/>
+	 * if {@code true}, the button will also be disabled on click
+	 *
+	 * @return false by default
+	 */
+	protected boolean isIndicating()
+	{
+		return false;
+	}
+
 	// Factories //
 
 	/**
@@ -141,14 +168,14 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	 * @param message the message to be displayed
 	 * @return the dialog instance
 	 */
-	protected AbstractDialog<?> newDialog(String id, IModel<String> title, IModel<String> message)
+	protected AbstractFormDialog<?> newDialog(String id, IModel<String> title, IModel<String> message)
 	{
 		return new MessageFormDialog(id, title, message, DialogButtons.OK_CANCEL, DialogIcon.WARN) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected DialogButton getSubmitButton()
+			public DialogButton getSubmitButton()
 			{
 				return this.findButton(OK);
 			}
@@ -207,6 +234,61 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				dialog.open(target);
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link AjaxIndicatingButtonBehavior} for this confirm-button
+	 * 
+	 * @return a new {@code AjaxIndicatingButtonBehavior}
+	 */
+	protected AjaxIndicatingButtonBehavior newAjaxIndicatingButtonBehavior()
+	{
+		final String buttonSelector = JQueryWidget.getSelector(this.button);
+		final String dialogSelector = JQueryWidget.getSelector(this.dialog);
+		final String submitSelector = "#" + this.dialog.getSubmitButton().getMarkupId();
+
+		return new AjaxIndicatingButtonBehavior(buttonSelector, this.getIcon(), Position.LEFT) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void renderHead(Component component, IHeaderResponse response)
+			{
+				super.renderHead(component, response);
+
+				// close statement //
+				String closeStatement = "";
+				closeStatement += String.format("jQuery('%s').click(function() {", submitSelector);
+				closeStatement += String.format("jQuery('%s').%s('close');", dialogSelector, DialogBehavior.METHOD);
+				closeStatement += "});";
+
+				this.renderOnDomReadyScript(closeStatement, response);
+			}
+
+			@Override
+			public String getSelector()
+			{
+				return submitSelector;
+			}
+
+			@Override
+			protected Options newOnClickOptions()
+			{
+				Options options = super.newOnClickOptions();
+				options.set("disabled", true);
+
+				return options;
+			}
+
+			@Override
+			protected Options newOnAjaxStopOptions()
+			{
+				Options options = super.newOnAjaxStopOptions();
+				options.set("disabled", !ConfirmAjaxButton.this.isEnabledInHierarchy());
+
+				return options;
 			}
 		};
 	}

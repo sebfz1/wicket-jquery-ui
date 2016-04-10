@@ -90,7 +90,6 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 		this.add(dialog);
 
 		final AjaxButton button = this.newAjaxButton("button", dialog);
-
 		this.add(button);
 
 		button.add(new Label("label", this.labelModel).setRenderBodyOnly(true));
