@@ -245,7 +245,12 @@ public class DateUtils
 	 */
 	public static LocalDate toLocalDate(Date date)
 	{
-		return DateUtils.toLocalDate(date.getTime());
+		if (date != null)
+		{
+			return DateUtils.toLocalDate(date.getTime());
+		}
+
+		return null;
 	}
 
 	/**
@@ -278,7 +283,12 @@ public class DateUtils
 	 */
 	public static LocalTime toLocalTime(Date time)
 	{
-		return DateUtils.toLocalTime(time.getTime());
+		if (time != null)
+		{
+			return DateUtils.toLocalTime(time.getTime());
+		}
+		
+		return null;
 	}
 
 	/**
