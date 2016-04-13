@@ -40,7 +40,7 @@ public class AjaxIndicatingButtonBehavior extends ButtonBehavior
 {
 	private static final long serialVersionUID = 1L;
 
-	protected static final String CSS_INDICATOR = "ui-icon-indicator";
+	public static final String CSS_INDICATOR = "ui-icon-indicator";
 
 	private final String icon;
 	private final Position position;

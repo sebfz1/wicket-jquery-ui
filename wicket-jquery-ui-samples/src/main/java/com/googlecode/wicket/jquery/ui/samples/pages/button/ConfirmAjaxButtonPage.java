@@ -42,12 +42,6 @@ public class ConfirmAjaxButtonPage extends AbstractButtonPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected boolean isIndicating()
-			{
-				return true;
-			}
-
-			@Override
 			protected void onError(AjaxRequestTarget target, Form<?> form)
 			{
 				this.error("Validation failed!");

@@ -16,24 +16,19 @@
  */
 package com.googlecode.wicket.jquery.ui.form.button;
 
-import org.apache.wicket.Component;
+import java.util.Arrays;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget.JQueryWidget;
-import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
-import com.googlecode.wicket.jquery.ui.form.button.IndicatingAjaxButton.Position;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
-import com.googlecode.wicket.jquery.ui.widget.dialog.DialogBehavior;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
-import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButtons;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogIcon;
 import com.googlecode.wicket.jquery.ui.widget.dialog.MessageFormDialog;
 
@@ -51,6 +46,18 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.MessageFormDialog;
 public abstract class ConfirmAjaxButton extends GenericPanel<String>
 {
 	private static final long serialVersionUID = 1L;
+
+	static final DialogButton BTN_CANCEL = new DialogButton(AbstractDialog.CANCEL, AbstractDialog.LBL_CANCEL);
+	static final DialogButton BTN_OK = new DialogButton(AbstractDialog.OK, AbstractDialog.LBL_OK) {
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public boolean isIndicating()
+		{
+			return true;
+		}
+	};
 
 	private final IModel<String> labelModel;
 	private final IModel<String> titleModel;
@@ -101,12 +108,6 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 		this.add(this.button);
 
 		this.button.add(new Label("label", this.labelModel).setRenderBodyOnly(true));
-
-		// behaviors //
-		if (ConfirmAjaxButton.this.isIndicating())
-		{
-			this.add(this.newAjaxIndicatingButtonBehavior());
-		}
 	}
 
 	/**
@@ -146,17 +147,6 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 		return JQueryIcon.ALERT;
 	}
 
-	/**
-	 * Indicates whether the button will display the ajax-indicator on submit<br/>
-	 * if {@code true}, the button will also be disabled on click
-	 *
-	 * @return false by default
-	 */
-	protected boolean isIndicating()
-	{
-		return false;
-	}
-
 	// Factories //
 
 	/**
@@ -170,7 +160,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	 */
 	protected AbstractFormDialog<?> newDialog(String id, IModel<String> title, IModel<String> message)
 	{
-		return new MessageFormDialog(id, title, message, DialogButtons.OK_CANCEL, DialogIcon.WARN) {
+		return new MessageFormDialog(id, title, message, Arrays.asList(BTN_OK, BTN_CANCEL), DialogIcon.WARN) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -238,58 +228,59 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 		};
 	}
 
-	/**
-	 * Gets a new {@link AjaxIndicatingButtonBehavior} for this confirm-button
-	 * 
-	 * @return a new {@code AjaxIndicatingButtonBehavior}
-	 */
-	protected AjaxIndicatingButtonBehavior newAjaxIndicatingButtonBehavior()
-	{
-		final String buttonSelector = JQueryWidget.getSelector(this.button);
-		final String dialogSelector = JQueryWidget.getSelector(this.dialog);
-		final String submitSelector = "#" + this.dialog.getSubmitButton().getMarkupId();
-
-		return new AjaxIndicatingButtonBehavior(buttonSelector, this.getIcon(), Position.LEFT) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void renderHead(Component component, IHeaderResponse response)
-			{
-				super.renderHead(component, response);
-
-				// close statement //
-				String closeStatement = "";
-				closeStatement += String.format("jQuery('%s').click(function() {", submitSelector);
-				closeStatement += String.format("jQuery('%s').%s('close');", dialogSelector, DialogBehavior.METHOD);
-				closeStatement += "});";
-
-				this.renderOnDomReadyScript(closeStatement, response);
-			}
-
-			@Override
-			public String getSelector()
-			{
-				return submitSelector;
-			}
-
-			@Override
-			protected Options newOnClickOptions()
-			{
-				Options options = super.newOnClickOptions();
-				options.set("disabled", true);
-
-				return options;
-			}
-
-			@Override
-			protected Options newOnAjaxStopOptions()
-			{
-				Options options = super.newOnAjaxStopOptions();
-				options.set("disabled", !ConfirmAjaxButton.this.isEnabledInHierarchy());
-
-				return options;
-			}
-		};
-	}
+//	/**
+//	 * Gets a new {@link AjaxIndicatingButtonBehavior} for this confirm-button. It will be applied on the button itself<br/>
+//	 * <b>Caution:</b> this behavior directly closes the dialog (without server roundtrip)
+//	 * 
+//	 * @return a new {@code AjaxIndicatingButtonBehavior}
+//	 */
+//	protected final AjaxIndicatingButtonBehavior newAjaxIndicatingButtonBehavior()
+//	{
+//		final String buttonSelector = JQueryWidget.getSelector(this.button);
+//		final String dialogSelector = JQueryWidget.getSelector(this.dialog);
+//		final String submitSelector = "#" + this.dialog.getSubmitButton().getMarkupId();
+//
+//		return new AjaxIndicatingButtonBehavior(buttonSelector, this.getIcon(), Position.LEFT) {
+//
+//			private static final long serialVersionUID = 1L;
+//
+//			@Override
+//			public void renderHead(Component component, IHeaderResponse response)
+//			{
+//				super.renderHead(component, response);
+//
+//				/** close statement */
+//				String statement = "";
+//				statement += String.format("jQuery('%s').click(function() {", submitSelector);
+//				statement += String.format("jQuery('%s').%s('close');", dialogSelector, DialogBehavior.METHOD);
+//				statement += "});";
+//
+//				this.renderOnDomReadyScript(statement, response);
+//			}
+//
+//			@Override
+//			public String getSelector()
+//			{
+//				return submitSelector;
+//			}
+//
+//			@Override
+//			protected Options newOnClickOptions()
+//			{
+//				Options options = super.newOnClickOptions();
+//				options.set("disabled", true);
+//
+//				return options;
+//			}
+//
+//			@Override
+//			protected Options newOnAjaxStopOptions()
+//			{
+//				Options options = super.newOnAjaxStopOptions();
+//				options.set("disabled", !ConfirmAjaxButton.this.isEnabledInHierarchy());
+//
+//				return options;
+//			}
+//		};
+//	}
 }
