@@ -46,7 +46,7 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.MessageFormDialog;
 public abstract class ConfirmAjaxButton extends GenericPanel<String>
 {
 	private static final long serialVersionUID = 1L;
-
+	
 	static final DialogButton BTN_CANCEL = new DialogButton(AbstractDialog.CANCEL, AbstractDialog.LBL_CANCEL);
 	static final DialogButton BTN_OK = new DialogButton(AbstractDialog.OK, AbstractDialog.LBL_OK) {
 
@@ -228,59 +228,60 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 		};
 	}
 
-//	/**
-//	 * Gets a new {@link AjaxIndicatingButtonBehavior} for this confirm-button. It will be applied on the button itself<br/>
-//	 * <b>Caution:</b> this behavior directly closes the dialog (without server roundtrip)
-//	 * 
-//	 * @return a new {@code AjaxIndicatingButtonBehavior}
-//	 */
-//	protected final AjaxIndicatingButtonBehavior newAjaxIndicatingButtonBehavior()
-//	{
-//		final String buttonSelector = JQueryWidget.getSelector(this.button);
-//		final String dialogSelector = JQueryWidget.getSelector(this.dialog);
-//		final String submitSelector = "#" + this.dialog.getSubmitButton().getMarkupId();
-//
-//		return new AjaxIndicatingButtonBehavior(buttonSelector, this.getIcon(), Position.LEFT) {
-//
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public void renderHead(Component component, IHeaderResponse response)
-//			{
-//				super.renderHead(component, response);
-//
-//				/** close statement */
-//				String statement = "";
-//				statement += String.format("jQuery('%s').click(function() {", submitSelector);
-//				statement += String.format("jQuery('%s').%s('close');", dialogSelector, DialogBehavior.METHOD);
-//				statement += "});";
-//
-//				this.renderOnDomReadyScript(statement, response);
-//			}
-//
-//			@Override
-//			public String getSelector()
-//			{
-//				return submitSelector;
-//			}
-//
-//			@Override
-//			protected Options newOnClickOptions()
-//			{
-//				Options options = super.newOnClickOptions();
-//				options.set("disabled", true);
-//
-//				return options;
-//			}
-//
-//			@Override
-//			protected Options newOnAjaxStopOptions()
-//			{
-//				Options options = super.newOnAjaxStopOptions();
-//				options.set("disabled", !ConfirmAjaxButton.this.isEnabledInHierarchy());
-//
-//				return options;
-//			}
-//		};
-//	}
+	//TODO: remove
+	// /**
+	// * Gets a new {@link AjaxIndicatingButtonBehavior} for this confirm-button. It will be applied on the button itself<br/>
+	// * <b>Caution:</b> this behavior directly closes the dialog (without server roundtrip)
+	// *
+	// * @return a new {@code AjaxIndicatingButtonBehavior}
+	// */
+	// protected final AjaxIndicatingButtonBehavior newAjaxIndicatingButtonBehavior()
+	// {
+	// final String buttonSelector = JQueryWidget.getSelector(this.button);
+	// final String dialogSelector = JQueryWidget.getSelector(this.dialog);
+	// final String submitSelector = "#" + this.dialog.getSubmitButton().getMarkupId();
+	//
+	// return new AjaxIndicatingButtonBehavior(buttonSelector, this.getIcon(), Position.LEFT) {
+	//
+	// private static final long serialVersionUID = 1L;
+	//
+	// @Override
+	// public void renderHead(Component component, IHeaderResponse response)
+	// {
+	// super.renderHead(component, response);
+	//
+	// /** close statement */
+	// String statement = "";
+	// statement += String.format("jQuery('%s').click(function() {", submitSelector);
+	// statement += String.format("jQuery('%s').%s('close');", dialogSelector, DialogBehavior.METHOD);
+	// statement += "});";
+	//
+	// this.renderOnDomReadyScript(statement, response);
+	// }
+	//
+	// @Override
+	// public String getSelector()
+	// {
+	// return submitSelector;
+	// }
+	//
+	// @Override
+	// protected Options newOnClickOptions()
+	// {
+	// Options options = super.newOnClickOptions();
+	// options.set("disabled", true);
+	//
+	// return options;
+	// }
+	//
+	// @Override
+	// protected Options newOnAjaxStopOptions()
+	// {
+	// Options options = super.newOnAjaxStopOptions();
+	// options.set("disabled", !ConfirmAjaxButton.this.isEnabledInHierarchy());
+	//
+	// return options;
+	// }
+	// };
+	// }
 }

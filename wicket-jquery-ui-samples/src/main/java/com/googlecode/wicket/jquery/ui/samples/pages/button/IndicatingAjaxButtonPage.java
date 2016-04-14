@@ -33,12 +33,6 @@ public class IndicatingAjaxButtonPage extends AbstractButtonPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected String getIcon()
-			{
-				return JQueryIcon.PLAY;
-			}
-				
-			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				try

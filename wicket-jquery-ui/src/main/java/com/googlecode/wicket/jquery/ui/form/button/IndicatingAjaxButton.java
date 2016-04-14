@@ -16,8 +16,11 @@
  */
 package com.googlecode.wicket.jquery.ui.form.button;
 
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
@@ -31,6 +34,7 @@ import com.googlecode.wicket.jquery.core.Options;
 public abstract class IndicatingAjaxButton extends AjaxButton
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(IndicatingAjaxButton.class);
 
 	public enum Position
 	{
@@ -87,6 +91,19 @@ public abstract class IndicatingAjaxButton extends AjaxButton
 	{
 		this.position = position;
 		return this;
+	}
+
+	// Events //
+
+	@Override
+	protected void onComponentTag(ComponentTag tag)
+	{
+		super.onComponentTag(tag);
+
+		if (!"button".equalsIgnoreCase(tag.getName()))
+		{
+			LOG.warn("IndicatingAjaxButton should be applied on a 'button' tag");
+		}
 	}
 
 	// Properties //
