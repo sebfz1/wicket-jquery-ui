@@ -137,7 +137,7 @@ public class ButtonAjaxBehavior extends JQueryAjaxBehavior
 		String icon = this.button.getIcon();
 
 		Options options = new Options();
-		options.set("disabled", false);
+		options.set("disabled", !this.button.isEnabled());
 		options.set("icons", new Options("primary", JQueryIcon.isNone(icon) ? "null" : Options.asString(icon)));
 
 		return options;
