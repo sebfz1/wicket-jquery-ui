@@ -49,7 +49,7 @@ public abstract class UploadDialog extends AbstractFormDialog<FileUpload>
 	}
 
 	@Override
-	protected DialogButton getSubmitButton()
+	public DialogButton getSubmitButton()
 	{
 		return this.btnUpload;
 	}

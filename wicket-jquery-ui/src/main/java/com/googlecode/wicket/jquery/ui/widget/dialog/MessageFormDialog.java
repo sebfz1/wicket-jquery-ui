@@ -162,15 +162,15 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	}
 
 	// Properties //
-	
+
 	@Override
 	protected final List<DialogButton> getButtons()
 	{
 		return this.buttons;
 	}
-	
+
 	// Events //
-	
+
 	@Override
 	protected void onInitialize()
 	{

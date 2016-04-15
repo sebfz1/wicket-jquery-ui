@@ -64,6 +64,20 @@
 		</repository>
 	</repositories>
 
+		<distributionManagement>
+        <repository>
+            <id>deployment.releases</id>
+            <name>SDS Releases Repository</name>
+            <url>http://ncesdsintgpic01.etv.nce.amadeus.net:81/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>deployment.snapshots</id>
+            <name>SDS Snapshots Repository</name>
+            <url>http://ncesdsintgpic01.etv.nce.amadeus.net:81/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+	<!--
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
@@ -74,6 +88,7 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 		</repository>
 	</distributionManagement>
+	-->
 
 	<build>
 		<pluginManagement>

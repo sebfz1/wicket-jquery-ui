@@ -439,7 +439,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	}
 
 	@Override
-	protected DialogButton getSubmitButton()
+	public DialogButton getSubmitButton()
 	{
 		return this.btnFinish;
 	}

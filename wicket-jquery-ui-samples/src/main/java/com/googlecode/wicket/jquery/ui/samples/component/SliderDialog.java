@@ -54,7 +54,7 @@ public abstract class SliderDialog extends AbstractFormDialog<Integer>
 	}
 
 	@Override
-	protected DialogButton getSubmitButton()
+	public DialogButton getSubmitButton()
 	{
 		return this.btnSubmit;
 	}
