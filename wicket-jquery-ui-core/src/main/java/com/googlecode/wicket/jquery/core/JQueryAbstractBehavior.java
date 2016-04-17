@@ -74,19 +74,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	}
 
 	/**
-	 * Constructor.
-	 *
-	 * @param name the name of the behavior. It is used in the token so the behavior can be identified in the generated page.
-	 * @deprecated name is no longer required, use {@link #JQueryAbstractBehavior()} instead.
-	 */
-	@Deprecated
-	// XXX: 6.23.0 / 7.3.0 remove
-	public JQueryAbstractBehavior(String name)
-	{
-		this();
-	}
-
-	/**
 	 * Adds a reference to be rendered at {@link #renderHead(Component, IHeaderResponse)} time.
 	 *
 	 * @param reference a {@link CssResourceReference}, a {@link JavaScriptResourceReference} or a {@link JQueryPluginResourceReference}

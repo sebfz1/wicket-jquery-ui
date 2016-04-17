@@ -210,8 +210,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 			{
 				super.onInitialize();
 
-				// does not validate the form before the window is being displayed
-				this.setDefaultFormProcessing(false);
+				this.setDefaultFormProcessing(false); // does not validate the form before the window is being displayed
 			}
 
 			@Override
@@ -227,61 +226,4 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 			}
 		};
 	}
-
-	//TODO: remove
-	// /**
-	// * Gets a new {@link AjaxIndicatingButtonBehavior} for this confirm-button. It will be applied on the button itself<br/>
-	// * <b>Caution:</b> this behavior directly closes the dialog (without server roundtrip)
-	// *
-	// * @return a new {@code AjaxIndicatingButtonBehavior}
-	// */
-	// protected final AjaxIndicatingButtonBehavior newAjaxIndicatingButtonBehavior()
-	// {
-	// final String buttonSelector = JQueryWidget.getSelector(this.button);
-	// final String dialogSelector = JQueryWidget.getSelector(this.dialog);
-	// final String submitSelector = "#" + this.dialog.getSubmitButton().getMarkupId();
-	//
-	// return new AjaxIndicatingButtonBehavior(buttonSelector, this.getIcon(), Position.LEFT) {
-	//
-	// private static final long serialVersionUID = 1L;
-	//
-	// @Override
-	// public void renderHead(Component component, IHeaderResponse response)
-	// {
-	// super.renderHead(component, response);
-	//
-	// /** close statement */
-	// String statement = "";
-	// statement += String.format("jQuery('%s').click(function() {", submitSelector);
-	// statement += String.format("jQuery('%s').%s('close');", dialogSelector, DialogBehavior.METHOD);
-	// statement += "});";
-	//
-	// this.renderOnDomReadyScript(statement, response);
-	// }
-	//
-	// @Override
-	// public String getSelector()
-	// {
-	// return submitSelector;
-	// }
-	//
-	// @Override
-	// protected Options newOnClickOptions()
-	// {
-	// Options options = super.newOnClickOptions();
-	// options.set("disabled", true);
-	//
-	// return options;
-	// }
-	//
-	// @Override
-	// protected Options newOnAjaxStopOptions()
-	// {
-	// Options options = super.newOnAjaxStopOptions();
-	// options.set("disabled", !ConfirmAjaxButton.this.isEnabledInHierarchy());
-	//
-	// return options;
-	// }
-	// };
-	// }
 }
