@@ -58,6 +58,7 @@ public class KendoMessageResourceReference extends JQueryPluginResourceReference
 		super(KendoMessageResourceReference.class, String.format(FILENAME_PATTERN, language));
 	}
 
+	@Override
 	public Iterable<? extends HeaderItem> getDependencies()
 	{
 		List<HeaderItem> dependencies = Generics.newArrayList();

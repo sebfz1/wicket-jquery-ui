@@ -210,8 +210,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 			{
 				super.onInitialize();
 
-				// does not validate the form before the window is being displayed
-				this.setDefaultFormProcessing(false);
+				this.setDefaultFormProcessing(false); // does not validate the form before the window is being displayed
 			}
 
 			@Override

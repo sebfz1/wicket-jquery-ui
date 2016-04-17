@@ -70,6 +70,7 @@ public class KendoCultureResourceReference extends JQueryPluginResourceReference
 		super(KendoCultureResourceReference.class, String.format(FILENAME_PATTERN, culture));
 	}
 
+	@Override
 	public Iterable<? extends HeaderItem> getDependencies()
 	{
 		List<HeaderItem> dependencies = Generics.newArrayList();

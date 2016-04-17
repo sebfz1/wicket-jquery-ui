@@ -28,6 +28,7 @@ public interface IValueChangedListener extends IClusterable
 {
 	/**
 	 * Triggers when the value has changed
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	void onValueChanged(AjaxRequestTarget target);

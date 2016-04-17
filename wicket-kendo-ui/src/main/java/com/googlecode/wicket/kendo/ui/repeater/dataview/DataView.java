@@ -169,7 +169,7 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	}
 
 	/**
-	 * Refreshes the widget by reading from the datasource
+	 * Refreshes the {@link DataView} by reading from the datasource
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
