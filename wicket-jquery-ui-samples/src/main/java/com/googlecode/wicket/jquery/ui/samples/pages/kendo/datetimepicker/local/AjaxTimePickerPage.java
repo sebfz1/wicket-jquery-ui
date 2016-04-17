@@ -68,6 +68,6 @@ public class AjaxTimePickerPage extends AbstractTimePickerPage
 			{
 				target.add(feedback);
 			}
-		});		
+		});
 	}
 }
