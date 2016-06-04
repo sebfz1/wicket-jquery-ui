@@ -11,6 +11,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.jquery.ui.samples.data.dao.scheduler.EmployeeEventsDAO;
 import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.multiselect.MultiSelect;
@@ -33,7 +34,7 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
+		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback", new Options());
 		form.add(feedback.setOutputMarkupId(true));
 
 		// MultiSelect //
@@ -57,9 +58,25 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage
 			{
 				super.onConfigure();
 
-				this.getResourceListModel().clear();
-				this.getResourceListModel().add(newRoomList(multiselect.getModelObject()));
-				this.getResourceListModel().add(newEmployeeList());
+				Collection<Resource> rooms = multiselect.getModelObject();
+
+				if (!rooms.isEmpty())
+				{
+					this.getResourceListModel().clear();
+					this.getResourceListModel().add(newRoomList(rooms));
+					this.getResourceListModel().add(newEmployeeList());
+				}
+				else
+				{
+					this.warn("No room are selected");
+
+					AjaxRequestTarget target = RequestCycleUtils.getAjaxRequestTarget();
+
+					if (target != null)
+					{
+						feedback.refresh(target, true);
+					}
+				}
 			}
 
 			@Override
