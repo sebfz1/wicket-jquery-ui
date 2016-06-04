@@ -2,11 +2,8 @@
 
 @font-face {
     font-family: 'icomoon';
-     src:    url('../fonts/icomoon.eot?a3s9hs');
-    src:    url('../fonts/icomoon.eot?a3s9hs#iefix') format('embedded-opentype'),
-        url('../fonts/icomoon.ttf?a3s9hs') format('truetype'),
-        url('../fonts/icomoon.woff?a3s9hs') format('woff'),
-        url('../fonts/icomoon.svg?a3s9hs#icomoon') format('svg');
+    src: url('../fonts/icomoon.eot?a3s9hs');
+    src: url('../fonts/icomoon.eot?a3s9hs#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?a3s9hs') format('truetype'), url('../fonts/icomoon.woff?a3s9hs') format('woff'), url('../fonts/icomoon.svg?a3s9hs#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -74,24 +71,31 @@ body {
     font-family: 'Raleway-Regular'!important;
     height: 100%;
     margin: 0;
-    padding:0;
+    padding: 0;
     color: #3a3a3c;
     max-width: 1800px;
-    min-width: 100%; /*ie 11 fix*/
+    min-width: 100%;
+    /*ie 11 fix*/
+    
     margin: 0 auto;
 }
 .no-flexbox body {
     min-width: 1024px;
 }
 header {
-        padding-top: 60px;
+    padding-top: 60px;
 }
 header .title {
     margin-left: 50px;
 }
 .main {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
     position: relative;
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
     justify-content: space-around;
     padding: 0.75em 40px
 }
@@ -105,7 +109,7 @@ header .title {
     white-space: normal;
 }
 .main aside {
-    min-width: 225px;
+    min-width: 255px;
 }
 .contentZone {
     width: 60%;
@@ -116,10 +120,10 @@ header .title {
     border: 1px solid #ccc;
     text-align: left;
 }
-
 .contentZone .component nav ul {
-    padding:0;
-margin:0;}
+    padding: 0;
+    margin: 0;
+}
 .componentSource h3>div {
     font-size: 0.8em;
 }
@@ -127,25 +131,23 @@ margin:0;}
     line-height: 2em;
 }
 .componentDescription pre {
-    padding:10px;
+    padding: 10px;
     position: relative;
-    border-bottom: 1px  dashed #565656;
+    border-bottom: 1px dashed #565656;
 }
 .componentDescription pre:before {
-    content:"";
+    content: "";
     display: block;
-    width:65%;
-    height:40%;
+    width: 65%;
+    height: 40%;
     position: absolute;
-    top:0px;
-    left:0;
+    top: 0px;
+    left: 0;
     border-style: dashed;
     border-width: 1px;
     border-color: #565656 transparent transparent #565656;
     z-index: -1;
 }
-
-
 .contentZone .background img {
     width: 100%;
     max-width: 1000px;
@@ -156,7 +158,6 @@ header {
     max-width: 1900px;
     margin: 0 auto;
 }
-
 button.close {
     position: absolute;
     top: 10px;
@@ -171,12 +172,12 @@ button.close {
 * {
     box-sizing: border-box;
 }
-
 button {
     font-family: 'Raleway-Bold';
     background-color: #fff;
     padding: 0;
     border: 1px solid #E15A2D;
+    -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
     white-space: nowrap;
 }
@@ -185,7 +186,7 @@ button:hover {
     border: 1px solid #FB9D34;
 }
 button:focus {
-    outline:1px solid #F9A950;
+    outline: 1px solid #F9A950;
 }
 button.close {
     width: 1.5em;
@@ -233,7 +234,7 @@ aside nav a {
 }
 nav.home ul {
     text-align: center;
-        padding: 0;
+    padding: 0;
 }
 nav.home ul li {
     display: inline-block;
@@ -242,12 +243,10 @@ nav.home ul li+li:before {
     content: "/";
     padding: 0 0.3em;
 }
-
 .contentZone .component nav {
-        -webkit-column-width: 14em;
-        -moz-column-width: 14em;
-        column-width: 14em;
-    
+    -webkit-column-width: 14em;
+    -moz-column-width: 14em;
+    column-width: 14em;
 }
 nav.home ul li a,
 nav.home ul li a:visited {
@@ -259,7 +258,6 @@ nav.home ul li a:visited {
     border: 1px solid transparent;
     padding: 0 3px;
 }
-
 .tButton span {
     border: 1px solid #E15A2D;
     width: 0.7em;
@@ -272,13 +270,11 @@ nav.home ul li a:visited {
     vertical-align: middle;
 }
 h2.tButton span:before {
-            content: "+";
-        }
-
-        h2.tButton.open span:before {
-            content: "-";
-        }
-
+    content: "+";
+}
+h2.tButton.open span:before {
+    content: "-";
+}
 aside nav {
     padding-left: 2em;
 }
@@ -310,13 +306,15 @@ aside nav ul li a:visited,
 }
 aside nav ul li a,
 aside nav ul li a:visited {
+    -webkit-transition: color 0.3s ease;
     transition: color 0.3s ease;
     padding: 0.1em 0;
     margin: 0.1em 0;
 }
 .contentZone .component nav ul li a,
 .contentZone .component nav ul li a:visited {
-    transition: border-color 0.2s ease; 
+    -webkit-transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease;
     font-family: 'Raleway-Regular';
     line-height: 1.5em;
 }
@@ -327,15 +325,14 @@ aside nav ul li a:not([href]) {
     color: #E15A2D;
     border-color: #E15A2D transparent #E15A2D transparent;
 }
- 
 .contentZone .component nav ul li a:hover,
 .contentZone .component nav ul li a:focus,
-    nav.home ul li a:focus {
+nav.home ul li a:focus {
     border-color: #000;
 }
 .contentZone {
     text-align: center;
-        margin: 0 40px;
+    margin: 0 40px;
 }
 .contentZone a {
     text-decoration: none;
@@ -348,6 +345,7 @@ aside nav ul li a:not([href]) {
     padding: 0 10px 4px 10px;
     height: 1.5em;
     line-height: 1em;
+    -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
     font-size: 2em;
     margin: 0 0 0.67em 0;
@@ -394,34 +392,6 @@ nav.home ul li a:after {
         opacity: 0;
     }
 }
-@-moz-keyframes MenuHoverAnim {
-    0% {
-        left: -10%;
-        opacity: 1;
-        visibility: visible;
-    }
-    65% {
-        opacity: 0.3;
-    }
-    100% {
-        left: 20%;
-        opacity: 0;
-    }
-}
-@-o-keyframes MenuHoverAnim {
-    0% {
-        left: -10%;
-        opacity: 1;
-        visibility: visible;
-    }
-    65% {
-        opacity: 0.3;
-    }
-    100% {
-        left: 20%;
-        opacity: 0;
-    }
-}
 @keyframes MenuHoverAnim {
     0% {
         left: -10%;
@@ -436,29 +406,18 @@ nav.home ul li a:after {
         opacity: 0;
     }
 }
+@-webkit-keyframes MenuHoverAnimTxt {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 @keyframes MenuHoverAnimTxt {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.7;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-@-o-keyframes MenuHoverAnimTxt {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.7;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-@-moz-keyframes MenuHoverAnimTxt {
     0% {
         opacity: 1;
     }
@@ -471,28 +430,25 @@ nav.home ul li a:after {
 }
 nav.home ul li a:hover:after {
     -webkit-animation: MenuHoverAnim 0.4s ease;
-    -moz-animation: MenuHoverAnim 0.4s ease;
     animation: MenuHoverAnim 0.4s ease;
 }
 nav.home ul li a:hover,
 nav.home ul li a:active,
- nav.home ul li a:focus,
-  nav.home ul li a:not([href]){
+nav.home ul li a:focus,
+nav.home ul li a:not([href]) {
     -webkit-animation: MenuHoverAnimTxt 0.4s ease;
-    -moz-animation: MenuHoverAnimTxt 0.4s ease;
     animation: MenuHoverAnimTxt 0.4s ease;
     color: #000;
 }
- nav.home ul li a:focus {
-    outline:0;
-    border:1px solid #000;
- }
-
+nav.home ul li a:focus {
+    outline: 0;
+    border: 1px solid #000;
+}
 .more {
     width: 100%;
     position: absolute;
     overflow-x: hidden;
-    height:150px;
+    height: 150px;
 }
 .more .left {
     left: 0;
@@ -509,34 +465,33 @@ nav.home ul li a:active,
     background: #E15A2D;
     color: #fff;
     line-height: 2em;
-        padding: 11px 15px;
-        
+    padding: 11px 15px;
 }
 .infos p,
 .donation p {
-    margin:0;
+    margin: 0;
 }
 .infos {
     top: 0;
     left: -100%;
     text-align: right;
     position: relative;
+    -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
 .donation {
     top: 0;
     right: -100%;
     position: relative;
+    -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
-
 }
 button.donate {
-            padding: 0 0.4em;
-            border: 1px solid #fff;
-            background-color: #e15a2d;
-            display: block;
-        }
-
+    padding: 0 0.4em;
+    border: 1px solid #fff;
+    background-color: #e15a2d;
+    display: block;
+}
 .infos:hover {
     left: 0%;
 }
@@ -549,10 +504,8 @@ button.donate {
 }
 .donation:hover,
 .donation:hover p:before {
-        box-shadow: -3px 3px 3px 0 rgba(0, 0, 0, 0.3);
-
+    box-shadow: -3px 3px 3px 0 rgba(0, 0, 0, 0.3);
 }
-
 .more a,
 .more a:visited {
     color: #fff;
@@ -561,12 +514,13 @@ button.donate {
     text-decoration: none;
     border: 1px solid #fff;
     padding: 3px 5px;
+    -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
 .more a:hover,
 .more a:active,
 .more button:hover,
-.more button:active  {
+.more button:active {
     box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.1), 2px 2px 0px 0 rgba(0, 0, 0, 0.2);
 }
 .infos p:after,
@@ -579,32 +533,40 @@ button.donate {
     position: relative;
 }
 .infos p:after {
-        top: 0;
+    top: 0;
     right: -66px;
     position: absolute;
 }
 .donation p:before {
-        top: 0;
+    top: 0;
     left: -66px;
     position: absolute;
 }
-
- #wicketDebugBar {
-            top: 58px;
-            font-size: 9pt;
-             font-family: Verdana,sans-serif;
-           }   
+#wicketDebugBar {
+    top: 58px;
+    font-size: 9pt;
+    font-family: Verdana, sans-serif;
+}
 .Box404 {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content:center;
-    align-items:center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     height: 100%;
 }
 .Box404 h1 {
-    background:#33FF33;
-    color:#fff;
+    background: #33FF33;
+    color: #fff;
     display: inline;
-    padding:10px 15px;
+    padding: 10px 15px;
     font-family: 'Raleway-Bold';
     text-transform: uppercase;
     white-space: nowrap;
@@ -615,32 +577,34 @@ button.donate {
     width: 50%;
     min-width: 300px;
 }
-.Box404 a, .Box404 a:visited {
+.Box404 a,
+.Box404 a:visited {
     position: absolute;
-    top:1em;
-    left:1em;
+    top: 1em;
+    left: 1em;
     font-size: 2em;
     text-decoration: none;
-    color:#000;
+    color: #000;
+    -webkit-transition: color 0.2s ease;
     transition: color 0.2s ease;
 }
-.Box404 a:hover, .Box404 a:active {
-    color:#7D7C7C;
+.Box404 a:hover,
+.Box404 a:active {
+    color: #7D7C7C;
 }
 .Box404 object {
     display: block;
-        margin-bottom: 3em;
+    margin-bottom: 3em;
 }
 .bugImg {
-    width:50%;
+    width: 50%;
     margin: 5% auto 0 auto;
 }
-
 /*responsive*/
 
 @media screen and (max-width: 1280px) {
-   .main {
-        padding:0 20px;
+    .main {
+        padding: 0 20px;
     }
 }
 @media screen and (min-width: 1024px) {
@@ -671,12 +635,16 @@ button.donate {
     .kendo .contentZone .component {
         background: #000;
     }
+    aside nav ul li a,
+    aside nav ul li a:visited {
+        margin: 0.1em 0;
+    }
 }
 @media screen and (max-width: 639px) {
     .main {
         display: block;
     }
-    }
+}
 @media screen and (max-width: 450px) {
     h1 {
         font-size: 1.3em;
@@ -687,20 +655,18 @@ button.donate {
     .main {
         padding: 0 5px;
     }
-
     .contentZone .component nav ul li {
         display: block;
         text-align: left;
     }
-
     .contentZone .component {
         padding: 25px 10px 10px 10px;
     }
     nav.home ul {
-    margin-right: 0;
-    text-align: left;
-    padding:0;
-}
+        margin-right: 0;
+        text-align: left;
+        padding: 0;
+    }
     nav.home ul li {
         display: block;
         margin: 0.7em 0 0 0;
@@ -766,7 +732,6 @@ html.kendo {
 .kendo .donation {
     color: #313131;
 }
-
 .kendo .more a,
 .kendo .more a:visited,
 .kendo button.donate {
