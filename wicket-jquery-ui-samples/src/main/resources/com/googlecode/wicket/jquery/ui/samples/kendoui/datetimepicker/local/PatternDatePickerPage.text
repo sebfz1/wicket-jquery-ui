@@ -1,5 +1,5 @@
 <h4>More info</h4>
-Custom date formats: <a class="icon-new-tab" target="_blank" href="http://demos.kendoui.com/web/globalization/index.html">http://demos.kendoui.com/web/globalization/index.html</a>
+Custom date formats: <a class="site icon-new-tab" target="_blank" href="http://demos.kendoui.com/web/globalization/index.html">http://demos.kendoui.com/web/globalization/index.html</a>
 
 <br/>
 <h4>Since</h4>
@@ -15,4 +15,4 @@ To be able to use it, you need to change the <code>ResourceReference</code> with
 
 <br/>
 <h4>See also</h4>
-<a class="icon-new-tab" target="_blank" href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references">[howto]-change-resource-references</a><br/>
+<a class="site icon-new-tab" target="_blank" href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references">[howto]-change-resource-references</a><br/>

@@ -4,9 +4,10 @@
 <wicket:head>
 	<title>Wicket jQuery UI: tooltip (custom)</title>
 	<style type="text/css">
-		.ui-tooltip {
+		.w-tooltip {
 			width: 100px;
 			height: 130px;
+			display: inline-block;
 		}
 		
 		.genres {
@@ -32,9 +33,11 @@
 	</div>
 
 	<wicket:fragment wicket:id="tooltip-fragment">
-		<b wicket:id="name">[genre]</b><br/>
-		<br/>
-		<img wicket:id="cover" class="ui-corner-all" style="width: 100px;" />
+		<div class="w-tooltip">
+			<b wicket:id="name">[genre]</b>
+			<br/>
+			<img wicket:id="cover" class="ui-corner-all" style="width: 100px;" />
+		</div>
 	</wicket:fragment>
 
 </wicket:extend>

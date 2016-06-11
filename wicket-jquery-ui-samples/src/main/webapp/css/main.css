@@ -158,7 +158,7 @@ header {
     max-width: 1900px;
     margin: 0 auto;
 }
-button.close {
+button.site.close {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -172,7 +172,7 @@ button.close {
 * {
     box-sizing: border-box;
 }
-button {
+button.site {
     font-family: 'Raleway-Bold';
     background-color: #fff;
     padding: 0;
@@ -181,14 +181,14 @@ button {
     transition: all 0.2s ease;
     white-space: nowrap;
 }
-button:hover {
+button.site:hover {
     box-shadow: 0 0 3px #FB9D34;
     border: 1px solid #FB9D34;
 }
-button:focus {
+button.site:focus {
     outline: 1px solid #F9A950;
 }
-button.close {
+button.site.close {
     width: 1.5em;
     height: 1.5em;
 }
@@ -228,8 +228,8 @@ p {
 nav ul li {
     list-style: none;
 }
-nav ul li a,
-aside nav a {
+nav ul li a.site,
+aside nav a.site {
     text-decoration: none;
 }
 nav.home ul {
@@ -248,8 +248,8 @@ nav.home ul li+li:before {
     -moz-column-width: 14em;
     column-width: 14em;
 }
-nav.home ul li a,
-nav.home ul li a:visited {
+nav.home ul li a.site,
+nav.home ul li a.site:visited {
     font-family: 'texgyreadventorregular';
     font-weight: 600;
     color: #505050;
@@ -289,59 +289,59 @@ aside nav h2 {
     border-bottom: 1px solid #E15A2D;
     padding-bottom: 10px;
 }
-aside nav h2 a,
-aside nav h2 a:visited {
+aside nav h2 a.site,
+aside nav h2 a.site:visited {
     color: #E15A2D;
 }
-.contentZone .component nav ul li a {
+.contentZone .component nav ul li a.site {
     padding: 0 10px;
 }
-aside nav ul li a,
-aside nav ul li a:visited,
-.contentZone .component nav ul li a,
-.contentZone .component nav ul li a:visited {
+aside nav ul li a.site,
+aside nav ul li a.site:visited,
+.contentZone .component nav ul li a.site,
+.contentZone .component nav ul li a.site:visited {
     color: #000;
     border: 1px solid transparent;
     display: inline-block;
 }
-aside nav ul li a,
-aside nav ul li a:visited {
+aside nav ul li a.site,
+aside nav ul li a.site:visited {
     -webkit-transition: color 0.3s ease;
     transition: color 0.3s ease;
     padding: 0.1em 0;
     margin: 0.1em 0;
 }
-.contentZone .component nav ul li a,
-.contentZone .component nav ul li a:visited {
+.contentZone .component nav ul li a.site,
+.contentZone .component nav ul li a.site:visited {
     -webkit-transition: border-color 0.2s ease;
     transition: border-color 0.2s ease;
     font-family: 'Raleway-Regular';
     line-height: 1.5em;
 }
-aside nav ul li a:hover,
-aside nav ul li a:focus,
-aside nav ul li a:not([href]) {
+aside nav ul li a.site:hover,
+aside nav ul li a.site:focus,
+aside nav ul li a.site:not([href]) {
     outline: 0;
     color: #E15A2D;
     border-color: #E15A2D transparent #E15A2D transparent;
 }
-.contentZone .component nav ul li a:hover,
-.contentZone .component nav ul li a:focus,
-nav.home ul li a:focus {
+.contentZone .component nav ul li a.site:hover,
+.contentZone .component nav ul li a.site:focus,
+nav.home ul li a.site:focus {
     border-color: #000;
 }
 .contentZone {
     text-align: center;
     margin: 0 40px;
 }
-.contentZone a {
+.contentZone a.site {
     text-decoration: none;
     font-family: 'Raleway-Bold';
     padding: 0 2px;
     border: 1px solid transparent;
 }
-.kendoZone nav button,
-.jQueryZone nav button {
+.kendoZone nav button.site,
+.jQueryZone nav button.site {
     padding: 0 10px 4px 10px;
     height: 1.5em;
     line-height: 1em;
@@ -352,20 +352,20 @@ nav.home ul li a:focus {
     font-family: 'texgyreadventorregular';
     font-weight: normal;
 }
-.kendoZone nav button {
+.kendoZone nav button.site {
     background: #313131;
     color: #fff;
     border: 1px solid #fff;
 }
-.jQueryZone nav button {
+.jQueryZone nav button.site {
     color: #000;
     border: 1px solid #000;
 }
-.kendoZone nav button:hover,
-.jQueryZone nav button:hover {
+.kendoZone nav button.site:hover,
+.jQueryZone nav button.site:hover {
     box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.5), 2px 2px 0px 0 rgba(0, 0, 0, 0.3);
 }
-nav.home ul li a:after {
+nav.home ul li a.site:after {
     content: "";
     display: block;
     width: 100%;
@@ -428,19 +428,19 @@ nav.home ul li a:after {
         opacity: 1;
     }
 }
-nav.home ul li a:hover:after {
+nav.home ul li a.site:hover:after {
     -webkit-animation: MenuHoverAnim 0.4s ease;
     animation: MenuHoverAnim 0.4s ease;
 }
-nav.home ul li a:hover,
-nav.home ul li a:active,
-nav.home ul li a:focus,
-nav.home ul li a:not([href]) {
+nav.home ul li a.site:hover,
+nav.home ul li a.site:active,
+nav.home ul li a.site:focus,
+nav.home ul li a.site:not([href]) {
     -webkit-animation: MenuHoverAnimTxt 0.4s ease;
     animation: MenuHoverAnimTxt 0.4s ease;
     color: #000;
 }
-nav.home ul li a:focus {
+nav.home ul li a.site:focus {
     outline: 0;
     border: 1px solid #000;
 }
@@ -486,7 +486,7 @@ nav.home ul li a:focus {
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
-button.donate {
+button.site.donate {
     padding: 0 0.4em;
     border: 1px solid #fff;
     background-color: #e15a2d;
@@ -506,8 +506,8 @@ button.donate {
 .donation:hover p:before {
     box-shadow: -3px 3px 3px 0 rgba(0, 0, 0, 0.3);
 }
-.more a,
-.more a:visited {
+.more a.site,
+.more a.site:visited {
     color: #fff;
     font-family: "Raleway-Bold";
     text-transform: uppercase;
@@ -517,10 +517,10 @@ button.donate {
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
-.more a:hover,
-.more a:active,
-.more button:hover,
-.more button:active {
+.more a.site:hover,
+.more a.site:active,
+.more button.site:hover,
+.more button.site:active {
     box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.1), 2px 2px 0px 0 rgba(0, 0, 0, 0.2);
 }
 .infos p:after,
@@ -577,8 +577,8 @@ button.donate {
     width: 50%;
     min-width: 300px;
 }
-.Box404 a,
-.Box404 a:visited {
+.Box404 a.site,
+.Box404 a.site:visited {
     position: absolute;
     top: 1em;
     left: 1em;
@@ -588,8 +588,8 @@ button.donate {
     -webkit-transition: color 0.2s ease;
     transition: color 0.2s ease;
 }
-.Box404 a:hover,
-.Box404 a:active {
+.Box404 a.site:hover,
+.Box404 a.site:active {
     color: #7D7C7C;
 }
 .Box404 object {
@@ -608,7 +608,7 @@ button.donate {
     }
 }
 @media screen and (min-width: 1024px) {
-    .contentZone .component button.close {
+    .contentZone .component button.site.close {
         display: none;
     }
 }
@@ -635,8 +635,8 @@ button.donate {
     .kendo .contentZone .component {
         background: #000;
     }
-    aside nav ul li a,
-    aside nav ul li a:visited {
+    aside nav ul li a.site,
+    aside nav ul li a.site:visited {
         margin: 0.1em 0;
     }
 }
@@ -671,7 +671,7 @@ button.donate {
         display: block;
         margin: 0.7em 0 0 0;
     }
-    nav.home ul li a:before {
+    nav.home ul li a.site:before {
         content: "/";
         padding: 0 0.3em;
     }
@@ -699,50 +699,50 @@ html.kendo {
     color: #D2D1D1;
 }
 .kendo header p.description,
-.kendo nav.home ul li a,
-.kendo nav.home ul li a:visited,
+.kendo nav.home ul li a.site,
+.kendo nav.home ul li a.site:visited,
 .kendo nav.home ul li+li:before {
     color: #9C9C9C;
 }
-.kendo nav.home ul li a:hover {
+.kendo nav.home ul li a.site:hover {
     color: #fff;
 }
-.kendo nav.home ul li a:after {
+.kendo nav.home ul li a.site:after {
     background: rgba(255, 255, 255, 0.5);
 }
-.kendo aside nav ul li a,
-.kendo aside nav ul li a:visited,
-.kendo aside nav ul li a,
-.kendo aside nav ul li a:visited,
-.kendo .contentZone .component nav ul li a,
-.kendo .contentZone .component nav ul li a:visited {
+.kendo aside nav ul li a.site,
+.kendo aside nav ul li a.site:visited,
+.kendo aside nav ul li a.site,
+.kendo aside nav ul li a.site:visited,
+.kendo .contentZone .component nav ul li a.site,
+.kendo .contentZone .component nav ul li a.site:visited {
     color: #fff;
 }
-.kendo .contentZone .component nav ul li a:hover {
+.kendo .contentZone .component nav ul li a.site:hover {
     border-color: #fff;
 }
-.kendo aside nav ul li a:hover {
+.kendo aside nav ul li a.site:hover {
     color: #E15A2D;
 }
 .kendo .infos p:after,
 .kendo .donation p:before,
-.kendo .more a,
-.kendo .more a:visited,
+.kendo .more a.site,
+.kendo .more a.site:visited,
 .kendo .infos,
 .kendo .donation {
     color: #313131;
 }
-.kendo .more a,
-.kendo .more a:visited,
-.kendo button.donate {
+.kendo .more a.site,
+.kendo .more a.site:visited,
+.kendo button.site.donate {
     border-color: #313131;
 }
-.kendo .contentZone a,
-.kendo .contentZone a:visited {
+.kendo .contentZone a.site,
+.kendo .contentZone a.site:visited {
     color: #fff;
 }
-.kendo .contentZone a:hover,
-.kendo .contentZone a:focus {
+.kendo .contentZone a.site:hover,
+.kendo .contentZone a.site:focus {
     border: 1px solid #fff;
 }
 /*jquery zone*/
@@ -750,11 +750,11 @@ html.kendo {
 .jquery aside.kendoZone {
     display: none;
 }
-.contentZone a,
-.contentZone a:visited {
+.contentZone a.site,
+.contentZone a.site:visited {
     color: #004276;
 }
-.contentZone a:hover,
-.contentZone a:focus {
+.contentZone a.site:hover,
+.contentZone a.site:focus {
     border: 1px solid #004276;
 }

@@ -85,7 +85,7 @@
   // Section constructor
   function Section($el, parent) {
 
-    if(!parent.options.clickQuery) $el.wrapInner('<a href="#"/>');
+    if(!parent.options.clickQuery) $el.wrapInner('<a class="site" href="#"/>');
 
     $.extend(this, {
       isOpen : false,

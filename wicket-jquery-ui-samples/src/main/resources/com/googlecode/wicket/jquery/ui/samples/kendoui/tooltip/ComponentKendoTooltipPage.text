@@ -2,7 +2,7 @@ This is a simple use of a <code>TooltipBehavior</code> that uses a Wicket compon
 
 <br/>
 <h4>Required markup & options</h4>
-<a class="icon-new-tab" target="_blank" href="http://docs.telerik.com/kendo-ui/api/javascript/ui/tooltip">http://docs.telerik.com/kendo-ui/api/javascript/ui/tooltip</a>
+<a class="site icon-new-tab" target="_blank" href="http://docs.telerik.com/kendo-ui/api/javascript/ui/tooltip">http://docs.telerik.com/kendo-ui/api/javascript/ui/tooltip</a>
 
 <br/>
 <h4>Since</h4>
@@ -18,4 +18,4 @@ To be able to use it, you need to change the <code>ResourceReference</code> with
 
 <br/>
 <h4>See also</h4>
-<a class="icon-new-tab" target="_blank" href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references">[howto]-change-resource-references</a><br/>
+<a class="site icon-new-tab" target="_blank" href="https://github.com/sebfz1/wicket-jquery-ui/wiki/%5Bhowto%5D-change-resource-references">[howto]-change-resource-references</a><br/>
