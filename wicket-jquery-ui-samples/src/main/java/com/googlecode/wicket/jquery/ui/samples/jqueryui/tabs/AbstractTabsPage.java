@@ -12,6 +12,10 @@ abstract class AbstractTabsPage extends JQuerySamplePage
 	@Override
 	protected List<DemoLink> getDemoLinks()
 	{
-		return Arrays.asList(new DemoLink(DefaultTabsPage.class, "Tabs Behavior"), new DemoLink(TabbedPanelPage.class, "TabbedPanel"), new DemoLink(AdvancedTabsPage.class, "TabbedPanel: demo"));
+		return Arrays.asList( // lf
+				new DemoLink(DefaultTabsPage.class, "Tabs Behavior"), // lf
+				new DemoLink(TabbedPanelPage.class, "TabbedPanel"), // lf
+				new DemoLink(AdvancedTabsPage.class, "TabbedPanel: demo") // lf
+			);
 	}
 }

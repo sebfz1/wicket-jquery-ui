@@ -12,6 +12,9 @@ abstract class AbstractTooltipPage extends JQuerySamplePage
 	@Override
 	protected List<DemoLink> getDemoLinks()
 	{
-		return Arrays.asList(new DemoLink(DefaultTooltipPage.class, "Tooltip behavior"), new DemoLink(CustomTooltipPage.class, "Custom tooltips"));
+		return Arrays.asList( // lf
+				new DemoLink(DefaultTooltipPage.class, "Tooltip behavior"), // lf
+				new DemoLink(CustomTooltipPage.class, "Custom tooltips") // lf
+			);
 	}
 }

@@ -12,6 +12,9 @@ abstract class AbstractWizardPage extends JQuerySamplePage
 	@Override
 	protected List<DemoLink> getDemoLinks()
 	{
-		return Arrays.asList(new DemoLink(DefaultWizardPage.class, "Wizard"), new DemoLink(DynamicWizardPage.class, "Wizard, using dynamic steps"));
+		return Arrays.asList( // lf
+				new DemoLink(DefaultWizardPage.class, "Wizard"), // lf
+				new DemoLink(DynamicWizardPage.class, "Wizard, using dynamic steps") // lf
+			);
 	}
 }
