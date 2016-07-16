@@ -19,7 +19,6 @@ public class SnippetLabel extends Label implements IJQueryWidget
 		this(id, language, model, new Options());
 	}
 
-	//XXX: update ctor!
 	public SnippetLabel(String id, String language, IModel<String> model, Options options)
 	{
 		super(id, model);
