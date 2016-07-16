@@ -18,6 +18,7 @@ package com.googlecode.wicket.kendo.ui.widget.tooltip;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.core.util.string.ComponentRenderer;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
@@ -40,7 +41,7 @@ public class TooltipBehavior extends KendoUIBehavior
 	 */
 	private static IModel<String> asModel(final Component tooltip)
 	{
-		return new IModel<String>() {
+		return new AbstractReadOnlyModel<String>() {
 
 			private static final long serialVersionUID = 1L;
 
