@@ -159,6 +159,32 @@ public class KendoFeedbackPanel extends WebMarkupContainer implements IJQueryWid
 		}
 	}
 
+	/**
+	 * Refreshes the {@code KendoFeedbackPanel}.
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param hide whether previous notifications should be hidden
+	 */
+	public final void refresh(AjaxRequestTarget target, Boolean hide)
+	{
+		if (hide)
+		{
+			this.hide(target);
+		}
+		
+		this.refresh(target);
+	}
+
+	/**
+	 * Hides all notifications
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public final void hide(AjaxRequestTarget target)
+	{
+		this.widgetBehavior.hide(target);
+	}
+
 	// Events //
 
 	@Override

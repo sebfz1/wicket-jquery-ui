@@ -69,6 +69,13 @@ public interface IJQueryWidget
 	class JQueryWidget
 	{
 		/**
+		 * Utility class
+		 */
+		private JQueryWidget()
+		{
+		}
+
+		/**
 		 * Helper method that returns the component's html selector (ie: '#myId').
 		 * 
 		 * @param component the {@link Component}
@@ -116,13 +123,6 @@ public interface IJQueryWidget
 		public static <T extends JQueryBehavior> T newWidgetBehavior(IJQueryWidget widget, String selector)
 		{
 			return (T) widget.newWidgetBehavior(selector);
-		}
-
-		/**
-		 * Utility class
-		 */
-		private JQueryWidget()
-		{
 		}
 	}
 }
