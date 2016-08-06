@@ -94,7 +94,7 @@ public abstract class AjaxMultiSelect<T> extends MultiSelect<T> implements ISele
 	// Events //
 
 	/**
-	 * Triggers when the selection has changed
+	 * Triggered when the selection has changed
 	 */
 	public final void onSelectionChanged()
 	{
