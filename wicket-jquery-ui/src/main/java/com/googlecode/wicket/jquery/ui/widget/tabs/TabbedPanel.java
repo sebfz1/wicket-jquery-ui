@@ -202,16 +202,6 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 		target.add(this);
 	}
 
-	/**
-	 * 
-	 * @deprecated use {@link #reload(AjaxRequestTarget)} instead
-	 */
-	// XXX 6.24.0 / 7.4.0 to remove
-	public void refresh(AjaxRequestTarget target)
-	{
-		this.reload(target);
-	}
-
 	// Events //
 
 	@Override

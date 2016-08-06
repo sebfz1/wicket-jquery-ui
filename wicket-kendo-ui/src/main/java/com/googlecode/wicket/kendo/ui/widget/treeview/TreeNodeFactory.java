@@ -49,10 +49,10 @@ public class TreeNodeFactory implements IClusterable
 	 */
 	public JSONObject toJson(int index, TreeNode<?> node)
 	{
+		JSONObject json = new JSONObject();
+
 		try
 		{
-			JSONObject json = new JSONObject();
-
 			if (node != null)
 			{
 				json.put(ID_FIELD, node.getId());
@@ -64,14 +64,12 @@ public class TreeNodeFactory implements IClusterable
 					json.put(URL_FIELD, node.getUrl());
 				}
 			}
-
-			return json;
 		}
 		catch (JSONException e)
 		{
 			LOG.error(e.getMessage(), e);
 		}
 
-		return null;
+		return json;
 	}
 }

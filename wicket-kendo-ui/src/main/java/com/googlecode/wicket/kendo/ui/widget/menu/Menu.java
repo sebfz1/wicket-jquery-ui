@@ -127,16 +127,6 @@ public class Menu extends JQueryPanel implements IMenuListener
 	}
 
 	/**
-	 * 
-	 * @deprecated use {@link #reload(AjaxRequestTarget)} instead
-	 */
-	// XXX 6.24.0 / 7.4.0 to remove
-	public void refresh(AjaxRequestTarget target)
-	{
-		this.reload(target);
-	}
-
-	/**
 	 * Gets the menu-item list
 	 *
 	 * @return the list of {@link IMenuItem}

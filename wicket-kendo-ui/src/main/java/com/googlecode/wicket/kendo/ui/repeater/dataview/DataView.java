@@ -70,7 +70,6 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	 *
 	 * @param id the markup id
 	 * @param provider the {@link IDataProvider}
-	 * @param rows the number of rows per page to be displayed
 	 */
 	public DataView(String id, final IDataProvider<T> provider)
 	{
@@ -82,7 +81,6 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	 *
 	 * @param id the markup id
 	 * @param provider the {@link IDataProvider}
-	 * @param rows the number of rows per page to be displayed
 	 * @param options the {@link Options}
 	 */
 	public DataView(String id, final IDataProvider<T> provider, Options options)
@@ -95,7 +93,6 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	 *
 	 * @param id the markup id
 	 * @param provider the {@link IDataProvider}
-	 * @param rows the number of rows per page to be displayed
 	 * @param renderer the {@link ITextRenderer}
 	 */
 	public DataView(String id, final IDataProvider<T> provider, ITextRenderer<? super T> renderer)
@@ -108,7 +105,6 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	 *
 	 * @param id the markup id
 	 * @param provider the {@link IDataProvider}
-	 * @param rows the number of rows per page to be displayed
 	 * @param renderer the {@link ITextRenderer}
 	 * @param options the {@link Options}
 	 */
@@ -194,7 +190,7 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	/**
 	 * Gets the number of rows per page to be displayed
 	 *
-	 * @return {@value #ROWS} by default
+	 * @return {@link DataView#ROWS} by default
 	 */
 	protected long getRowCount()
 	{

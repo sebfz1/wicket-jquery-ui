@@ -223,16 +223,6 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		target.add(this.form);
 	}
 
-	/**
-	 * 
-	 * @deprecated use {@link #reload(AjaxRequestTarget)} instead
-	 */
-	// XXX 6.24.0 / 7.4.0 to remove
-	public void refresh(AjaxRequestTarget target)
-	{
-		this.reload(target);
-	}
-
 	// Properties //
 
 	/**

@@ -118,11 +118,11 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	 * @param paths the path list to the node, as id-arrays
 	 * @see #expandPath(AjaxRequestTarget, String)
 	 */
-	public void expandPaths(AjaxRequestTarget handler, List<String> paths)
+	public void expandPaths(AjaxRequestTarget target, List<String> paths)
 	{
 		for (String path : paths)
 		{
-			this.expandPath(handler, path);
+			this.expandPath(target, path);
 		}
 	}
 
