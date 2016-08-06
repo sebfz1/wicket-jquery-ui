@@ -128,16 +128,6 @@ public class Menu extends JQueryPanel implements IMenuListener
 	}
 
 	/**
-	 * 
-	 * @deprecated use {@link #reload(IPartialPageRequestHandler)} instead
-	 */
-	// XXX 6.24.0 / 7.4.0 to remove
-	public void refresh(IPartialPageRequestHandler handler)
-	{
-		this.reload(handler);
-	}
-
-	/**
 	 * Gets the menu-item list
 	 *
 	 * @return the list of {@link IMenuItem}

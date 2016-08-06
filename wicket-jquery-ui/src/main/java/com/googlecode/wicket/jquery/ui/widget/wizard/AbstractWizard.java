@@ -224,16 +224,6 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		handler.add(this.form);
 	}
 
-	/**
-	 * 
-	 * @deprecated use {@link #reload(IPartialPageRequestHandler)} instead
-	 */
-	// XXX 6.24.0 / 7.4.0 to remove
-	public void refresh(IPartialPageRequestHandler handler)
-	{
-		this.reload(handler);
-	}
-
 	// Properties //
 
 	/**
