@@ -25,7 +25,6 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.util.lang.Args;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -217,7 +216,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	{
 		if (event instanceof NavigateEvent)
 		{
-			this.listener.onNavigate(target, ((NavigateEvent) event).getView());
+			this.listener.onNavigate(target, ((NavigateEvent) event));
 		}
 
 		if (event instanceof SchedulerPayload)
@@ -358,7 +357,9 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		protected CallbackParameter[] getCallbackParameters()
 		{
 			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-					CallbackParameter.resolved("view", "e.sender.view().name") };
+											 CallbackParameter.resolved("oldview", "e.sender.view().name"), // lf
+											 CallbackParameter.resolved("newview", "e.view")
+					};
 		}
 
 		@Override
@@ -443,23 +444,33 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnNavigateAjaxBehavior} callback
 	 */
-	protected static class NavigateEvent extends JQueryEvent
+	public static class NavigateEvent extends JQueryEvent
 	{
-		private SchedulerViewType view = null;
+		private SchedulerViewType oldView = null;
+		private SchedulerViewType newView = null;
 
 		public NavigateEvent()
 		{
-			String view = RequestCycleUtils.getQueryParameterValue("view").toString();
+			String oldView = RequestCycleUtils.getQueryParameterValue("oldview").toString();
+			String newView = RequestCycleUtils.getQueryParameterValue("newview").toString();
 
-			if (view != null)
+			if (oldView != null)
 			{
-				this.view = SchedulerViewType.get(view);
+				this.oldView = SchedulerViewType.get(oldView);
+			}
+			if (newView != null)
+			{
+				this.newView = SchedulerViewType.get(newView);
 			}
 		}
 
-		public SchedulerViewType getView()
+		public SchedulerViewType getOldView()
 		{
-			return this.view;
+			return this.oldView;
+		}
+		public SchedulerViewType getNewView()
+		{
+			return this.newView;
 		}
 	}
 
