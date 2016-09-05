@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.scheduler;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.io.IClusterable;
 
+import com.googlecode.wicket.kendo.ui.scheduler.SchedulerBehavior.NavigateEvent;
 import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 
 /**
@@ -60,9 +61,9 @@ public interface ISchedulerListener extends IClusterable
 	 * Triggered when the user changes the selected date, or view of the scheduler
 	 * 
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param view the {@link SchedulerViewType}
+	 * @param navigateEvent the {@link NavigateEvent}
 	 */
-	void onNavigate(AjaxRequestTarget target, SchedulerViewType view);
+	void onNavigate(AjaxRequestTarget target, NavigateEvent navigateEvent);
 
 	/**
 	 * Triggered when a {@link SchedulerEvent} is created (or modified) through the Scheduler's dialog
