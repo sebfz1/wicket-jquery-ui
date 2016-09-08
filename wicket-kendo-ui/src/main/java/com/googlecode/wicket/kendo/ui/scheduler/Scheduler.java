@@ -341,7 +341,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	@Override
-	public void onNavigate(AjaxRequestTarget target, NavigateEvent navigateEvent)
+	public void onNavigate(AjaxRequestTarget target, NavigateEvent event)
 	{
 		this.refresh(target);
 	}

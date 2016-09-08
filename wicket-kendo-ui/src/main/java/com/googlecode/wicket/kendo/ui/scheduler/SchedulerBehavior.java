@@ -216,7 +216,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	{
 		if (event instanceof NavigateEvent)
 		{
-			this.listener.onNavigate(target, ((NavigateEvent) event));
+			this.listener.onNavigate(target, (NavigateEvent) event);
 		}
 
 		if (event instanceof SchedulerPayload)
