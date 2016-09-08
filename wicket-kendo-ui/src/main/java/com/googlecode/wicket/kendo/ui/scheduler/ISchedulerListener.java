@@ -61,9 +61,9 @@ public interface ISchedulerListener extends IClusterable
 	 * Triggered when the user changes the selected date, or view of the scheduler
 	 * 
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param navigateEvent the {@link NavigateEvent}
+	 * @param event the {@link NavigateEvent}
 	 */
-	void onNavigate(AjaxRequestTarget target, NavigateEvent navigateEvent);
+	void onNavigate(AjaxRequestTarget target, NavigateEvent event);
 
 	/**
 	 * Triggered when a {@link SchedulerEvent} is created (or modified) through the Scheduler's dialog

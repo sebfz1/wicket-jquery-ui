@@ -44,7 +44,7 @@ public class SchedulerAdapter implements ISchedulerListener
 	}
 
 	@Override
-	public void onNavigate(AjaxRequestTarget target, NavigateEvent navigateEvent)
+	public void onNavigate(AjaxRequestTarget target, NavigateEvent event)
 	{
 		// noop
 	}
