@@ -34,6 +34,13 @@ import org.apache.wicket.util.string.StringValue;
 public class RequestCycleUtils
 {
 	/**
+	 * Utility class
+	 */
+	private RequestCycleUtils()
+	{
+	}
+
+	/**
 	 * Gets the current {@link AjaxRequestTarget}
 	 *
 	 * @return the target or {@code null} if not in an ajax request
@@ -114,12 +121,5 @@ public class RequestCycleUtils
 		final IRequestParameters parameters = requestCycle.getRequest().getPostParameters();
 
 		return parameters.getParameterValues(name);
-	}
-
-	/**
-	 * Utility class
-	 */
-	private RequestCycleUtils()
-	{
 	}
 }

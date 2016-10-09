@@ -17,7 +17,18 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 public abstract class UploadDialog extends AbstractFormDialog<FileUpload>
 {
 	private static final long serialVersionUID = 1L;
-	protected final DialogButton btnUpload = new DialogButton(SUBMIT, Model.of("Upload!"));
+
+	protected final DialogButton btnUpload = new DialogButton(SUBMIT, Model.of("Upload!")) {
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public boolean isIndicating()
+		{
+			return true;
+		}
+	};
+
 	protected final DialogButton btnCancel = new DialogButton(CANCEL, LBL_CANCEL);
 
 	private Form<?> form;
@@ -30,7 +41,7 @@ public abstract class UploadDialog extends AbstractFormDialog<FileUpload>
 
 		// Form //
 		this.form = new Form<Integer>("form");
-//		this.form.setMultiPart(true);
+		// this.form.setMultiPart(true);
 		this.add(this.form);
 
 		// Upload File //
@@ -69,7 +80,7 @@ public abstract class UploadDialog extends AbstractFormDialog<FileUpload>
 	@Override
 	protected void onOpen(AjaxRequestTarget target)
 	{
-		//re-attach the feedback panel to clear previously displayed error message(s)
+		// re-attach the feedback panel to clear previously displayed error message(s)
 		target.add(this.feedback);
 	}
 

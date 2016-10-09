@@ -101,7 +101,6 @@ public abstract class SamplePage extends TemplatePage
 		}
 
 		return string;
-
 	}
 
 	protected final List<ITab> newSourceTabList()

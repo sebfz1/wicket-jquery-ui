@@ -17,7 +17,7 @@
 package com.googlecode.wicket.jquery.ui.effect;
 
 /**
- * Provides an enumeration of effect being available in jQuery<br/>
+ * Provides an enumeration of available jQuery UI effects<br/>
  * It can be used as argument on {@link JQueryEffectContainer#play(org.apache.wicket.ajax.AjaxRequestTarget, Effect)}
  *
  * @author Sebastien Briquet - sebfz1

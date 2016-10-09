@@ -41,7 +41,7 @@ public class JQueryDestroyListener extends AbstractListener
 	{
 		/**
 		 * Removes the widget functionality completely. This will return the element back to its pre-init state.<br/>
-		 * This method is automatically called on ajax request. In case of web socket requests, this may be called manually. 
+		 * This method is automatically called on ajax request. In case of web socket requests, this may be called manually.
 		 * 
 		 * @param target the {@link AjaxRequestTarget}
 		 */
@@ -55,7 +55,7 @@ public class JQueryDestroyListener extends AbstractListener
 	{
 		for (Entry<String, Component> entry : map.entrySet())
 		{
-			Visits.visitPostOrder(entry.getValue(), this.newBeforeRespondVisitor(target));
+			Visits.visitPostOrder(entry.getValue(), newBeforeRespondVisitor(target));
 		}
 	}
 
@@ -66,7 +66,7 @@ public class JQueryDestroyListener extends AbstractListener
 	 *
 	 * @return the new {@code IVisitor}
 	 */
-	protected IVisitor<Component, Object> newBeforeRespondVisitor(final AjaxRequestTarget target)
+	protected static IVisitor<Component, Object> newBeforeRespondVisitor(final AjaxRequestTarget target)
 	{
 		return new IVisitor<Component, Object>() {
 

@@ -33,12 +33,12 @@ import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.template.JQueryTemplate;
 import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
-import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.behavior.DataBoundBehavior;
 import com.googlecode.wicket.kendo.ui.repeater.DataProviderBehavior;
 import com.googlecode.wicket.kendo.ui.repeater.listview.IListViewListener;
 import com.googlecode.wicket.kendo.ui.repeater.listview.ListViewBehavior;
+import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
 
 /**
  * Provides a DataView based on Kendo UI listView
@@ -53,8 +53,6 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	/** default rows */
 	private static final long ROWS = Byte.MAX_VALUE;
 
-	private final Options options;
-
 	/** the data-source provider */
 	private final IDataProvider<T> provider;
 	private AbstractAjaxBehavior providerBehavior;
@@ -64,6 +62,8 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 
 	/** the template */
 	private KendoTemplateBehavior templateBehavior = null;
+
+	protected final Options options;
 
 	/**
 	 * Constructor

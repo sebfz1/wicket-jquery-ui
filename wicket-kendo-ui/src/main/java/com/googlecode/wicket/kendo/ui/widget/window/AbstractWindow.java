@@ -49,7 +49,7 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	/** Default width */
 	private static final int WIDTH = 450;
 
-	private IModel<String> title;
+	private IModel<String> titleModel;
 	private boolean modal;
 	private WindowBehavior widgetBehavior;
 
@@ -148,7 +148,7 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	{
 		super(id, model);
 
-		this.title = title;
+		this.titleModel = title;
 		this.modal = modal;
 	}
 
@@ -211,9 +211,9 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	 *
 	 * @return the window's title
 	 */
-	public IModel<String> getTitle()
+	public String getTitle()
 	{
-		return this.title;
+		return this.titleModel.getObject();
 	}
 
 	/**
@@ -221,11 +221,9 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	 *
 	 * @param title the window's title
 	 */
-	public void setTitle(IModel<String> title)
+	public void setTitle(String title)
 	{
-		Args.notNull(title, "title");
-
-		this.title = title;
+		this.titleModel.setObject(title);
 	}
 
 	/**
@@ -236,20 +234,44 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	 */
 	public void setTitle(AjaxRequestTarget target, String title)
 	{
-		this.setTitle(target, Model.of(title));
+		this.setTitle(title);
+
+		target.appendJavaScript(String.format("%s.title(%s);", this.widgetBehavior.widget(), Options.asString(title)));
+	}
+
+	/**
+	 * Gets the window's title
+	 *
+	 * @return the window's title
+	 */
+	public IModel<String> getTitleModel()
+	{
+		return this.titleModel;
+	}
+
+	/**
+	 * Sets the window's title
+	 *
+	 * @param model the window's title
+	 */
+	public void setTitleModel(IModel<String> model)
+	{
+		Args.notNull(model, "model");
+
+		this.titleModel = model;
 	}
 
 	/**
 	 * Sets the window's title dynamically
 	 *
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param title the window's title
+	 * @param model the window's title
 	 */
-	public void setTitle(AjaxRequestTarget target, IModel<String> title)
+	public void setTitleModel(AjaxRequestTarget target, IModel<String> model)
 	{
-		this.setTitle(title);
+		this.setTitleModel(model);
 
-		target.appendJavaScript(String.format("%s.title(%s);", this.widgetBehavior.widget(), Options.asString(title.getObject())));
+		target.appendJavaScript(String.format("%s.title(%s);", this.widgetBehavior.widget(), Options.asString(model.getObject())));
 	}
 
 	/**
@@ -310,7 +332,7 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	public void onConfigure(JQueryBehavior behavior)
 	{
 		// class options //
-		behavior.setOption("title", Options.asString(this.getTitle().getObject()));
+		behavior.setOption("title", Options.asString(this.getTitle()));
 		behavior.setOption("modal", this.isModal());
 		behavior.setOption("resizable", this.isResizable());
 		behavior.setOption("width", this.getWidth());

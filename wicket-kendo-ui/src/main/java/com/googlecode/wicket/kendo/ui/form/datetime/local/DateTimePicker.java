@@ -309,7 +309,6 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	 * Gets a new {@link TimePicker}
 	 *
 	 * @param id the markup id
-	 * @param locale the {@link Locale}
 	 * @param model the {@link IModel}
 	 * @param timePattern the date pattern to be used
 	 * @param options the {@code Options}

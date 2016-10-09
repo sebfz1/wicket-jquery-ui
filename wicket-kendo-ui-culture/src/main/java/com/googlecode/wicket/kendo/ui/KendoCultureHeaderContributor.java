@@ -2,6 +2,7 @@ package com.googlecode.wicket.kendo.ui;
 
 import java.util.Locale;
 
+import org.apache.wicket.Session;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.PriorityHeaderItem;
 import org.apache.wicket.markup.html.IHeaderContributor;
@@ -36,6 +37,14 @@ public class KendoCultureHeaderContributor implements IHeaderContributor
 	private final String culture;
 
 	/**
+	 * Constructor that will take the current {@link Session#getLocale()}
+	 */
+	public KendoCultureHeaderContributor()
+	{
+		this.culture = null;
+	}
+
+	/**
 	 * Constructor
 	 * 
 	 * @param locale the {@link Locale}, ie: Locale.FRENCH
@@ -68,6 +77,6 @@ public class KendoCultureHeaderContributor implements IHeaderContributor
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
-		response.render(new PriorityHeaderItem(new KendoCultureHeaderItem(this.culture)));
+		response.render(new PriorityHeaderItem(new KendoCultureHeaderItem(this.culture != null ? this.culture : LocaleUtils.getLangageCode(Session.get().getLocale()))));
 	}
 }

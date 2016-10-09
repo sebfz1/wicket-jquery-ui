@@ -2,7 +2,6 @@ package com.googlecode.wicket.jquery.ui.samples.kendoui.button;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,7 @@ public class IndicatingButtonPage extends AbstractButtonPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Buttons //
-		final Button button1 = new IndicatingButton("button1") {
+		form.add(new IndicatingButton("button1") {
 
 			private static final long serialVersionUID = 1L;
 
@@ -56,9 +55,7 @@ public class IndicatingButtonPage extends AbstractButtonPage
 
 				IndicatingButtonPage.this.info(this);
 			}
-		};
-
-		form.add(button1);
+		});
 
 		form.add(new IndicatingAjaxButton("button2") {
 

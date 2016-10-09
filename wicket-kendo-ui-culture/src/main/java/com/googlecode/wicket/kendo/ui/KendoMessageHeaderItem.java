@@ -1,8 +1,11 @@
 package com.googlecode.wicket.kendo.ui;
 
+import java.util.Locale;
+
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
 
+import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 import com.googlecode.wicket.kendo.ui.resource.KendoMessageResourceReference;
 
 /**
@@ -30,6 +33,16 @@ import com.googlecode.wicket.kendo.ui.resource.KendoMessageResourceReference;
 public class KendoMessageHeaderItem extends JavaScriptReferenceHeaderItem
 {
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Constructor
+	 * 
+	 * @param locale the {@link Locale}, ie: Locale.FRENCH
+	 */
+	public KendoMessageHeaderItem(Locale locale)
+	{
+		this(LocaleUtils.getLangageCode(locale));
+	}
 
 	/**
 	 * Constructor
