@@ -363,7 +363,7 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	 */
 	protected KendoDataSource newDataSource(String selector)
 	{
-		return new KendoDataSource("datasource" + selector);
+		return new KendoDataSource(this);
 	}
 
 	/**
