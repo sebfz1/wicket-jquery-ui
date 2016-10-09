@@ -57,7 +57,7 @@ public class KendoTemplateBehavior extends JQueryAbstractTemplateBehavior implem
 	{
 		super.bind(component);
 		
-		this.token = String.format("%s-template", component.getMarkupId());
+		this.token = String.format("%s_template", component.getMarkupId());
 	}
 
 	@Override

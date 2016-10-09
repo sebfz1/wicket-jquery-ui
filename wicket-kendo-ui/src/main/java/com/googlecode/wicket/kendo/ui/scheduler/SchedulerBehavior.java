@@ -49,7 +49,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 	private final ISchedulerListener listener;
 	private final SchedulerEventFactory factory;
-	private final SchedulerDataSource dataSource;
+	private SchedulerDataSource dataSource;
 
 	private JQueryAjaxBehavior onEditAjaxBehavior = null;
 	private JQueryAjaxBehavior onNavigateAjaxBehavior;
@@ -84,8 +84,6 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 		this.factory = Args.notNull(factory, "factory");
 		this.listener = Args.notNull(listener, "listener");
-		this.dataSource = new SchedulerDataSource("schedulerDataSource");
-		this.add(this.dataSource);
 	}
 
 	// Methods //
@@ -95,6 +93,11 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	{
 		super.bind(component);
 
+		// data-source //
+		this.dataSource = new SchedulerDataSource(component);
+		this.add(this.dataSource);
+
+		
 		// events //
 		if (this.listener.isEditEnabled())
 		{
