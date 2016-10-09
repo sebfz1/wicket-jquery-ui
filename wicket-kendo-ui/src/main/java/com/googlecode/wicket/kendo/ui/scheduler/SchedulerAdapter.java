@@ -18,7 +18,6 @@ package com.googlecode.wicket.kendo.ui.scheduler;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
-import com.googlecode.wicket.kendo.ui.scheduler.SchedulerBehavior.NavigateEvent;
 import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 
 /**
@@ -44,7 +43,7 @@ public class SchedulerAdapter implements ISchedulerListener
 	}
 
 	@Override
-	public void onNavigate(AjaxRequestTarget target, NavigateEvent event)
+	public void onNavigate(AjaxRequestTarget target, SchedulerViewType oldView,  SchedulerViewType newView)
 	{
 		// noop
 	}

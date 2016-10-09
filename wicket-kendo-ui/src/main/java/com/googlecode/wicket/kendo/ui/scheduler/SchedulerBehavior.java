@@ -216,7 +216,9 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	{
 		if (event instanceof NavigateEvent)
 		{
-			this.listener.onNavigate(target, (NavigateEvent) event);
+			NavigateEvent navigateEvent = (NavigateEvent) event;
+
+			this.listener.onNavigate(target, navigateEvent.oldView, navigateEvent.newView);
 		}
 
 		if (event instanceof SchedulerPayload)
@@ -357,9 +359,8 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		protected CallbackParameter[] getCallbackParameters()
 		{
 			return new CallbackParameter[] { CallbackParameter.context("e"), // lf
-											 CallbackParameter.resolved("oldview", "e.sender.view().name"), // lf
-											 CallbackParameter.resolved("newview", "e.view")
-					};
+					CallbackParameter.resolved("oldview", "e.sender.view().name"), // lf
+					CallbackParameter.resolved("newview", "e.view") };
 		}
 
 		@Override
@@ -444,7 +445,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnNavigateAjaxBehavior} callback
 	 */
-	public static class NavigateEvent extends JQueryEvent
+	protected static class NavigateEvent extends JQueryEvent
 	{
 		private SchedulerViewType oldView = null;
 		private SchedulerViewType newView = null;
@@ -458,6 +459,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 			{
 				this.oldView = SchedulerViewType.get(oldView);
 			}
+
 			if (newView != null)
 			{
 				this.newView = SchedulerViewType.get(newView);
@@ -468,6 +470,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 		{
 			return this.oldView;
 		}
+
 		public SchedulerViewType getNewView()
 		{
 			return this.newView;
