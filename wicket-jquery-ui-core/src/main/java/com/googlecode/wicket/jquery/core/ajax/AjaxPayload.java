@@ -14,43 +14,48 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.datatable.editor;
+package com.googlecode.wicket.jquery.core.ajax;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * Provides a simple {@link IKendoEditor} editor, based on a textarea
+ * Payload object that supports {@link AjaxRequestTarget}
  * 
  * @author Sebastien Briquet - sebfz1
- * @see KendoEditorHeaderItem
+ * @see Component#send(org.apache.wicket.event.IEventSink, org.apache.wicket.event.Broadcast, Object)
  */
-public class TextAreaEditor implements IKendoEditor
+public class AjaxPayload
 {
-	protected final String name;
-
-	/**
-	 * Constructor, for inline inclusion
-	 */
-	public TextAreaEditor()
-	{
-		this("");
-	}
+	private final AjaxRequestTarget target;
 
 	/**
 	 * Constructor
 	 * 
-	 * @param name the name of the function
+	 * @param target the {@link AjaxRequestTarget}
 	 */
-	public TextAreaEditor(String name)
+	public AjaxPayload(AjaxRequestTarget target)
 	{
-		this.name = name;
+		this.target = target;
 	}
 
-	@Override
-	public String toString()
+	// Methods //
+
+	/**
+	 * Helper method that reloads a component<br/>
+	 * Similar to {@link AjaxRequestTarget#add(Component...)}
+	 * 
+	 * @param components the {@link Component}{@code s} to add
+	 */
+	public void reload(Component... components)
 	{
-		return "function " + this.name + "(container, options) { " // lf
-				+ "jQuery('<textarea class=\"k-textbox\" data-bind=\"value:' + options.field + '\"></textarea>')" // lf
-				+ ".appendTo(container); " // lf
-				+ "}";
+		this.getTarget().add(components);
+	}
+
+	// Properties //
+
+	public AjaxRequestTarget getTarget()
+	{
+		return this.target;
 	}
 }

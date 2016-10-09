@@ -71,7 +71,7 @@ public class TimeSpinnerPage extends AbstractSpinnerPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
+			protected void onError(AjaxRequestTarget target, Form<?> unused)
 			{
 				target.add(TimeSpinnerPage.this.feedback);
 			}

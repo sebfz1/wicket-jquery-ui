@@ -26,11 +26,11 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
-import com.googlecode.wicket.kendo.ui.KendoTemplateBehavior;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceListModel;
 import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
+import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
 
 /**
  * Provides the Kendo UI Scheduler
@@ -48,7 +48,6 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		horizontal, vertical
 	}
 
-	private final Options options;
 	private SchedulerEventFactory factory;
 	private SchedulerModelBehavior modelBehavior; // load events
 
@@ -59,6 +58,8 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	private IJQueryTemplate eventTemplate;
 	private KendoTemplateBehavior editTemplateBehavior = null;
 	private KendoTemplateBehavior eventTemplateBehavior = null;
+
+	protected final Options options;
 
 	/**
 	 * Constructor

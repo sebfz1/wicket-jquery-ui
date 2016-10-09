@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.datatable.column;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.lang.Generics;
@@ -40,8 +41,8 @@ public abstract class AbstractColumn implements IColumn
 	static final int WIDTH = -1;
 
 	private final String field;
-	private final IModel<String> title;
-	private Integer width;
+	private final Integer width;
+	private final IModel<String> titleModel;
 
 	// TODO: add locked & lockable
 
@@ -130,7 +131,7 @@ public abstract class AbstractColumn implements IColumn
 	 */
 	public AbstractColumn(IModel<String> title, String field, int width)
 	{
-		this.title = title;
+		this.titleModel = title;
 		this.field = field;
 		this.width = width;
 	}
@@ -138,7 +139,7 @@ public abstract class AbstractColumn implements IColumn
 	@Override
 	public String getTitle()
 	{
-		return this.title.getObject();
+		return this.titleModel.getObject();
 	}
 
 	@Override
@@ -178,6 +179,12 @@ public abstract class AbstractColumn implements IColumn
 
 	@Override
 	public String getTemplate()
+	{
+		return null;
+	}
+
+	@Override
+	public String getAttributes()
 	{
 		return null;
 	}
@@ -297,6 +304,12 @@ public abstract class AbstractColumn implements IColumn
 		{
 			builder.append(", ");
 			BuilderUtils.append(builder, "template", this.getTemplate());
+		}
+
+		if (this.getAttributes() != null)
+		{
+			builder.append(", ");
+			builder.append(JSONObject.quote("attributes")).append(": ").append(this.getAttributes()); // caution, not a String value
 		}
 
 		if (this.getFooterTemplate() != null)

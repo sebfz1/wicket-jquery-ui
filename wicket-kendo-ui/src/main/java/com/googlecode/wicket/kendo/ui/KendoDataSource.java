@@ -50,16 +50,16 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	 * Constructor
 	 *
 	 * @param name the data-source name
-	 * @param type the response type (json, xml)
+	 * @param type the response data type (json, xml)
 	 */
 	public KendoDataSource(String name, String type)
 	{
 		this.name = Args.notNull(name, "name").replace('#', '_');
 		this.transport = new Options();
 
-		this.set("type", Options.asString(type));
 		this.set("sync", "function() { this.read(); }"); // will force holding component to call #refresh
 		this.set("error", DebugUtils.errorCallback);
+		this.set("dataType", Options.asString(type)); // useless
 	}
 
 	// Properties //
@@ -83,11 +83,22 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	/**
 	 * Sets the 'transport.read' callback function
 	 *
-	 * @param function the javascript function. The function can be replaced with a (quoted) url as long as read is the only callback used by the datasource
+	 * @param function the javascript function.
+	 * @see #setTransportReadUrl(String)
 	 */
 	public void setTransportRead(String function)
 	{
 		this.transport.set("read", function);
+	}
+
+	/**
+	 * Sets the 'transport.read' callback url
+	 *
+	 * @param url the callback url
+	 */
+	public void setTransportReadUrl(CharSequence url)
+	{
+		this.transport.set("read", Options.asString(url));
 	}
 
 	/**
@@ -165,7 +176,6 @@ public class KendoDataSource extends Options implements IKendoDataSource
 				+ "		url: '" + url + "'," // lf
 				+ "		data: options.data," // lf
 				+ "		cache: " + useCache + "," // lf
-				+ "		dataType: 'json'," // lf
 				+ "		success: function(result) {" // lf
 				+ "			options.success(result);" // lf
 				+ "		}," // lf

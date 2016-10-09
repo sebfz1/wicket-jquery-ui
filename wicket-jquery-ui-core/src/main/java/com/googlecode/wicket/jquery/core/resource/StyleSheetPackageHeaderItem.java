@@ -14,33 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui;
+package com.googlecode.wicket.jquery.core.resource;
 
-import com.googlecode.wicket.jquery.core.template.JQueryResourceStream;
+import org.apache.wicket.markup.head.CssReferenceHeaderItem;
+import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
+import org.apache.wicket.request.resource.CssResourceReference;
 
 /**
- * Provides the resource stream for Kendo-UI templates.
- * The {@link #getString()} method returns a script block like &lt;script id="jquery-template-123456" type="text/x-kendo-template" /&gt;  
+ * Provides a {@link JavaScriptReferenceHeaderItem} that will load a '.css' file corresponding to the supplied {@code Class}<br/>
+ * <b>i.e.:</b> {@code MyClass.css}
  * 
  * @author Sebastien Briquet - sebfz1
+ *
  */
-public class KendoResourceStream extends JQueryResourceStream
+public class StyleSheetPackageHeaderItem extends CssReferenceHeaderItem
 {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor
-	 * @param content the content inside the &lt;script /&gt; block
-	 * @param token the unique resource-stream token that acts as the script id.
+	 * 
+	 * @param scope the scope
 	 */
-	public KendoResourceStream(final String content, final String token)
+	public StyleSheetPackageHeaderItem(Class<?> scope)
 	{
-		super(content, token);
-	}
-
-	@Override
-	public String getContentType()
-	{
-		return "text/x-kendo-template";
+		super(new CssResourceReference(scope, scope.getSimpleName() + ".css"), null, null, null);
 	}
 }
