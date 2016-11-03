@@ -17,7 +17,6 @@
 package com.googlecode.wicket.kendo.ui;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.Options;
@@ -36,7 +35,8 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	protected static final String TYPE = "json";
 
 	private final String name;
-	private final Options transport;
+
+	protected final Options transport;
 
 	/**
 	 * Constructor
@@ -164,12 +164,6 @@ public class KendoDataSource extends Options implements IKendoDataSource
 		this.set("transport", this.transport);
 
 		return this;
-	}
-
-	@Override
-	public void destroy(IPartialPageRequestHandler handler)
-	{
-		handler.prependJavaScript(String.format("var $w = jQuery('#%s'); if($w) { $w.detach(); }", this.getToken()));
 	}
 
 	@Override
