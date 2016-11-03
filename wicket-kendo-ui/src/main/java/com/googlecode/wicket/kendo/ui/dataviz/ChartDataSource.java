@@ -14,27 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui;
+package com.googlecode.wicket.kendo.ui.dataviz;
+
+import org.apache.wicket.Component;
+
+import com.googlecode.wicket.kendo.ui.KendoDataSource;
 
 /**
- * Specifies a Kendo UI data-source
+ * Provide the data-source for the {@link Chart}
  *
  * @author Sebastien Briquet - sebfz1
- *
  */
-public interface IKendoDataSource
+public class ChartDataSource extends KendoDataSource
 {
-	/**
-	 * Gets the unique token that acts as the script id.
-	 *
-	 * @return the token
-	 */
-	String getToken();
+	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Gets the data-source jQuery statement.
-	 *
-	 * @return the jQuery statement
-	 */
-	String toScript();
+	public ChartDataSource(Component component)
+	{
+		super(component);
+		
+		this.set("serverFiltering", true);
+		this.transport.set("parameterMap", "function(data) { return { filter: JSON.stringify(data.filter) }; }");
+	}
 }

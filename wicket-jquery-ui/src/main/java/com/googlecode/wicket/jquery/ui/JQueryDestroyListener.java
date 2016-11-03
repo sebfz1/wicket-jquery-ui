@@ -26,8 +26,6 @@ import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 import org.apache.wicket.util.visit.Visits;
 
-import com.googlecode.wicket.jquery.ui.template.JQueryTemplateBehavior;
-
 /**
  * INTERNAL USE<br/>
  * Provides an {@code IListener} for {@link JQueryUIBehavior}{@code s} that destroys widgets about to be repainted.
@@ -76,11 +74,6 @@ public class JQueryDestroyListener extends AbstractListener
 			public void component(Component component, IVisit<Object> visit)
 			{
 				for (IDestroyable behavior : component.getBehaviors(JQueryUIBehavior.class))
-				{
-					behavior.destroy(target);
-				}
-
-				for (IDestroyable behavior : component.getBehaviors(JQueryTemplateBehavior.class))
 				{
 					behavior.destroy(target);
 				}

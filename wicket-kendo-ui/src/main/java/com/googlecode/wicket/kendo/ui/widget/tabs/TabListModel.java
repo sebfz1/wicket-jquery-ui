@@ -14,27 +14,53 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui;
+package com.googlecode.wicket.kendo.ui.widget.tabs;
+
+import java.util.List;
+
+import org.apache.wicket.extensions.markup.html.tabs.ITab;
+import org.apache.wicket.model.util.ListModel;
 
 /**
- * Specifies a Kendo UI data-source
+ * Provides a loadable (non-detachable) {@link ListModel} to use as {@link TabbedPanel}'s model
  *
  * @author Sebastien Briquet - sebfz1
- *
  */
-public interface IKendoDataSource
+public abstract class TabListModel extends ListModel<ITab>
 {
-	/**
-	 * Gets the unique token that acts as the script id.
-	 *
-	 * @return the token
-	 */
-	String getToken();
+	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Gets the data-source jQuery statement.
-	 *
-	 * @return the jQuery statement
+	 * Constructor
 	 */
-	String toScript();
+	public TabListModel()
+	{
+		super(null);
+	}
+
+	@Override
+	public List<ITab> getObject()
+	{
+		if (super.getObject() == null)
+		{
+			this.setObject(this.load());
+		}
+
+		return super.getObject();
+	}
+
+	/**
+	 * Clears the underlying list of {@code ITabs}
+	 */
+	public void clear()
+	{
+		this.setObject(null);
+	}
+
+	/**
+	 * Loads the list of {@code ITabs}
+	 * 
+	 * @return the list of {@code ITabs}
+	 */
+	protected abstract List<ITab> load();
 }

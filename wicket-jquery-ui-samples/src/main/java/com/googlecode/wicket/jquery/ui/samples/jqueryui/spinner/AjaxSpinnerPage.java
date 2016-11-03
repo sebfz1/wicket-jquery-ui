@@ -63,7 +63,7 @@ public class AjaxSpinnerPage extends AbstractSpinnerPage
 			}
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> unused)
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				AjaxSpinnerPage.this.info(this, form);
 				target.add(form);
@@ -71,7 +71,7 @@ public class AjaxSpinnerPage extends AbstractSpinnerPage
 		});
 	}
 
-	private void info(Component component, Form<Integer> form)
+	private void info(Component component, Form<?> form)
 	{
 		this.info(component.getMarkupId() + " has been clicked");
 		this.info("The model object is: " + form.getModelObject());
