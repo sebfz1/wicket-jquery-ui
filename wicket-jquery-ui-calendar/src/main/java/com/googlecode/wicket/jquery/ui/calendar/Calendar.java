@@ -22,6 +22,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Generics;
+import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -245,7 +246,7 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	@Override
-	public void onViewRender(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end)
+	public void onViewRender(AjaxRequestTarget target, CalendarView view, LocalDate start, LocalDate end)
 	{
 		// noop
 	}

@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.ui.calendar;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 
 /**
@@ -119,7 +120,7 @@ public class CalendarAdapter implements ICalendarListener
 	}
 
 	@Override
-	public void onViewRender(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end)
+	public void onViewRender(AjaxRequestTarget target, CalendarView view, LocalDate start, LocalDate end)
 	{
 		// noop
 	}
