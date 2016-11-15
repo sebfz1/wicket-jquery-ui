@@ -5,6 +5,7 @@ import java.util.Date;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.temporal.ChronoUnit;
 
@@ -91,6 +92,10 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			@Override
 			public boolean isEventResizeEnabled()
 			{
+				return true;
+			}
+			@Override
+			public boolean isViewRenderEnabled() {
 				return true;
 			}
 
