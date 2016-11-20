@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.ui.calendar;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.io.IClusterable;
+import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 
 /**
@@ -173,8 +174,8 @@ public interface ICalendarListener extends IClusterable
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param view the current calendar view
-	 * @param start the start {@link LocalDateTime} of the current view
-	 * @param end the event end {@link LocalDateTime} of the current view
+	 * @param start the start {@link LocalDate} of the current view
+	 * @param end the event end {@link LocalDate} of the current view
 	 */
-	void onViewRender(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end);
+	void onViewRender(AjaxRequestTarget target, CalendarView view, LocalDate start, LocalDate end);
 }
