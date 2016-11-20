@@ -5,7 +5,6 @@ import java.util.Date;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.temporal.ChronoUnit;
 
@@ -50,7 +49,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 					CalendarDAO.addEvent(event);
 				}
 
-				calendar.refresh(target); //use calendar.refresh(target) instead of target.add(calendar)
+				calendar.refresh(target); // use calendar.refresh(target) instead of target.add(calendar)
 			}
 		};
 
@@ -94,8 +93,10 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			{
 				return true;
 			}
+
 			@Override
-			public boolean isViewRenderEnabled() {
+			public boolean isViewRenderEnabled()
+			{
 				return true;
 			}
 
@@ -137,8 +138,8 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 
 				if (event != null)
 				{
-					event.setStart(event.getStart() != null ? event.getStart().plus(delta, ChronoUnit.MILLIS) : null);	//recompute start date
-					event.setEnd(event.getEnd() != null ? event.getEnd().plus(delta, ChronoUnit.MILLIS) : null);	// recompute end date
+					event.setStart(event.getStart() != null ? event.getStart().plus(delta, ChronoUnit.MILLIS) : null); // recompute start date
+					event.setEnd(event.getEnd() != null ? event.getEnd().plus(delta, ChronoUnit.MILLIS) : null); // recompute end date
 					event.setAllDay(allDay);
 
 					this.info(String.format("%s changed to %s", event.getTitle(), event.getStart()));

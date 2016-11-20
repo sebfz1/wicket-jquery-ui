@@ -109,7 +109,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */
 	public void detach(IPartialPageRequestHandler handler)
 	{
-		handler.prependJavaScript(String.format("jQuery('%s').detach();", this.selector));
+		handler.prependJavaScript(JQueryUtils.detach(this.selector));
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */
 	public void remove(IPartialPageRequestHandler handler)
 	{
-		handler.prependJavaScript(String.format("jQuery('%s').remove();", this.selector));
+		handler.prependJavaScript(JQueryUtils.remove(this.selector));
 	}
 
 	// Properties //
