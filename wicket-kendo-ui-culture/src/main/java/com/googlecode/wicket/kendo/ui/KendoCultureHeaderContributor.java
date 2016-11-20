@@ -10,7 +10,9 @@ import org.apache.wicket.markup.html.IHeaderContributor;
 import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 
 /**
- * {@link IHeaderContributor} to easily add {@link KendoCultureHeaderItem} to each page by using {@code org.apache.wicket.Application#getHeaderContributorListeners().add(new KendoCultureHeaderContributor(locale))} <br/>
+ * {@link IHeaderContributor} to automatically add the {@link KendoCultureHeaderItem} to each rendered page, using the specified culture.<br/>
+ * If no culture is specified, the Session's Locale *culture* will be used. If that culture is invalid, the Session's Locale *language* will be used. If Session's Locale *language* is still invalid, the {@code IHeaderContributor} will not be rendered, providing a natural fallback to default widget's culture/language.<br/>
+ * <br/>
  * Usage:
  * 
  * <pre>
@@ -21,7 +23,7 @@ import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
  * 	{
  * 		super.init();
  * 		
- * 		this.getHeaderContributorListenerCollection().add(new KendoCultureHeaderContributor(Locale.GERMANY));
+ * 		this.getHeaderContributorListenerCollection().add(new KendoCultureHeaderContributor());
  * 	}
  * }
  * </code>
@@ -37,7 +39,7 @@ public class KendoCultureHeaderContributor implements IHeaderContributor
 	private final String culture;
 
 	/**
-	 * Constructor that will take the current {@link Session#getLocale()}
+	 * Constructor that will use the current {@link Session#getLocale()} culture/language
 	 */
 	public KendoCultureHeaderContributor()
 	{
@@ -67,7 +69,7 @@ public class KendoCultureHeaderContributor implements IHeaderContributor
 	/**
 	 * Constructor
 	 * 
-	 * @param culture the culture, ie: 'fr' or 'fr-FR'
+	 * @param culture the culture or language, ie: 'fr' or 'fr-FR'
 	 */
 	public KendoCultureHeaderContributor(String culture)
 	{
@@ -77,6 +79,16 @@ public class KendoCultureHeaderContributor implements IHeaderContributor
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
-		response.render(new PriorityHeaderItem(new KendoCultureHeaderItem(this.culture != null ? this.culture : LocaleUtils.getLangageCode(Session.get().getLocale()))));
+		final Locale locale = Session.get().getLocale();
+
+		if (locale != null)
+		{
+			String culture = KendoCulture.get(this.culture, LocaleUtils.getLangageCode(locale), locale.getLanguage());
+
+			if (culture != null)
+			{
+				response.render(new PriorityHeaderItem(new KendoCultureHeaderItem(culture)));
+			}
+		}
 	}
 }
