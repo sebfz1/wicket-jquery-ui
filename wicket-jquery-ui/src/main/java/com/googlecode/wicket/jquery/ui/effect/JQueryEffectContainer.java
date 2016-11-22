@@ -48,6 +48,7 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 	}
 
 	// Properties //
+
 	@Override
 	public boolean isCallbackEnabled()
 	{
@@ -104,6 +105,7 @@ public class JQueryEffectContainer extends WebMarkupContainer implements IEffect
 	}
 
 	// Events //
+
 	@Override
 	protected void onInitialize()
 	{
