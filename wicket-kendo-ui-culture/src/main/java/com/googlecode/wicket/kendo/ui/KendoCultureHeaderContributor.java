@@ -3,15 +3,16 @@ package com.googlecode.wicket.kendo.ui;
 import java.util.Locale;
 
 import org.apache.wicket.Session;
+import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.PriorityHeaderItem;
 import org.apache.wicket.markup.html.IHeaderContributor;
 
 import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 
 /**
  * {@link IHeaderContributor} to automatically add the {@link KendoCultureHeaderItem} to each rendered page, using the specified culture.<br/>
- * If no culture is specified, the Session's Locale *culture* will be used. If that culture is invalid, the Session's Locale *language* will be used. If Session's Locale *language* is still invalid, the {@code IHeaderContributor} will not be rendered, providing a natural fallback to default widget's culture/language.<br/>
+ * If no culture is specified, the Session's Locale *culture* will be used. If that culture is invalid, the Session's Locale *language* will be used. If Session's Locale *language* is still invalid, the {@code IHeaderContributor} will not
+ * be rendered, providing a natural fallback to default widget's culture/language.<br/>
  * <br/>
  * Usage:
  * 
@@ -83,11 +84,11 @@ public class KendoCultureHeaderContributor implements IHeaderContributor
 
 		if (locale != null)
 		{
-			String culture = KendoCulture.get(this.culture, LocaleUtils.getLangageCode(locale), locale.getLanguage());
+			HeaderItem item = KendoCultureHeaderItem.of(this.culture, locale.toLanguageTag(), locale.getLanguage());
 
-			if (culture != null)
+			if (item != null)
 			{
-				response.render(new PriorityHeaderItem(new KendoCultureHeaderItem(culture)));
+				response.render(item);
 			}
 		}
 	}
