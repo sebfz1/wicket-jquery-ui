@@ -56,7 +56,7 @@ public class TooltipBehavior extends KendoUIBehavior
 	private final IModel<String> model;
 
 	/**
-	 * Constructor<br/>
+	 * Constructor<br>
 	 * The {@code title} attribute will serve as tooltip content
 	 */
 	public TooltipBehavior()
@@ -65,7 +65,7 @@ public class TooltipBehavior extends KendoUIBehavior
 	}
 
 	/**
-	 * Constructor<br/>
+	 * Constructor<br>
 	 * The {@code title} attribute will serve as tooltip content
 	 * 
 	 * @param options the {@link Options}

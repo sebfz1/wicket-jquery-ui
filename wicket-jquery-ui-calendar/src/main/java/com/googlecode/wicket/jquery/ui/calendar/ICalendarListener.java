@@ -30,7 +30,7 @@ import org.threeten.bp.LocalDateTime;
 public interface ICalendarListener extends IClusterable
 {
 	/**
-	 * Indicates whether a cell can be selected.<br/>
+	 * Indicates whether a cell can be selected.<br>
 	 * If true, the {@link #onSelect(AjaxRequestTarget, CalendarView, LocalDateTime, LocalDateTime, boolean)} event will be triggered
 	 *
 	 * @return false by default
@@ -38,8 +38,8 @@ public interface ICalendarListener extends IClusterable
 	boolean isSelectable();
 
 	/**
-	 * Indicates whether a day can be clicked.<br/>
-	 * If true, the {@link #onDayClick(AjaxRequestTarget, CalendarView, LocalDateTime, boolean)} event will be triggered<br/>
+	 * Indicates whether a day can be clicked.<br>
+	 * If true, the {@link #onDayClick(AjaxRequestTarget, CalendarView, LocalDateTime, boolean)} event will be triggered<br>
 	 * <b>Note:</b> {@code true} will enable the global 'editable' option to {@code true}.
 	 *
 	 * @return false by default
@@ -48,8 +48,8 @@ public interface ICalendarListener extends IClusterable
 	boolean isDayClickEnabled();
 
 	/**
-	 * Indicates whether an event can be clicked.<br/>
-	 * If true, the {@link #onEventClick(AjaxRequestTarget, CalendarView, int)} event will be triggered<br/>
+	 * Indicates whether an event can be clicked.<br>
+	 * If true, the {@link #onEventClick(AjaxRequestTarget, CalendarView, int)} event will be triggered<br>
 	 * <b>Note:</b> {@code true} will enable the global 'editable' option to {@code true}.
 	 *
 	 * @return false by default
@@ -86,7 +86,7 @@ public interface ICalendarListener extends IClusterable
 	boolean isViewRenderEnabled();
 
 	/**
-	 * Gets the javascript statement which will be executed before {@link #onEventDrop(AjaxRequestTarget, int, long, boolean)} event is triggered<br/>
+	 * Gets the javascript statement which will be executed before {@link #onEventDrop(AjaxRequestTarget, int, long, boolean)} event is triggered<br>
 	 * A common use case is to call the {@code revertFunc} callback to cancel the event.
 	 *
 	 * @return the javascript statement, empty string by default
@@ -95,7 +95,7 @@ public interface ICalendarListener extends IClusterable
 	CharSequence getEventDropPrecondition();
 
 	/**
-	 * Gets the javascript statement which will be executed before {@link #onEventResize(AjaxRequestTarget, int, long)} event is triggered<br/>
+	 * Gets the javascript statement which will be executed before {@link #onEventResize(AjaxRequestTarget, int, long)} event is triggered<br>
 	 * A common use case is to call the {@code revertFunc} callback to cancel the event.
 	 *
 	 * @return the javascript statement, empty string by default
@@ -104,7 +104,7 @@ public interface ICalendarListener extends IClusterable
 	CharSequence getEventResizePrecondition();
 
 	/**
-	 * Triggered when an cell is selected.<br/>
+	 * Triggered when an cell is selected.<br>
 	 * {@link #isSelectable()} should return true for this event to be triggered.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -116,7 +116,7 @@ public interface ICalendarListener extends IClusterable
 	void onSelect(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end, boolean allDay);
 
 	/**
-	 * Triggered when a calendar day is clicked<br/>
+	 * Triggered when a calendar day is clicked<br>
 	 * {@link #isDayClickEnabled()} should return true for this event to be triggered.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -127,7 +127,7 @@ public interface ICalendarListener extends IClusterable
 	void onDayClick(AjaxRequestTarget target, CalendarView view, LocalDateTime date, boolean allDay);
 
 	/**
-	 * Triggered when an event is clicked.<br/>
+	 * Triggered when an event is clicked.<br>
 	 * {@link #isEventClickEnabled()} should return true for this event to be triggered.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -137,7 +137,7 @@ public interface ICalendarListener extends IClusterable
 	void onEventClick(AjaxRequestTarget target, CalendarView view, int eventId);
 
 	/**
-	 * Triggered when an event is dropped (after being dragged).<br/>
+	 * Triggered when an event is dropped (after being dragged).<br>
 	 * {@link #isEventDropEnabled()} should return true for this event to be triggered.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -148,7 +148,7 @@ public interface ICalendarListener extends IClusterable
 	void onEventDrop(AjaxRequestTarget target, int eventId, long delta, boolean allDay);
 
 	/**
-	 * Triggered when an event is dropped (after being dragged).<br/>
+	 * Triggered when an event is dropped (after being dragged).<br>
 	 * {@link #isEventResizeEnabled()} should return true for this event to be triggered.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -158,7 +158,7 @@ public interface ICalendarListener extends IClusterable
 	void onEventResize(AjaxRequestTarget target, int eventId, long delta);
 
 	/**
-	 * Triggered when an event-object is dropped.<br/>
+	 * Triggered when an event-object is dropped.<br>
 	 * {@link #isObjectDropEnabled()} should return true for this event to be triggered.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -169,7 +169,7 @@ public interface ICalendarListener extends IClusterable
 	void onObjectDrop(AjaxRequestTarget target, String title, LocalDateTime date, boolean allDay);
 
 	/**
-	 * Triggered when the calendar loads and every time a different date-range is displayed.<br/>
+	 * Triggered when the calendar loads and every time a different date-range is displayed.<br>
 	 * {@link #isViewRenderEnabled()} should return true for this event to be triggered.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
