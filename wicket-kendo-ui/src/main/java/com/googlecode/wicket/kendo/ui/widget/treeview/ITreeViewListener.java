@@ -28,7 +28,7 @@ import org.apache.wicket.util.io.IClusterable;
 public interface ITreeViewListener extends IClusterable
 {
 	/**
-	 * Indicates whether the 'expand' event is enabled.<br />
+	 * Indicates whether the 'expand' event is enabled.<br>
 	 * If true, the {@link #onExpand(AjaxRequestTarget, int)} event will be triggered
 	 *
 	 * @return false by default
@@ -36,12 +36,20 @@ public interface ITreeViewListener extends IClusterable
 	boolean isExpandEventEnabled();
 
 	/**
-	 * Indicates whether the 'select' event is enabled.<br />
+	 * Indicates whether the 'select' event is enabled.<br>
 	 * If true, the {@link #onSelect(AjaxRequestTarget, int, String)} event will be triggered
 	 *
 	 * @return false by default
 	 */
 	boolean isSelectEventEnabled();
+
+	/**
+	 * Indicates whether the 'drop' event is enabled.<br>
+	 * If true, the {@link #onDrop(AjaxRequestTarget, int, int, String)} event will be triggered
+	 *
+	 * @return false by default
+	 */
+	boolean isDropEventEnabled();
 
 	/**
 	 * Triggered when a node is expanding
@@ -59,4 +67,15 @@ public interface ITreeViewListener extends IClusterable
 	 * @param nodePath the node path as array, ie [1,2,3]
 	 */
 	void onSelect(AjaxRequestTarget target, int nodeId, String nodePath);
+
+	/**
+	 * Triggered when a node is (drag and) dropped
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param nodeId the node-id
+	 * @param parentId the node that the node-id is being dropped upon.
+	 * @param position one of the values 'over', 'before', or 'after'.
+	 * 
+	 */
+	void onDrop(AjaxRequestTarget target, int nodeId, int parentId, String position);
 }
