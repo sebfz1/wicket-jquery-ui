@@ -176,6 +176,12 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 		return false;
 	}
 
+	@Override
+	public boolean isDropEventEnabled()
+	{
+		return false;
+	}
+
 	// Events //
 
 	@Override
@@ -240,6 +246,12 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 
 	@Override
 	public void onSelect(AjaxRequestTarget target, int nodeId, String nodePath)
+	{
+		// noop
+	}
+
+	@Override
+	public void onDrop(AjaxRequestTarget target, int nodeId, int parentId, String position)
 	{
 		// noop
 	}
