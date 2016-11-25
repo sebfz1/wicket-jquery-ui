@@ -1,8 +1,12 @@
 language: java
 
-script:
-  - mvn clean install -q
+branches:
+  only:
+  - master
+  - wicket8.x
+  - wicket6.x
+
+script: mvn clean install -q
  
-after_success:
-  - mvn clean deploy -q --settings settings.xml -P snapshot 
+after_success: mvn deploy -q --settings settings.xml -P snapshot 
 
