@@ -1,2 +1,8 @@
 language: java
 
+script:
+  - mvn clean install -q
+ 
+after_success:
+  - mvn clean deploy -q --settings settings.xml -P snapshot 
+

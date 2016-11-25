@@ -1,6 +1,5 @@
 # wicket-jquery-ui
-**jQuery UI integration in Wicket 1.5.x, Wicket 6.x &amp; Wicket7.x**  
-[![CircleCI](https://circleci.com/gh/sebfz1/wicket-jquery-ui/tree/master.svg?style=svg)](https://circleci.com/gh/sebfz1/wicket-jquery-ui/tree/master)
+**jQuery UI integration in Wicket 1.5.x, Wicket 6.x &amp; Wicket7.x** [![TravisCI](https://travis-ci.org/sebfz1/wicket-jquery-ui.svg?branch=master)](https://travis-ci.org/sebfz1/wicket-jquery-ui)
 
 ## Artifacts
 - jQuery UI `wicket-jquery-ui`
