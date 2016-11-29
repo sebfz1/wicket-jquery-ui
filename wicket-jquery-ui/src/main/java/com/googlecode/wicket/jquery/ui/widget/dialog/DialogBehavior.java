@@ -74,7 +74,7 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	// Properties //
 
 	/**
-	 * Gets the dialog's buttons.<br/>
+	 * Gets the dialog's buttons.<br>
 	 *
 	 * @return the {@link List} of {@link Button}
 	 */
@@ -228,7 +228,7 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	// Ajax class //
 
 	/**
-	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'close' event<br/>
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'close' event<br>
 	 * Underlying callback will be triggered when the user clicks on the X-icon
 	 */
 	protected static class OnDefaultCloseAjaxBehavior extends JQueryAjaxBehavior
@@ -254,7 +254,7 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	}
 
 	/**
-	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'beforeClose' event<br/>
+	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'beforeClose' event<br>
 	 * Underlying callback will be triggered when the user presses the escape key
 	 */
 	protected static class OnEscapeCloseAjaxBehavior extends JQueryAjaxBehavior

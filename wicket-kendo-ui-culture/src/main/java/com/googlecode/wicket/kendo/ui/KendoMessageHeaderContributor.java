@@ -10,9 +10,9 @@ import org.apache.wicket.markup.html.IHeaderContributor;
 import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 
 /**
- * {@link IHeaderContributor} to automatically add the {@link KendoMessageHeaderItem} to each rendered page, using the specified culture.<br/>
- * If no culture is specified, the Session's Locale *culture* will be used. If that culture is invalid, the {@code IHeaderContributor} will not be rendered, providing a natural fallback to default widget's culture.<br/>
- * <br/>
+ * {@link IHeaderContributor} to automatically add the {@link KendoMessageHeaderItem} to each rendered page, using the specified culture.<br>
+ * If no culture is specified, the Session's Locale *culture* will be used. If that culture is invalid, the {@code IHeaderContributor} will not be rendered, providing a natural fallback to default widget's culture.<br>
+ * <br>
  * Usage:
  * 
  * <pre>

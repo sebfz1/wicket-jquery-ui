@@ -120,8 +120,8 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	}
 
 	/**
-	 * Activates the selected tab<br/>
-	 * <br/>
+	 * Activates the selected tab<br>
+	 * <br>
 	 * <b>Warning:</b> invoking this method results to a dual client-server round-trip. Use this method if you cannot use {@link #setActiveTab(int)} followed by {@code target.add(myTabbedPannel)}
 	 *
 	 * @param index the tab's index to activate
@@ -184,8 +184,8 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	}
 
 	/**
-	 * Reloads the {@link TabbedPanel}<br/>
-	 * <br/>
+	 * Reloads the {@link TabbedPanel}<br>
+	 * <br>
 	 * <b>Note:</b> This method should be used instead of {@code target.add(tabbedPanel)} if the underlying model is-a {@link TabListModel}
 	 * 
 	 * @param target the {@link AjaxRequestTarget}
@@ -292,7 +292,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	}
 
 	/**
-	 * Gets a new tab container that contains the tab's title<br/>
+	 * Gets a new tab container that contains the tab's title<br>
 	 * <b>Warning:</b> override with care!
 	 * 
 	 * @param id the container's markup-id

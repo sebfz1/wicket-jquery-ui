@@ -34,7 +34,7 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
 
 /**
- * Provides a jQuery tabs behavior.<br/>
+ * Provides a jQuery tabs behavior.<br>
  * Note, this class has almost the same code as AccordionBehavior
  *
  * @author Sebastien Briquet - sebfz1
@@ -78,7 +78,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	// Properties //
 
 	/**
-	 * Gets the reference {@link List} of {@link ITab}{@code s}.<br/>
+	 * Gets the reference {@link List} of {@link ITab}{@code s}.<br>
 	 * Usually the model object of the component on which this {@link TabsBehavior} is bound to.
 	 *
 	 * @return a non-null {@link List}

@@ -124,7 +124,7 @@ To use wicket-jquery-ui with a standard theme, just add the corresponding theme 
 <dependency>
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-jquery-ui-theme-uilightness</artifactId>
-    <version>6.25.0</version>
+	<version>6.25.0</version>
 </dependency>
 ```
 
@@ -140,7 +140,7 @@ To use wicket-kendo-ui with a standard theme, just add the corresponding theme d
 <dependency>
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-kendo-ui-theme-default</artifactId>
-    <version>6.25.0</version>
+	<version>6.25.0</version>
 </dependency>
 ```
 

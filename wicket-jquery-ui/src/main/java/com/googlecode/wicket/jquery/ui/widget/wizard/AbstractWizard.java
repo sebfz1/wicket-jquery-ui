@@ -210,7 +210,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	}
 
 	/**
-	 * Reloads the wizard, by calling {@link #onConfigure(AjaxRequestTarget)} and re-attaching the form<br/>
+	 * Reloads the wizard, by calling {@link #onConfigure(AjaxRequestTarget)} and re-attaching the form<br>
 	 * This method is called when, for instance, the wizard opens or the step changes.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -276,7 +276,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	}
 
 	/**
-	 * {@inheritDoc}<br/>
+	 * {@inheritDoc}<br>
 	 * <b>Warning:</b> {@code autoOpen} option is not supported
 	 */
 	@Override
@@ -435,7 +435,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	}
 
 	/**
-	 * Gets the button that is in charge to cancel to wizard.<br/>
+	 * Gets the button that is in charge to cancel to wizard.<br>
 	 *
 	 * @return the cancel button
 	 */
@@ -451,8 +451,8 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	}
 
 	/**
-	 * Returns the form associated to the button.<br/>
-	 * It means that it will return the form if the supplied button is considered as a form submitter and null otherwise. <br/>
+	 * Returns the form associated to the button.<br>
+	 * It means that it will return the form if the supplied button is considered as a form submitter and null otherwise. <br>
 	 * This method may be overridden to specify other form-submitter buttons (ie: btnPrev)
 	 *
 	 * @param button the dialog's button

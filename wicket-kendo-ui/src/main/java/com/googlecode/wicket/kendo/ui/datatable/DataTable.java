@@ -197,7 +197,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	}
 
 	/**
-	 * Reloads the {@link DataTable}<br/>
+	 * Reloads the {@link DataTable}<br>
 	 * Equivalent to {@code target.add(table);}
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -209,7 +209,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	}
 
 	/**
-	 * Reloads the {@link DataTable}<br/>
+	 * Reloads the {@link DataTable}<br>
 	 * If {@code reset} is {@code true}, equivalent to {@code #reset(AjaxRequestTarget)} + {@code handler.add(table)}
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -479,7 +479,7 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called by the corresponding table's button.<br/>
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called by the corresponding table's button.<br>
 	 * This method may be overridden to provide additional behaviors
 	 *
 	 * @param source the {@link IJQueryAjaxAware}

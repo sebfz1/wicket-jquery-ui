@@ -155,7 +155,7 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	}
 
 	/**
-	 * Reloads the {@link DataView}<br/>
+	 * Reloads the {@link DataView}<br>
 	 * Equivalent to {@code target.add(table)}
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -357,9 +357,9 @@ public class DataView<T> extends WebMarkupContainer implements IJQueryWidget, IL
 	// Factories //
 
 	/**
-	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
-	 * The properties used in the template text (ie: ${data.name}) should be of the prefixed by "data."<br/>
-	 * <br/>
+	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br>
+	 * The properties used in the template text (ie: ${data.name}) should be of the prefixed by "data."<br>
+	 * <br>
 	 * <b>Note:</b> {@link DataView} uses a {@link JsonRenderer} by default, making {@link IJQueryTemplate#getTextProperties()} not required to override (see {@link JQueryTemplate})
 	 *
 	 * @return null by default
