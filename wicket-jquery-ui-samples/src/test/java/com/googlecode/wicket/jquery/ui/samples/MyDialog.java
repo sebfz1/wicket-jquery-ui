@@ -1,3 +1,5 @@
+package com.googlecode.wicket.jquery.ui.samples;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
