@@ -238,7 +238,7 @@ public abstract class InputWindow<T> extends Window<T>
 	/**
 	 * Gets a new {@link Form}
 	 *
-	 * @param id the markup-id
+	 * @param id the markup id
 	 * @return the new form
 	 */
 	private static Form<Void> newForm(String id)
@@ -258,6 +258,7 @@ public abstract class InputWindow<T> extends Window<T>
 	/**
 	 * Gets a new {@link KendoFeedbackPanel}
 	 * 
+	 * @param id the markup id
 	 * @return a new {@code KendoFeedbackPanel}
 	 */
 	protected KendoFeedbackPanel newFeedbackPanel(String id)
@@ -269,7 +270,7 @@ public abstract class InputWindow<T> extends Window<T>
 	 * Gets a new {@link Component} that will be used as a label in the window.<br>
 	 * Override this method when you need to show formatted label.
 	 *
-	 * @param id the markup-id
+	 * @param id the markup id
 	 * @param model the label {@link IModel}
 	 * @return the new label component.
 	 */
@@ -282,7 +283,7 @@ public abstract class InputWindow<T> extends Window<T>
 	 * Gets a new {@link FormComponent} that will be used as an input.<br>
 	 * Override this method when you need to use a {@code IValidator} or different input type, e.g. {@code NumberTextField} or {@code PasswordField}.
 	 * 
-	 * @param id the markup-id
+	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @return the new {@link FormComponent}
 	 */
