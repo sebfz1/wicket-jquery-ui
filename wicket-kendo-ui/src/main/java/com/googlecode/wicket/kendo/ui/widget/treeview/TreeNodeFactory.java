@@ -16,7 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.widget.treeview;
 
-import org.apache.wicket.ajax.json.JSONObject;
+import org.json.JSONObject;
 import org.apache.wicket.util.io.IClusterable;
 
 /**

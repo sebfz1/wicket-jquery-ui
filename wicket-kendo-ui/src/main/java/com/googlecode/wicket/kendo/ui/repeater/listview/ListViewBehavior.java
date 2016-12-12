@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
-import org.apache.wicket.ajax.json.JSONObject;
+import org.json.JSONObject;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Generics;
 

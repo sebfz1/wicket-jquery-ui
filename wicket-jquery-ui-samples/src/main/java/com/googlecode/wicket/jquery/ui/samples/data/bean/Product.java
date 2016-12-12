@@ -3,7 +3,7 @@ package com.googlecode.wicket.jquery.ui.samples.data.bean;
 import java.text.ParseException;
 import java.util.Date;
 
-import org.apache.wicket.ajax.json.JSONObject;
+import org.json.JSONObject;
 import org.apache.wicket.util.io.IClusterable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
