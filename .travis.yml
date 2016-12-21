@@ -1,10 +1,8 @@
 language: java
+jdk: openjdk6
 
 branches:
-  only:
-  - master
-  - wicket8.x
-  - wicket6.x
+  only: wicket6.x
 
 script: mvn clean install -q
  

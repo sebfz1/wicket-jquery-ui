@@ -12,7 +12,7 @@
 
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-jquery-ui-parent</artifactId>
-	<version>6.25.1-SNAPSHOT</version>
+	<version>6.25.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<licenses>
@@ -130,6 +130,7 @@
 						</links>
 						<additionalJOptions>
 							<additionalJOption>-J-Xmx256m</additionalJOption>
+							<!-- additionalJOption>-Xdoclint:none</additionalJOption> disables checking -->
 						</additionalJOptions>
 					</configuration>
 					<executions>

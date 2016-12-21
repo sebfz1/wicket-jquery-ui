@@ -233,7 +233,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	/**
 	 * Triggered when the form is submitted, but the validation failed
 	 *
-	 * @param target
+	 * @param target the {@link AjaxRequestTarget}
 	 */
 	protected abstract void onError(AjaxRequestTarget target);
 

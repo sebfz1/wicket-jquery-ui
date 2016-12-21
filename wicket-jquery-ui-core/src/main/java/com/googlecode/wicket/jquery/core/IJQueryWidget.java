@@ -89,7 +89,8 @@ public interface IJQueryWidget
 		/**
 		 * Factory method that gets a new {@link JQueryBehavior} by invoking {@link IJQueryWidget#newWidgetBehavior(String)} on the supplied widget.
 		 * 
-		 * @param <W> the type
+		 * @param <T> the behavior type
+		 * @param <W> the component type
 		 * @param widget the {@link IJQueryWidget} object
 		 * @return the {@link JQueryBehavior}
 		 */
@@ -102,6 +103,7 @@ public interface IJQueryWidget
 		/**
 		 * Factory method that gets a new {@link JQueryBehavior} by invoking {@link IJQueryWidget#newWidgetBehavior(String)} on the supplied widget.
 		 * 
+		 * @param <T> the behavior type
 		 * @param widget object implementing the {@link IJQueryWidget} interface.
 		 * @param component the {@link Component} the selector will be calculated from.
 		 * @return the {@link JQueryBehavior}
@@ -115,6 +117,7 @@ public interface IJQueryWidget
 		/**
 		 * Factory method that gets a new {@link JQueryBehavior} by invoking {@link IJQueryWidget#newWidgetBehavior(String)} on the supplied widget.
 		 * 
+		 * @param <T> the behavior type
 		 * @param widget object implementing the {@link IJQueryWidget} interface.
 		 * @param selector the html selector (ie: '#myId')
 		 * @return the {@link JQueryBehavior}
