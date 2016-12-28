@@ -1,8 +1,11 @@
 package com.googlecode.wicket.jquery.core.utils;
 
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import org.apache.wicket.ajax.json.JSONArray;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.apache.wicket.util.lang.Generics;
 
 /**
@@ -54,5 +57,13 @@ public class JsonUtils
 		}
 
 		return new JSONArray(list);
+	}
+	
+	public static String toJson(Object object) {
+		try {
+			return new JSONObject(object).toString();
+		} catch (InvocationTargetException | IllegalAccessException | IntrospectionException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
