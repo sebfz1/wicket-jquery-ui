@@ -83,7 +83,7 @@ public class KendoMessageHeaderContributor implements IHeaderContributor
 
 		if (locale != null)
 		{
-			HeaderItem item = KendoMessageHeaderItem.of(this.culture, locale.toLanguageTag());
+			HeaderItem item = KendoMessageHeaderItem.of(this.culture, LocaleUtils.getLangageCode(locale));
 
 			if (item != null)
 			{

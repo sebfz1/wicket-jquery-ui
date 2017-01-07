@@ -75,7 +75,7 @@ public class KendoMessageHeaderItem extends JavaScriptReferenceHeaderItem
 	{
 		if (locale != null)
 		{
-			return KendoMessageHeaderItem.of(locale.toLanguageTag());
+			return KendoMessageHeaderItem.of(LocaleUtils.getLangageCode(locale));
 		}
 
 		return null;

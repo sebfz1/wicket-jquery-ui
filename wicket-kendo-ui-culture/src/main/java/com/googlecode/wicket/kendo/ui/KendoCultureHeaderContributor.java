@@ -84,7 +84,7 @@ public class KendoCultureHeaderContributor implements IHeaderContributor
 
 		if (locale != null)
 		{
-			HeaderItem item = KendoCultureHeaderItem.of(this.culture, locale.toLanguageTag(), locale.getLanguage());
+			HeaderItem item = KendoCultureHeaderItem.of(this.culture, LocaleUtils.getLangageCode(locale), locale.getLanguage());
 
 			if (item != null)
 			{

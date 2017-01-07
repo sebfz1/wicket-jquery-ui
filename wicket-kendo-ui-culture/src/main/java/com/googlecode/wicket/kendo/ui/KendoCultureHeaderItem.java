@@ -100,7 +100,7 @@ public class KendoCultureHeaderItem extends JavaScriptContentHeaderItem
 	{
 		if (locale != null)
 		{
-			return KendoCultureHeaderItem.of(locale.toLanguageTag(), locale.getLanguage());
+			return KendoCultureHeaderItem.of(LocaleUtils.getLangageCode(locale), locale.getLanguage());
 		}
 
 		return null;
