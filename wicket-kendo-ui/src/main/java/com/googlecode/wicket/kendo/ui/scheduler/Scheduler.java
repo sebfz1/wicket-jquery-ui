@@ -285,6 +285,16 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		return GroupOrientation.horizontal;
 	}
 
+	/**
+	 * Indicates whether the resources are grouped by date.
+	 *
+	 * @return {@code false} by default
+	 */
+	protected boolean isGroupedByDate()
+	{
+		return false;
+	}
+
 	// Events //
 
 	@Override
@@ -326,10 +336,12 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 
 		if (!groups.isEmpty())
 		{
-			Options options = new Options();
-			options.set("resources", Options.asString(groups));
-			options.set("orientation", Options.asString(this.getGroupOrientation()));
-			behavior.setOption("group", options);
+			Options groupOptions = new Options();
+			groupOptions.set("date", this.isGroupedByDate());
+			groupOptions.set("resources", Options.asString(groups));
+			groupOptions.set("orientation", Options.asString(this.getGroupOrientation()));
+
+			behavior.setOption("group", groupOptions);
 		}
 
 		// set templates (if any) //
