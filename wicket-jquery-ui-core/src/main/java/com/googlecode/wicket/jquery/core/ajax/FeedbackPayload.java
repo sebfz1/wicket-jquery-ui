@@ -26,7 +26,7 @@ import org.apache.wicket.feedback.FeedbackMessage;
  * <pre>
  * <code>
  * &#64;Override
- * public void onEvent(IEvent<?> event)
+ * public void onEvent(IEvent&lt;?&gt; event)
  * {
  * 	super.onEvent(event);
  *

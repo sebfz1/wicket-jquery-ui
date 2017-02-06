@@ -79,7 +79,6 @@ public class FeedbackUtils
 	/**
 	 * Register a warn at session level so the message is available even if the page is redirected
 	 * 
-	 * @param message the message
 	 * @param e the {@link Exception}
 	 */
 	public static void warn(Exception e)
@@ -103,7 +102,6 @@ public class FeedbackUtils
 	/**
 	 * Register an error at session level so the message is available even if the page is redirected
 	 * 
-	 * @param message the message
 	 * @param e the {@link Exception}
 	 */
 	public static void error(Exception e)
