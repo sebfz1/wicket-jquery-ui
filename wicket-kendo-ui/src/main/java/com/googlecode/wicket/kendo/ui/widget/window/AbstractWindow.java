@@ -35,7 +35,7 @@ import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
  * @author Sebastien Briquet - sebfz1
  * @since 6.17.0
  */
-public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQueryWidget, IWindowListener
+public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQueryWidget, IWindowListener // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -377,7 +377,7 @@ public abstract class AbstractWindow<T> extends GenericPanel<T> implements IJQue
 	@Override
 	public WindowBehavior newWidgetBehavior(String selector)
 	{
-		return new WindowBehavior(selector, this) {
+		return new WindowBehavior(selector, this) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

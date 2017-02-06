@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.scheduler;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -192,6 +193,17 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		this.onRefresh(target);
 	}
 
+	/**
+	 * Utility method that converts a {@link JSONObject} event to a {@link SchedulerEvent}
+	 * 
+	 * @param object the {@link JSONObject}
+	 * @return a new {@link SchedulerEvent}
+	 */
+	protected SchedulerEvent eventOf(JSONObject object)
+	{
+		return this.getSchedulerEventFactory().toObject(object, this.getResourceListModel().getObject());
+	}
+
 	// Properties //
 
 	@Override
@@ -354,6 +366,9 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		{
 			behavior.setOption("eventTemplate", String.format("jQuery('#%s').html()", this.getEventTemplateToken()));
 		}
+
+		// resource //
+		behavior.setOption("resources", this.getResourceListModel());
 	}
 
 	/**
@@ -377,6 +392,18 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	@Override
+	public final void onEdit(AjaxRequestTarget target, JSONObject object, SchedulerViewType view)
+	{
+		this.onEdit(target, eventOf(object), view);
+	}
+
+	/**
+	 * Triggered when a {@link SchedulerEvent} is edited.
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param event the {@link SchedulerEvent}
+	 * @param view the {@link SchedulerViewType}
+	 */
 	public void onEdit(AjaxRequestTarget target, SchedulerEvent event, SchedulerViewType view)
 	{
 		// noop
@@ -388,19 +415,64 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		this.refresh(target);
 	}
 
+	/**
+	 * {@inheritDoc}<br>
+	 * <b>Warning:</b> to be overridden with care!
+	 */
 	@Override
+	public void onCreate(AjaxRequestTarget target, JSONObject object)
+	{
+		this.onCreate(target, eventOf(object));
+	}
+
+	/**
+	 * Triggered when a {@link SchedulerEvent} is created.
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param event the {@link SchedulerEvent}
+	 */
 	public void onCreate(AjaxRequestTarget target, SchedulerEvent event)
 	{
 		// noop
 	}
 
+	/**
+	 * {@inheritDoc}<br>
+	 * <b>Warning:</b> to be overridden with care!
+	 */
 	@Override
+	public void onUpdate(AjaxRequestTarget target, JSONObject object)
+	{
+		this.onUpdate(target, eventOf(object));
+	}
+
+	/**
+	 * Triggered when a {@link SchedulerEvent} is updated
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param event the {@link SchedulerEvent}
+	 */
 	public void onUpdate(AjaxRequestTarget target, SchedulerEvent event)
 	{
 		// noop
 	}
 
+	/**
+	 * {@inheritDoc}<br>
+	 * <b>Warning:</b> to be overridden with care!
+	 */
 	@Override
+	public void onDelete(AjaxRequestTarget target, JSONObject object)
+	{
+		this.onDelete(target, this.eventOf(object));
+	}
+
+	/**
+	 * Triggered when a {@link SchedulerEvent} is deleted
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param event the {@link SchedulerEvent}
+	 */
 	public void onDelete(AjaxRequestTarget target, SchedulerEvent event)
 	{
 		// noop
@@ -414,7 +486,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new SchedulerBehavior(selector, this.options, this.getSchedulerEventFactory(), this) {
+		return new SchedulerBehavior(selector, this.options, this) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -424,12 +496,6 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 			protected CharSequence getDataSourceUrl()
 			{
 				return Scheduler.this.getCallbackUrl();
-			}
-
-			@Override
-			protected ResourceListModel getResourceListModel()
-			{
-				return Scheduler.this.resourceListModel;
 			}
 
 			// Events //

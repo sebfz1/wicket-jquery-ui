@@ -264,7 +264,7 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new AjaxTreeViewBehavior(selector, this.options, this) {
+		return new AjaxTreeViewBehavior(selector, this.options, this) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

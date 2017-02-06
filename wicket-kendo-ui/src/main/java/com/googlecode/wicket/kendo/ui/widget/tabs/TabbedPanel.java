@@ -39,7 +39,7 @@ import com.googlecode.wicket.jquery.core.Options;
  * @since 6.19.0
  * @since 7.0.0
  */
-public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabsListener
+public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabsListener // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -236,7 +236,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	{
 		super.onInitialize();
 
-		final RepeatingView panels = new RepeatingView("panels") {
+		final RepeatingView panels = new RepeatingView("panels") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -257,7 +257,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 
 		this.add(panels);
 
-		this.add(new ListView<ITab>("tabs", this.getModelObject()) {
+		this.add(new ListView<ITab>("tabs", this.getModelObject()) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -328,7 +328,7 @@ public class TabbedPanel extends JQueryGenericPanel<List<ITab>> implements ITabs
 	@Override
 	public TabsBehavior newWidgetBehavior(String selector)
 	{
-		return new TabsBehavior(selector, this.options, this) {
+		return new TabsBehavior(selector, this.options, this) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 

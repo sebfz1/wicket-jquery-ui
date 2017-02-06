@@ -23,7 +23,7 @@ import com.googlecode.wicket.kendo.ui.scheduler.SchedulerModel;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.Resource;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
 
-public class SingleResourceSchedulerPage extends AbstractSchedulerPage
+public class SingleResourceSchedulerPage extends AbstractSchedulerPage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 	private static final String AGENDA_1 = "Sebastien";
@@ -59,7 +59,7 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 		options.set("workDayStart", "new Date('2014/1/1 08:00 AM')");
 		options.set("workDayEnd", "new Date('2014/1/1 6:00 PM')");
 
-		final Scheduler scheduler = new Scheduler("scheduler", newSchedulerModel(), this.resources, options) {
+		final Scheduler scheduler = new Scheduler("scheduler", newSchedulerModel(), this.resources, options) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -113,7 +113,7 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage
 
 		// Buttons //
 
-		form.add(new AjaxButton("refresh") {
+		form.add(new AjaxButton("refresh") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
