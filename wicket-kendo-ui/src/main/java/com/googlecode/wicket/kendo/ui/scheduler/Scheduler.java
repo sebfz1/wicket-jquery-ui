@@ -48,7 +48,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 		horizontal, vertical
 	}
 
-	private SchedulerEventFactory factory;
+	private ISchedulerConverter converter;
 	private SchedulerModelBehavior modelBehavior; // load events
 
 	private final ResourceListModel resourceListModel;
@@ -201,7 +201,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	 */
 	protected SchedulerEvent eventOf(JSONObject object)
 	{
-		return this.getSchedulerEventFactory().toObject(object, this.getResourceListModel().getObject());
+		return this.getConverter().toObject(object, this.getResourceListModel().getObject());
 	}
 
 	// Properties //
@@ -263,18 +263,18 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	/**
-	 * Gets the {@link SchedulerEventFactory}
+	 * Gets the {@link SchedulerConverter}
 	 * 
 	 * @return the {@code SchedulerEventFactory}
 	 */
-	protected final SchedulerEventFactory getSchedulerEventFactory()
+	protected final ISchedulerConverter getConverter()
 	{
-		if (this.factory == null)
+		if (this.converter == null)
 		{
-			this.factory = this.newSchedulerEventFactory();
+			this.converter = this.newConverter();
 		}
 
-		return this.factory;
+		return this.converter;
 	}
 
 	/**
@@ -314,7 +314,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	{
 		super.onInitialize();
 
-		this.modelBehavior = this.newSchedulerModelBehavior(this.getModel(), this.getSchedulerEventFactory());
+		this.modelBehavior = this.newSchedulerModelBehavior(this.getModel(), this.getConverter());
 		this.add(this.modelBehavior);
 
 		// templates //
@@ -511,6 +511,16 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	// Factory methods //
 
 	/**
+	 * Gets a new {@link ISchedulerConverter}
+	 * 
+	 * @return a new {@code SchedulerConverter} by default
+	 */
+	protected ISchedulerConverter newConverter()
+	{
+		return new SchedulerConverter();
+	}
+
+	/**
 	 * Gets a new {@link IJQueryTemplate} to customize the built-in edit window
 	 * 
 	 * @return null by default
@@ -534,24 +544,14 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	/**
-	 * Gets a new {@link SchedulerEventFactory}
-	 * 
-	 * @return a new {@code SchedulerEventFactory}
-	 */
-	protected SchedulerEventFactory newSchedulerEventFactory()
-	{
-		return new SchedulerEventFactory();
-	}
-
-	/**
 	 * Gets a new {@link SchedulerModelBehavior}
 	 *
 	 * @param model the {@code SchedulerModel}
-	 * @param factory the {@code SchedulerEventFactory}
+	 * @param converter the {@code SchedulerEventFactory}
 	 * @return the {@code SchedulerModelBehavior}
 	 */
-	protected SchedulerModelBehavior newSchedulerModelBehavior(final SchedulerModel model, final SchedulerEventFactory factory)
+	protected SchedulerModelBehavior newSchedulerModelBehavior(final SchedulerModel model, final ISchedulerConverter converter)
 	{
-		return new SchedulerModelBehavior(model, factory);
+		return new SchedulerModelBehavior(model, converter);
 	}
 }

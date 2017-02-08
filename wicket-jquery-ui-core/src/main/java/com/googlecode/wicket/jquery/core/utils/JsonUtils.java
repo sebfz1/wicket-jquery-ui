@@ -3,7 +3,10 @@ package com.googlecode.wicket.jquery.core.utils;
 import java.util.List;
 
 import org.apache.wicket.ajax.json.JSONArray;
+import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.util.lang.Generics;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utility class for json objects
@@ -13,6 +16,8 @@ import org.apache.wicket.util.lang.Generics;
  */
 public class JsonUtils
 {
+	private static final Logger log = LoggerFactory.getLogger(JsonUtils.class);
+
 	/**
 	 * Utility class
 	 */
@@ -54,5 +59,33 @@ public class JsonUtils
 		}
 
 		return new JSONArray(list);
+	}
+
+	/**
+	 * Converts a {@link JSONArray} to a {@link List} of {@code Objects}
+	 * 
+	 * @param values the {@link JSONArray} 
+	 * @return a new {@link List}
+	 */
+	public static List<Object> toList(JSONArray values)
+	{
+		List<Object> list = Generics.newArrayList();
+
+		if (values != null)
+		{
+			for (int i = 0; i < values.length(); i++)
+			{
+				try
+				{
+					list.add(values.get(i));
+				}
+				catch (JSONException e)
+				{
+					log.warn(e.getMessage(), e);
+				}
+			}
+		}
+
+		return list;
 	}
 }

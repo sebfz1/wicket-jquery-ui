@@ -26,8 +26,8 @@ import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
 public class SingleResourceSchedulerPage extends AbstractSchedulerPage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
-	private static final String AGENDA_1 = "Sebastien";
-	private static final String AGENDA_2 = "Samantha";
+	private static final String AGENDA_NAME1 = "The Man";
+	private static final String AGENDA_NAME2 = "The Woman";
 
 	private List<String> agendas;
 	private ResourceList resources;
@@ -44,9 +44,9 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage // NOSONA
 
 		// MultiSelect //
 		this.agendas = new ArrayList<String>();
-		this.agendas.add(AGENDA_1);
+		this.agendas.add(AGENDA_NAME1);
 
-		final MultiSelect<String> multiselect = new MultiSelect<String>("select", new ListModel<String>(this.agendas), Arrays.asList(AGENDA_1, AGENDA_2));
+		final MultiSelect<String> multiselect = new MultiSelect<String>("select", new ListModel<String>(this.agendas), Arrays.asList(AGENDA_NAME1, AGENDA_NAME2));
 		form.add(multiselect);
 
 		// Scheduler //
@@ -127,16 +127,19 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage // NOSONA
 
 	// Properties //
 
-	protected boolean isAgendaSelected(Integer agendaId)
+	protected boolean isAgendaSelected(Object agendaId)
 	{
 		String agendaName = "";
 
-		for (Resource resource : this.resources)
+		if (agendaId != null)
 		{
-			if (agendaId.equals(resource.getId()))
+			for (Resource resource : this.resources)
 			{
-				agendaName = resource.getText();
-				break;
+				if (agendaId.equals(resource.getId())) // both are Strings
+				{
+					agendaName = resource.getText();
+					break;
+				}
 			}
 		}
 
@@ -154,12 +157,9 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage // NOSONA
 			@Override
 			public void visit(SchedulerEvent event)
 			{
-				Integer agendaId = event.getValue(ResourceEventsDAO.AGENDA_ID, Integer.class);
+				Object agendaId = event.getValue(ResourceEventsDAO.AGENDA_ID);
 
-				if (agendaId != null)
-				{
-				    event.setVisible(isAgendaSelected(agendaId));
-				}
+				event.setVisible(isAgendaSelected(agendaId));
 			}
 		};
 	}
@@ -167,8 +167,8 @@ public class SingleResourceSchedulerPage extends AbstractSchedulerPage // NOSONA
 	static ResourceList newResourceList()
 	{
 		ResourceList list = new ResourceList("Agenda", ResourceEventsDAO.AGENDA_ID);
-		list.add(new Resource(1, AGENDA_1, "#6699cc"));
-		list.add(new Resource(2, AGENDA_2, "#cc6699"));
+		list.add(new Resource(ResourceEventsDAO.AGENDA_1, AGENDA_NAME1, "#6699cc")); // using string ids
+		list.add(new Resource(ResourceEventsDAO.AGENDA_2, AGENDA_NAME2, "#cc6699"));
 
 		return list;
 	}

@@ -30,7 +30,6 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.JQueryUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.scheduler.SchedulerEventFactory;
 import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
 
 /**
@@ -299,9 +298,9 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	}
 
 	/**
-	 * Gets a new {@link SchedulerEventFactory}
+	 * Gets a new {@link TreeNodeFactory}
 	 * 
-	 * @return a new {@code SchedulerEventFactory}
+	 * @return a new {@code TreeNodeFactory}
 	 */
 	protected TreeNodeFactory newTreeNodeFactory()
 	{

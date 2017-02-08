@@ -153,15 +153,15 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage // NOSO
 	static ResourceList newRoomList()
 	{
 		List<Resource> list = new ArrayList<Resource>();
-		list.add(new Resource(1, "Room #1", "#6699cc"));
-		list.add(new Resource(2, "Room #2", "#9966cc"));
+		list.add(new Resource(EmployeeEventsDAO.ROOM_1, "Room #1", "#6699cc")); // using integer ids
+		list.add(new Resource(EmployeeEventsDAO.ROOM_2, "Room #2", "#9966cc"));
 
 		return newRoomList(list);
 	}
 
 	static ResourceList newRoomList(Collection<Resource> resources)
 	{
-		ResourceList list = new ResourceList("Room", "roomId", "Rooms"); // grouping by "Rooms" (optional)
+		ResourceList list = new ResourceList("Room", EmployeeEventsDAO.ROOM_ID, "Rooms"); // grouping by "Rooms" (optional)
 
 		for (Resource resource : resources)
 		{
@@ -173,8 +173,8 @@ public class MultipleResourceSchedulerPage extends AbstractSchedulerPage // NOSO
 
 	static ResourceList newEmployeeList()
 	{
-		ResourceList list = new ResourceList("Employee", "employeeId", true); // true: multiple
-		list.add(new Resource(EmployeeEventsDAO.EMPLOYEE_1, "Patrick", "#339966")); // using EMPLOYEE_X/uuid like (String)
+		ResourceList list = new ResourceList("Employee", EmployeeEventsDAO.EMPLOYEE_ID, true); // true: multiple
+		list.add(new Resource(EmployeeEventsDAO.EMPLOYEE_1, "Patrick", "#339966")); // using uuid-like ids
 		list.add(new Resource(EmployeeEventsDAO.EMPLOYEE_2, "Sebastien", "#996633"));
 
 		return list;
