@@ -47,8 +47,8 @@ public class EmployeeEventsDAO extends AbstractSchedulerEventsDAO
 
 		if (e != null)
 		{
-			e.setValue(ROOM_ID, event.getValue(ROOM_ID));
-			e.setValue(EMPLOYEE_ID, event.getValue(EMPLOYEE_ID));
+			e.setResource(ROOM_ID, event.getValue(ROOM_ID, Integer.class));
+			e.setResource(EMPLOYEE_ID, event.getValue(EMPLOYEE_ID, List.class));
 		}
 
 		return e;
