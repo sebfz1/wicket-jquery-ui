@@ -22,8 +22,6 @@ import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.util.lang.Args;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +30,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.resource.JavaScriptPackageHeaderItem;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
@@ -45,7 +44,6 @@ import com.googlecode.wicket.kendo.ui.scheduler.views.SchedulerViewType;
 public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
-	private static final JavaScriptResourceReference JS = new JavaScriptResourceReference(SchedulerBehavior.class, "SchedulerBehavior.js");
 
 	public static final String METHOD = "kendoScheduler";
 
@@ -120,44 +118,7 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	{
 		super.renderHead(component, response);
 
-		response.render(JavaScriptHeaderItem.forReference(JS));
-	}
-
-	// Properties //
-
-	/**
-	 * Gets the data-source behavior's url
-	 *
-	 * @return the data-source behavior's url
-	 */
-	protected abstract CharSequence getDataSourceUrl();
-
-	/**
-	 * Gets the 'read' callback function<br>
-	 * As create, update and destroy need to be supplied, we should declare read as a function. Weird...
-	 *
-	 * @return the 'read' callback function
-	 */
-	private String getReadCallbackFunction()
-	{
-		String widget = this.widget();
-		String start = widget + ".view().startDate().getTime()";
-		String end = String.format("calculateKendoSchedulerViewEndPeriod(%s.view().endDate()).getTime()", widget);
-
-		return "function(options) {" // lf
-				+ " jQuery.ajax({" // lf
-				+ "		url: '" + this.getDataSourceUrl() + "'," // lf
-				+ "		data: { start: " + start + ",  end: " + end + "}," // lf
-				+ "		cache: false," // lf
-				+ "		dataType: 'json'," // lf
-				+ "		success: function(result) {" // lf
-				+ "			options.success(result);" // lf
-				+ "		}," // lf
-				+ "		error: function(result) {" // lf
-				+ "			options.error(result);" // lf
-				+ "		}" // lf
-				+ "	});" // lf
-				+ "}";
+		response.render(new JavaScriptPackageHeaderItem(SchedulerBehavior.class));
 	}
 
 	// Events //
@@ -233,6 +194,43 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 				this.listener.onDelete(target, object);
 			}
 		}
+	}
+
+	// Properties //
+
+	/**
+	 * Gets the data-source behavior's url
+	 *
+	 * @return the data-source behavior's url
+	 */
+	protected abstract CharSequence getDataSourceUrl();
+
+	/**
+	 * Gets the 'read' callback function<br>
+	 * As create, update and destroy need to be supplied, we should declare read as a function. Weird...
+	 *
+	 * @return the 'read' callback function
+	 */
+	private String getReadCallbackFunction()
+	{
+		String widget = this.widget();
+		String start = widget + ".view().startDate().getTime()";
+		String end = String.format("calculateKendoSchedulerViewEndPeriod(%s.view().endDate()).getTime()", widget);
+
+		return "function(options) { " // lf
+				+ "jQuery.ajax({" // lf
+				+ "		url: '" + this.getDataSourceUrl() + "'," // lf
+				+ "		data: { start: " + start + ", end: " + end + " }," // lf
+				+ "		cache: false," // lf
+				+ "		dataType: 'json'," // lf
+				+ "		success: function(result) { "// lf
+				+ "			options.success(result);" // lf
+				+ "		}," // lf
+				+ "		error: function(result) {" // lf
+				+ "			options.error(result);" // lf
+				+ "		}" // lf
+				+ "	});" // lf
+				+ "}";
 	}
 
 	// Factories //
