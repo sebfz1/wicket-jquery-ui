@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.dataviz;
+package com.googlecode.wicket.kendo.ui.dataviz.chart;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
 import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.dataviz.series.Series;
+import com.googlecode.wicket.kendo.ui.dataviz.chart.series.Series;
 import com.googlecode.wicket.kendo.ui.scheduler.SchedulerModel;
 
 /**

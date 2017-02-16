@@ -14,18 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.dataviz.series;
+package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 
 /**
- * Provides a <i>bar</i> series object.
+ * Provides a <i>line</i> series object.
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class BarSeries extends Series
+public class LineSeries extends Series
 {
 	private static final long serialVersionUID = 1L;
-	private static final String TYPE = "bar";
+	private static final String TYPE = "line";
 
 	private final String field;
 
@@ -35,7 +35,7 @@ public class BarSeries extends Series
 	 * @param name the series name
 	 * @param field the series field, it should correspond to a model object's property
 	 */
-	public BarSeries(String name, String field)
+	public LineSeries(String name, String field)
 	{
 		super(name, TYPE);
 
@@ -49,10 +49,10 @@ public class BarSeries extends Series
 	 * @param field the series field, it should correspond to a model object's property
 	 * @param axis the axis on which the series should be placed
 	 */
-	public BarSeries(String name, String field, String axis)
+	public LineSeries(String name, String field, String axis)
 	{
 		super(name, TYPE, axis);
-
+		
 		this.field = field;
 	}
 
