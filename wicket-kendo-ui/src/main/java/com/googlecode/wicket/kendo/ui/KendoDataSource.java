@@ -21,6 +21,7 @@ import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.utils.DebugUtils;
+import com.googlecode.wicket.kendo.ui.widget.treeview.AjaxTreeView;
 
 /**
  * Provides a standard Kendo UI data-source<br>
@@ -219,4 +220,66 @@ public class KendoDataSource extends Options implements IKendoDataSource
 				+ "	});" // lf
 				+ "}";
 	}
+	
+	// Classes //
+	
+	/**
+	 * Provide the hierarchical data-source for the {@link AjaxTreeView}
+	 *
+	 * @author Sebastien Briquet - sebfz1
+	 */
+	public static class HierarchicalDataSource extends KendoDataSource
+	{
+		private static final long serialVersionUID = 1L;
+
+		/**
+		 * Constructor which create a JSON based data-source
+		 *
+		 * @param name the data-source name
+		 */
+		public HierarchicalDataSource(String name)
+		{
+			this(name, TYPE);
+		}
+
+		/**
+		 * Constructor
+		 *
+		 * @param component the hosting component (used to get the name)
+		 */
+		public HierarchicalDataSource(Component component)
+		{
+			super(component);
+		}
+
+		/**
+		 * Constructor
+		 *
+		 * @param name the data-source name
+		 * @param type the response type (json, xml)
+		 */
+		public HierarchicalDataSource(String name, String type)
+		{
+			super(name, type);
+		}
+
+		/**
+		 * Constructor
+		 *
+		 * @param component the hosting component (used to get the name)
+		 * @param type the response data type (json, xml)
+		 */
+		public HierarchicalDataSource(Component component, String type)
+		{
+			super(component, type);
+		}
+
+		// Properties //
+
+		@Override
+		public String toScript()
+		{
+			return String.format("jQuery(function() { %s = new kendo.data.HierarchicalDataSource(%s); });", this.getName(), this.build());
+		}
+	}	
 }

@@ -29,6 +29,7 @@ import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.JQueryUtils;
+import com.googlecode.wicket.kendo.ui.KendoDataSource.HierarchicalDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.template.KendoTemplateBehavior;
 
@@ -218,11 +219,11 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 	}
 
 	/**
-	 * Configure the {@link TreeViewDataSource} with additional options
+	 * Configure the {@link HierarchicalDataSource} with additional options
 	 * 
-	 * @param dataSource the {@link TreeViewDataSource}
+	 * @param dataSource the {@link HierarchicalDataSource}
 	 */
-	protected void onConfigure(TreeViewDataSource dataSource)
+	protected void onConfigure(HierarchicalDataSource dataSource)
 	{
 		dataSource.set("schema", String.format("{ model: { id: '%s' } }", TreeNodeFactory.ID_FIELD));
 	}
@@ -278,7 +279,7 @@ public class AjaxTreeView extends JQueryContainer implements ITreeViewListener
 			// Events //
 
 			@Override
-			protected void onConfigure(TreeViewDataSource dataSource)
+			protected void onConfigure(HierarchicalDataSource dataSource)
 			{
 				AjaxTreeView.this.onConfigure(dataSource);
 			}
