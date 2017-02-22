@@ -309,7 +309,7 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	// Factories //
 
 	/**
-	 * Gets a new {@link AbstractAjaxBehavior}
+	 * Gets a new {@link AjaxCallbackBehavior}
 	 *
 	 * @param model the @{@code List} {@link Model}
 	 * @return a new {@link ListModelBehavior}, by default
