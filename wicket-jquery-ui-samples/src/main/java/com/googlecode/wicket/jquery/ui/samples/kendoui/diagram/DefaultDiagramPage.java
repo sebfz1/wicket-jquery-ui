@@ -46,10 +46,13 @@ public class DefaultDiagramPage extends AbstractDiagramPage
 			@Override
 			public void onClick(AjaxRequestTarget target, AvatarNode node)
 			{
-				this.info("Clicked on node: " + node);
-				target.add(feedback);
+				if (node != null)
+				{
+					this.info("Clicked on node: " + node);
+					this.refresh(target); // just because it's fun
+				}
 
-				this.refresh(target); // just because it's fun
+				target.add(feedback);
 			}
 		});
 	}
