@@ -14,45 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.dataviz.chart;
+package com.googlecode.wicket.jquery.core.converter;
 
 import java.util.List;
 
-import org.apache.wicket.ajax.json.JSONArray;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.IRequestParameters;
+import org.apache.wicket.ajax.json.JSONObject;
+import org.apache.wicket.util.io.IClusterable;
 
-import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
-import com.googlecode.wicket.kendo.ui.scheduler.SchedulerModel;
+import com.googlecode.wicket.jquery.core.utils.JsonUtils;
 
 /**
- * Provides the behavior that loads {@link Chart} objects/beans<br>
- * <b>Note: </b> the {@code List} of objects will be converted in JSON using {@code new JSONArray(list)}
+ * Provides a serializable converter for building {@link T}{@code s} as {@link JSONObject}, and vice-versa
  * 
+ * @param <T> the object type
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class ChartModelBehavior<T> extends AjaxCallbackBehavior
+public abstract class JsonConverter<T> implements IJsonConverter<T>, IClusterable
 {
 	private static final long serialVersionUID = 1L;
 
-	private final IModel<List<T>> model;
-
 	/**
-	 * Constructor
+	 * Converts a {@link T} to a JSON String
 	 *
-	 * @param model the {@link SchedulerModel}
+	 * @param object the {@link T}
+	 * @return the JSON String
 	 */
-	public ChartModelBehavior(final IModel<List<T>> model)
+	 @Override
+	public String toString(List<T> objects)
 	{
-		this.model = model;
-	}
-
-	@Override
-	protected String getResponse(IRequestParameters parameters)
-	{
-		List<T> list = this.model.getObject(); // calls #load
-
-		return new JSONArray(list).toString();
+		return JsonUtils.toString(objects);
 	}
 }

@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.kendo.ui.dataviz.chart;
+package com.googlecode.wicket.kendo.ui.dataviz.diagram;
 
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.ajax.json.JSONString;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.model.IModel;
@@ -30,51 +31,48 @@ import com.googlecode.wicket.jquery.core.JQueryGenericContainer;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.behavior.AjaxCallbackBehavior;
 import com.googlecode.wicket.jquery.core.behavior.ListModelBehavior;
-import com.googlecode.wicket.kendo.ui.KendoBehaviorFactory;
-import com.googlecode.wicket.kendo.ui.KendoDataSource;
+import com.googlecode.wicket.jquery.core.converter.IJsonConverter;
+import com.googlecode.wicket.kendo.ui.KendoDataSource.HierarchicalDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
-import com.googlecode.wicket.kendo.ui.dataviz.chart.series.Series;
+import com.googlecode.wicket.kendo.ui.scheduler.ISchedulerConverter;
 
 /**
- * Provides a Kendo UI chart
+ * Provides a Kendo UI diagram
  *
  * @param <T> the model object type. It is recommended that the object type implements {@link JSONString}
  * @author Sebastien Briquet - sebfz1
  */
-public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartListener // NOSONAR
+public class Diagram<T> extends JQueryGenericContainer<List<T>> implements IDiagramListener // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
 	protected final Options options;
-	protected final List<Series> series;
 
-	/** The behavior that ajax-loads data */
-	private AjaxCallbackBehavior modelBehavior;
+	private final IJsonConverter<T> converter;
+	private AjaxCallbackBehavior modelBehavior; // loads data
 
 	/**
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param series the {@code List} of {@link Series}
 	 */
-	public Chart(String id, final List<Series> series)
+	public Diagram(String id, IJsonConverter<T> converter)
 	{
-		this(id, series, new Options());
+		this(id, converter, new Options());
 	}
 
 	/**
 	 * Main constructor
 	 *
 	 * @param id the markup id
-	 * @param series the {@code List} of {@link Series}
 	 * @param options the {@link Options}
 	 */
-	public Chart(String id, final List<Series> series, Options options)
+	public Diagram(String id, IJsonConverter<T> converter, Options options)
 	{
 		super(id);
 
-		this.series = series;
 		this.options = options;
+		this.converter = converter;
 	}
 
 	/**
@@ -82,11 +80,10 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 *
 	 * @param id the markup id
 	 * @param data the list of data
-	 * @param series the {@code List} of {@link Series}
 	 */
-	public Chart(String id, List<T> data, final List<Series> series)
+	public Diagram(String id, List<T> data, IJsonConverter<T> converter)
 	{
-		this(id, new ListModel<T>(data), series, new Options());
+		this(id, new ListModel<T>(data), converter, new Options());
 	}
 
 	/**
@@ -94,12 +91,11 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 *
 	 * @param id the markup id
 	 * @param data the list of data
-	 * @param series the {@code List} of {@link Series}
 	 * @param options the {@link Options}
 	 */
-	public Chart(String id, List<T> data, final List<Series> series, Options options)
+	public Diagram(String id, List<T> data, IJsonConverter<T> converter, Options options)
 	{
-		this(id, new ListModel<T>(data), series, options);
+		this(id, new ListModel<T>(data), converter, options);
 	}
 
 	/**
@@ -107,11 +103,10 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 *
 	 * @param id the markup id
 	 * @param model the list model of data
-	 * @param series the {@code List} of {@link Series}
 	 */
-	public Chart(String id, final IModel<List<T>> model, final List<Series> series)
+	public Diagram(String id, final IModel<List<T>> model, IJsonConverter<T> converter)
 	{
-		this(id, model, series, new Options());
+		this(id, model, converter, new Options());
 	}
 
 	/**
@@ -119,15 +114,14 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 *
 	 * @param id the markup id
 	 * @param model the list model of data
-	 * @param series the {@code List} of {@link Series}
 	 * @param options the {@link Options}
 	 */
-	public Chart(String id, final IModel<List<T>> model, final List<Series> series, Options options)
+	public Diagram(String id, final IModel<List<T>> model, IJsonConverter<T> converter, Options options)
 	{
 		super(id, model);
 
-		this.series = series;
 		this.options = options;
+		this.converter = converter;
 	}
 
 	// Methods //
@@ -139,35 +133,11 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 */
 	public String widget()
 	{
-		return KendoUIBehavior.widget(this, ChartBehavior.METHOD);
+		return KendoUIBehavior.widget(this, DiagramBehavior.METHOD);
 	}
 
 	/**
-	 * Shows the {@link Chart}
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 */
-	public final void show(AjaxRequestTarget target)
-	{
-		this.onShow(target);
-
-		KendoBehaviorFactory.show(target, this);
-	}
-
-	/**
-	 * Hides the {@link Chart}
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 */
-	public final void hide(AjaxRequestTarget target)
-	{
-		KendoBehaviorFactory.hide(target, this);
-
-		this.onHide(target);
-	}
-
-	/**
-	 * Reloads the {@link Chart}<br>
+	 * Reloads the {@link Diagram}<br>
 	 * Equivalent to {@code handler.add(table)}
 	 *
 	 * @param target the {@link AjaxRequestTarget}
@@ -190,16 +160,6 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	// Properties //
 
 	/**
-	 * Gets the read-only {@link List} of {@link Series}
-	 *
-	 * @return the {@code List} of {@code Series}
-	 */
-	public final List<Series> getSeries()
-	{
-		return this.series;
-	}
-
-	/**
 	 * Gets the data-provider behavior's url
 	 *
 	 * @return the data-provider behavior's url
@@ -209,8 +169,18 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 		return this.modelBehavior.getCallbackUrl();
 	}
 
+	/**
+	 * Gets the {@link ISchedulerConverter}
+	 * 
+	 * @return the {@link ISchedulerConverter}
+	 */
+	protected final IJsonConverter<T> getConverter()
+	{
+		return this.converter;
+	}
+
 	@Override
-	public boolean isSeriesClickEventEnabled()
+	public boolean isClickEventEnabled()
 	{
 		return false;
 	}
@@ -222,7 +192,7 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	{
 		super.onInitialize();
 
-		this.modelBehavior = this.newListModelBehavior(this.getModel());
+		this.modelBehavior = this.newListModelBehavior(this.getModel(), this.getConverter());
 		this.add(this.modelBehavior);
 
 		this.add(JQueryWidget.newWidgetBehavior(this)); // cannot be in ctor as the markupId may be set manually afterward
@@ -235,13 +205,14 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	}
 
 	/**
-	 * Configure the {@link KendoDataSource} with additional options
+	 * Configure the {@link HierarchicalDataSource} with additional options
 	 * 
-	 * @param dataSource the {@link KendoDataSource}
+	 * @param dataSource the {@link HierarchicalDataSource}
 	 */
-	protected void onConfigure(KendoDataSource dataSource)
+	protected void onConfigure(HierarchicalDataSource dataSource)
 	{
 		// show loading indicator //
+		// TODO move into an Utils class
 		String selector = JQueryWidget.getSelector(this);
 		dataSource.set("requestStart", String.format("function () { kendo.ui.progress(jQuery('%s'), true); }", selector));
 		dataSource.set("requestEnd", String.format("function () { kendo.ui.progress(jQuery('%s'), false); }", selector));
@@ -253,28 +224,19 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 		// noop
 	}
 
-	/**
-	 * Triggered when the {@link Chart} shows
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 */
-	public void onShow(AjaxRequestTarget target)
-	{
-		// noop
-	}
-
-	/**
-	 * Triggered when the {@link Chart} hides
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 */
-	public void onHide(AjaxRequestTarget target)
-	{
-		// noop
-	}
-
 	@Override
-	public void onSeriesClick(AjaxRequestTarget target, String seriesName, String seriesField, String category, long value)
+	public void onClick(AjaxRequestTarget target, JSONObject object)
+	{
+		this.onClick(target, this.getConverter().toObject(object));
+	}
+
+	/**
+	 * Triggered when a series is clicked
+	 * 
+	 * @param target
+	 * @param object
+	 */
+	public void onClick(AjaxRequestTarget target, T object)
 	{
 		// noop
 	}
@@ -284,7 +246,7 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new ChartBehavior(selector, this.options, this.series, this) { // NOSONAR
+		return new DiagramBehavior(selector, this.options, this) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -293,15 +255,15 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 			@Override
 			protected CharSequence getProviderUrl()
 			{
-				return Chart.this.getCallbackUrl();
+				return Diagram.this.getCallbackUrl();
 			}
 
 			// Events //
 
 			@Override
-			protected void onConfigure(KendoDataSource dataSource)
+			protected void onConfigure(HierarchicalDataSource dataSource)
 			{
-				Chart.this.onConfigure(dataSource);
+				Diagram.this.onConfigure(dataSource);
 			}
 		};
 	}
@@ -314,8 +276,8 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 * @param model the @{@code List} {@link Model}
 	 * @return a new {@link ListModelBehavior}, by default
 	 */
-	protected AjaxCallbackBehavior newListModelBehavior(final IModel<List<T>> model)
+	protected AjaxCallbackBehavior newListModelBehavior(final IModel<List<T>> model, IJsonConverter<T> converter)
 	{
-		return new ListModelBehavior<T>(model);
+		return new ListModelBehavior<T>(model, converter);
 	}
 }

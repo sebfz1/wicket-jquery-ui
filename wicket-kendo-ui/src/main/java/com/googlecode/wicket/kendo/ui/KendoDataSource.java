@@ -21,7 +21,6 @@ import org.apache.wicket.util.lang.Args;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.kendo.ui.utils.DebugUtils;
-import com.googlecode.wicket.kendo.ui.widget.treeview.AjaxTreeView;
 
 /**
  * Provides a standard Kendo UI data-source<br>
@@ -224,9 +223,7 @@ public class KendoDataSource extends Options implements IKendoDataSource
 	// Classes //
 	
 	/**
-	 * Provide the hierarchical data-source for the {@link AjaxTreeView}
-	 *
-	 * @author Sebastien Briquet - sebfz1
+	 * Provide the hierarchical data-source
 	 */
 	public static class HierarchicalDataSource extends KendoDataSource
 	{

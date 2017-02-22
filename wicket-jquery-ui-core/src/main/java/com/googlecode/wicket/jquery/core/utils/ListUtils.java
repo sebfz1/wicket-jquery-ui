@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Utility class for {@link List}({@code s})
@@ -29,11 +30,72 @@ import java.util.List;
  */
 public class ListUtils
 {
+	private static final int MAX = 20;
+
 	/**
 	 * Utility class
 	 */
 	private ListUtils()
 	{
+	}
+
+	/**
+	 * Returns a pseudo-random {@code int} value between 0 and the specified bound (exclusive)
+	 * 
+	 * @param bound the maximum bound (exclusive)
+	 * @return a pseudo-random {@code int}
+	 */
+	static int random(int bound)
+	{
+		return ThreadLocalRandom.current().nextInt(0, bound);
+	}
+
+	/**
+	 * Gets a random object from the supplied {@link List}
+	 * 
+	 * @param list the {@link List}
+	 * @return {@code null} if the supplied list is empty
+	 */
+	public static <T> T random(T[] array)
+	{
+		if (array.length > 0)
+		{
+			return array[ListUtils.random(array.length)];
+		}
+
+		return null;
+	}
+
+	/**
+	 * Gets a random object from the supplied {@link List}
+	 * 
+	 * @param list the {@link List}
+	 * @return {@code null} if the supplied list is empty
+	 */
+	public static <T> T random(List<T> list)
+	{
+		if (!list.isEmpty())
+		{
+			return list.get(ListUtils.random(list.size()));
+		}
+
+		return null;
+	}
+
+	/**
+	 * Empty a {@link List}
+	 * 
+	 * @param list the list to empty
+	 */
+	public static void empty(List<?> list)
+	{
+		Iterator<?> iterator = list.iterator();
+
+		while (iterator.hasNext())
+		{
+			iterator.next();
+			iterator.remove();
+		}
 	}
 
 	/**
@@ -94,8 +156,6 @@ public class ListUtils
 			list.add(index, list.remove(ListUtils.indexOf(item.hashCode(), list)));
 		}
 	}
-
-	private static final int MAX = 20;
 
 	/**
 	 * Returns a sub list of items of type T having their textual representation (toString()) containing the search criteria<br>

@@ -263,9 +263,9 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	}
 
 	/**
-	 * Gets the {@link SchedulerConverter}
+	 * Gets the {@link ISchedulerConverter}
 	 * 
-	 * @return the {@code SchedulerEventFactory}
+	 * @return the {@link ISchedulerConverter}
 	 */
 	protected final ISchedulerConverter getConverter()
 	{

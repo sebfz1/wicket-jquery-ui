@@ -24,7 +24,7 @@ import org.apache.wicket.util.io.IClusterable;
 import com.googlecode.wicket.kendo.ui.scheduler.resource.ResourceList;
 
 /**
- * Provides a factory for building {@link SchedulerEvent}{@code s} as {@link JSONObject}, and vice-versa
+ * Provides a converter for building {@link SchedulerEvent}{@code s} as {@link JSONObject}, and vice-versa
  * 
  * @author Sebastien Briquet - sebfz1
  *

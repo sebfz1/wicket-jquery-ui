@@ -274,6 +274,29 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget // N
 		// noop
 	}
 
+	// Methods //
+
+	// TODO test this, and add it to all datasource-based components
+	// /**
+	// * Gets the Kendo UI widget
+	// *
+	// * @return the jQuery object
+	// */
+	// public String widget()
+	// {
+	// return KendoUIBehavior.widget(this, ComboBoxBehavior.METHOD);
+	// }
+	//
+	// /**
+	// * Refreshes the widget by reading from the datasource
+	// *
+	// * @param target the {@link AjaxRequestTarget}
+	// */
+	// public void refresh(AjaxRequestTarget target)
+	// {
+	// target.appendJavaScript(String.format("var $w = %s; if ($w) { $w.dataSource.read(); }", this.widget()));
+	// }
+
 	// IJQueryWidget //
 
 	@Override

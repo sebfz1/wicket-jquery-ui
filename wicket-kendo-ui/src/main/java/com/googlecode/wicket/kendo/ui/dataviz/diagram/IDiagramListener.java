@@ -14,44 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.core.renderer;
+package com.googlecode.wicket.kendo.ui.dataviz.diagram;
 
-import com.googlecode.wicket.jquery.core.utils.JsonUtils;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.json.JSONObject;
 
 /**
- * Provides a Json {@link TextRenderer}
- *
- * @param <T> the model object type
+ * Event listener shared by the {@link Diagram} widget and the {@link DiagramBehavior}
+ * 
  * @author Sebastien Briquet - sebfz1
+ *
  */
-public class JsonRenderer<T> extends TextRenderer<T>
+public interface IDiagramListener
 {
-	private static final long serialVersionUID = 1L;
-
 	/**
-	 * Constructor
+	 * Indicates whether the 'click' event is enabled.<br>
+	 * If true, the {@link #onClick(AjaxRequestTarget, JSONObject)} event will be triggered when clicking on an item
+	 * 
+	 * @return {@code false} by default
 	 */
-	public JsonRenderer()
-	{
-		super();
-	}
+	boolean isClickEventEnabled();
 
 	/**
-	 * Constructor
+	 * Triggered when a diagram item is clicked
 	 *
-	 * @param expression the property expression that will be resolved for the bean supplied to {@link #getText(Object)}
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param object the {@link JSONObject} item
 	 */
-	public JsonRenderer(String expression)
-	{
-		super(expression);
-	}
-
-	// Methods //
-
-	@Override
-	public String render(T object)
-	{
-		String json = JsonUtils.toString(object);
-		return json.substring(1, json.length() - 1); // keep body only
-	}
+	void onClick(AjaxRequestTarget target, JSONObject object);
 }
