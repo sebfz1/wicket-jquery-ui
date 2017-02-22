@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 /**
  * Utility class for {@link List}({@code s})
@@ -47,7 +47,7 @@ public class ListUtils
 	 */
 	static int random(int bound)
 	{
-		return ThreadLocalRandom.current().nextInt(0, bound);
+		return new Random((long) (Math.random() * 1000000L)).nextInt(bound);
 	}
 
 	/**
