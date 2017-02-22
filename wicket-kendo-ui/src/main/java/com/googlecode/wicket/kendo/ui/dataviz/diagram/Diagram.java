@@ -55,6 +55,7 @@ public class Diagram<T> extends JQueryGenericContainer<List<T>> implements IDiag
 	 * Constructor
 	 *
 	 * @param id the markup id
+	 * @param converter the {@link IJsonConverter}
 	 */
 	public Diagram(String id, IJsonConverter<T> converter)
 	{
@@ -65,6 +66,7 @@ public class Diagram<T> extends JQueryGenericContainer<List<T>> implements IDiag
 	 * Main constructor
 	 *
 	 * @param id the markup id
+	 * @param converter the {@link IJsonConverter}
 	 * @param options the {@link Options}
 	 */
 	public Diagram(String id, IJsonConverter<T> converter, Options options)
@@ -80,6 +82,7 @@ public class Diagram<T> extends JQueryGenericContainer<List<T>> implements IDiag
 	 *
 	 * @param id the markup id
 	 * @param data the list of data
+	 * @param converter the {@link IJsonConverter}
 	 */
 	public Diagram(String id, List<T> data, IJsonConverter<T> converter)
 	{
@@ -91,6 +94,7 @@ public class Diagram<T> extends JQueryGenericContainer<List<T>> implements IDiag
 	 *
 	 * @param id the markup id
 	 * @param data the list of data
+	 * @param converter the {@link IJsonConverter}
 	 * @param options the {@link Options}
 	 */
 	public Diagram(String id, List<T> data, IJsonConverter<T> converter, Options options)
@@ -103,6 +107,7 @@ public class Diagram<T> extends JQueryGenericContainer<List<T>> implements IDiag
 	 *
 	 * @param id the markup id
 	 * @param model the list model of data
+	 * @param converter the {@link IJsonConverter}
 	 */
 	public Diagram(String id, final IModel<List<T>> model, IJsonConverter<T> converter)
 	{
@@ -114,6 +119,7 @@ public class Diagram<T> extends JQueryGenericContainer<List<T>> implements IDiag
 	 *
 	 * @param id the markup id
 	 * @param model the list model of data
+	 * @param converter the {@link IJsonConverter}
 	 * @param options the {@link Options}
 	 */
 	public Diagram(String id, final IModel<List<T>> model, IJsonConverter<T> converter, Options options)
@@ -233,8 +239,8 @@ public class Diagram<T> extends JQueryGenericContainer<List<T>> implements IDiag
 	/**
 	 * Triggered when a series is clicked
 	 * 
-	 * @param target
-	 * @param object
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param object the converted object
 	 */
 	public void onClick(AjaxRequestTarget target, T object)
 	{
@@ -274,6 +280,7 @@ public class Diagram<T> extends JQueryGenericContainer<List<T>> implements IDiag
 	 * Gets a new {@link AbstractAjaxBehavior}
 	 *
 	 * @param model the @{@code List} {@link Model}
+	 * @param converter the {@link IJsonConverter}
 	 * @return a new {@link ListModelBehavior}, by default
 	 */
 	protected AjaxCallbackBehavior newListModelBehavior(final IModel<List<T>> model, IJsonConverter<T> converter)

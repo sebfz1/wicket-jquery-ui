@@ -34,12 +34,6 @@ public abstract class JsonConverter<T> implements IJsonConverter<T>, IClusterabl
 {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Converts a {@link T} to a JSON String
-	 *
-	 * @param object the {@link T}
-	 * @return the JSON String
-	 */
 	 @Override
 	public String toString(List<T> objects)
 	{

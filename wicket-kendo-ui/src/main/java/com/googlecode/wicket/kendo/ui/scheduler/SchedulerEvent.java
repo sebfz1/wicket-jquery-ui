@@ -210,7 +210,9 @@ public class SchedulerEvent implements Serializable
 
 	/**
 	 * Gets the unique identifier of the scheduler event
-	 * 
+	 *
+	 * @param type the class type
+	 * @param <T> the type
 	 * @return the id, casted to the supplied type (unchecked)
 	 */
 	@SuppressWarnings("unchecked")

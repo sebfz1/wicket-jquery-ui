@@ -51,10 +51,11 @@ public class ListUtils
 	}
 
 	/**
-	 * Gets a random object from the supplied {@link List}
+	 * Gets a random object from the supplied array
 	 * 
-	 * @param list the {@link List}
-	 * @return {@code null} if the supplied list is empty
+	 * @param array the array
+	 * @param <T> the object type
+	 * @return {@code null} if the supplied array is empty
 	 */
 	public static <T> T random(T[] array)
 	{
@@ -70,6 +71,7 @@ public class ListUtils
 	 * Gets a random object from the supplied {@link List}
 	 * 
 	 * @param list the {@link List}
+	 * @param <T> the object type
 	 * @return {@code null} if the supplied list is empty
 	 */
 	public static <T> T random(List<T> list)

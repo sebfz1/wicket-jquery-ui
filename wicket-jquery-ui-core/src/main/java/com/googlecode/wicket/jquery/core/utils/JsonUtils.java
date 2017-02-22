@@ -93,7 +93,7 @@ public class JsonUtils
 	/**
 	 * Converts a {@link List} to its JSON string representation
 	 * 
-	 * @param object the {@code Object} to convert
+	 * @param list the {@code List} to convert
 	 * @return a new JSON String
 	 */
 	public static String toString(List<?> list)

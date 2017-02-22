@@ -30,9 +30,9 @@ import org.apache.wicket.ajax.json.JSONObject;
 public interface IJsonConverter<T>
 {
 	/**
-	 * Converts a {@link T} to a JSON String
+	 * Converts a {@link List} of {@link T} to a JSON String
 	 *
-	 * @param object the {@link T}
+	 * @param objects the {@link List} of {@link T}
 	 * @return the JSON String
 	 */
 	String toString(List<T> objects);
