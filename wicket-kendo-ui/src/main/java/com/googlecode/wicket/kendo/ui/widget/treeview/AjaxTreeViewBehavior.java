@@ -26,6 +26,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.kendo.ui.KendoDataSource.HierarchicalDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 
 /**
@@ -41,7 +42,7 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 	public static final String METHOD = "kendoTreeView";
 
 	private final ITreeViewListener listener;
-	private TreeViewDataSource dataSource;
+	private HierarchicalDataSource dataSource;
 
 	private JQueryAjaxBehavior onChangeAjaxBehavior = null;
 	private JQueryAjaxBehavior onExpandAjaxBehavior = null;
@@ -80,7 +81,7 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 		super.bind(component);
 
 		// data-source //
-		this.dataSource = new TreeViewDataSource(component);
+		this.dataSource = new HierarchicalDataSource(component);
 		this.add(this.dataSource);
 
 		// behaviors //
@@ -145,15 +146,15 @@ public abstract class AjaxTreeViewBehavior extends KendoUIBehavior implements IJ
 		// data-source //
 		this.onConfigure(this.dataSource);
 		this.setOption("dataSource", this.dataSource.getName());
-		this.dataSource.setTransportRead(Options.asString(this.getDataSourceUrl()));
+		this.dataSource.setTransportReadUrl(this.getDataSourceUrl());
 	}
 
 	/**
-	 * Configure the {@link TreeViewDataSource} with additional options
+	 * Configure the {@link HierarchicalDataSource} with additional options
 	 * 
-	 * @param dataSource the {@link TreeViewDataSource}
+	 * @param dataSource the {@link HierarchicalDataSource}
 	 */
-	protected void onConfigure(TreeViewDataSource dataSource)
+	protected void onConfigure(HierarchicalDataSource dataSource)
 	{
 		// noop
 	}
