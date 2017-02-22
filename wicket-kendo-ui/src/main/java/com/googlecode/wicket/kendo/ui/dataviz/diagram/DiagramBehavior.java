@@ -22,6 +22,7 @@ import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -190,19 +191,22 @@ public abstract class DiagramBehavior extends KendoUIBehavior implements IJQuery
 	protected static class ClickEvent extends JQueryEvent
 	{
 		private static final Logger log = LoggerFactory.getLogger(ClickEvent.class);
-		private JSONObject object;
+		private JSONObject object = null;
 
 		public ClickEvent()
 		{
 			String data = RequestCycleUtils.getQueryParameterValue("data").toString();
 
-			try
+			if (!Strings.isEmpty(data))
 			{
-				this.object = new JSONObject(data);
-			}
-			catch (JSONException e)
-			{
-				log.warn(e.getMessage(), e);
+				try
+				{
+					this.object = new JSONObject(data);
+				}
+				catch (JSONException e)
+				{
+					log.warn(e.getMessage(), e);
+				}
 			}
 		}
 

@@ -118,7 +118,12 @@ public class DefaultDiagramPage extends AbstractDiagramPage
 				@Override
 				public AvatarNode toObject(JSONObject object)
 				{
-					return new AvatarNode(object.optInt("parentId"), object.optInt("id"), object.optString("image"));
+					if (object != null)
+					{
+						return new AvatarNode(object.optInt("parentId"), object.optInt("id"), object.optString("image"));
+					}
+
+					return null;
 				}
 			};
 		}
