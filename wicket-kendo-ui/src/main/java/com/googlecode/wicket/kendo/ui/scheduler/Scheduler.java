@@ -394,7 +394,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	@Override
 	public final void onEdit(AjaxRequestTarget target, JSONObject object, SchedulerViewType view)
 	{
-		this.onEdit(target, eventOf(object), view);
+		this.onEdit(target, this.eventOf(object), view);
 	}
 
 	/**
@@ -422,7 +422,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	@Override
 	public void onCreate(AjaxRequestTarget target, JSONObject object)
 	{
-		this.onCreate(target, eventOf(object));
+		this.onCreate(target, this.eventOf(object));
 	}
 
 	/**
@@ -443,7 +443,7 @@ public class Scheduler extends JQueryContainer implements ISchedulerListener
 	@Override
 	public void onUpdate(AjaxRequestTarget target, JSONObject object)
 	{
-		this.onUpdate(target, eventOf(object));
+		this.onUpdate(target, this.eventOf(object));
 	}
 
 	/**

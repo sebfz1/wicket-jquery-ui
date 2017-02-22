@@ -161,7 +161,7 @@ public abstract class AjaxPropertyColumn extends PropertyColumn
 	 * @param value the value corresponding to the column's field
 	 * @return the new {@code Component}
 	 */
-	protected abstract Component newLazyComponent(String id, String value);
+	protected abstract Component getLazyComponent(String id, String value);
 
 	// Classes //
 
@@ -191,7 +191,7 @@ public abstract class AjaxPropertyColumn extends PropertyColumn
 		protected String getResponse(IRequestParameters parameters)
 		{
 			final String value = RequestCycleUtils.getQueryParameterValue("id").toString();
-			final Component component = AjaxPropertyColumn.this.newLazyComponent(this.newMarkupId(), value);
+			final Component component = AjaxPropertyColumn.this.getLazyComponent(this.newMarkupId(), value);
 			final CharSequence response = ComponentRenderer.renderComponent(component);
 
 			return response != null ? response.toString() : "";

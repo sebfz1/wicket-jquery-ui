@@ -209,7 +209,8 @@ public class SchedulerEvent implements Serializable
 	}
 
 	/**
-	 * Gets the unique identifier of the scheduler event
+	 * Gets the unique identifier of the scheduler event<br>
+	 * <b>Caution:</b> not type-safe
 	 *
 	 * @param type the class type
 	 * @param <T> the type

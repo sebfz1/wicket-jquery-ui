@@ -42,10 +42,10 @@ public class SchedulerConverter implements ISchedulerConverter
 	@Override
 	public JSONObject toJson(SchedulerEvent event)
 	{
+		JSONObject object = new JSONObject();
+
 		try
 		{
-			JSONObject object = new JSONObject();
-
 			object.put("id", event.getId()); // Object
 			object.put("isAllDay", event.isAllDay());
 			object.putOpt("title", event.getTitle()); // may be null
@@ -72,22 +72,22 @@ public class SchedulerConverter implements ISchedulerConverter
 				object.put(field, event.getValue(field)); // value is type of Object
 			}
 
-			return object;
 		}
 		catch (JSONException e)
 		{
 			LOG.error(e.getMessage(), e);
 		}
 
-		return null;
+		return object;
 	}
 
 	@Override
 	public SchedulerEvent toObject(JSONObject object, List<ResourceList> lists)
 	{
+		SchedulerEvent event = this.newSchedulerEvent();
+
 		try
 		{
-			SchedulerEvent event = this.newSchedulerEvent();
 			event.setId(object.get("id")); // Object
 			event.setTitle(object.optString("title"));
 			event.setDescription(object.optString("description"));
@@ -116,14 +116,13 @@ public class SchedulerConverter implements ISchedulerConverter
 				}
 			}
 
-			return event;
 		}
 		catch (JSONException e)
 		{
 			LOG.error(e.getMessage(), e);
 		}
 
-		return null;
+		return event;
 	}
 
 	/**

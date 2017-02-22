@@ -32,15 +32,29 @@ import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 public class CommandButton extends AbstractButton
 {
 	private static final long serialVersionUID = 1L;
+	
+	/** default model property */
+	private static final String PROPERTY = "id";
 
 	/**
-	 * Constructor for built-in commands (no property supplied)
+	 * Constructor for either built-in commands or linked to 'id' property (default) 
 	 *
 	 * @param name the button's name
 	 */
 	public CommandButton(String name)
 	{
-		super(name);
+		super(name, PROPERTY);
+	}
+
+	/**
+	 * Constructor for either built-in commands or linked to 'id' property (default)
+	 *
+	 * @param name the button's name
+	 * @param text the button's text
+	 */
+	public CommandButton(String name, IModel<String> text)
+	{
+		super(name, text, PROPERTY);
 	}
 
 	/**
@@ -52,17 +66,6 @@ public class CommandButton extends AbstractButton
 	public CommandButton(String name, String property)
 	{
 		super(name, property);
-	}
-
-	/**
-	 * Constructor for built-in commands (no property supplied)
-	 *
-	 * @param name the button's name
-	 * @param text the button's text
-	 */
-	public CommandButton(String name, IModel<String> text)
-	{
-		super(name, text);
 	}
 
 	/**
@@ -88,7 +91,7 @@ public class CommandButton extends AbstractButton
 	public boolean isBuiltIn()
 	{
 		String name = this.getName();
-		
+
 		if (EDIT.equals(name))
 		{
 			return true;
@@ -103,13 +106,24 @@ public class CommandButton extends AbstractButton
 	}
 
 	/**
-	 * Gets the CSS class to be applied on the button
+	 * Indicates whether this button is enabled
+	 * 
+	 * @return {@code true} by default
+	 */
+	public boolean isEnabled()
+	{
+		return true;
+	}
+
+	/**
+	 * Gets the CSS class to be applied on the button<br>
+	 * <b>Caution:</b> {@code super.getCSSClass()} should be called when overridden
 	 *
 	 * @return the CSS class
 	 */
 	public String getCSSClass()
 	{
-		return "";
+		return this.isEnabled() ? "" : "k-state-disabled";
 	}
 
 	public String toString(JQueryAjaxBehavior behavior)
@@ -117,7 +131,10 @@ public class CommandButton extends AbstractButton
 		StringBuilder builder = new StringBuilder();
 
 		builder.append("{ ");
-		BuilderUtils.append(builder, "name", this.getName());
+
+		String name = this.isEnabled() ? this.getName() : "disabled_" + this.getName(); // prevent firing 'click' for builtin buttons TODO WIP
+		BuilderUtils.append(builder, "name", name);
+
 		builder.append(", ");
 		BuilderUtils.append(builder, "text", this.getText().getObject());
 
@@ -129,7 +146,7 @@ public class CommandButton extends AbstractButton
 			BuilderUtils.append(builder, "className", css);
 		}
 
-		if (behavior != null)
+		if (this.isEnabled() && behavior != null)
 		{
 			builder.append(", ");
 			builder.append("'click': ").append(behavior.getCallbackFunction());

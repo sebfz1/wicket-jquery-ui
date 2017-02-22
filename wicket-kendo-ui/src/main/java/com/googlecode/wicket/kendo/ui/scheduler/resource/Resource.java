@@ -123,7 +123,8 @@ public class Resource implements Serializable
 	// Properties //
 
 	/**
-	 * Gets the resource id
+	 * Gets the resource id<br>
+	 * <b>Caution:</b> not type-safe
 	 *
 	 * @param <T> the object type
 	 * @return the resource id
