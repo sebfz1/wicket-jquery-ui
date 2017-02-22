@@ -16,8 +16,6 @@
  */
 package com.googlecode.wicket.jquery.core.converter;
 
-import java.util.List;
-
 import org.apache.wicket.ajax.json.JSONObject;
 
 /**
@@ -30,18 +28,18 @@ import org.apache.wicket.ajax.json.JSONObject;
 public interface IJsonConverter<T>
 {
 	/**
-	 * Converts a {@link List} of {@link T} to a JSON String
+	 * Converts a {@link T} object to a {@link JSONObject}
 	 *
-	 * @param objects the {@link List} of {@link T}
-	 * @return the JSON String
+	 * @param object the {@link T} object
+	 * @return the {@link JSONObject}
 	 */
-	String toString(List<T> objects);
+	JSONObject toJson(T object);
 
 	/**
-	 * Converts a {@link JSONObject} to a {@link T}
+	 * Converts a {@link JSONObject} to a {@link T} object
 	 *
 	 * @param object the {@code JSONObject}
-	 * @return the {@link T}
+	 * @return the {@link T} object
 	 */
 	T toObject(JSONObject object);
 }

@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONObject;
-import org.apache.wicket.ajax.json.JSONString;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
@@ -18,11 +17,10 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.converter.IJsonConverter;
 import com.googlecode.wicket.jquery.core.converter.JsonConverter;
 import com.googlecode.wicket.jquery.core.resource.JavaScriptPackageHeaderItem;
-import com.googlecode.wicket.jquery.core.utils.JsonUtils;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.User.Avatar;
-import com.googlecode.wicket.kendo.ui.KendoDataSource.HierarchicalDataSource;
 import com.googlecode.wicket.kendo.ui.dataviz.diagram.Diagram;
+import com.googlecode.wicket.kendo.ui.dataviz.diagram.IDiagramNode;
 import com.googlecode.wicket.kendo.ui.panel.KendoFeedbackPanel;
 
 public class DefaultDiagramPage extends AbstractDiagramPage
@@ -65,14 +63,6 @@ public class DefaultDiagramPage extends AbstractDiagramPage
 		private AvatarDiagram(String id)
 		{
 			super(id, newModel(), newConverter());
-		}
-
-		@Override
-		protected void onConfigure(HierarchicalDataSource dataSource)
-		{
-			super.onConfigure(dataSource);
-
-			dataSource.set("schema", "{ model: { children: 'nodes' } }");
 		}
 
 		@Override
@@ -134,11 +124,7 @@ public class DefaultDiagramPage extends AbstractDiagramPage
 		}
 	}
 
-	/**
-	 * It is recommended that the bean-class implements JSONString,<br>
-	 * Caution: in that case the class *should* be public
-	 */
-	public static class AvatarNode extends Avatar implements JSONString
+	public static class AvatarNode extends Avatar implements IDiagramNode<AvatarNode>
 	{
 		private static final long serialVersionUID = 1L;
 		private static String[] colors = { "#1696d3", "#ef6944", "#ee587b", "#75be16" };
@@ -180,6 +166,7 @@ public class DefaultDiagramPage extends AbstractDiagramPage
 			return UrlUtils.rewriteToContextRelative(this.getImagePath(), RequestCycle.get());
 		}
 
+		@Override
 		public List<AvatarNode> getNodes()
 		{
 			return Collections.unmodifiableList(this.nodes);
@@ -190,12 +177,6 @@ public class DefaultDiagramPage extends AbstractDiagramPage
 		public void addNode(AvatarNode avatar)
 		{
 			this.nodes.add(avatar);
-		}
-
-		@Override
-		public String toJSONString()
-		{
-			return JsonUtils.toString(this);
 		}
 	}
 

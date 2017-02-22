@@ -42,7 +42,7 @@ import com.googlecode.wicket.kendo.ui.scheduler.ISchedulerConverter;
  * @param <T> the model object type. It is recommended that the object type implements {@link JSONString}
  * @author Sebastien Briquet - sebfz1
  */
-public class Diagram<T> extends JQueryGenericContainer<List<T>> implements IDiagramListener // NOSONAR
+public class Diagram<T extends IDiagramNode<T>> extends JQueryGenericContainer<List<T>> implements IDiagramListener // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
@@ -217,6 +217,8 @@ public class Diagram<T> extends JQueryGenericContainer<List<T>> implements IDiag
 	 */
 	protected void onConfigure(HierarchicalDataSource dataSource)
 	{
+		dataSource.set("schema", "{ model: { children: 'nodes' } }"); // IDiagramNode
+
 		// show loading indicator //
 		// TODO move into an Utils class
 		String selector = JQueryWidget.getSelector(this);

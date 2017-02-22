@@ -14,25 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.core.converter;
+package com.googlecode.wicket.kendo.ui.dataviz.diagram;
 
-import org.apache.wicket.ajax.json.JSONObject;
-import org.apache.wicket.util.io.IClusterable;
+import java.util.List;
 
 /**
- * Provides a serializable converter for building {@link T}{@code s} as {@link JSONObject}, and vice-versa
+ * Specifies the model object for {@link Diagram}
  * 
- * @param <T> the object type
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class JsonConverter<T> implements IJsonConverter<T>, IClusterable
+public interface IDiagramNode<T>
 {
-	private static final long serialVersionUID = 1L;
-
-	 @Override
-	public JSONObject toJson(T object)
-	{
-		return new JSONObject(object);
-	}
+	/**
+	 * Gets the list of children nodes
+	 * 
+	 * @return the list of children nodes
+	 */
+	List<T> getNodes();
 }

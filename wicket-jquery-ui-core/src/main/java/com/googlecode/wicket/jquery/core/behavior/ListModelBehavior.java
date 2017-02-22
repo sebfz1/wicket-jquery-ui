@@ -18,8 +18,10 @@ package com.googlecode.wicket.jquery.core.behavior;
 
 import java.util.List;
 
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.IRequestParameters;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.converter.IJsonConverter;
 import com.googlecode.wicket.jquery.core.utils.JsonUtils;
@@ -65,6 +67,18 @@ public class ListModelBehavior<T> extends AjaxCallbackBehavior
 	{
 		List<T> list = this.model.getObject();
 
-		return this.converter != null ? this.converter.toString(list) : JsonUtils.toString(list);
+		if (this.converter != null)
+		{
+			List<JSONObject> objects = Generics.newArrayList();
+
+			for (T object : list)
+			{
+				objects.add(this.converter.toJson(object));
+			}
+
+			return JsonUtils.toString(objects);
+		}
+
+		return JsonUtils.toString(list);
 	}
 }
