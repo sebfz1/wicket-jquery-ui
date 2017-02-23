@@ -40,7 +40,7 @@ public class ListUtils
 	}
 
 	/**
-	 * Returns a pseudo-random {@code int} value between 0 and the specified bound (exclusive)
+	 * Returns a pseudo-random {@code int} value between 0 (inclusive) and the specified bound (exclusive)
 	 * 
 	 * @param bound the maximum bound (exclusive)
 	 * @return a pseudo-random {@code int}
@@ -51,9 +51,10 @@ public class ListUtils
 	}
 
 	/**
-	 * Returns a pseudo-random {@code int} value between 0 and the specified bound (exclusive)
+	 * Returns a pseudo-random {@code int} value between the minimum (inclusive) and the maximum bound (exclusive)
 	 * 
-	 * @param bound the maximum bound (exclusive)
+	 * @param min the minimum bound (inclusive)
+	 * @param max the maximum bound (exclusive)
 	 * @return a pseudo-random {@code int}
 	 */
 	public static int random(int min, int max)
