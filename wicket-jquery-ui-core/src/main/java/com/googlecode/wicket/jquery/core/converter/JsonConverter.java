@@ -26,7 +26,7 @@ import org.apache.wicket.util.io.IClusterable;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class JsonConverter<T> implements IJsonConverter<T>, IClusterable
+public class JsonConverter<T> implements IJsonConverter<T>, IClusterable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -34,5 +34,11 @@ public abstract class JsonConverter<T> implements IJsonConverter<T>, IClusterabl
 	public JSONObject toJson(T object)
 	{
 		return new JSONObject(object);
+	}
+	 
+	 @Override
+	public T toObject(JSONObject object)
+	{
+		throw new UnsupportedOperationException("JsonConverter#toObject is not implemented");
 	}
 }

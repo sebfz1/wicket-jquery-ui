@@ -45,9 +45,20 @@ public class ListUtils
 	 * @param bound the maximum bound (exclusive)
 	 * @return a pseudo-random {@code int}
 	 */
-	static int random(int bound)
+	public static int random(int bound)
 	{
 		return new Random((long) (Math.random() * 1000000L)).nextInt(bound);
+	}
+
+	/**
+	 * Returns a pseudo-random {@code int} value between 0 and the specified bound (exclusive)
+	 * 
+	 * @param bound the maximum bound (exclusive)
+	 * @return a pseudo-random {@code int}
+	 */
+	public static int random(int min, int max)
+	{
+		return min + random(max - min);
 	}
 
 	/**
