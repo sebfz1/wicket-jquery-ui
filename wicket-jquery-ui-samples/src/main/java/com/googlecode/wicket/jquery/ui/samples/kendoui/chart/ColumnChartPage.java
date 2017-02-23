@@ -34,7 +34,7 @@ public class ColumnChartPage extends AbstractChartPage // NOSONAR
 
 		for (int i = 1; i <= 10; i++)
 		{
-			// smooth bar
+			// smooth variation
 			value1 = value1 != null ? value1 + ListUtils.random(-10, 10) : ListUtils.random(25, 50);
 			value2 = value2 != null ? value2 + ListUtils.random(-10, 10) : ListUtils.random(25, 50);
 
@@ -81,7 +81,7 @@ public class ColumnChartPage extends AbstractChartPage // NOSONAR
 		static Options newOptions()
 		{
 			Options options = new Options();
-			options.set("title", "{ text: 'Sample Line Chart' }");
+			options.set("title", "{ text: 'Sample Column Chart' }");
 			options.set("legend", "{ position: 'top' }");
 			options.set("tooltip", "{ visible: true, template: '#= series.name #: #= kendo.toString(value, \"n0\") #' }");
 			options.set("categoryAxis", "{ field: 'category' }"); // MyLines#category field

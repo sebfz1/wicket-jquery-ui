@@ -10,14 +10,14 @@ import org.apache.wicket.util.lang.Generics;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
 import com.googlecode.wicket.kendo.ui.dataviz.chart.Chart;
-import com.googlecode.wicket.kendo.ui.dataviz.chart.series.LineSeries;
+import com.googlecode.wicket.kendo.ui.dataviz.chart.series.AreaSeries;
 import com.googlecode.wicket.kendo.ui.dataviz.chart.series.Series;
 
-public class LineChartPage extends AbstractChartPage // NOSONAR
+public class AreaChartPage extends AbstractChartPage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
-	public LineChartPage()
+	public AreaChartPage()
 	{
 		// Chart //
 		this.add(new MyChart("chart"));
@@ -25,20 +25,20 @@ public class LineChartPage extends AbstractChartPage // NOSONAR
 
 	// statics //
 
-	static List<MyLine> randomLines()
+	static List<MyArea> randomAreas()
 	{
-		List<MyLine> data = Generics.newArrayList();
+		List<MyArea> data = Generics.newArrayList();
 
 		Double value1 = null;
 		Double value2 = null;
 
-		for (int i = 1; i <= 25; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			// smooth variation
-			value1 = value1 != null ? value1 + ListUtils.random(-5, 10) : ListUtils.random(25, 75);
-			value2 = value2 != null ? value2 + ListUtils.random(-5, 10) : ListUtils.random(25, 75);
+			value1 = value1 != null ? value1 + ListUtils.random(-10, 10) : ListUtils.random(25, 50);
+			value2 = value2 != null ? value2 + ListUtils.random(-10, 10) : ListUtils.random(25, 50);
 
-			data.add(new MyLine("#" + i, value1, value2));
+			data.add(new MyArea("#" + i, value1, value2));
 		}
 
 		return data;
@@ -46,7 +46,7 @@ public class LineChartPage extends AbstractChartPage // NOSONAR
 
 	// classes //
 
-	static class MyChart extends Chart<MyLine> // NOSONAR
+	static class MyChart extends Chart<MyArea> // NOSONAR
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -55,16 +55,16 @@ public class LineChartPage extends AbstractChartPage // NOSONAR
 			super(id, newModel(), newSeries(), newOptions());
 		}
 
-		static IModel<List<MyLine>> newModel()
+		static IModel<List<MyArea>> newModel()
 		{
-			return new LoadableDetachableModel<List<MyLine>>() {
+			return new LoadableDetachableModel<List<MyArea>>() {
 
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected List<MyLine> load()
+				protected List<MyArea> load()
 				{
-					return randomLines();
+					return randomAreas();
 				}
 			};
 		}
@@ -72,8 +72,8 @@ public class LineChartPage extends AbstractChartPage // NOSONAR
 		static List<Series> newSeries()
 		{
 			List<Series> series = Generics.newArrayList();
-			series.add(new LineSeries(MyLine.SERIES_1, MyLine.VALUES_1));
-			series.add(new LineSeries(MyLine.SERIES_2, MyLine.VALUES_2));
+			series.add(new AreaSeries(MyArea.SERIES_1, MyArea.VALUES_1));
+			series.add(new AreaSeries(MyArea.SERIES_2, MyArea.VALUES_2));
 
 			return series;
 		}
@@ -81,7 +81,7 @@ public class LineChartPage extends AbstractChartPage // NOSONAR
 		static Options newOptions()
 		{
 			Options options = new Options();
-			options.set("title", "{ text: 'Sample Line Chart' }");
+			options.set("title", "{ text: 'Sample Area Chart' }");
 			options.set("legend", "{ position: 'top' }");
 			options.set("tooltip", "{ visible: true, template: '#= series.name #: #= kendo.toString(value, \"n0\") #' }");
 			options.set("categoryAxis", "{ field: 'category' }"); // MyLines#category field
@@ -90,11 +90,11 @@ public class LineChartPage extends AbstractChartPage // NOSONAR
 		}
 	}
 
-	public static class MyLine implements IClusterable
+	public static class MyArea implements IClusterable
 	{
 		private static final long serialVersionUID = 1L;
-		public static final String SERIES_1 = "line 1";
-		public static final String SERIES_2 = "line 2";
+		public static final String SERIES_1 = "area 1";
+		public static final String SERIES_2 = "area 2";
 		public static final String VALUES_1 = "value1"; // the value property
 		public static final String VALUES_2 = "value2"; // the value property
 
@@ -102,7 +102,7 @@ public class LineChartPage extends AbstractChartPage // NOSONAR
 		private final Double value1;
 		private final Double value2;
 
-		public MyLine(String category, Double value1, Double value2)
+		public MyArea(String category, Double value1, Double value2)
 		{
 			this.category = category;
 			this.value1 = value1;

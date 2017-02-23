@@ -17,18 +17,18 @@
 package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 
 /**
- * Provides a <i>line</i> series object.
+ * Provides a <i>area</i> series object.
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class LineSeries extends Series implements IStackable
+public class AreaSeries extends Series implements IStackable
 {
 	private static final long serialVersionUID = 1L;
-	private static final String TYPE = "line";
+	private static final String TYPE = "area";
 
 	private final String field;
-	private Object stack = null;	
+	private Object stack = true; // stacked by default	
 
 	/**
 	 * Constructor
@@ -36,7 +36,7 @@ public class LineSeries extends Series implements IStackable
 	 * @param name the series name
 	 * @param field the series field, it should correspond to a model object's property
 	 */
-	public LineSeries(String name, String field)
+	public AreaSeries(String name, String field)
 	{
 		super(name, TYPE);
 
@@ -50,7 +50,7 @@ public class LineSeries extends Series implements IStackable
 	 * @param field the series field, it should correspond to a model object's property
 	 * @param axis the axis on which the series should be placed
 	 */
-	public LineSeries(String name, String field, String axis)
+	public AreaSeries(String name, String field, String axis)
 	{
 		super(name, TYPE, axis);
 		
@@ -85,7 +85,7 @@ public class LineSeries extends Series implements IStackable
 	 * @param stack the stack
 	 * @return this, for chaining
 	 */
-	public LineSeries setStack(Object stack)
+	public AreaSeries setStack(Object stack)
 	{
 		this.stack = stack;
 

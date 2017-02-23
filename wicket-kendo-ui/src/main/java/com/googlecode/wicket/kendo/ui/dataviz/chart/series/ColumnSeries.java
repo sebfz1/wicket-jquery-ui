@@ -22,13 +22,13 @@ package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class ColumnSeries extends Series
+public class ColumnSeries extends Series implements IStackable
 {
 	private static final long serialVersionUID = 1L;
 	private static final String TYPE = "column";
 
 	private final String field;
-	private String stack = null;
+	private Object stack = null;
 
 	/**
 	 * Constructor
@@ -72,7 +72,8 @@ public class ColumnSeries extends Series
 	 * 
 	 * @return the stack
 	 */
-	public String getStack()
+	@Override
+	public Object getStack()
 	{
 		return this.stack;
 	}
@@ -83,7 +84,7 @@ public class ColumnSeries extends Series
 	 * @param stack the stack
 	 * @return this, for chaining
 	 */
-	public ColumnSeries setStack(String stack)
+	public ColumnSeries setStack(Object stack)
 	{
 		this.stack = stack;
 
