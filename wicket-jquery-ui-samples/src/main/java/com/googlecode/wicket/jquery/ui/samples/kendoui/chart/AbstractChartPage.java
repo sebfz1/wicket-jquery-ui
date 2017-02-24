@@ -15,7 +15,8 @@ abstract class AbstractChartPage extends KendoSamplePage // NOSONAR
 		return Arrays.asList( // lf
 				new DemoLink(LineChartPage.class, "Line Chart"), // lf
 				new DemoLink(ColumnChartPage.class, "Column Chart"), // lf
-				new DemoLink(AreaChartPage.class, "Area Chart") // lf
+				new DemoLink(AreaChartPage.class, "Area Chart"), // lf
+				new DemoLink(BubbleChartPage.class, "Bubble Chart") // lf
 		);
 	}
 }

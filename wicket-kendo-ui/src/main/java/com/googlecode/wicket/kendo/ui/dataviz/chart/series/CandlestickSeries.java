@@ -17,7 +17,7 @@
 package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 
 /**
- * Provides a <i>candlestick</i> series object.
+ * Provides a {@value #TYPE} series object
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -72,9 +72,9 @@ public class CandlestickSeries extends Series
 	}
 
 	/**
-	 * Gets the open field
+	 * Gets the 'open' field
 	 * 
-	 * @return the open field
+	 * @return the 'open' field
 	 */
 	public String getOpenField()
 	{
@@ -82,9 +82,9 @@ public class CandlestickSeries extends Series
 	}
 
 	/**
-	 * Gets the close field
+	 * Gets the 'close' field
 	 * 
-	 * @return the close field
+	 * @return the 'close' field
 	 */
 	public String getCloseField()
 	{
@@ -92,9 +92,9 @@ public class CandlestickSeries extends Series
 	}
 
 	/**
-	 * Gets the low field
+	 * Gets the 'low' field
 	 * 
-	 * @return the low field
+	 * @return the 'low' field
 	 */
 	public String getLowField()
 	{
@@ -102,9 +102,9 @@ public class CandlestickSeries extends Series
 	}
 
 	/**
-	 * Gets the high field
+	 * Gets the 'high' field
 	 * 
-	 * @return the high field
+	 * @return the 'high' field
 	 */
 	public String getHighField()
 	{

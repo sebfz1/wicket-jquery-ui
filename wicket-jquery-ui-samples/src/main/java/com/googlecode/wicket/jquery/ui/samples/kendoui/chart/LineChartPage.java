@@ -72,8 +72,8 @@ public class LineChartPage extends AbstractChartPage // NOSONAR
 		static List<Series> newSeries()
 		{
 			List<Series> series = Generics.newArrayList();
-			series.add(new LineSeries(MyLine.SERIES_1, MyLine.VALUES_1));
-			series.add(new LineSeries(MyLine.SERIES_2, MyLine.VALUES_2));
+			series.add(new LineSeries("series 1", MyLine.FIELD_1));
+			series.add(new LineSeries("series 2", MyLine.FIELD_2));
 
 			return series;
 		}
@@ -93,20 +93,18 @@ public class LineChartPage extends AbstractChartPage // NOSONAR
 	public static class MyLine implements IClusterable
 	{
 		private static final long serialVersionUID = 1L;
-		public static final String SERIES_1 = "line 1";
-		public static final String SERIES_2 = "line 2";
-		public static final String VALUES_1 = "value1"; // the value property
-		public static final String VALUES_2 = "value2"; // the value property
+		public static final String FIELD_1 = "value1"; // the value property
+		public static final String FIELD_2 = "value2"; // the value property
 
-		private final String category;
 		private final Double value1;
 		private final Double value2;
+		private final String category;
 
 		public MyLine(String category, Double value1, Double value2)
 		{
-			this.category = category;
 			this.value1 = value1;
 			this.value2 = value2;
+			this.category = category;
 		}
 
 		public String getCategory()

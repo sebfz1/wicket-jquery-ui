@@ -17,7 +17,7 @@
 package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 
 /**
- * Provides a <i>area</i> series object.
+ * Provides a {@value #TYPE} series object
  *
  * @author Sebastien Briquet - sebfz1
  *

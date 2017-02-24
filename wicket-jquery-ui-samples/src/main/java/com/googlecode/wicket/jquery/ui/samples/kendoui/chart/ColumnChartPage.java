@@ -38,7 +38,7 @@ public class ColumnChartPage extends AbstractChartPage // NOSONAR
 			value1 = value1 != null ? value1 + ListUtils.random(-10, 10) : ListUtils.random(25, 50);
 			value2 = value2 != null ? value2 + ListUtils.random(-10, 10) : ListUtils.random(25, 50);
 
-			data.add(new MyColumn("#" + i, value1, value2));
+			data.add(new MyColumn("cat. #" + i, value1, value2));
 		}
 
 		return data;
@@ -72,8 +72,8 @@ public class ColumnChartPage extends AbstractChartPage // NOSONAR
 		static List<Series> newSeries()
 		{
 			List<Series> series = Generics.newArrayList();
-			series.add(new ColumnSeries(MyColumn.SERIES_1, MyColumn.VALUES_1));
-			series.add(new ColumnSeries(MyColumn.SERIES_2, MyColumn.VALUES_2));
+			series.add(new ColumnSeries("series 1", MyColumn.FIELD_1));
+			series.add(new ColumnSeries("series 2", MyColumn.FIELD_2));
 
 			return series;
 		}
@@ -93,20 +93,18 @@ public class ColumnChartPage extends AbstractChartPage // NOSONAR
 	public static class MyColumn implements IClusterable
 	{
 		private static final long serialVersionUID = 1L;
-		public static final String SERIES_1 = "column 1";
-		public static final String SERIES_2 = "column 2";
-		public static final String VALUES_1 = "value1"; // the value property
-		public static final String VALUES_2 = "value2"; // the value property
+		public static final String FIELD_1 = "value1"; // the value property
+		public static final String FIELD_2 = "value2"; // the value property
 
-		private final String category;
 		private final Double value1;
 		private final Double value2;
+		private final String category;
 
 		public MyColumn(String category, Double value1, Double value2)
 		{
-			this.category = category;
 			this.value1 = value1;
 			this.value2 = value2;
+			this.category = category;
 		}
 
 		public String getCategory()

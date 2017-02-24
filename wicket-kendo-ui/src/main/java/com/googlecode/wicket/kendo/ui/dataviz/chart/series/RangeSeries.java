@@ -17,7 +17,7 @@
 package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 
 /**
- * Provides a <i>rangeColumn</i> series object.
+ * Provides a {@value #TYPE} series object
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -62,9 +62,9 @@ public class RangeSeries extends Series
 	}
 
 	/**
-	 * Gets the series from-field
+	 * Gets the 'from' field
 	 * 
-	 * @return the series from-field
+	 * @return the 'from' field
 	 */
 	public String getFromField()
 	{
@@ -72,9 +72,9 @@ public class RangeSeries extends Series
 	}
 
 	/**
-	 * Gets the series to-field
+	 * Gets the 'to' field
 	 * 
-	 * @return the series to-field
+	 * @return the 'to' field
 	 */
 	public String getToField()
 	{

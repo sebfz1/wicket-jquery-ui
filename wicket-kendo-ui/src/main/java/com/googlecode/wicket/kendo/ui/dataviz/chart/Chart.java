@@ -404,6 +404,7 @@ public class Chart<T> extends JQueryGenericContainer<List<T>> implements IChartL
 	 * Gets a new {@link AjaxCallbackBehavior}
 	 *
 	 * @param model the @{@code List} {@link Model}
+	 * @param converter the {@link IJsonConverter}
 	 * @return a new {@link ListModelBehavior}, by default
 	 */
 	protected AjaxCallbackBehavior newListModelBehavior(final IModel<List<T>> model, IJsonConverter<T> converter)
