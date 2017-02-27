@@ -13,10 +13,13 @@ abstract class AbstractChartPage extends KendoSamplePage // NOSONAR
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Arrays.asList( // lf
-				new DemoLink(LineChartPage.class, "Line Chart"), // lf
-				new DemoLink(ColumnChartPage.class, "Column Chart"), // lf
 				new DemoLink(AreaChartPage.class, "Area Chart"), // lf
-				new DemoLink(BubbleChartPage.class, "Bubble Chart") // lf
+				new DemoLink(BarChartPage.class, "Bar Chart"), // lf
+				new DemoLink(BubbleChartPage.class, "Bubble Chart"), // lf
+				new DemoLink(BulletChartPage.class, "Bullet Chart"), // lf
+				new DemoLink(ColumnChartPage.class, "Column Chart"), // lf
+				new DemoLink(DonutChartPage.class, "Donut Chart"), // lf
+				new DemoLink(LineChartPage.class, "Line Chart") // lf
 		);
 	}
 }

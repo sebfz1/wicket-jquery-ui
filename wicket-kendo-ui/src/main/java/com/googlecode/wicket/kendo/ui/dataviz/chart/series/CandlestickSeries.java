@@ -22,6 +22,7 @@ package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
  * @author Sebastien Briquet - sebfz1
  *
  */
+// TODO CandlestickData
 public class CandlestickSeries extends Series
 {
 	private static final long serialVersionUID = 1L;

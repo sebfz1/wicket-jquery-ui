@@ -10,14 +10,14 @@ import org.apache.wicket.util.lang.Generics;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
 import com.googlecode.wicket.kendo.ui.dataviz.chart.Chart;
-import com.googlecode.wicket.kendo.ui.dataviz.chart.series.AreaSeries;
+import com.googlecode.wicket.kendo.ui.dataviz.chart.series.BarSeries;
 import com.googlecode.wicket.kendo.ui.dataviz.chart.series.Series;
 
-public class AreaChartPage extends AbstractChartPage // NOSONAR
+public class BarChartPage extends AbstractChartPage // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
-	public AreaChartPage()
+	public BarChartPage()
 	{
 		// Chart //
 		this.add(new Chart<MyData>("chart", newModel(), newSeries(), newOptions()));
@@ -28,7 +28,7 @@ public class AreaChartPage extends AbstractChartPage // NOSONAR
 	static Options newOptions()
 	{
 		Options options = new Options();
-		options.set("title", "{ text: 'Sample Area Chart' }");
+		options.set("title", "{ text: 'Sample Bar Chart' }");
 		options.set("legend", "{ position: 'top' }");
 		options.set("tooltip", "{ visible: true, template: '#= series.name #: #= kendo.toString(value, \"n0\") #' }");
 		options.set("categoryAxis", "{ field: 'category' }"); // MyData#category field
@@ -39,8 +39,8 @@ public class AreaChartPage extends AbstractChartPage // NOSONAR
 	static List<Series> newSeries()
 	{
 		List<Series> series = Generics.newArrayList();
-		series.add(new AreaSeries("series 1", MyData.FIELD_1));
-		series.add(new AreaSeries("series 2", MyData.FIELD_2));
+		series.add(new BarSeries("series 1", MyData.FIELD_1));
+		series.add(new BarSeries("series 2", MyData.FIELD_2));
 
 		return series;
 	}
@@ -54,19 +54,19 @@ public class AreaChartPage extends AbstractChartPage // NOSONAR
 			@Override
 			protected List<MyData> load()
 			{
-				return randomAreas();
+				return randomBars();
 			}
 		};
 	}
 
-	static List<MyData> randomAreas()
+	static List<MyData> randomBars()
 	{
 		List<MyData> data = Generics.newArrayList();
 
 		Double value1 = null;
 		Double value2 = null;
 
-		for (int i = 0; i < 10; i++)
+		for (int i = 1; i <= 5; i++)
 		{
 			// smooth variation
 			value1 = value1 != null ? value1 + ListUtils.random(-10, 10) : ListUtils.random(25, 50);

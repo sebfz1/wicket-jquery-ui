@@ -19,6 +19,7 @@ package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.ajax.json.JSONString;
+import org.apache.wicket.util.io.IClusterable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +41,14 @@ public class BubbleSeries extends Series implements JSONString
 	private final String categoryField;
 
 	/**
+	 * Constructor that takes {@link BubbleData} field names
+	 */
+	public BubbleSeries()
+	{
+		this(BubbleData.FIELD_CATEGORY, BubbleData.FIELD_X, BubbleData.FIELD_Y, BubbleData.FIELD_SIZE);
+	}
+
+	/**
 	 * Constructor
 	 * 
 	 * @param categoryField the high field
@@ -58,13 +67,13 @@ public class BubbleSeries extends Series implements JSONString
 	}
 
 	/**
-	 * Gets the 'size' field
+	 * Gets the 'category' field
 	 * 
-	 * @return the 'size' field
+	 * @return the 'category' field
 	 */
-	public String getSizeField()
+	public String getCategoryField()
 	{
-		return this.sizeField;
+		return this.categoryField;
 	}
 
 	/**
@@ -72,9 +81,9 @@ public class BubbleSeries extends Series implements JSONString
 	 * 
 	 * @return the 'size' field
 	 */
-	public String getCategoryField()
+	public String getSizeField()
 	{
-		return this.categoryField;
+		return this.sizeField;
 	}
 
 	/**
@@ -99,5 +108,81 @@ public class BubbleSeries extends Series implements JSONString
 		}
 
 		return object.toString();
+	}
+
+	// classes //
+
+	/**
+	 * Provides a data bean for {@link BubbleSeries}
+	 */
+	public static class BubbleData implements IClusterable
+	{
+		private static final long serialVersionUID = 1L;
+
+		public static final String FIELD_X = "x"; // xField
+		public static final String FIELD_Y = "y"; // yField
+		public static final String FIELD_SIZE = "size"; // sizeField
+		public static final String FIELD_CATEGORY = "category"; // category
+
+		private final Double x;
+		private final Double y;
+		private final Double size;
+		private final String category;
+
+		/**
+		 * Constructor
+		 * 
+		 * @param category the category
+		 * @param x the x value
+		 * @param y the y value
+		 * @param size the size value
+		 */
+		public BubbleData(String category, Double x, Double y, Double size)
+		{
+			this.x = x;
+			this.y = y;
+			this.size = size;
+			this.category = category;
+		}
+
+		/**
+		 * Gets the x value
+		 * 
+		 * @return the x value
+		 */
+		public Double getX()
+		{
+			return this.x;
+		}
+
+		/**
+		 * Gets the y value
+		 * 
+		 * @return the y value
+		 */
+		public Double getY()
+		{
+			return this.y;
+		}
+
+		/**
+		 * Gets the size value
+		 * 
+		 * @return the size value
+		 */
+		public Double getSize()
+		{
+			return this.size;
+		}
+
+		/**
+		 * Gets the category
+		 * 
+		 * @return the category
+		 */
+		public String getCategory()
+		{
+			return this.category;
+		}
 	}
 }

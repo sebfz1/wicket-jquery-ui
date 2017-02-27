@@ -51,18 +51,6 @@ public class ListUtils
 	}
 
 	/**
-	 * Returns a pseudo-random {@code int} value between the minimum (inclusive) and the maximum bound (exclusive)
-	 * 
-	 * @param min the minimum bound (inclusive)
-	 * @param max the maximum bound (exclusive)
-	 * @return a pseudo-random {@code int}
-	 */
-	public static int random(int min, int max)
-	{
-		return min + random(max - min);
-	}
-
-	/**
 	 * Gets a random object from the supplied array
 	 * 
 	 * @param array the array
@@ -94,6 +82,18 @@ public class ListUtils
 		}
 
 		return null;
+	}
+
+	/**
+	 * Returns a pseudo-random {@code double} value between the minimum (inclusive) and the maximum bound (exclusive)
+	 * 
+	 * @param min the minimum bound (inclusive)
+	 * @param max the maximum bound (exclusive)
+	 * @return a pseudo-random {@code double}
+	 */
+	public static double random(int min, int max)
+	{
+		return min + Math.random() * (max - min);
 	}
 
 	/**

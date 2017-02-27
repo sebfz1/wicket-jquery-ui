@@ -20,14 +20,48 @@ public class ColumnChartPage extends AbstractChartPage // NOSONAR
 	public ColumnChartPage()
 	{
 		// Chart //
-		this.add(new MyChart("chart"));
+		this.add(new Chart<MyData>("chart", newModel(), newSeries(), newOptions()));
 	}
 
 	// statics //
 
-	static List<MyColumn> randomColumns()
+	static Options newOptions()
 	{
-		List<MyColumn> data = Generics.newArrayList();
+		Options options = new Options();
+		options.set("title", "{ text: 'Sample Column Chart' }");
+		options.set("legend", "{ position: 'top' }");
+		options.set("tooltip", "{ visible: true, template: '#= series.name #: #= kendo.toString(value, \"n0\") #' }");
+		options.set("categoryAxis", "{ field: 'category' }"); // MyData#category field
+
+		return options;
+	}
+
+	static List<Series> newSeries()
+	{
+		List<Series> series = Generics.newArrayList();
+		series.add(new ColumnSeries("series 1", MyData.FIELD_1));
+		series.add(new ColumnSeries("series 2", MyData.FIELD_2));
+
+		return series;
+	}
+
+	static IModel<List<MyData>> newModel()
+	{
+		return new LoadableDetachableModel<List<MyData>>() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected List<MyData> load()
+			{
+				return randomColumns();
+			}
+		};
+	}
+
+	static List<MyData> randomColumns()
+	{
+		List<MyData> data = Generics.newArrayList();
 
 		Double value1 = null;
 		Double value2 = null;
@@ -38,7 +72,7 @@ public class ColumnChartPage extends AbstractChartPage // NOSONAR
 			value1 = value1 != null ? value1 + ListUtils.random(-10, 10) : ListUtils.random(25, 50);
 			value2 = value2 != null ? value2 + ListUtils.random(-10, 10) : ListUtils.random(25, 50);
 
-			data.add(new MyColumn("cat. #" + i, value1, value2));
+			data.add(new MyData("cat. #" + i, value1, value2));
 		}
 
 		return data;
@@ -46,65 +80,21 @@ public class ColumnChartPage extends AbstractChartPage // NOSONAR
 
 	// classes //
 
-	static class MyChart extends Chart<MyColumn> // NOSONAR
-	{
-		private static final long serialVersionUID = 1L;
-
-		public MyChart(String id)
-		{
-			super(id, newModel(), newSeries(), newOptions());
-		}
-
-		static IModel<List<MyColumn>> newModel()
-		{
-			return new LoadableDetachableModel<List<MyColumn>>() {
-
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				protected List<MyColumn> load()
-				{
-					return randomColumns();
-				}
-			};
-		}
-
-		static List<Series> newSeries()
-		{
-			List<Series> series = Generics.newArrayList();
-			series.add(new ColumnSeries("series 1", MyColumn.FIELD_1));
-			series.add(new ColumnSeries("series 2", MyColumn.FIELD_2));
-
-			return series;
-		}
-
-		static Options newOptions()
-		{
-			Options options = new Options();
-			options.set("title", "{ text: 'Sample Column Chart' }");
-			options.set("legend", "{ position: 'top' }");
-			options.set("tooltip", "{ visible: true, template: '#= series.name #: #= kendo.toString(value, \"n0\") #' }");
-			options.set("categoryAxis", "{ field: 'category' }"); // MyLines#category field
-
-			return options;
-		}
-	}
-
-	public static class MyColumn implements IClusterable
+	public static class MyData implements IClusterable
 	{
 		private static final long serialVersionUID = 1L;
 		public static final String FIELD_1 = "value1"; // the value property
 		public static final String FIELD_2 = "value2"; // the value property
 
+		private final String category;
 		private final Double value1;
 		private final Double value2;
-		private final String category;
 
-		public MyColumn(String category, Double value1, Double value2)
+		public MyData(String category, Double value1, Double value2)
 		{
+			this.category = category;
 			this.value1 = value1;
 			this.value2 = value2;
-			this.category = category;
 		}
 
 		public String getCategory()
