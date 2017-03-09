@@ -18,6 +18,8 @@ package com.googlecode.wicket.kendo.ui.scheduler;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes.Method;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
@@ -358,13 +360,21 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'edit' event
 	 */
-	protected abstract class OnEditAjaxBehavior extends JQueryAjaxBehavior
+	protected abstract static class OnEditAjaxBehavior extends JQueryAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
 		public OnEditAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
+		}
+
+		@Override
+		protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
+		{
+			super.updateAjaxAttributes(attributes);
+
+			attributes.setMethod(Method.POST); // #259
 		}
 
 		@Override
@@ -393,13 +403,21 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 	/**
 	 * Provides a {@link JQueryAjaxBehavior} for handling datasource operations
 	 */
-	protected abstract class DataSourceAjaxBehavior extends JQueryAjaxBehavior
+	protected abstract static class DataSourceAjaxBehavior extends JQueryAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
 
 		public DataSourceAjaxBehavior(IJQueryAjaxAware source)
 		{
 			super(source);
+		}
+
+		@Override
+		protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
+		{
+			super.updateAjaxAttributes(attributes);
+
+			attributes.setMethod(Method.POST); // #259
 		}
 
 		@Override
@@ -474,19 +492,22 @@ public abstract class SchedulerBehavior extends KendoUIBehavior implements IJQue
 
 		public SchedulerPayload()
 		{
-			String data = RequestCycleUtils.getQueryParameterValue("data").toString();
+			String data = RequestCycleUtils.getRequestParameterValue("data").toString();
 
-			try
+			if (data != null)
 			{
-				this.object = new JSONObject(data);
-			}
-			catch (JSONException e)
-			{
-				LOG.warn(e.getMessage(), e);
+				try
+				{
+					this.object = new JSONObject(data);
+				}
+				catch (JSONException e)
+				{
+					LOG.warn(e.getMessage(), e);
+				}
 			}
 
 			// View //
-			String view = RequestCycleUtils.getQueryParameterValue("view").toString();
+			String view = RequestCycleUtils.getRequestParameterValue("view").toString();
 
 			if (view != null)
 			{
