@@ -16,12 +16,9 @@
  */
 package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 
-import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.ajax.json.JSONString;
 import org.apache.wicket.util.io.IClusterable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides a {@value #TYPE} series object
