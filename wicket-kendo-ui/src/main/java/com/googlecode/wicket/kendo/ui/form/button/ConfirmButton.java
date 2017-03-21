@@ -138,7 +138,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 	 */
 	protected String getIcon()
 	{
-		return KendoIcon.NOTE;
+		return KendoIcon.WARNING;
 	}
 
 	// Factories //
@@ -154,7 +154,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 	 */
 	protected Window<?> newWindow(String id, IModel<String> title, IModel<String> message)
 	{
-		return new MessageWindow(id, title, message, WindowButtons.OK_CANCEL, KendoIcon.NOTE) {
+		return new MessageWindow(id, title, message, WindowButtons.OK_CANCEL, KendoIcon.QUESTION) {
 
 			private static final long serialVersionUID = 1L;
 
