@@ -305,6 +305,7 @@ public abstract class InputWindow<T> extends Window<T>
 
 		public AutoFocusBehavior()
 		{
+			// noop
 		}
 
 		@Override

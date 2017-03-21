@@ -6,6 +6,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.lang.Generics;
+import org.threeten.bp.LocalDate;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
@@ -31,7 +32,8 @@ public class ColumnChartPage extends AbstractChartPage // NOSONAR
 		options.set("title", "{ text: 'Sample Column Chart' }");
 		options.set("legend", "{ position: 'top' }");
 		options.set("tooltip", "{ visible: true, template: '#= series.name #: #= kendo.toString(value, \"n0\") #' }");
-		options.set("categoryAxis", "{ field: 'category' }"); // MyData#category field
+		options.set("categoryAxis", "{ field: 'category', baseUnit: 'days', labels: { format: '{0:dd MMM}' } }"); // MyData#category field
+		// FIXME format label
 
 		return options;
 	}
@@ -65,14 +67,15 @@ public class ColumnChartPage extends AbstractChartPage // NOSONAR
 
 		Double value1 = null;
 		Double value2 = null;
+		LocalDate date = LocalDate.now();
 
-		for (int i = 1; i <= 10; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			// smooth variation
 			value1 = value1 != null ? value1 + ListUtils.random(-10, 10) : ListUtils.random(25, 50);
 			value2 = value2 != null ? value2 + ListUtils.random(-10, 10) : ListUtils.random(25, 50);
 
-			data.add(new MyData("cat. #" + i, value1, value2));
+			data.add(new MyData(date.plusDays(i), value1, value2));
 		}
 
 		return data;
@@ -86,11 +89,11 @@ public class ColumnChartPage extends AbstractChartPage // NOSONAR
 		public static final String FIELD_1 = "value1"; // the value property
 		public static final String FIELD_2 = "value2"; // the value property
 
-		private final String category;
+		private final LocalDate category;
 		private final Double value1;
 		private final Double value2;
 
-		public MyData(String category, Double value1, Double value2)
+		public MyData(LocalDate category, Double value1, Double value2)
 		{
 			this.category = category;
 			this.value1 = value1;
@@ -99,7 +102,7 @@ public class ColumnChartPage extends AbstractChartPage // NOSONAR
 
 		public String getCategory()
 		{
-			return this.category;
+			return String.valueOf(this.category);
 		}
 
 		public Double getValue1()

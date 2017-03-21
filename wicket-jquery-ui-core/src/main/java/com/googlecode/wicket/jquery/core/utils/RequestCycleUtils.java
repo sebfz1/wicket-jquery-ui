@@ -70,7 +70,7 @@ public class RequestCycleUtils
 	/**
 	 * Gets the value of a query parameter
 	 *
-	 * @param name the name of the parameter
+	 * @param name the name of the query parameter
 	 * @return a {@link StringValue}
 	 */
 	public static StringValue getQueryParameterValue(String name)
@@ -84,7 +84,7 @@ public class RequestCycleUtils
 	/**
 	 * Gets the values of a query parameter
 	 *
-	 * @param name the name of the parameter
+	 * @param name the name of the query parameter
 	 * @return a {@link List} of {@link StringValue}
 	 */
 	public static List<StringValue> getQueryParameterValues(String name)
@@ -98,7 +98,7 @@ public class RequestCycleUtils
 	/**
 	 * Gets the value of a post parameter
 	 *
-	 * @param name the name of the parameter
+	 * @param name the name of the post parameter
 	 * @return a {@link StringValue}
 	 */
 	public static StringValue getPostParameterValue(String name)
@@ -112,7 +112,7 @@ public class RequestCycleUtils
 	/**
 	 * Gets the values of a post parameter
 	 *
-	 * @param name the name of the parameter
+	 * @param name the name of the post parameter
 	 * @return a {@link List} of {@link StringValue}
 	 */
 	public static List<StringValue> getPostParameterValues(String name)
