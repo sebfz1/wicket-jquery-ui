@@ -99,7 +99,7 @@ public class TextRenderer<T> implements ITextRenderer<T>
 
 			if (value != null)
 			{
-				return value.toString();
+				return value.toString().replace("\"", "\\\"");
 			}
 		}
 
