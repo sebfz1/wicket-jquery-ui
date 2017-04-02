@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.jqueryui.menu;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
