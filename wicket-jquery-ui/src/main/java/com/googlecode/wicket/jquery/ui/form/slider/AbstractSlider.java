@@ -104,13 +104,12 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	 * <b>Warning:</b> it does not define the minimum and maximum values the slider can slide on, but only valid ones.<br>
 	 * To define the minimum and maximum values the slider can slide on, use {@link #setMin(Integer)} and {@link #setMax(Integer)}<br>
 	 * <br>
-	 * <b>Dev note:</b> this method is masked abstract to make sure the developer that will add the validator to the right input(s) in {@link #onInitialize()}
+	 * <b>Dev note:</b> this method is marked as abstract to make sure the developer that will add the validator to the right input(s) in {@link #onInitialize()}
 	 *
-	 * @param <W> the widget type
 	 * @param validator the {@link RangeValidator}
 	 * @return this
 	 */
-	public abstract <W extends AbstractSlider<T>> W setRangeValidator(RangeValidator<Integer> validator);
+	public abstract AbstractSlider<T> setRangeValidator(RangeValidator<Integer> validator);
 
 	// Properties //
 
@@ -170,60 +169,57 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	}
 
 	// Options //
+
 	/**
 	 * Sets the min value
 	 *
-	 * @param <W> the widget type
 	 * @param min the min value
 	 * @return this, for chaining
 	 */
-	@SuppressWarnings("unchecked")
-	public <W extends AbstractSlider<T>> W setMin(Integer min)
+	public AbstractSlider<T> setMin(Integer min)
 	{
 		this.options.set("min", min);
-		return (W) this;
+
+		return this;
 	}
 
 	/**
 	 * Sets the max value
 	 *
-	 * @param <W> the widget type
 	 * @param max the max value
 	 * @return this, for chaining
 	 */
-	@SuppressWarnings("unchecked")
-	public <W extends AbstractSlider<T>> W setMax(Integer max)
+	public AbstractSlider<T> setMax(Integer max)
 	{
 		this.options.set("max", max);
-		return (W) this;
+
+		return this;
 	}
 
 	/**
 	 * Sets the step value
 	 *
-	 * @param <W> the widget type
 	 * @param step the step value
 	 * @return this, for chaining
 	 */
-	@SuppressWarnings("unchecked")
-	public <W extends AbstractSlider<T>> W setStep(Integer step)
+	public AbstractSlider<T> setStep(Integer step)
 	{
 		this.options.set("step", step);
-		return (W) this;
+
+		return this;
 	}
 
 	/**
 	 * Sets the {@link Orientation}
 	 *
-	 * @param <W> the widget type
 	 * @param orientation the {@code Orientation}
 	 * @return this, for chaining
 	 */
-	@SuppressWarnings("unchecked")
-	public <W extends AbstractSlider<T>> W setOrientation(Orientation orientation)
+	public AbstractSlider<T> setOrientation(Orientation orientation)
 	{
 		this.options.set("orientation", orientation);
-		return (W) this;
+
+		return this;
 	}
 
 	/**

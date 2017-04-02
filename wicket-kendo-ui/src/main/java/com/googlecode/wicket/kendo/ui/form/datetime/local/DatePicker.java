@@ -261,7 +261,7 @@ public class DatePicker extends LocalTextField<LocalDate> // NOSONAR
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public LocalDate convertToObject(String value, Locale locale) throws ConversionException
+			public LocalDate convertToObject(String value, Locale locale)
 			{
 				try
 				{
