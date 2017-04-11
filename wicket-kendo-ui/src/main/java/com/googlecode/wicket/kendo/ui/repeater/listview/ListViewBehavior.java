@@ -181,7 +181,6 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 		schema.set("total", Options.asString("__count"));
 
 		// data-source //
-		this.onConfigure(this.dataSource);
 		this.setOption("dataSource", this.getDataSourceName());
 
 		this.dataSource.set("schema", schema);
@@ -191,6 +190,8 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 		this.dataSource.setTransportCreate(this.onCreateAjaxBehavior.getCallbackFunction());
 		this.dataSource.setTransportUpdate(this.onUpdateAjaxBehavior.getCallbackFunction());
 		this.dataSource.setTransportDelete(this.onDeleteAjaxBehavior.getCallbackFunction());
+
+		this.onConfigure(this.dataSource); // last chance to set options
 
 		// events //
 		if (this.onChangeAjaxBehavior != null)

@@ -26,7 +26,7 @@ public class AjaxDropDownPage extends AbstractDropDownPage
 		final KendoFeedbackPanel feedback = new KendoFeedbackPanel("feedback");
 		form.add(feedback);
 
-		// ComboBox //
+		// DropDownList //
 		final DropDownList<String> dropdown = new AjaxDropDownList<String>("select", new Model<String>(), new ListModel<String>(GENRES)) {
 
 			private static final long serialVersionUID = 1L;
