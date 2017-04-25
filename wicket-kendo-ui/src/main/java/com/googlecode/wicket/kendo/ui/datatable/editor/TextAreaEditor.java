@@ -18,7 +18,7 @@ package com.googlecode.wicket.kendo.ui.datatable.editor;
 
 
 /**
- * Provides a simple {@link IKendoEditor} editor, based on a textarea
+ * Provides a {@link IKendoEditor} editor, based on a textarea
  * 
  * @author Sebastien Briquet - sebfz1
  * @see KendoEditorHeaderItem

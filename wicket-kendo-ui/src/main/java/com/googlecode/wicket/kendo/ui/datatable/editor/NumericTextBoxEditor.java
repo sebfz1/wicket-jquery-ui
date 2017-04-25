@@ -16,75 +16,62 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable.editor;
 
-import org.apache.wicket.ajax.json.JSONArray;
-
-import com.googlecode.wicket.jquery.core.utils.JsonUtils;
+import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a {@link IKendoEditor} editor, based on a list of string (not on json objects)
+ * Provides a {@link IKendoEditor} editor, based on a {@code kendoNumericTextBox}
  * 
  * @author Sebastien Briquet - sebfz1
  * @see KendoEditorHeaderItem
  */
-public class DropDownListEditor implements IKendoEditor
+public class NumericTextBoxEditor implements IKendoEditor
 {
 	protected final String name;
-	protected final JSONArray array;
+	protected final Options options;
 
 	/**
 	 * Constructor, for inline inclusion
-	 * 
-	 * @param values the values
 	 */
-	public DropDownListEditor(String[] values)
+	public NumericTextBoxEditor()
 	{
-		this("", values);
+		this("", new Options());
 	}
 
 	/**
 	 * Constructor, for inline inclusion
-	 * 
-	 * @param values the values
 	 */
-	public DropDownListEditor(Enum<?>[] values)
+	public NumericTextBoxEditor(Options options)
 	{
-		this("", values);
+		this("", options);
 	}
 
 	/**
 	 * Constructor
 	 * 
 	 * @param name the name of the function
-	 * @param values the values
 	 */
-	public DropDownListEditor(String name, String[] values)
+	public NumericTextBoxEditor(String name)
 	{
-		this.name = name;
-		this.array = JsonUtils.toArray(values);
+		this(name, new Options());
 	}
 
 	/**
 	 * Constructor
 	 * 
 	 * @param name the name of the function
-	 * @param values the enum values
 	 */
-	public DropDownListEditor(String name, Enum<?>[] values)
+	public NumericTextBoxEditor(String name, Options options)
 	{
 		this.name = name;
-		this.array = JsonUtils.toArray(values);
+		this.options = options;
 	}
 
 	@Override
 	public String toString()
 	{
 		return "function " + this.name + "(container, options) { " // lf
-				+ "jQuery('<input required data-bind=\"value:' + options.field + '\"/>')" // lf
-				+ ".appendTo(container)" // lf
-				+ ".kendoDropDownList({ " // lf
-				+ "  autoBind: false," // lf
-				+ "  dataSource: " + this.array // lf
-				+ " }); " // lf
+				+ "$('<input data-bind=\"value:' + options.field + '\"/>')" // lf
+				+ ".appendTo(container).kendoNumericTextBox(" + this.options + ");" // lf
 				+ "}";
 	}
 }
