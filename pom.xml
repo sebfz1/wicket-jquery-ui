@@ -60,7 +60,7 @@
 		</repository>
 		<repository>
 			<id>Wicket Nexus Staging</id>
-			<url>https://repository.apache.org/content/repositories/orgapachewicket-1087</url>
+			<url>https://repository.apache.org/content/repositories/orgapachewicket-1089</url>
 		</repository>
 	</repositories>
 
