@@ -7,6 +7,7 @@ import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.resource.DynamicJQueryResourceReference;
+import org.apache.wicket.util.lang.Generics;
 
 /**
  * Provides the {@link ResourceReference} for the {@code jquery-migrate-3.0.0.js} javascript library (CDN).<br>
@@ -44,7 +45,7 @@ public class JQueryMigrateResourceReference extends JQueryUrlResourceReference
 	 *
 	 * @return the single instance of the resource reference
 	 */
-	public static JQueryUrlResourceReference get()
+	public static JQueryMigrateResourceReference get()
 	{
 		return INSTANCE;
 	}
@@ -52,6 +53,9 @@ public class JQueryMigrateResourceReference extends JQueryUrlResourceReference
 	@Override
 	public List<HeaderItem> getDependencies()
 	{
-		return Arrays.asList(JavaScriptHeaderItem.forReference(DynamicJQueryResourceReference.get()));
+		List<HeaderItem> dependencies = Generics.newArrayList();
+		dependencies.add(JavaScriptHeaderItem.forReference(DynamicJQueryResourceReference.get()));
+
+		return dependencies;
 	}
 }
