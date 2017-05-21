@@ -16,11 +16,8 @@
  */
 package com.googlecode.wicket.kendo.ui.widget.treeview;
 
-import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.io.IClusterable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides a factory for building {@link TreeNode}{@code s} as JSON
@@ -31,7 +28,6 @@ import org.slf4j.LoggerFactory;
 public class TreeNodeFactory implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = LoggerFactory.getLogger(TreeNodeFactory.class);
 
 	/** node-id (also identifies the request parameter on ajax call */
 	public static final String ID_FIELD = "nid";
@@ -51,23 +47,16 @@ public class TreeNodeFactory implements IClusterable
 	{
 		JSONObject json = new JSONObject();
 
-		try
+		if (node != null)
 		{
-			if (node != null)
-			{
-				json.put(ID_FIELD, node.getId());
-				json.put(TEXT_FIELD, node.getText());
-				json.put(CHILDREN_FIELD, node.hasChildren());
+			json.put(ID_FIELD, node.getId());
+			json.put(TEXT_FIELD, node.getText());
+			json.put(CHILDREN_FIELD, node.hasChildren());
 
-				if (node.hasUrl())
-				{
-					json.put(URL_FIELD, node.getUrl());
-				}
+			if (node.hasUrl())
+			{
+				json.put(URL_FIELD, node.getUrl());
 			}
-		}
-		catch (JSONException e)
-		{
-			LOG.error(e.getMessage(), e);
 		}
 
 		return json;

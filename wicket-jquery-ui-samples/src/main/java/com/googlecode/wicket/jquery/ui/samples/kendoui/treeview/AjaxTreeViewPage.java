@@ -2,10 +2,7 @@ package com.googlecode.wicket.jquery.ui.samples.kendoui.treeview;
 
 import java.util.List;
 
-import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
@@ -20,7 +17,6 @@ import com.googlecode.wicket.kendo.ui.widget.treeview.TreeViewModel;
 public class AjaxTreeViewPage extends AbstractTreeViewPage
 {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = LoggerFactory.getLogger(AjaxTreeViewPage.class);
 
 	public AjaxTreeViewPage()
 	{
@@ -66,14 +62,7 @@ public class AjaxTreeViewPage extends AbstractTreeViewPage
 
 						if (node.getObject() instanceof Band)
 						{
-							try
-							{
-								object.put("desc", ((Band) node.getObject()).getDesc());
-							}
-							catch (JSONException e) // wicket6
-							{
-								LOG.warn(e.getMessage(), e);
-							}
+							object.put("desc", ((Band) node.getObject()).getDesc());
 						}
 
 						return object;

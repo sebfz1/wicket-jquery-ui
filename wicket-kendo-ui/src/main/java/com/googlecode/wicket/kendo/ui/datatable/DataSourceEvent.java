@@ -16,10 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable;
 
-import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
@@ -32,22 +29,12 @@ import com.googlecode.wicket.kendo.ui.KendoDataSource;
  */
 public class DataSourceEvent extends JQueryEvent
 {
-	private final Logger LOG = LoggerFactory.getLogger(DataSourceEvent.class);
-
-	private JSONObject object;
+	private final JSONObject object;
 
 	public DataSourceEvent()
 	{
 		String data = RequestCycleUtils.getQueryParameterValue("data").toString("{}");
-
-		try
-		{
-			this.object = new JSONObject(data);
-		}
-		catch (JSONException e)
-		{
-			LOG.warn(e.getMessage());
-		}
+		this.object = new JSONObject(data);
 	}
 
 	public JSONObject getObject()

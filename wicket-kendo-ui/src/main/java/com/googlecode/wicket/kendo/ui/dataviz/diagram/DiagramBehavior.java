@@ -19,12 +19,9 @@ package com.googlecode.wicket.kendo.ui.dataviz.diagram;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
-import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -189,7 +186,6 @@ public abstract class DiagramBehavior extends KendoUIBehavior implements IJQuery
 	 */
 	protected static class ClickEvent extends JQueryEvent
 	{
-		private static final Logger log = LoggerFactory.getLogger(ClickEvent.class);
 		private JSONObject object = null;
 
 		public ClickEvent()
@@ -198,14 +194,7 @@ public abstract class DiagramBehavior extends KendoUIBehavior implements IJQuery
 
 			if (!Strings.isEmpty(data))
 			{
-				try
-				{
-					this.object = new JSONObject(data);
-				}
-				catch (JSONException e)
-				{
-					log.warn(e.getMessage(), e);
-				}
+				this.object = new JSONObject(data);
 			}
 		}
 

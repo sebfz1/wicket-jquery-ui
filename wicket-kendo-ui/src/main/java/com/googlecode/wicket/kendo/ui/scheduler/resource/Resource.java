@@ -21,12 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.googlecode.wicket.jquery.core.utils.JsonUtils;
 
 /**
  * Defines a resource for the Kendo UI Scheduler<br>
@@ -41,7 +36,6 @@ import com.googlecode.wicket.jquery.core.utils.JsonUtils;
 public class Resource implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(JsonUtils.class);
 
 	private final Object id;
 	private String text;
@@ -241,20 +235,13 @@ public class Resource implements Serializable
 	{
 		JSONObject object = new JSONObject();
 
-		try
-		{
-			object.put("value", this.id);
-			object.put("text", this.text);
-			object.putOpt("color", this.color); // may be null
+		object.put("value", this.id);
+		object.put("text", this.text);
+		object.putOpt("color", this.color); // may be null
 
-			for (Entry<String, Object> entry : this.fields.entrySet())
-			{
-				object.put(entry.getKey(), entry.getValue());
-			}
-		}
-		catch (JSONException e)
+		for (Entry<String, Object> entry : this.fields.entrySet())
 		{
-			log.warn(e.getMessage(), e);
+			object.put(entry.getKey(), entry.getValue());
 		}
 
 		return object.toString();

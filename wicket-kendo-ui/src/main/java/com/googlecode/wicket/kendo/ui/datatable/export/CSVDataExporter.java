@@ -31,6 +31,7 @@ import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
 import org.apache.wicket.util.resource.AbstractResourceStreamWriter;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.IResourceStreamWriter;
+import org.apache.wicket.util.lang.Generics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,56 +56,6 @@ public class CSVDataExporter implements IDataExporter
 
 	private static final char delimiter = ',';
 	private static final String characterSet = "utf-8";
-
-	public static void export(DataTable<?> table, String filename)
-	{
-		CSVDataExporter.export(RequestCycle.get(), table, filename);
-	}
-
-	/**
-	 * Exports {@link DataTable} data to a CSV file
-	 *
-	 * @param cycle the {@link RequestCycle}
-	 * @param table the {@link DataTable}
-	 * @param filename the file name of the output
-	 */
-	public static void export(RequestCycle cycle, final DataTable<?> table, String filename)
-	{
-		List<IExportableColumn> columns = new ArrayList<IExportableColumn>();
-
-		for (IColumn column : table.getColumns())
-		{
-			if (column instanceof IExportableColumn)
-			{
-				columns.add((IExportableColumn) column);
-			}
-		}
-
-		CSVDataExporter.export(cycle, table.getDataProvider(), columns, filename);
-	}
-
-	/**
-	 * Exports {@link DataTable} data to a CSV file
-	 *
-	 * @param cycle the {@link RequestCycle}
-	 * @param provider the {@link IDataProvider}
-	 * @param columns the list of {@link IExportableColumn}
-	 * @param filename the file name of the output
-	 */
-	public static void export(RequestCycle cycle, final IDataProvider<?> provider, final List<IExportableColumn> columns, String filename)
-	{
-		IResourceStream stream = new DataExporterResourceStreamWriter(new CSVDataExporter(), provider, columns);
-		cycle.scheduleRequestHandlerAfterCurrent(new ResourceStreamRequestHandler(stream, filename));
-
-		try
-		{
-			stream.close();
-		}
-		catch (IOException e)
-		{
-			LOG.error(e.getMessage(), e);
-		}
-	}
 
 	private final String contentType;
 	private boolean exportHeadersEnabled = true;
@@ -277,6 +228,58 @@ public class CSVDataExporter implements IDataExporter
 		finally
 		{
 			writer.close();
+		}
+	}
+
+	public static void export(DataTable<?> table, String filename)
+	{
+		CSVDataExporter.export(RequestCycle.get(), table, filename);
+	}
+
+	// Statics //
+
+	/**
+	 * Exports {@link DataTable} data to a CSV file
+	 *
+	 * @param cycle the {@link RequestCycle}
+	 * @param table the {@link DataTable}
+	 * @param filename the file name of the output
+	 */
+	public static void export(RequestCycle cycle, final DataTable<?> table, String filename)
+	{
+		List<IExportableColumn> columns = Generics.newArrayList();
+
+		for (IColumn column : table.getColumns())
+		{
+			if (column instanceof IExportableColumn)
+			{
+				columns.add((IExportableColumn) column);
+			}
+		}
+
+		CSVDataExporter.export(cycle, table.getDataProvider(), columns, filename);
+	}
+
+	/**
+	 * Exports {@link DataTable} data to a CSV file
+	 *
+	 * @param cycle the {@link RequestCycle}
+	 * @param provider the {@link IDataProvider}
+	 * @param columns the list of {@link IExportableColumn}
+	 * @param filename the file name of the output
+	 */
+	public static void export(RequestCycle cycle, final IDataProvider<?> provider, final List<IExportableColumn> columns, String filename)
+	{
+		IResourceStream stream = new DataExporterResourceStreamWriter(new CSVDataExporter(), provider, columns);
+		cycle.scheduleRequestHandlerAfterCurrent(new ResourceStreamRequestHandler(stream, filename));
+
+		try
+		{
+			stream.close();
+		}
+		catch (IOException e)
+		{
+			LOG.error(e.getMessage(), e);
 		}
 	}
 

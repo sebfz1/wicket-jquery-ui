@@ -23,12 +23,9 @@ import java.util.regex.Pattern;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
-import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Generics;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -356,8 +353,6 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 	 */
 	protected static class ChangeEvent extends JQueryEvent
 	{
-		private final Logger LOG = LoggerFactory.getLogger(ChangeEvent.class);
-
 		/** simple json object pattern */
 		private static final Pattern PATTERN = Pattern.compile("(\\{.*?\\})");
 
@@ -372,14 +367,7 @@ public abstract class ListViewBehavior extends KendoUIBehavior implements IJQuer
 
 			while (matcher.find())
 			{
-				try
-				{
-					this.objects.add(new JSONObject(matcher.group()));
-				}
-				catch (JSONException e)
-				{
-					LOG.warn(e.getMessage());
-				}
+				this.objects.add(new JSONObject(matcher.group()));
 			}
 		}
 

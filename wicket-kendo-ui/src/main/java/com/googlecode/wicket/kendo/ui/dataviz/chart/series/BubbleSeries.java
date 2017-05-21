@@ -16,12 +16,9 @@
  */
 package com.googlecode.wicket.kendo.ui.dataviz.chart.series;
 
-import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.ajax.json.JSONString;
 import org.apache.wicket.util.io.IClusterable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides a {@value #TYPE} series object
@@ -32,7 +29,6 @@ import org.slf4j.LoggerFactory;
 public class BubbleSeries extends Series implements JSONString
 {
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(BubbleSeries.class);
 	private static final String TYPE = "bubble";
 
 	private final String xField;
@@ -96,16 +92,8 @@ public class BubbleSeries extends Series implements JSONString
 	public String toJSONString()
 	{
 		JSONObject object = new JSONObject(this);
-
-		try
-		{
-			object.put("xField", this.xField);
-			object.put("yField", this.yField);
-		}
-		catch (JSONException e)
-		{
-			log.error(e.getMessage(), e);
-		}
+		object.put("xField", this.xField);
+		object.put("yField", this.yField);
 
 		return object.toString();
 	}
