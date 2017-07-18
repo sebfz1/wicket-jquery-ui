@@ -278,7 +278,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	 * @param button the {@code CommandButton}
 	 * @return {@code null} if no {@code CommandAjaxBehavior} is associated to the button
 	 */
-	private static JQueryAjaxBehavior getCommandAjaxBehavior(CommandButton button, List<CommandAjaxBehavior> behaviors)
+	public static JQueryAjaxBehavior getCommandAjaxBehavior(CommandButton button, List<CommandAjaxBehavior> behaviors)
 	{
 		for (CommandAjaxBehavior behavior : behaviors)
 		{
@@ -344,8 +344,6 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		List<IColumn> columns = this.columns.getObject();
 
 		// this.setOption("edit", this.onEditAjaxBehavior.getCallbackFunction());
@@ -389,6 +387,8 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 			this.off(selector, "click");
 			this.on(selector, "click", behavior.getCallbackFunction());
 		}
+		
+		super.onConfigure(component);		
 	}
 
 	/**
@@ -427,17 +427,17 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 
 		if (event instanceof CreateEvent)
 		{
-			this.listener.onCreate(target, ((CreateEvent) event).getObject());
+			this.listener.onCreate(target, ((DataSourceEvent) event).getObject());
 		}
 
 		if (event instanceof UpdateEvent)
 		{
-			this.listener.onUpdate(target, ((UpdateEvent) event).getObject());
+			this.listener.onUpdate(target, ((DataSourceEvent) event).getObject());
 		}
 
 		if (event instanceof DeleteEvent)
 		{
-			this.listener.onDelete(target, ((DeleteEvent) event).getObject());
+			this.listener.onDelete(target, ((DataSourceEvent) event).getObject());
 		}
 	}
 
@@ -458,12 +458,12 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		{
 			if (column.getField() != null)
 			{
-				Options field = new Options();
-
 				if (column instanceof IdPropertyColumn)
 				{
 					model.set("id", Options.asString(column.getField()));
 				}
+
+				Options field = new Options();
 
 				if (column.isEditable() != null)
 				{

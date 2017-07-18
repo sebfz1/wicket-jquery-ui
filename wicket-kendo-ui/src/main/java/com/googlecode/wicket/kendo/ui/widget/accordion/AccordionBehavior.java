@@ -187,8 +187,6 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		if (this.onSelectAjaxBehavior != null)
 		{
 			this.setOption("select", this.onSelectAjaxBehavior.getCallbackFunction());
@@ -208,6 +206,8 @@ public abstract class AccordionBehavior extends KendoUIBehavior implements IJQue
 		{
 			this.setOption("collapse", this.onCollapseAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

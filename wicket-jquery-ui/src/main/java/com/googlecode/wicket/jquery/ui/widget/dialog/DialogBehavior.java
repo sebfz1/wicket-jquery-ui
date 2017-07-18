@@ -131,8 +131,6 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		if (this.onDefaultCloseAjaxBehavior != null)
 		{
 			this.setOption("close", this.onDefaultCloseAjaxBehavior.getCallbackFunction());
@@ -177,6 +175,8 @@ public abstract class DialogBehavior extends JQueryUIBehavior implements IJQuery
 		buttons.append(" ]");
 
 		this.setOption("buttons", buttons);
+
+		super.onConfigure(component);
 	}
 
 	@Override

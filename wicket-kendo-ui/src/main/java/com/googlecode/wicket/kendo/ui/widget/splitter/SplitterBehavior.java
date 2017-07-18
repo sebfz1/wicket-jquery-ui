@@ -117,8 +117,6 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		if (this.onExpandAjaxBehavior != null)
 		{
 			this.setOption("expand", this.onExpandAjaxBehavior.getCallbackFunction());
@@ -128,6 +126,8 @@ public class SplitterBehavior extends KendoUIBehavior implements IJQueryAjaxAwar
 		{
 			this.setOption("collapse", this.onCollapseAjaxBehavior.getCallbackFunction());
 		}
+
+		super.onConfigure(component);
 	}
 
 	@Override

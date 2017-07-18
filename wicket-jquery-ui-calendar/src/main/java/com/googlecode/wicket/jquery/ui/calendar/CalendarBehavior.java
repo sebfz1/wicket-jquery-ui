@@ -210,8 +210,6 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 	@Override
 	public void onConfigure(Component component)
 	{
-		super.onConfigure(component);
-
 		this.setOption("editable", this.isEditable());
 		this.setOption("selectable", this.listener.isSelectable());
 		this.setOption("selectHelper", this.listener.isSelectable());
@@ -253,6 +251,8 @@ public class CalendarBehavior extends JQueryBehavior implements IJQueryAjaxAware
 		{
 			this.setOption("viewRender", this.onViewRenderAjaxBehavior.getCallbackFunction());
 		}
+		
+		super.onConfigure(component);		
 	}
 
 	@Override

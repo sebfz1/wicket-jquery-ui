@@ -153,13 +153,13 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	}
 
 	// Methods //
-	
+
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
 		super.renderHead(response);
-		
-		response.render(new JavaScriptPackageHeaderItem(DataTable.class)); // DataTable.js		
+
+		response.render(new JavaScriptPackageHeaderItem(DataTable.class)); // DataTable.js
 	}
 
 	/**
@@ -243,6 +243,23 @@ public class DataTable<T> extends WebComponent implements IGenericComponent<List
 	 */
 	public void refresh(AjaxRequestTarget target)
 	{
+		this.refresh(target, false);
+	}
+
+	/**
+	 * Refreshes the widget by reading from the datasource
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param reset whether to call reset or not
+	 * @see DataTable#reset(AjaxRequestTarget)
+	 */
+	public void refresh(AjaxRequestTarget target, boolean reset)
+	{
+		if (reset)
+		{
+			this.reset(target);
+		}
+
 		target.appendJavaScript(String.format("var $w = %s; if ($w) { $w.dataSource.read(); }", this.widget()));
 	}
 

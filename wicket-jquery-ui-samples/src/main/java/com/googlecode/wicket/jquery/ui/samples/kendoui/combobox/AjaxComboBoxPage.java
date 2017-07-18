@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.util.ListModel;
 
 import com.googlecode.wicket.kendo.ui.form.combobox.AjaxComboBox;
 import com.googlecode.wicket.kendo.ui.form.combobox.ComboBox;
@@ -26,7 +27,7 @@ public class AjaxComboBoxPage extends AbstractComboBoxPage
 		form.add(feedback);
 
 		// ComboBox //
-		final ComboBox<String> combobox = new AjaxComboBox<String>("combobox", Model.of(""), Model.ofList(GENRES)) {
+		final ComboBox<String> combobox = new AjaxComboBox<String>("combobox", Model.of(""), new ListModel<String>(GENRES)) {
 
 			private static final long serialVersionUID = 1L;
 
