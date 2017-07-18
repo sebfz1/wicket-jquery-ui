@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.core.resource;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.markup.head.HeaderItem;
