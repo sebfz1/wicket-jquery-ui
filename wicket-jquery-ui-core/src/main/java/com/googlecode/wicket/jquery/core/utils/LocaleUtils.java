@@ -37,6 +37,7 @@ public class LocaleUtils
 	 */
 	private LocaleUtils()
 	{
+		// noop
 	}
 
 	/**
