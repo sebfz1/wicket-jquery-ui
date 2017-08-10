@@ -38,6 +38,7 @@ public class RequestCycleUtils
 	 */
 	private RequestCycleUtils()
 	{
+		// noop
 	}
 
 	/**
@@ -65,6 +66,28 @@ public class RequestCycleUtils
 		}
 
 		return null;
+	}
+
+	/**
+	 * Indicates whether the query contains the specified parameter
+	 *
+	 * @param name the name of the query parameter
+	 * @return {@code true} if the parameter is found
+	 */
+	public static boolean hasQueryParameter(final String name)
+	{
+		final RequestCycle requestCycle = RequestCycle.get();
+		final IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
+
+		for (String param : parameters.getParameterNames())
+		{
+			if (name.equals(param))
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
