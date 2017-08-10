@@ -2,7 +2,6 @@ package com.googlecode.wicket.jquery.ui.samples.kendoui.datetimepicker.local;
 
 import java.util.Locale;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.core.request.handler.IPartialPageRequestHandler;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -10,7 +9,6 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.threeten.bp.LocalDate;
 
-import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.datetime.local.AjaxDatePicker;
 import com.googlecode.wicket.kendo.ui.form.datetime.local.DatePicker;
@@ -42,6 +40,12 @@ public class LocaleAjaxDatePickerPage extends AbstractTimePickerPage
 
 				handler.add(feedback);
 			}
+
+			@Override
+			protected void onError(IPartialPageRequestHandler handler)
+			{
+				handler.add(feedback);
+			}
 		};
 
 		form.add(datepicker);
@@ -54,25 +58,7 @@ public class LocaleAjaxDatePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info("Date: " + datepicker.getModelObject()); // warning, model object can be null
-			}
-		});
-
-		form.add(new AjaxButton("button") {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
-			{
-				this.info("Date: " + datepicker.getModelObject()); // warning, model object can be null
-				target.add(feedback);
-			}
-
-			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
-			{
-				target.add(feedback);
+				this.info("Submitted: " + datepicker.getModelObject()); // warning, model object can be null
 			}
 		});
 	}
