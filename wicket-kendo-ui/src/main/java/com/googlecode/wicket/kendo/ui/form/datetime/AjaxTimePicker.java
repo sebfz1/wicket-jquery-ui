@@ -230,6 +230,16 @@ public class AjaxTimePicker extends TimePicker implements IValueChangedListener 
 
 	// Events //
 
+	/**
+	 * Triggered when the validation failed (ie, not input provided)
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	protected void onError(AjaxRequestTarget target)
+	{
+		// noop
+	}
+
 	@Override
 	public void onValueChanged(AjaxRequestTarget target)
 	{
@@ -241,7 +251,7 @@ public class AjaxTimePicker extends TimePicker implements IValueChangedListener 
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		IValueChangedListener listener = new IValueChangedListener() {
+		final IValueChangedListener listener = new IValueChangedListener() {
 
 			private static final long serialVersionUID = 1L;
 
@@ -249,7 +259,15 @@ public class AjaxTimePicker extends TimePicker implements IValueChangedListener 
 			public void onValueChanged(AjaxRequestTarget target)
 			{
 				AjaxTimePicker.this.processInput();
-				AjaxTimePicker.this.onValueChanged(target);
+
+				if (AjaxTimePicker.this.hasErrorMessage())
+				{
+					AjaxTimePicker.this.onError(target);
+				}
+				else
+				{
+					AjaxTimePicker.this.onValueChanged(target);
+				}
 			}
 		};
 

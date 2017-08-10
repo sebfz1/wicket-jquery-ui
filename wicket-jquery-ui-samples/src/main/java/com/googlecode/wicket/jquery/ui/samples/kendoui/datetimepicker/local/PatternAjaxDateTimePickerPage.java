@@ -5,7 +5,6 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.threeten.bp.LocalDateTime;
 
-import com.googlecode.wicket.kendo.ui.form.button.AjaxButton;
 import com.googlecode.wicket.kendo.ui.form.button.Button;
 import com.googlecode.wicket.kendo.ui.form.datetime.local.AjaxDateTimePicker;
 import com.googlecode.wicket.kendo.ui.form.datetime.local.DateTimePicker;
@@ -36,6 +35,12 @@ public class PatternAjaxDateTimePickerPage extends AbstractTimePickerPage
 
 				target.add(feedback);
 			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target)
+			{
+				target.add(feedback);
+			}
 		};
 
 		form.add(datetimepicker);
@@ -48,25 +53,7 @@ public class PatternAjaxDateTimePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info("Date & Time: " + datetimepicker.getModelObject());
-			}
-		});
-
-		form.add(new AjaxButton("button") {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
-			{
-				this.info("Date & Time: " + datetimepicker.getModelObject());
-				target.add(feedback);
-			}
-
-			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
-			{
-				target.add(feedback);
+				this.info("Submitted: " + datetimepicker.getModelObject());
 			}
 		});
 	}

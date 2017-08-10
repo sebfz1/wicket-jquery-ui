@@ -35,7 +35,7 @@ public class PatternDateTimePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info("Date & Time: " + datetimepicker.getModelObject());
+				this.info("Submitted: " + datetimepicker.getModelObject());
 			}
 		});
 
@@ -46,7 +46,7 @@ public class PatternDateTimePickerPage extends AbstractTimePickerPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				this.info("Date & Time: " + datetimepicker.getModelObject());
+				this.info("Submitted: " + datetimepicker.getModelObject());
 				target.add(feedback);
 			}
 

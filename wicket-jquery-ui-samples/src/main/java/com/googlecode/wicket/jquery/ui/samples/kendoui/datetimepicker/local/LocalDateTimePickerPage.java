@@ -35,7 +35,7 @@ public class LocalDateTimePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info("Date & Time: " + datetimepicker.getModelObject()); //warning, model object can be null
+				this.info("Submitted: " + datetimepicker.getModelObject()); //warning, model object can be null
 			}
 		});
 
@@ -46,7 +46,7 @@ public class LocalDateTimePickerPage extends AbstractTimePickerPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				this.info("Date & Time: " + datetimepicker.getModelObject()); //warning, model object can be null
+				this.info("Submitted: " + datetimepicker.getModelObject()); //warning, model object can be null
 				target.add(feedback);
 			}
 
