@@ -22,6 +22,7 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Generics;
@@ -30,6 +31,7 @@ import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 import com.googlecode.wicket.kendo.ui.KendoDataSource;
 import com.googlecode.wicket.kendo.ui.KendoUIBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.DataSourceEvent.CreateEvent;
@@ -63,9 +65,10 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 
 	// TODO: private JQueryAjaxBehavior onEditAjaxBehavior;
 	private JQueryAjaxBehavior onCancelAjaxBehavior;
-	private JQueryAjaxBehavior onCreateAjaxBehavior;
-	private JQueryAjaxBehavior onUpdateAjaxBehavior;
-	private JQueryAjaxBehavior onDeleteAjaxBehavior;
+	private JQueryAjaxBehavior onColumnReorderAjaxBehavior = null;
+	private DataSourceAjaxBehavior onCreateAjaxBehavior;
+	private DataSourceAjaxBehavior onUpdateAjaxBehavior;
+	private DataSourceAjaxBehavior onDeleteAjaxBehavior;
 
 	/**
 	 * Constructor
@@ -110,7 +113,13 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		this.onCancelAjaxBehavior = this.newOnCancelAjaxBehavior(this);
 		component.add(this.onCancelAjaxBehavior);
 
-		// events //
+		if (this.isColumnReorderEnabled())
+		{
+			this.onColumnReorderAjaxBehavior = this.newColumnReorderAjaxBehavior(this);
+			component.add(this.onColumnReorderAjaxBehavior);
+		}
+
+		// data events //
 		this.onCreateAjaxBehavior = this.newOnCreateAjaxBehavior(this);
 		component.add(this.onCreateAjaxBehavior);
 
@@ -137,6 +146,18 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 				component.add(this.newCommandAjaxBehavior(this, button));
 			}
 		}
+	}
+
+	/**
+	 * Indicates whether the {@code reorderable} option is set
+	 * 
+	 * @return {@code false} by default
+	 */
+	public boolean isColumnReorderEnabled()
+	{
+		Boolean value = this.options.get("reorderable");
+
+		return value != null && value;
 	}
 
 	// Properties //
@@ -349,6 +370,11 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		// this.setOption("edit", this.onEditAjaxBehavior.getCallbackFunction());
 		this.setOption("cancel", this.onCancelAjaxBehavior.getCallbackFunction());
 
+		if (this.onColumnReorderAjaxBehavior != null)
+		{
+			this.setOption("columnReorder", this.onColumnReorderAjaxBehavior.getCallbackFunction());
+		}
+
 		// toolbar //
 		if (this.hasVisibleToolbarButtons())
 		{
@@ -387,8 +413,8 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 			this.off(selector, "click");
 			this.on(selector, "click", behavior.getCallbackFunction());
 		}
-		
-		super.onConfigure(component);		
+
+		super.onConfigure(component);
 	}
 
 	/**
@@ -407,7 +433,7 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		if (event instanceof ToolbarClickEvent)
 		{
 			ToolbarClickEvent e = (ToolbarClickEvent) event;
-			
+
 			e.getButton().onClick(target, e.getValues());
 			this.listener.onClick(target, e.getButton(), e.getValues());
 		}
@@ -423,6 +449,12 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 		if (event instanceof CancelEvent)
 		{
 			this.listener.onCancel(target);
+		}
+
+		if (event instanceof ColumnReorderEvent)
+		{
+			ColumnReorderEvent e = (ColumnReorderEvent) event;
+			this.listener.onColumnReorder(target, e.getOldIndex(), e.getNewIndex(), e.getObject());
 		}
 
 		if (event instanceof CreateEvent)
@@ -516,14 +548,43 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'create' event
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'columnReorder' event
+	 * 
+	 * @param source the {@link IJQueryAjaxAware}
+	 * @return a new {@code JQueryAjaxBehavior} by default
+	 */
+	protected JQueryAjaxBehavior newColumnReorderAjaxBehavior(IJQueryAjaxAware source)
+	{
+		return new JQueryAjaxBehavior(source) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				return new CallbackParameter[] { CallbackParameter.context("e"), // lf
+						CallbackParameter.resolved("oldIndex", "e.oldIndex"), // lf
+						CallbackParameter.resolved("newIndex", "e.newIndex"), // lf
+						CallbackParameter.resolved("data", "kendo.stringify(e.column)") };
+			}
+
+			@Override
+			protected JQueryEvent newEvent()
+			{
+				return new ColumnReorderEvent();
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link DataSourceAjaxBehavior} that will be wired to the datasource's 'create' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@code DataSourceAjaxBehavior} by default
+	 * @return a new {@code DataSourceAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnCreateAjaxBehavior(IJQueryAjaxAware source)
+	protected DataSourceAjaxBehavior newOnCreateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new DataSourceAjaxBehavior(source) {
+		return new DataSourceAjaxBehavior(source) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -536,14 +597,14 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'update' event
+	 * Gets a new {@link DataSourceAjaxBehavior} that will be wired to the datasource's 'update' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@code DataSourceAjaxBehavior} by default
+	 * @return a new {@code DataSourceAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source)
+	protected DataSourceAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new DataSourceAjaxBehavior(source) {
+		return new DataSourceAjaxBehavior(source) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -556,14 +617,14 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the datasource's 'delete' event
+	 * Gets a new {@link DataSourceAjaxBehavior} that will be wired to the datasource's 'delete' event
 	 *
 	 * @param source the {@link IJQueryAjaxAware}
-	 * @return a new {@code DataSourceAjaxBehavior} by default
+	 * @return a new {@code DataSourceAjaxBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnDeleteAjaxBehavior(IJQueryAjaxAware source)
+	protected DataSourceAjaxBehavior newOnDeleteAjaxBehavior(IJQueryAjaxAware source)
 	{
-		return new DataSourceAjaxBehavior(source) {
+		return new DataSourceAjaxBehavior(source) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -598,7 +659,44 @@ public abstract class DataTableBehavior extends KendoUIBehavior implements IJQue
 
 	// Event object //
 
+	/**
+	 * Provides an event object that will be broadcasted by the {@link #newOnCancelAjaxBehavior} callback
+	 */
 	protected static class CancelEvent extends JQueryEvent
 	{
+	}
+
+	/**
+	 * Provides an event object that will be broadcasted by the {@linkplain #newColumnReorderAjaxBehavior} callback
+	 */
+	protected static class ColumnReorderEvent extends JQueryEvent
+	{
+		private final int oldIndex;
+		private final int newIndex;
+		private final JSONObject object;
+
+		public ColumnReorderEvent()
+		{
+			this.oldIndex = RequestCycleUtils.getQueryParameterValue("oldIndex").toInt(0);
+			this.newIndex = RequestCycleUtils.getQueryParameterValue("newIndex").toInt(0);
+
+			String data = RequestCycleUtils.getQueryParameterValue("data").toString();
+			this.object = new JSONObject(data);
+		}
+
+		public int getOldIndex()
+		{
+			return this.oldIndex;
+		}
+
+		public int getNewIndex()
+		{
+			return this.newIndex;
+		}
+
+		public JSONObject getObject()
+		{
+			return this.object;
+		}
 	}
 }

@@ -33,16 +33,6 @@ public abstract class AbstractButton implements IClusterable
 	private static final long serialVersionUID = 1L;
 	private static short sequence = 0;
 
-	/**
-	 * Gets the next id-sequence. This is used to generate the markup id
-	 *
-	 * @return 0x0000 to 0x7FFF
-	 */
-	private static synchronized int nextSequence()
-	{
-		return AbstractButton.sequence++ % Short.MAX_VALUE;
-	}
-
 	public static final String EDIT = "edit";
 	public static final String SAVE = "save";
 	public static final String CREATE = "create";
@@ -183,4 +173,16 @@ public abstract class AbstractButton implements IClusterable
 	{
 		return Strings.isEqual(name, this.name);
 	}
+	
+	// factories //
+
+	/**
+	 * Gets the next id-sequence. This is used to generate the markup id
+	 *
+	 * @return 0x0000 to 0x7FFF
+	 */
+	private static synchronized int nextSequence()
+	{
+		return AbstractButton.sequence++ % Short.MAX_VALUE;
+	}	
 }

@@ -17,7 +17,6 @@
 package com.googlecode.wicket.kendo.ui.form.multiselect.lazy;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -198,13 +197,9 @@ public abstract class MultiSelect<T> extends FormComponent<Collection<T>> implem
 					}
 				}
 			}
+		}
 
-			this.setConvertedInput(list);
-		}
-		else
-		{
-			this.setConvertedInput(Collections.emptyList());
-		}
+		this.setConvertedInput(list);
 	}
 
 	@Override
