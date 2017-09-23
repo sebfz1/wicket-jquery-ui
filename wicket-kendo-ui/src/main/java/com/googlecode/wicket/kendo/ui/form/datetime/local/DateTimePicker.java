@@ -294,7 +294,7 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	 */
 	public final void setTimePickerEnabled(IPartialPageRequestHandler handler, boolean enabled)
 	{
-		this.setTimePickerEnabled(enabled);
+		this.timePickerEnabled = enabled;
 
 		handler.add(this.timePicker);
 	}

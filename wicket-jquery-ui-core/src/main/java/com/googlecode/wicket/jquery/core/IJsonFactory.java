@@ -16,20 +16,15 @@
  */
 package com.googlecode.wicket.jquery.core;
 
+import org.apache.wicket.ajax.json.JSONObject;
+
 /**
- * Specifies that the implementing class is able to provide a verification/approval on user roles and/or permissions
+ * Specifies that the type can be converted to {@link JSONObject}
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IJQuerySecurityProvider
+public interface IJsonFactory
 {
-	/**
-	 * Indicates whether the user has the required role and/or permissions.<br>
-	 * Implementation is free to define the strategy.
-	 * 
-	 * @param roles the roles and/or permissions to check
-	 * @return the strategy result
-	 */
-	boolean hasRole(String... roles);
+	JSONObject toJSONObject();
 }
