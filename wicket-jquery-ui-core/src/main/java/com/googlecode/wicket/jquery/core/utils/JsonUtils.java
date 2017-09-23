@@ -7,7 +7,7 @@ import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.util.lang.Generics;
 
 /**
- * Utility class for json objects
+ * Utility class for JSON objects
  * 
  * @author Sebastien Briquet - sebfz1
  *

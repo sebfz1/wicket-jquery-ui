@@ -19,10 +19,10 @@ package com.googlecode.wicket.kendo.ui.datatable.button;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.Strings;
 
-import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 
@@ -122,14 +122,35 @@ public class ToolbarButton extends AbstractButton
 	}
 
 	/**
-	 * Gets the CSS icon class to be applied on the button
+	 * Indicates whether this button is enabled
+	 * 
+	 * @return {@code true} by default
+	 */
+	public boolean isEnabled()
+	{
+		return true;
+	}
+
+	/**
+	 * Gets the CSS class to be applied on the button<br>
+	 * <b>Caution:</b> {@code super.getCSSClass()} should be called when overridden
 	 *
 	 * @return the CSS class
+	 */
+	public String getCSSClass()
+	{
+		return this.isEnabled() ? "" : "k-state-disabled";
+	}
+
+	/**
+	 * Gets the icon being displayed in the button
+	 *
+	 * @return {@link KendoIcon#NONE} by default
 	 * @see #getIconClass()
 	 */
 	public String getIcon()
 	{
-		return null;
+		return KendoIcon.NONE;
 	}
 
 	/**
@@ -140,9 +161,11 @@ public class ToolbarButton extends AbstractButton
 	 */
 	public String getIconClass()
 	{
-		if (this.getIcon() != null)
+		final String icon = this.getIcon();
+
+		if (!KendoIcon.isNone(icon))
 		{
-			return KendoIcon.getCssClass(this.getIcon());
+			return KendoIcon.getCssClass(icon);
 		}
 
 		return ""; // allows to override & chain super()
@@ -153,23 +176,30 @@ public class ToolbarButton extends AbstractButton
 	@Override
 	public String toString()
 	{
-		StringBuilder builder = new StringBuilder("{ ");
+		return this.toJSONObject().toString();
+	}
 
-		// name //
-		BuilderUtils.append(builder, "name", this.getName());
+	@Override
+	public JSONObject toJSONObject()
+	{
+		JSONObject object = new JSONObject();
+		
+		object.put("name", this.isEnabled() ? this.getName() : "disabled_" + this.getName());
+		object.put("text", this.getText().getObject());
 
-		// text //
-		BuilderUtils.append(builder.append(", "), "text", this.getText().getObject());
-
-		// icon //
-		String cssIcon = this.getIconClass();
-
-		if (!Strings.isEmpty(cssIcon)) /* important */
+		// css //
+		if (!Strings.isEmpty(this.getCSSClass())) /* important */
 		{
-			BuilderUtils.append(builder.append(", "), "imageClass", cssIcon);
+			object.put("className", this.getCSSClass());
 		}
 
-		return builder.append(" }").toString();
+		// icon //
+		if (!Strings.isEmpty(this.getIconClass())) /* important */
+		{
+			object.put("iconClass", this.getIconClass());
+		}
+
+		return object;
 	}
 
 	// Events //

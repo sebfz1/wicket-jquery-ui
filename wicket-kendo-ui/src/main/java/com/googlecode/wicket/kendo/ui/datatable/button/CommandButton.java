@@ -17,11 +17,12 @@
 package com.googlecode.wicket.kendo.ui.datatable.button;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.json.JSONObject;
+import org.apache.wicket.ajax.json.JsonFunction;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.Strings;
 
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
-import com.googlecode.wicket.jquery.core.utils.BuilderUtils;
 import com.googlecode.wicket.kendo.ui.KendoIcon;
 import com.googlecode.wicket.kendo.ui.datatable.DataTable;
 
@@ -128,14 +129,14 @@ public class CommandButton extends AbstractButton
 	}
 
 	/**
-	 * Gets the CSS icon class to be applied on the button
+	 * Gets the icon being displayed in the button
 	 *
-	 * @return the CSS class
+	 * @return {@link KendoIcon#NONE} by default
 	 * @see #getIconClass()
 	 */
 	public String getIcon()
 	{
-		return null;
+		return KendoIcon.NONE;
 	}
 
 	/**
@@ -146,9 +147,11 @@ public class CommandButton extends AbstractButton
 	 */
 	public String getIconClass()
 	{
-		if (this.getIcon() != null)
+		final String icon = this.getIcon();
+
+		if (!KendoIcon.isNone(icon))
 		{
-			return KendoIcon.getCssClass(this.getIcon());
+			return KendoIcon.getCssClass(icon);
 		}
 
 		return ""; // allows to override & chain super()
@@ -156,36 +159,38 @@ public class CommandButton extends AbstractButton
 
 	public String toString(JQueryAjaxBehavior behavior)
 	{
-		StringBuilder builder = new StringBuilder("{ ");
-
-		String name = this.isEnabled() ? this.getName() : "disabled_" + this.getName(); // prevent firing 'click' for builtin buttons TODO WIP
-		BuilderUtils.append(builder, "name", name);
-
-		builder.append(", ");
-		BuilderUtils.append(builder, "text", this.getText().getObject());
-
-		String cssClass = this.getCSSClass();
-
-		if (!Strings.isEmpty(cssClass)) /* important */
-		{
-			BuilderUtils.append(builder.append(", "), "className", cssClass);
-		}
-
-		// icon //
-		String cssIcon = this.getIconClass();
-
-		if (!Strings.isEmpty(cssIcon)) /* important */
-		{
-			BuilderUtils.append(builder.append(", "), "imageClass", cssIcon);
-		}
+		JSONObject object = this.toJSONObject();
 
 		if (this.isEnabled() && behavior != null)
 		{
-			builder.append(", ");
-			builder.append("'click': ").append(behavior.getCallbackFunction());
+			object.put("click", new JsonFunction(behavior.getCallbackFunction()));
 		}
 
-		return builder.append(" }").toString();
+		return object.toString();
+	}
+
+	@Override
+	public JSONObject toJSONObject()
+	{
+		JSONObject object = new JSONObject();
+
+		// prevent firing 'click' for builtin buttons TODO WIP
+		object.put("name", this.isEnabled() ? this.getName() : "disabled_" + this.getName());
+		object.put("text", this.getText().getObject());
+
+		// css //
+		if (!Strings.isEmpty(this.getCSSClass())) /* important */
+		{
+			object.put("className", this.getCSSClass());
+		}
+
+		// icon //
+		if (!Strings.isEmpty(this.getIconClass())) /* important */
+		{
+			object.put("iconClass", this.getIconClass());
+		}
+
+		return object;
 	}
 
 	// Events //

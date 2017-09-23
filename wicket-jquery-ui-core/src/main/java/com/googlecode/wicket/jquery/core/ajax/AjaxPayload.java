@@ -54,6 +54,11 @@ public class AjaxPayload
 
 	// Properties //
 
+	/**
+	 * Gets the {@link AjaxRequestTarget}
+	 * 
+	 * @return the {@code AjaxRequestTarget}
+	 */
 	public AjaxRequestTarget getTarget()
 	{
 		return this.target;

@@ -294,7 +294,7 @@ public class DateTimePicker extends FormComponentPanel<LocalDateTime> implements
 	 */
 	public final void setTimePickerEnabled(AjaxRequestTarget target, boolean enabled)
 	{
-		this.setTimePickerEnabled(enabled);
+		this.timePickerEnabled = enabled;
 
 		target.add(this.timePicker);
 	}

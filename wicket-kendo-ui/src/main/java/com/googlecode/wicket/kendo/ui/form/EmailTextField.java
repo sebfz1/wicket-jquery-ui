@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.kendo.ui.form;
 
+import org.apache.wicket.extensions.validation.validator.RfcCompliantEmailAddressValidator;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.validation.IValidator;
@@ -49,12 +50,24 @@ public class EmailTextField extends org.apache.wicket.markup.html.form.EmailText
 	 * Constructor
 	 *
 	 * @param id the markup id
-	 * @param emailAddress the email input value
+	 * @param email the email input value
 	 */
-	public EmailTextField(String id, String emailAddress)
+	public EmailTextField(String id, String email)
 	{
-		super(id, emailAddress);
+		super(id, email);
 	}
+
+//	/**
+//	 * Constructor
+//	 *
+//	 * @param id the markup id
+//	 * @param validator the email validator that will check the correctness of the input value
+//	 * @see RfcCompliantEmailAddressValidator
+//	 */
+//	public EmailTextField(String id, IValidator<String> validator)
+//	{
+//		super(id, validator);
+//	}
 
 	/**
 	 * Constructor
@@ -72,11 +85,12 @@ public class EmailTextField extends org.apache.wicket.markup.html.form.EmailText
 	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param emailValidator the validator that will check the correctness of the input value
+	 * @param validator the email validator that will check the correctness of the input value
+	 * @see RfcCompliantEmailAddressValidator
 	 */
-	public EmailTextField(String id, IModel<String> model, IValidator<String> emailValidator)
+	public EmailTextField(String id, IModel<String> model, IValidator<String> validator)
 	{
-		super(id, model, emailValidator);
+		super(id, model, validator);
 	}
 
 	// Events //
