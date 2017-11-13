@@ -142,6 +142,48 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 		target.appendJavaScript(this.$("'option'", "'active'", index));
 	}
 
+	/**
+	 * Enables all tabs
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public void enable(AjaxRequestTarget target)
+	{
+		target.appendJavaScript(this.$("'enable'"));
+	}
+
+	/**
+	 * Enables a tab, identified by its index
+	 *
+	 * @param index the tab's index
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public void enable(int index, AjaxRequestTarget target)
+	{
+		target.appendJavaScript(this.$("'enable'", index));
+	}
+
+	/**
+	 * Disables all tabs
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public void disable(AjaxRequestTarget target)
+	{
+		target.appendJavaScript(this.$("'disable'"));
+	}
+
+	/**
+	 * Disables a tab, identified by its index. The selected tab cannot be disabled.
+	 *
+	 * @param index the tab's index
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public void disable(int index, AjaxRequestTarget target)
+	{
+		target.appendJavaScript(this.$("'disable'", index));
+	}
+	
 	// Events //
 
 	@Override
