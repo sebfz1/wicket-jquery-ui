@@ -231,7 +231,7 @@
 					<goals>deploy</goals>
 				</configuration>
 			</plugin>
-
+<!-- 
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
@@ -242,7 +242,7 @@
 					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
 					<autoReleaseAfterClose>false</autoReleaseAfterClose>
 				</configuration>
-			</plugin>
+			</plugin> -->
 		</plugins>
 
 		<resources>
