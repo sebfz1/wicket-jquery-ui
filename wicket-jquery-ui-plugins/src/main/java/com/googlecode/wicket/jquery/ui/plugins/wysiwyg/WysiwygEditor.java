@@ -45,7 +45,6 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 
 	private TextArea<String> textarea;
 	private final WebMarkupContainer container;
-	private final PolicyFactory policy;
 
 	/**
 	 * Constructor
@@ -99,7 +98,6 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 		}
 
 		this.setEscapeModelStrings(false); // fixes #121
-		this.policy = newPolicy();
 	}
 
 	// Properties //
@@ -128,6 +126,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	@Override
 	public void convertInput()
 	{
+		final PolicyFactory policy = newPolicy();
 		String html = this.textarea.getConvertedInput();
 		this.setConvertedInput(policy.sanitize(html));
 	}
