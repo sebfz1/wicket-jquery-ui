@@ -40,7 +40,7 @@
 		<url>git@github.com:sebfz1/wicket-jquery-ui.git</url>
 		<connection>scm:git:git@github.com:sebfz1/wicket-jquery-ui.git</connection>
 		<developerConnection>scm:git:git@github.com:sebfz1/wicket-jquery-ui.git</developerConnection>
-		<tag>wicket-jquery-ui-parent-7.9.1</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<properties>
