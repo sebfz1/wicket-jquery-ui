@@ -28,6 +28,7 @@ import com.googlecode.wicket.jquery.core.ajax.FeedbackPayload;
 /**
  * Utility class for handling feedback session messages and feedback ajax messages.<br>
  * The hosting page should implement a code like:
+ * 
  * <pre>
  * <code>
  * public void onEvent(IEvent&lt;?&gt; event)

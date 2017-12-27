@@ -18,7 +18,7 @@ Once done, just include the jar(s) in your project's build path.
 <dependency>
     <groupId>com.googlecode.wicket-jquery-ui</groupId>
     <artifactId>wicket-jquery-ui</artifactId>
-    <version>6.27.0</version>
+    <version>6.28.0</version>
 </dependency>
 ```
 
@@ -48,6 +48,7 @@ If the version you specified is *snapshot*, you might define this repository:
 <tr><td>8.0.0-M3</td><td>8.0.0-M3</td><td>1.12.1</td></tr>
 <tr><td>8.0.0-M2</td><td>8.0.0-M2</td><td>1.12.0</td></tr>
 <tr><td>8.0.0-M1</td><td>8.0.0-M1</td><td>1.12.0</td></tr>
+<tr><td>7.9.0</td><td>7.9.0</td><td>1.12.1</td></tr>
 <tr><td>7.8.0</td><td>7.8.0</td><td>1.12.1</td></tr>
 <tr><td>7.7.0</td><td>7.7.0</td><td>1.12.1</td></tr>
 <tr><td>7.6.0</td><td>7.6.0</td><td>1.12.1</td></tr>
@@ -94,6 +95,7 @@ If the version you specified is *snapshot*, you might define this repository:
 <tr><td>8.0.0-M3</td><td>8.0.0-M3</td><td>2016.3.1118 (ASFv2)</td></tr>
 <tr><td>8.0.0-M2</td><td>8.0.0-M2</td><td>2016.3.1028 (ASFv2)</td></tr>
 <tr><td>8.0.0-M1</td><td>8.0.0-M1</td><td>2016.2.714 (ASFv2)</td></tr>
+<tr><td>7.9.0</td><td>7.9.0</td><td>2017.2.621 (ASFv2)</td></tr>
 <tr><td>7.8.0</td><td>7.8.0</td><td>2017.2.621 (ASFv2)</td></tr>
 <tr><td>7.7.0</td><td>7.7.0</td><td>2017.1.223 (ASFv2)</td></tr>
 <tr><td>7.6.0</td><td>7.6.0</td><td>2016.3.1118 (ASFv2)</td></tr>
@@ -140,7 +142,7 @@ To use wicket-jquery-ui with a standard theme, just add the corresponding theme 
 <dependency>
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-jquery-ui-theme-uilightness</artifactId>
-	<version>6.27.0</version>
+	<version>6.28.0</version>
 </dependency>
 ```
 
@@ -156,7 +158,7 @@ To use wicket-kendo-ui with a standard theme, just add the corresponding theme d
 <dependency>
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-kendo-ui-theme-default</artifactId>
-	<version>6.27.0</version>
+	<version>6.28.0</version>
 </dependency>
 ```
 
