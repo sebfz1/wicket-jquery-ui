@@ -16,8 +16,9 @@
  */
 package com.googlecode.wicket.jquery.ui.widget.dialog;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.wicket.util.lang.Generics;
 
 /**
  * Button set to be used in a {@link MessageDialog} or {@link MessageFormDialog}
@@ -35,7 +36,7 @@ public enum DialogButtons
 
 	private DialogButtons(DialogButton... buttons)
 	{
-		this.buttons = new ArrayList<DialogButton>();
+		this.buttons = Generics.newArrayList();
 
 		for (DialogButton button : buttons)
 		{
