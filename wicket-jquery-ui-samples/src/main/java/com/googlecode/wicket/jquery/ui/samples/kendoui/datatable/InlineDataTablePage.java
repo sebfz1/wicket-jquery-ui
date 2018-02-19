@@ -1,6 +1,5 @@
 package com.googlecode.wicket.jquery.ui.samples.kendoui.datatable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,6 +7,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.Product;
@@ -92,7 +92,7 @@ public class InlineDataTablePage extends AbstractDataTablePage
 
 	private static List<IColumn> newColumnList()
 	{
-		List<IColumn> columns = new ArrayList<IColumn>();
+		List<IColumn> columns = Generics.newArrayList();
 
 		columns.add(new IdPropertyColumn("ID", "id", 40)); /* Important, for being sent back to server */
 		columns.add(new PropertyColumn("Name", "name"));

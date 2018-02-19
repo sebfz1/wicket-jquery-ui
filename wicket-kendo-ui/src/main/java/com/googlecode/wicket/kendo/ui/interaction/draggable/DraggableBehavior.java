@@ -62,6 +62,7 @@ public class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 
 	/**
 	 * Constructor
+	 * 
 	 * @param listener the {@link IDraggableListener}
 	 */
 	public DraggableBehavior(IDraggableListener listener)
@@ -101,7 +102,7 @@ public class DraggableBehavior extends KendoUIBehavior implements IJQueryAjaxAwa
 	protected DraggableBehavior(String selector, Options options, IDraggableListener listener)
 	{
 		super(selector, METHOD, options);
-		
+
 		this.listener = Args.notNull(listener, "listener");
 	}
 

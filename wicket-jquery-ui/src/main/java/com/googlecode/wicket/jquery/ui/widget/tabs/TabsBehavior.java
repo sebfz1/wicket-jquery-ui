@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.widget.tabs;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,6 +24,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.lang.Generics;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
@@ -71,7 +71,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	public TabsBehavior(String selector, Options options, ITabsListener listener)
 	{
 		super(selector, METHOD, options);
-		
+
 		this.listener = Args.notNull(listener, "listener");
 	}
 
@@ -92,7 +92,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	 */
 	protected List<ITab> getVisibleTabs()
 	{
-		List<ITab> list = new ArrayList<ITab>();
+		List<ITab> list = Generics.newArrayList();
 
 		for (ITab tab : this.getTabs())
 		{
@@ -183,7 +183,7 @@ public abstract class TabsBehavior extends JQueryUIBehavior implements IJQueryAj
 	{
 		target.appendJavaScript(this.$("'disable'", index));
 	}
-	
+
 	// Events //
 
 	@Override

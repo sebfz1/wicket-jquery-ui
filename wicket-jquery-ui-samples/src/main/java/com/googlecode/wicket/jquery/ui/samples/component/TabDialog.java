@@ -84,10 +84,6 @@ public abstract class TabDialog extends AbstractFormDialog<TabItem>
 		private String title = "";
 		private String content = "";
 
-		public TabItem()
-		{
-		}
-
 		public String getTitle()
 		{
 			return this.title;

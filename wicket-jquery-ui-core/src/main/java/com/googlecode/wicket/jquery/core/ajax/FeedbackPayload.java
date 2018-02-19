@@ -33,8 +33,8 @@ import org.apache.wicket.feedback.FeedbackMessage;
  * 	if (event.getPayload() instanceof FeedbackPayload)
  * 	{
  * 		FeedbackPayload payload = (FeedbackPayload) event.getPayload();
- * 		String message = payload.getMessage();
  * 		AjaxRequestTarget target = payload.getTarget();
+ * 		String message = payload.getMessage();
  *
  * 		if (payload.getLevel() == FeedbackMessage.DEBUG)
  * 		{

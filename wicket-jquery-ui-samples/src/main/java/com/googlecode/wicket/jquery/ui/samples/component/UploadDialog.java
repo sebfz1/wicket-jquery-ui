@@ -41,7 +41,6 @@ public abstract class UploadDialog extends AbstractFormDialog<FileUpload>
 
 		// Form //
 		this.form = new Form<Integer>("form");
-		// this.form.setMultiPart(true);
 		this.add(this.form);
 
 		// Upload File //
