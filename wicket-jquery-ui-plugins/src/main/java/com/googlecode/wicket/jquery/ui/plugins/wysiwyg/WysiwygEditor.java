@@ -22,7 +22,7 @@ import org.apache.wicket.markup.head.OnLoadHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
-import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.model.IModel;
 import org.owasp.html.HtmlPolicyBuilder;
 import org.owasp.html.PolicyFactory;
@@ -43,7 +43,7 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 {
 	private static final long serialVersionUID = 1L;
 
-	private TextArea<String> textarea;
+	private HiddenField<String> textarea;
 	private final WebMarkupContainer container;
 
 	/**
@@ -138,9 +138,10 @@ public class WysiwygEditor extends FormComponentPanel<String> implements IJQuery
 	{
 		super.onInitialize();
 
-		this.textarea = new TextArea<String>("textarea", this.getModel());
+		this.textarea = new HiddenField<String>("textarea", this.getModel());
+		this.textarea.setOutputMarkupId(true);
 		this.textarea.setEscapeModelStrings(false);
-		this.add(this.textarea.setOutputMarkupId(true));
+		this.add(this.textarea);
 
 		this.add(JQueryWidget.newWidgetBehavior(this, this.container));
 	}
