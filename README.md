@@ -1,6 +1,6 @@
 # wicket-jquery-ui
 **jQuery UI & Kendo UI integration in Wicket 6.x, Wicket 7.x &amp; Wicket8.x**  
-[![TravisCI](https://travis-ci.org/sebfz1/wicket-jquery-ui.svg?branch=master)](https://travis-ci.org/sebfz1/wicket-jquery-ui)
+[![TravisCI](https://travis-ci.org/sebfz1/wicket-jquery-ui.svg?branch=wicket7.x)](https://travis-ci.org/sebfz1/wicket-jquery-ui)
 
 ## Getting started
 In order to get started using this API, you may download appropriate jar(s) or set a maven dependency.
