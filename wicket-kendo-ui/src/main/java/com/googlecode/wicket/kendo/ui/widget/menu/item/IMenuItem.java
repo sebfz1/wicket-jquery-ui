@@ -59,9 +59,17 @@ public interface IMenuItem extends IClusterable
 	boolean isEnabled();
 
 	/**
-	 * Gets the {@link List} of submenu-items
-	 * @return the {@link List} of submenu-items
-	 */
+     * Indicates whether the menu-item is selected
+     * 
+     * @return true or false
+     */
+    boolean isSelected();
+
+    /**
+     * Gets the {@link List} of submenu-items
+     * 
+     * @return the {@link List} of submenu-items
+     */
 	List<IMenuItem> getItems();
 
 	/**
