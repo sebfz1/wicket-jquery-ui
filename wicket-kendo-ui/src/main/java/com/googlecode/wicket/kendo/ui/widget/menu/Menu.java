@@ -223,6 +223,9 @@ public class Menu extends JQueryPanel implements IMenuListener
 					{
 						item.add(AttributeModifier.append("disabled", Model.of("disabled")));
 					}
+                    if (menuItem.isSelected()) {
+                        item.add(AttributeModifier.append("class", Model.of("menu-item-selected")));
+                    }
 				}
 			});
 		}
