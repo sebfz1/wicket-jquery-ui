@@ -36,11 +36,11 @@ import com.googlecode.wicket.jquery.ui.interaction.selectable.SelectableBehavior
 /**
  * Provides a jQuery sortable behavior
  *
- * @param <T> the type of the model object
+ * @param <T>
+ *            the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJQueryAjaxAware
-{
+public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJQueryAjaxAware {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "sortable";
 
@@ -54,25 +54,28 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	/**
 	 * Constructor
 	 *
-	 * @param selector the html selector (ie: "#myId")
-	 * @param listener the {@link ISortableListener}
+	 * @param selector
+	 *            the html selector (ie: "#myId")
+	 * @param listener
+	 *            the {@link ISortableListener}
 	 */
-	public SortableBehavior(String selector, ISortableListener<T> listener)
-	{
+	public SortableBehavior(String selector, ISortableListener<T> listener) {
 		this(selector, new Options(), listener);
 	}
 
 	/**
 	 * Constructor
 	 *
-	 * @param selector the html selector (ie: "#myId")
-	 * @param options the {@link Options}
-	 * @param listener the {@link ISortableListener}
+	 * @param selector
+	 *            the html selector (ie: "#myId")
+	 * @param options
+	 *            the {@link Options}
+	 * @param listener
+	 *            the {@link ISortableListener}
 	 */
-	public SortableBehavior(String selector, Options options, ISortableListener<T> listener)
-	{
+	public SortableBehavior(String selector, Options options, ISortableListener<T> listener) {
 		super(selector, METHOD, options);
-		
+
 		this.listener = Args.notNull(listener, "listener");
 	}
 
@@ -87,39 +90,44 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	protected abstract List<T> getItemList();
 
 	/**
-	 * Gets the list of the connected sortable
+	 * Gets the list of the connected sortable.
 	 *
 	 * @return null by default
 	 */
-	protected List<T> getConnectedList()
-	{
+	@Deprecated
+	protected List<T> getConnectedList() {
+		return Collections.emptyList();
+	}
+
+	/**
+	 * Gets the lists of the connected sortable
+	 *
+	 * @return null by default
+	 */
+	protected List<List<T>> getConnectedLists() {
 		return Collections.emptyList();
 	}
 
 	@Override
-	public boolean isEnabled(Component component)
-	{
+	public boolean isEnabled(Component component) {
 		return component.isEnabledInHierarchy();
 	}
 
 	// Methods //
 
 	@Override
-	public void bind(Component component)
-	{
+	public void bind(Component component) {
 		super.bind(component);
 
 		this.onUpdateAjaxBehavior = this.newOnUpdateAjaxBehavior(this);
 		component.add(this.onUpdateAjaxBehavior);
 
-		if (this.listener.isOnReceiveEnabled())
-		{
+		if (this.listener.isOnReceiveEnabled()) {
 			this.onReceiveAjaxBehavior = this.newOnReceiveAjaxBehavior(this);
 			component.add(this.onReceiveAjaxBehavior);
 		}
 
-		if (this.listener.isOnRemoveEnabled())
-		{
+		if (this.listener.isOnRemoveEnabled()) {
 			this.onRemoveAjaxBehavior = this.newOnRemoveAjaxBehavior(this);
 			component.add(this.onRemoveAjaxBehavior);
 		}
@@ -129,32 +137,29 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	 * Helper method to locate an item in a list by identifier.<br>
 	 * By default, uses item's hashcode as identifier.
 	 *
-	 * @param id the item id
-	 * @param list the list of items
+	 * @param id
+	 *            the item id
+	 * @param list
+	 *            the list of items
 	 * @return the item with that identifier or {@code null} if there is no such
 	 * @see Sortable#findItem(String, List)
 	 */
-	protected T findItem(String id, List<T> list)
-	{
+	protected T findItem(String id, List<T> list) {
 		return ListUtils.fromHash(Integer.parseInt(id), list);
 	}
 
 	// Events //
 
 	@Override
-	public void onConfigure(Component component)
-	{
-		if (this.isEnabled(component))
-		{
+	public void onConfigure(Component component) {
+		if (this.isEnabled(component)) {
 			this.setOption("update", this.onUpdateAjaxBehavior.getCallbackFunction());
 
-			if (this.onReceiveAjaxBehavior != null)
-			{
+			if (this.onReceiveAjaxBehavior != null) {
 				this.setOption("receive", this.onReceiveAjaxBehavior.getCallbackFunction());
 			}
 
-			if (this.onRemoveAjaxBehavior != null)
-			{
+			if (this.onRemoveAjaxBehavior != null) {
 				this.setOption("remove", this.onRemoveAjaxBehavior.getCallbackFunction());
 			}
 		}
@@ -163,40 +168,35 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	}
 
 	@Override
-	public void onAjax(AjaxRequestTarget target, JQueryEvent event)
-	{
-		if (event instanceof SortableEvent)
-		{
+	public void onAjax(AjaxRequestTarget target, JQueryEvent event) {
+		if (event instanceof SortableEvent) {
 			SortableEvent ev = (SortableEvent) event;
 			String hash = ev.getHash();
 			int index = ev.getIndex();
 
-			if (event instanceof UpdateEvent)
-			{
+			if (event instanceof UpdateEvent) {
 				List<T> list = this.getItemList();
 
-				if (list != null)
-				{
+				if (list != null) {
 					this.listener.onUpdate(target, findItem(hash, list), index);
 				}
 			}
 
-			if (event instanceof ReceiveEvent)
-			{
-				List<T> list = this.getConnectedList();
+			if (event instanceof ReceiveEvent) {
+				List<List<T>> connectedLists = this.getConnectedLists();
 
-				if (!list.isEmpty())
-				{
-					this.listener.onReceive(target, findItem(hash, list), index);
+				for (List<T> connected : connectedLists) {
+					if (findItem(hash, connected) != null) {
+						this.listener.onReceive(target, findItem(hash, connected), index);
+						break;
+					}
 				}
 			}
 
-			if (event instanceof RemoveEvent)
-			{
+			if (event instanceof RemoveEvent) {
 				List<T> list = this.getItemList();
 
-				if (list != null)
-				{
+				if (list != null) {
 					this.listener.onRemove(target, findItem(hash, list));
 				}
 			}
@@ -208,33 +208,35 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'update' event, triggered when the user stopped sorting
 	 *
-	 * @param source the {@link IJQueryAjaxAware}
+	 * @param source
+	 *            the {@link IJQueryAjaxAware}
 	 * @return a new {@code OnUpdateAjaxBehavior} by default
 	 */
-	protected JQueryAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source)
-	{
+	protected JQueryAjaxBehavior newOnUpdateAjaxBehavior(IJQueryAjaxAware source) {
 		return new OnUpdateAjaxBehavior(source);
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'receive' event, triggered when a connected sortable list has received an item from another list.
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'receive' event, triggered when a connected sortable list has received an item
+	 * from another list.
 	 *
-	 * @param source the {@link IJQueryAjaxAware}
+	 * @param source
+	 *            the {@link IJQueryAjaxAware}
 	 * @return a new {@code OnReceiveAjaxBehavior} by default
 	 */
-	protected JQueryAjaxBehavior newOnReceiveAjaxBehavior(IJQueryAjaxAware source)
-	{
+	protected JQueryAjaxBehavior newOnReceiveAjaxBehavior(IJQueryAjaxAware source) {
 		return new OnReceiveAjaxBehavior(source);
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'remove' event, triggered when a sortable item has been dragged out from the list and into another.
+	 * Gets a new {@link JQueryAjaxBehavior} that will be wired to the 'remove' event, triggered when a sortable item has been dragged out from the
+	 * list and into another.
 	 *
-	 * @param source the {@link IJQueryAjaxAware}
+	 * @param source
+	 *            the {@link IJQueryAjaxAware}
 	 * @return a new {@code OnRemoveAjaxBehavior} by default
 	 */
-	protected JQueryAjaxBehavior newOnRemoveAjaxBehavior(IJQueryAjaxAware source)
-	{
+	protected JQueryAjaxBehavior newOnRemoveAjaxBehavior(IJQueryAjaxAware source) {
 		return new OnRemoveAjaxBehavior(source);
 	}
 
@@ -243,18 +245,15 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	/**
 	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'update' event
 	 */
-	protected static class OnUpdateAjaxBehavior extends JQueryAjaxBehavior
-	{
+	protected static class OnUpdateAjaxBehavior extends JQueryAjaxBehavior {
 		private static final long serialVersionUID = 1L;
 
-		public OnUpdateAjaxBehavior(IJQueryAjaxAware source)
-		{
+		public OnUpdateAjaxBehavior(IJQueryAjaxAware source) {
 			super(source);
 		}
 
 		@Override
-		protected CallbackParameter[] getCallbackParameters()
-		{
+		protected CallbackParameter[] getCallbackParameters() {
 			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
 					CallbackParameter.context("ui"), // lf
 					CallbackParameter.resolved("hash", "ui.item.data('hash')"), // lf
@@ -262,8 +261,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 		}
 
 		@Override
-		protected JQueryEvent newEvent()
-		{
+		protected JQueryEvent newEvent() {
 			return new UpdateEvent();
 		}
 	}
@@ -271,18 +269,15 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	/**
 	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'receive' event
 	 */
-	protected static class OnReceiveAjaxBehavior extends JQueryAjaxBehavior
-	{
+	protected static class OnReceiveAjaxBehavior extends JQueryAjaxBehavior {
 		private static final long serialVersionUID = 1L;
 
-		public OnReceiveAjaxBehavior(IJQueryAjaxAware source)
-		{
+		public OnReceiveAjaxBehavior(IJQueryAjaxAware source) {
 			super(source);
 		}
 
 		@Override
-		protected CallbackParameter[] getCallbackParameters()
-		{
+		protected CallbackParameter[] getCallbackParameters() {
 			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
 					CallbackParameter.context("ui"), // lf
 					CallbackParameter.resolved("hash", "ui.item.data('hash')"), // lf
@@ -290,8 +285,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 		}
 
 		@Override
-		protected JQueryEvent newEvent()
-		{
+		protected JQueryEvent newEvent() {
 			return new ReceiveEvent();
 		}
 	}
@@ -299,26 +293,22 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	/**
 	 * Provides a {@link JQueryAjaxBehavior} that aims to be wired to the 'remove' event
 	 */
-	protected static class OnRemoveAjaxBehavior extends JQueryAjaxBehavior
-	{
+	protected static class OnRemoveAjaxBehavior extends JQueryAjaxBehavior {
 		private static final long serialVersionUID = 1L;
 
-		public OnRemoveAjaxBehavior(IJQueryAjaxAware source)
-		{
+		public OnRemoveAjaxBehavior(IJQueryAjaxAware source) {
 			super(source);
 		}
 
 		@Override
-		protected CallbackParameter[] getCallbackParameters()
-		{
+		protected CallbackParameter[] getCallbackParameters() {
 			return new CallbackParameter[] { CallbackParameter.context("event"), // lf
 					CallbackParameter.context("ui"), // lf
 					CallbackParameter.resolved("hash", "ui.item.data('hash')") };
 		}
 
 		@Override
-		protected JQueryEvent newEvent()
-		{
+		protected JQueryEvent newEvent() {
 			return new RemoveEvent();
 		}
 	}
@@ -328,13 +318,11 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	/**
 	 * Provides a base class for {@link SortableBehavior} event objects
 	 */
-	protected static class SortableEvent extends JQueryEvent
-	{
+	protected static class SortableEvent extends JQueryEvent {
 		private final String hash;
 		private final int index;
 
-		public SortableEvent()
-		{
+		public SortableEvent() {
 			this.hash = RequestCycleUtils.getQueryParameterValue("hash").toString();
 			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(-1); // remove-behavior will default to -1
 		}
@@ -344,8 +332,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 		 *
 		 * @return the hash
 		 */
-		public String getHash()
-		{
+		public String getHash() {
 			return this.hash;
 		}
 
@@ -354,8 +341,7 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 		 *
 		 * @return the index
 		 */
-		public int getIndex()
-		{
+		public int getIndex() {
 			return this.index;
 		}
 	}
@@ -363,21 +349,19 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnUpdateAjaxBehavior} callback
 	 */
-	protected static class UpdateEvent extends SortableEvent
-	{
+	protected static class UpdateEvent extends SortableEvent {
 	}
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnReceiveAjaxBehavior} callback
 	 */
-	protected static class ReceiveEvent extends SortableEvent
-	{
+	protected static class ReceiveEvent extends SortableEvent {
 	}
 
 	/**
 	 * Provides an event object that will be broadcasted by the {@link OnRemoveAjaxBehavior} callback
 	 */
-	protected static class RemoveEvent extends SortableEvent
-	{
+	protected static class RemoveEvent extends SortableEvent {
 	}
+
 }

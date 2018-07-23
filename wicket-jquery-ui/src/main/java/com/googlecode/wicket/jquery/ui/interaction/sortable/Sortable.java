@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.interaction.sortable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,7 +40,8 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
  * Provides a jQuery UI sortable {@link JQueryGenericContainer}.<br>
  * The {@code Sortable} is usually associated to an &lt;UL&gt; element.
  *
- * @param <T> the type of the model object
+ * @param <T>
+ *            the type of the model object
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -53,51 +55,57 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	 * The {@link Sortable} that requested to be connected to this {@link Sortable}<br>
 	 * In other words, the {@link Sortable} that called {@link #connectWith(Sortable)}
 	 */
-	private Sortable<T> connectedSortable = null;
+	private List<Sortable<T>> connectedSortable = new ArrayList<Sortable<T>>();
 
 	/**
 	 * Constructor
 	 *
-	 * @param id the markup id
-	 * @param list the list the {@link Sortable} should observe.
+	 * @param id
+	 *            the markup id
+	 * @param list
+	 *            the list the {@link Sortable} should observe.
 	 */
-	public Sortable(String id, List<T> list)
-	{
+	public Sortable(String id, List<T> list) {
 		this(id, Model.ofList(list), new Options());
 	}
 
 	/**
 	 * Constructor
 	 *
-	 * @param id the markup id
-	 * @param list the list the {@link Sortable} should observe.
-	 * @param options the {@link Options}
+	 * @param id
+	 *            the markup id
+	 * @param list
+	 *            the list the {@link Sortable} should observe.
+	 * @param options
+	 *            the {@link Options}
 	 */
-	public Sortable(String id, List<T> list, Options options)
-	{
+	public Sortable(String id, List<T> list, Options options) {
 		this(id, Model.ofList(list), options);
 	}
 
 	/**
 	 * Constructor
 	 *
-	 * @param id the markup id
-	 * @param model the list the {@link Sortable} should observe.
+	 * @param id
+	 *            the markup id
+	 * @param model
+	 *            the list the {@link Sortable} should observe.
 	 */
-	public Sortable(String id, IModel<List<T>> model)
-	{
+	public Sortable(String id, IModel<List<T>> model) {
 		this(id, model, new Options());
 	}
 
 	/**
 	 * Constructor
 	 *
-	 * @param id the markup id
-	 * @param model the list the {@link Sortable} should observe.
-	 * @param options the {@link Options}
+	 * @param id
+	 *            the markup id
+	 * @param model
+	 *            the list the {@link Sortable} should observe.
+	 * @param options
+	 *            the {@link Options}
 	 */
-	public Sortable(String id, IModel<List<T>> model, Options options)
-	{
+	public Sortable(String id, IModel<List<T>> model, Options options) {
 		super(id, model);
 
 		this.options = Args.notNull(options, "options");
@@ -106,22 +114,18 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	// Events //
 
 	@Override
-	protected void onInitialize()
-	{
+	protected void onInitialize() {
 		super.onInitialize();
 
 		this.add(this.newListView(this.getModel()));
 	}
 
 	@Override
-	public void onEvent(IEvent<?> event)
-	{
-		if (event.getSource() instanceof Sortable<?>)
-		{
+	public void onEvent(IEvent<?> event) {
+		if (event.getSource() instanceof Sortable<?>) {
 			AjaxRequestTarget target = RequestCycleUtils.getAjaxRequestTarget();
 
-			if (target != null)
-			{
+			if (target != null) {
 				@SuppressWarnings("unchecked")
 				T item = (T) event.getPayload();
 
@@ -131,27 +135,30 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	}
 
 	@Override
-	public void onUpdate(AjaxRequestTarget target, T item, int index)
-	{
+	public void onUpdate(AjaxRequestTarget target, T item, int index) {
 		this.modelChanging();
 		ListUtils.move(item, index, this.getModelObject()); // why is it called by sender if moving to receiver?
 		this.modelChanged();
 	}
 
 	@Override
-	public void onReceive(AjaxRequestTarget target, T item, int index)
-	{
+	public void onReceive(AjaxRequestTarget target, T item, int index) {
 		this.modelChanging();
 		this.getModelObject().add(index, item);
 		this.modelChanged();
 
 		// broadcast to the connected sortable for removing the item
-		this.send(this.connectedSortable, Broadcast.EXACT, item);
+		for (Sortable<T> connected : this.connectedSortable) {
+			List<T> list = connected.getModelObject();
+			if (list.contains(item)) {
+				this.send(connected, Broadcast.EXACT, item);
+				break;
+			}
+		}
 	}
 
 	@Override
-	public void onRemove(AjaxRequestTarget target, T item)
-	{
+	public void onRemove(AjaxRequestTarget target, T item) {
 		this.modelChanging();
 		this.getModelObject().remove(item);
 		this.modelChanged();
@@ -160,15 +167,14 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	// Properties //
 
 	@Override
-	public boolean isOnReceiveEnabled()
-	{
+	public boolean isOnReceiveEnabled() {
 		return this.connectedSortable != null;
 	}
 
 	@Override
-	public boolean isOnRemoveEnabled()
-	{
-		return false; // 'remove' will be handled after 'receive' by the event bus because there is a risk the item is removed before being received (leading to a NPE)
+	public boolean isOnRemoveEnabled() {
+		return false; // 'remove' will be handled after 'receive' by the event bus because there is a risk the item is removed before being received
+						// (leading to a NPE)
 	}
 
 	// Methods //
@@ -177,95 +183,116 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	 * Connects with another {@link Sortable}<br>
 	 * The specified {@link Sortable} will keep a reference to the caller ({@code this}).
 	 *
-	 * @param sortable the {@link Sortable} to connect with
+	 * @param sortable
+	 *            the {@link Sortable} to connect with
 	 * @return this, for chaining
 	 */
-	public Sortable<T> connectWith(Sortable<T> sortable)
-	{
+	public Sortable<T> connectWith(Sortable<T> sortable) {
 		Args.notNull(sortable, "sortable");
 
 		sortable.connect(this); // eq. to sortable.connectedSortable = this;
+		this.connect(sortable);
 
-		return this.connectWith(JQueryWidget.getSelector(sortable));
+		return this.connectAll();
 	}
 
 	/**
 	 * Sets the '{@code connectWith}' options
 	 *
-	 * @param selector the html selector
+	 * @param selector
+	 *            the html selector
 	 * @return this, for chaining
 	 */
-	private Sortable<T> connectWith(String selector)
-	{
-		this.options.set("connectWith", Options.asString(selector));
-
-		return this;
-	}
 
 	/**
 	 * Sets the connected {@link Sortable} reference.<br>
 	 * Supplying a non-null {@link Sortable} will activate {@link #isOnReceiveEnabled()}
 	 *
-	 * @param sortable the {@link Sortable}
+	 * @param sortable
+	 *            the {@link Sortable}
 	 * @see #isOnReceiveEnabled()
 	 */
-	private void connect(Sortable<T> sortable)
-	{
-		this.connectedSortable = sortable;
+	private void connect(Sortable<T> sortable) {
+		this.connectedSortable.add(sortable);
+	}
+
+	private Sortable<T> connectAll() {
+		List<String> selectors = new ArrayList<>();
+		for (Sortable<T> connection : this.connectedSortable) {
+			selectors.add(JQueryWidget.getSelector(connection));
+		}
+
+		System.out.println("OPT: " + Options.asString(selectors));
+
+		this.options.set("connectWith", Options.asString(selectors));
+
+		return this;
 	}
 
 	/**
 	 * Helper method to locate an item in a list by identifier.<br>
 	 * By default, uses item's hashcode as identifier.
 	 *
-	 * @param id the item id
-	 * @param list the list of items
+	 * @param id
+	 *            the item id
+	 * @param list
+	 *            the list of items
 	 * @return the item with that identifier or {@code null} if there is no such
 	 * @see SortableBehavior#findItem(String, List)
 	 */
-	protected T findItem(String id, List<T> list)
-	{
+	protected T findItem(String id, List<T> list) {
 		return ListUtils.fromHash(Integer.parseInt(id), list);
 	}
 
 	// IJQueryWidget //
 
 	@Override
-	public JQueryBehavior newWidgetBehavior(String selector)
-	{
+	public JQueryBehavior newWidgetBehavior(String selector) {
 		return new SortableBehavior<T>(selector, this.options, this) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected List<T> getItemList()
-			{
+			protected List<T> getItemList() {
 				return Sortable.this.getModelObject();
 			}
 
 			@Override
-			protected List<T> getConnectedList()
-			{
-				if (Sortable.this.connectedSortable != null)
-				{
-					return Sortable.this.connectedSortable.getModelObject();
+			@Deprecated
+			protected List<T> getConnectedList() {
+				if (Sortable.this.connectedSortable.size() > 0) {
+					return Sortable.this.connectedSortable.get(0).getModelObject();
 				}
 
 				return Collections.emptyList();
 			}
 
 			@Override
-			protected T findItem(String id, List<T> list)
-			{
+			protected List<List<T>> getConnectedLists() {
+				return Sortable.this.getConnectedLists();
+
+			}
+
+			@Override
+			protected T findItem(String id, List<T> list) {
 				return Sortable.this.findItem(id, list);
 			}
 		};
 	}
 
+	protected List<List<T>> getConnectedLists() {
+		List<List<T>> connectedLists = new ArrayList<>();
+		for (Sortable<T> connected : this.connectedSortable) {
+			connectedLists.add(connected.getModelObject());
+		}
+		return connectedLists;
+	}
+
 	/**
 	 * Gets a new {@link HashListView}
 	 *
-	 * @param model the {@link IModel} that <i>should</i> be used
+	 * @param model
+	 *            the {@link IModel} that <i>should</i> be used
 	 * @return the {@link HashListView}
 	 */
 	protected abstract HashListView<T> newListView(IModel<List<T>> model);
@@ -273,7 +300,8 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	/**
 	 * Provides the {@link ListView} to be used within the {@link Sortable}
 	 *
-	 * @param <T> the type of the model object
+	 * @param <T>
+	 *            the type of the model object
 	 */
 	public abstract static class HashListView<T> extends ListView<T> // NOSONAR
 	{
@@ -282,38 +310,39 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 		/**
 		 * Constructor
 		 *
-		 * @param id the markup id
+		 * @param id
+		 *            the markup id
 		 */
-		public HashListView(String id)
-		{
+		public HashListView(String id) {
 			super(id);
 		}
 
 		/**
 		 * Constructor
 		 *
-		 * @param id the markup id
-		 * @param list the {@link List}
+		 * @param id
+		 *            the markup id
+		 * @param list
+		 *            the {@link List}
 		 */
-		public HashListView(String id, List<T> list)
-		{
+		public HashListView(String id, List<T> list) {
 			super(id, list);
 		}
 
 		/**
 		 * Constructor
 		 *
-		 * @param id the markup id
-		 * @param model the {@link IModel}
+		 * @param id
+		 *            the markup id
+		 * @param model
+		 *            the {@link IModel}
 		 */
-		public HashListView(String id, IModel<? extends List<T>> model)
-		{
+		public HashListView(String id, IModel<? extends List<T>> model) {
 			super(id, model);
 		}
 
 		@Override
-		protected void onBeginPopulateItem(ListItem<T> item)
-		{
+		protected void onBeginPopulateItem(ListItem<T> item) {
 			super.onBeginPopulateItem(item);
 
 			item.add(AttributeModifier.replace("data-hash", item.getModelObject().hashCode()));
