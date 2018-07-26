@@ -222,8 +222,6 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 			selectors.add(JQueryWidget.getSelector(connection));
 		}
 
-		System.out.println("OPT: " + Options.asString(selectors));
-
 		this.options.set("connectWith", Options.asString(selectors));
 
 		return this;
