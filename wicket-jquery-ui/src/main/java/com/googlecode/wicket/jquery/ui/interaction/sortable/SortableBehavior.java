@@ -72,7 +72,6 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	public SortableBehavior(String selector, Options options, ISortableListener<T> listener)
 	{
 		super(selector, METHOD, options);
-
 		this.listener = Args.notNull(listener, "listener");
 	}
 
@@ -395,5 +394,4 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	protected static class RemoveEvent extends SortableEvent
 	{
 	}
-
 }

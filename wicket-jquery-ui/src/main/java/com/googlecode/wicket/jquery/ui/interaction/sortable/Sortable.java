@@ -277,7 +277,6 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 			protected List<List<T>> getConnectedLists()
 			{
 				return Sortable.this.getConnectedLists();
-
 			}
 
 			@Override
@@ -351,7 +350,6 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 		protected void onBeginPopulateItem(ListItem<T> item)
 		{
 			super.onBeginPopulateItem(item);
-
 			item.add(AttributeModifier.replace("data-hash", item.getModelObject().hashCode()));
 		}
 	}
