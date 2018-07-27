@@ -100,7 +100,6 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	public Sortable(String id, IModel<List<T>> model, Options options)
 	{
 		super(id, model);
-
 		this.options = Args.notNull(options, "options");
 	}
 
@@ -110,7 +109,6 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	protected void onInitialize()
 	{
 		super.onInitialize();
-
 		this.add(this.newListView(this.getModel()));
 	}
 
