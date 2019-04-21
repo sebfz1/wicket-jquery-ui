@@ -380,7 +380,7 @@ public abstract class AbstractAutoCompleteTextField<T, C> extends TextField<T> i
 	 */
 	protected ChoiceModelBehavior<C> newChoiceModelBehavior()
 	{
-		return new ChoiceModelBehavior<>(this.renderer, this.template) {
+		return new ChoiceModelBehavior<C>(this.renderer, this.template) {
 
 			private static final long serialVersionUID = 1L;
 			private static final String TERM = "filter[filters][0][value]";

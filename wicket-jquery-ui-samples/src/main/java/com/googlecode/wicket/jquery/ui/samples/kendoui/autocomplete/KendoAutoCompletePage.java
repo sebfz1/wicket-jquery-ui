@@ -36,7 +36,7 @@ public class KendoAutoCompletePage extends AbstractAutoCompletePage
 		form.add(feedback);
 
 		// Auto-complete //
-		final AutoCompleteTextField<String> autocomplete = new AutoCompleteTextField<>("autocomplete", Model.of("Heavy metal")) {
+		final AutoCompleteTextField<String> autocomplete = new AutoCompleteTextField<String>("autocomplete", Model.of("Heavy metal")) {
 
 			private static final long serialVersionUID = 1L;
 
