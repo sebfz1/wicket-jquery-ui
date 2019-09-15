@@ -44,7 +44,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>7.14.0</wicket.version>
+		<wicket.version>7.15.0</wicket.version>
 		<owasp-sanitizer.version>20171016.1</owasp-sanitizer.version>
 		<junit.version>4.12</junit.version>
 		<jetty.version>8.1.16.v20140903</jetty.version>
@@ -123,9 +123,10 @@
 					<artifactId>maven-javadoc-plugin</artifactId>
 					<version>2.10.3</version>
 					<configuration>
+						<source>7</source>
 						<quiet>true</quiet>
 						<links>
-							<link>http://docs.oracle.com/javase/6/docs/api/</link>
+							<link>http://docs.oracle.com/javase/7/docs/api/</link>
 							<link>http://junit.org/junit4/javadoc/latest/</link>
 							<link>http://www.slf4j.org/apidocs/</link>
 						</links>
