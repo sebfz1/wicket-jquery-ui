@@ -123,9 +123,10 @@
 					<artifactId>maven-javadoc-plugin</artifactId>
 					<version>2.10.3</version>
 					<configuration>
+						<source>8</source>
 						<quiet>true</quiet>
 						<links>
-							<link>http://docs.oracle.com/javase/6/docs/api/</link>
+							<link>http://docs.oracle.com/javase/8/docs/api/</link>
 							<link>http://junit.org/junit4/javadoc/latest/</link>
 							<link>http://www.slf4j.org/apidocs/</link>
 						</links>
