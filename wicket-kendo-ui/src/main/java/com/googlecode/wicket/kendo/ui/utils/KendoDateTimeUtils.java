@@ -84,6 +84,11 @@ public class KendoDateTimeUtils
 		{
 			converted = converted.replace("a", "aa");
 		}
+                // single 'y' is allowed in Java11, but *NOT* allowed in kendo
+                if (converted.contains("y") && !converted.contains("yy"))
+                {
+                        converted = converted.replace("y", "yy");
+                }
 
 		for (int i = 0; i < chars_lenth; i++)
 		{
