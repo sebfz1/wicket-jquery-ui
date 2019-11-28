@@ -146,7 +146,15 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 		super(id, model);
 
 		this.locale = locale;
-		this.datePattern = datePattern;
+		// single 'y' is allowed in Java11, but *NOT* being work as expected while using with DateTimeFormatter
+		if (datePattern.contains("y") && !datePattern.contains("yy"))
+		{
+			this.datePattern = datePattern.replace("y", "yy");
+		}
+		else
+		{
+			this.datePattern = datePattern;
+		}
 		this.timePattern = timePattern;
 
 		this.setType(Date.class); // makes use of the converter
@@ -314,7 +322,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 	/**
 	 * Gets a new {@link Date} {@link IConverter}.
-	 * 
+	 *
 	 * @param format the time format
 	 * @return the converter
 	 */
@@ -357,7 +365,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 				this.setEnabled(DateTimePicker.this.isEnabled());
 			}
-			
+
 			// methods //
 
 			@Override
