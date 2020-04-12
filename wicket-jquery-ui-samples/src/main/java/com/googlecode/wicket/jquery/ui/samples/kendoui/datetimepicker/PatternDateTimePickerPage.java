@@ -25,7 +25,7 @@ public class PatternDateTimePickerPage extends AbstractTimePickerPage
 		form.add(feedback);
 
 		// DateTimePicker //
-		final DateTimePicker datetimepicker = new DateTimePicker("datetimepicker", Model.of(new Date()), "EEE dd MMM yyyy", "HH:mm:ss");
+		final DateTimePicker datetimepicker = new DateTimePicker("datetimepicker", Model.of(new Date()), "EEE dd MMM y", "HH:mm:ss");
 		form.add(datetimepicker);
 
 		// Buttons //
