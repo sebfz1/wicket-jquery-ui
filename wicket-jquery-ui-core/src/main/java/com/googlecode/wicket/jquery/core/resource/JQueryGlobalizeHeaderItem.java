@@ -28,11 +28,11 @@ import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
  * public void renderHead(IHeaderResponse response)
  * {
  * 	super.renderHead(response);
- * 	
+ *
  * 	response.render(new JQueryGlobalizeHeaderItem());
  * }
  * </code></pre>
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  * @see JQueryLibrarySettings#getJQueryGlobalizeReference()
  *

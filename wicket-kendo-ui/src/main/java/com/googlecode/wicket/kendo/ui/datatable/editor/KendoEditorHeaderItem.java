@@ -23,24 +23,24 @@ import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
  * Usage:<br>
  * <pre><code>
  * new PropertyColumn("Status", "status") {
- * 
+ *
  * 	public String getEditor()
  * 	{
  * 		return EDITOR_NAME;
  * 	}
  * }
- * 
+ *
  * class MyDataTable
  * {
  * 	public void renderHead(IHeaderResponse response)
  * 	{
  * 		super.renderHead(response);
- * 
+ *
  * 		response.render(new KendoEditorHeaderItem(new DropDownListEditor(EDITOR_NAME, MyEnum.values()), EDITOR_NAME));
  * 	}
  * }
  * </code></pre>
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -50,7 +50,7 @@ public class KendoEditorHeaderItem extends JavaScriptContentHeaderItem
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param editor the {@link IKendoEditor}
 	 * @param id the id of the javascript element
 	 */

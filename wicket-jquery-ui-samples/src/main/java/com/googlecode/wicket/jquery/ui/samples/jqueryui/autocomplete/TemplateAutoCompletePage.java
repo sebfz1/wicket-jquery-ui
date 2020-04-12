@@ -4,11 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.core.utils.ListUtils;
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
@@ -86,5 +88,15 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 				};
 			}
 		});
+	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(TemplateAutoCompletePage.class));
 	}
 }

@@ -2,9 +2,11 @@ package com.googlecode.wicket.jquery.ui.samples.jqueryui.droppable;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.core.resource.StyleSheetPackageHeaderItem;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
 import com.googlecode.wicket.jquery.ui.interaction.droppable.Droppable;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -22,7 +24,6 @@ public class DefaultDroppablePage extends AbstractDroppablePage
 		return new Draggable<String>(id, Model.of(label)).setContainment("#wrapper-panel-frame");
 	}
 
-
 	private final FeedbackPanel feedback;
 
 	public DefaultDroppablePage()
@@ -37,6 +38,18 @@ public class DefaultDroppablePage extends AbstractDroppablePage
 		this.add(newDraggable("draggable1", "Draggable #1"));
 		this.add(newDraggable("draggable2", "Draggable #2"));
 	}
+
+	// Methods //
+
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(new StyleSheetPackageHeaderItem(DefaultDroppablePage.class));
+	}
+
+	// Factories //
 
 	/**
 	 * Gets a new Droppable.
