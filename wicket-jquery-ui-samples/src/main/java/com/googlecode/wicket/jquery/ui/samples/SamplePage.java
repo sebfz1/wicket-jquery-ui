@@ -67,6 +67,11 @@ public abstract class SamplePage extends TemplatePage // NOSONAR
 		});
 	}
 
+	protected List<DemoLink> getDemoLinks()
+	{
+		return Collections.emptyList();
+	}
+
 	private String getResourceString(String string)
 	{
 		return this.getString(String.format("%s.%s", this.getClass().getSimpleName(), string));
@@ -75,11 +80,6 @@ public abstract class SamplePage extends TemplatePage // NOSONAR
 	protected IModel<String> getSource(Source source)
 	{
 		return Model.of(SamplePage.getSource(source, this.getClass()));
-	}
-
-	protected List<DemoLink> getDemoLinks()
-	{
-		return Collections.emptyList();
 	}
 
 	private static String getSource(Source source, Class<? extends SamplePage> scope)
