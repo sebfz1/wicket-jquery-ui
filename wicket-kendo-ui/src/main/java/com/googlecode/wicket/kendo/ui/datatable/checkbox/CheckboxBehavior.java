@@ -20,12 +20,13 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
-import com.googlecode.wicket.kendo.ui.ajax.OnCheckedAjaxBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.DataTableBehavior;
 import com.googlecode.wicket.kendo.ui.datatable.column.IColumn;
 
@@ -68,7 +69,7 @@ public abstract class CheckboxBehavior extends DataTableBehavior {
         super(selector, options, columns, listener);
         
         this.listener = listener;
-        this.onCheckedAjaxBehavior = new OnCheckedAjaxBehavior(this);
+        this.onCheckedAjaxBehavior = onCheckedAjaxBehavior(this);
     }
 
     @Override
@@ -96,5 +97,27 @@ public abstract class CheckboxBehavior extends DataTableBehavior {
         } else {
             super.onAjax(target, event);
         }
+    }
+    
+    protected JQueryAjaxBehavior onCheckedAjaxBehavior(IJQueryAjaxAware source) {
+
+        return new JQueryAjaxBehavior(source) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected CallbackParameter[] getCallbackParameters() {
+                
+                return new CallbackParameter[] {
+                    CallbackParameter.context("e"),
+                    CallbackParameter.resolved("values", "this.selectedKeyNames()")
+                };
+            }
+
+            @Override
+            protected JQueryEvent newEvent() {
+                return new CheckboxEvent();
+            }
+        };
     }
 }

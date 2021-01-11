@@ -32,7 +32,7 @@ public interface CheckboxListener extends IDataTableListener {
      * since Kendo UI does not provide a specific event for checkbox actions.
      * 
      * @param target the {@link AjaxRequestTarget}
-     * @param selectedLines the selected lines of the table
+     * @param selectedRows the selected rows of the table
      */
-    void onChecked(AjaxRequestTarget target, String selectedLines);
+    void onChecked(AjaxRequestTarget target, String selectedRows);
 }
