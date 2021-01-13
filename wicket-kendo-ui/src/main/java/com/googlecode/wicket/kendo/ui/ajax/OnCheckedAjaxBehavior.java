@@ -29,8 +29,8 @@ import com.googlecode.wicket.kendo.ui.datatable.checkbox.CheckboxEvent;
  * 
  * @author Haritos Hatzidimitriou
  */
-public class OnCheckedAjaxBehavior  extends JQueryAjaxPostBehavior {
-    
+public class OnCheckedAjaxBehavior extends JQueryAjaxPostBehavior 
+{
     private static final long serialVersionUID = 1L;
     
     /**
@@ -38,23 +38,24 @@ public class OnCheckedAjaxBehavior  extends JQueryAjaxPostBehavior {
      *
      * @param source the {@link Behavior} that will broadcast the event.
      */
-    public OnCheckedAjaxBehavior (final IJQueryAjaxAware source) {
-        
+    public OnCheckedAjaxBehavior (final IJQueryAjaxAware source) 
+    {
         super(source);
     }
     
     @Override
-    protected CallbackParameter[] getCallbackParameters() {
-        
-        return new CallbackParameter[] {
+    protected CallbackParameter[] getCallbackParameters() 
+    {
+        return new CallbackParameter[] 
+        {
             CallbackParameter.context("e"),
             CallbackParameter.resolved("values", "this.selectedKeyNames()")
         };
     }
 
     @Override
-    protected JQueryEvent newEvent() {
+    protected JQueryEvent newEvent() 
+    {
         return new CheckboxEvent();
     }
-
 }

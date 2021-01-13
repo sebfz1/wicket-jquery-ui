@@ -7,8 +7,6 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.util.lang.Generics;
 
-import com.github.openjson.JSONArray;
-import com.github.openjson.JSONObject;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
@@ -49,7 +47,7 @@ public class CheckboxDataTablePage extends AbstractDataTablePage
         options.set("height", 430);
         options.set("pageable", "{ pageSizes: [ 25, 50, 100 ] }");
         options.set("columnMenu", true);
-        options.set("selectable", true);
+        options.set("selectable", false); // this must be false
         options.set("persistSelection", true); // keep the selection when changing pages
 
         final CheckboxDataTable<Product> table = new CheckboxDataTable<Product>("datatable", newColumnList(), newDataProvider(), 25, options, feedback);
@@ -97,6 +95,10 @@ public class CheckboxDataTablePage extends AbstractDataTablePage
     {
         List<IColumn> columns = Generics.newArrayList();
 
+        /* 
+         * An IdPropertyColumn is mandatory for the checkbox selection to work properly.
+         * If you don't want to display it just override the isVisible() method to always return false .
+         */
         columns.add(new IdPropertyColumn("ID", "id", 50));
         columns.add(new PropertyColumn("Name", "name"));
         columns.add(new PropertyColumn("Description", "description"));
@@ -118,37 +120,10 @@ public class CheckboxDataTablePage extends AbstractDataTablePage
             super(id, columns, provider, rows, options);
             this.feedback = feedback;
         }
-                
-        @Override
-        public void onColumnReorder(AjaxRequestTarget target, int oldIndex, int newIndex, JSONObject column)
-        {
-            final String message = String.format("reordered: old-index=%d, new-index=%d, column=%s", oldIndex, newIndex, column.optString("field"));
-
-            feedback.info(message);
-            feedback.refresh(target);
-        }
-        
-        @Override
-        public void onChange(AjaxRequestTarget target, JSONArray items)
-        {
-//            final List<Integer> ids = JsonUtils.toJSONList(items).stream().map(o -> o.getInt("id")).collect(Collectors.toList());
-//            final String message = String.format("Selected: %s", ids);
-//
-//            feedback.info(message);
-//            feedback.refresh(target);
-        }
         
         @Override
         public void onChecked(AjaxRequestTarget target, String selectedRows) 
         {
-            if (selectedRows == null) // TODO: remove this when you get it working!
-            {    final String message = String.format("Error: selectedRows is NULL");
-                
-                feedback.info(message);
-                feedback.refresh(target);
-                return;
-            }
-            
             if (!selectedRows.equals("")) 
             {
                 final String message = String.format("Selected rows: " + selectedRows);

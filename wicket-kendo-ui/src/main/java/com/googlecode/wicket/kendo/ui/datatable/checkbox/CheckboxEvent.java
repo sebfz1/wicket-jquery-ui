@@ -16,8 +16,6 @@
  */
 package com.googlecode.wicket.kendo.ui.datatable.checkbox;
 
-import org.apache.wicket.util.string.StringValue;
-
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
 
@@ -28,15 +26,15 @@ import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
  */
 public class CheckboxEvent extends JQueryEvent {
 
-    private final StringValue selectedLines;
+    private final String selectedLines;
     
     public CheckboxEvent() {
         
-        selectedLines = RequestCycleUtils.getQueryParameterValue("values");
+        selectedLines = RequestCycleUtils.getQueryParameterValue("values").toString();
     }
 
     public String getSelectedLines() {
         
-        return selectedLines.toString();
+        return selectedLines;
     }
 }
