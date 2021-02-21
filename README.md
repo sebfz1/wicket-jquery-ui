@@ -1,5 +1,5 @@
 # wicket-jquery-ui
-**jQuery UI & Kendo UI integration in Wicket 6.x, Wicket 7.x &amp; Wicket8.x**  
+**jQuery UI & Kendo UI integration in Wicket 7.x, Wicket 8.x &amp; Wicket9.x**  
 [![TravisCI](https://travis-ci.org/sebfz1/wicket-jquery-ui.svg?branch=wicket7.x)](https://travis-ci.org/sebfz1/wicket-jquery-ui)
 
 ## Getting started
