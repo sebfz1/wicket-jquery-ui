@@ -69,7 +69,7 @@ public class SampleApplication extends WebApplication
 		super.init();
 
 		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
-		
+
 		// jQuery //
 		// this.getJavaScriptLibrarySettings().setJQueryReference(JQueryMigrateResourceReference.get());
 

@@ -1,5 +1,5 @@
 # wicket-jquery-ui
-**jQuery UI integration in Wicket 6.x, Wicket 7.x, Wicket 8.x &amp; Wicket9.x**  
+**jQuery UI & Kendo UI integration in Wicket 7.x, Wicket 8.x &amp; Wicket9.x**  
 [![TravisCI](https://travis-ci.org/sebfz1/wicket-jquery-ui.svg?branch=wicket8.x)](https://travis-ci.org/sebfz1/wicket-jquery-ui)
 
 ## Getting started
@@ -48,6 +48,7 @@ If the version you specified is *snapshot*, you might define this repository:
 
 <table>
 <tr><th>wicket-jquery-ui</th><th>Wicket</th><th>jQuery UI</th></tr>
+<tr><td>8.11.0</td><td>8.11.0</td><td>1.12.1</td></tr>
 <tr><td>8.10.0</td><td>8.10.0</td><td>1.12.1</td></tr>
 <tr><td>8.9.0</td><td>8.9.0</td><td>1.12.1</td></tr>
 <tr><td>8.8.0</td><td>8.8.0</td><td>1.12.1</td></tr>
