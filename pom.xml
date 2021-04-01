@@ -44,7 +44,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>8.11.0</wicket.version>
+		<wicket.version>8.12.0</wicket.version>
 		<owasp-sanitizer.version>20191001.1</owasp-sanitizer.version>
 		<junit.version>4.12</junit.version>
 		<jetty.version>8.1.16.v20140903</jetty.version>
@@ -61,7 +61,7 @@
 		</repository>
 		<repository>
 			<id>Wicket Nexus Staging</id>
-			<url>https://repository.apache.org/content/repositories/orgapachewicket-1110</url>
+			<url>https://repository.apache.org/content/repositories/orgapachewicket-1159</url>
 		</repository>
 	</repositories>
 
@@ -334,6 +334,6 @@
 		<module>wicket-kendo-ui</module>
 		<module>wicket-kendo-ui-culture</module>
 		<module>wicket-kendo-ui-themes</module>
-		<!-- module>wicket-jquery-ui-samples</module -->
+		<module>wicket-jquery-ui-samples</module>
 	</modules>
 </project>
