@@ -203,7 +203,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		this.wizardModel.addListener(this);
 
 		// form //
-		this.form = new Form<T>(Wizard.FORM_ID);
+		this.form = createForm(Wizard.FORM_ID);
 		this.add(this.form);
 
 		// header (title + summary )//
@@ -212,6 +212,17 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		// dummy view to be replaced //
 		this.form.add(new EmptyPanel(Wizard.VIEW_ID));
 		// this.form.add(newOverviewBar(Wizard.OVERVIEW_ID)); //OverviewBar not handled
+	}
+
+	/**
+	 * Factory method that allows to create a form.
+	 *
+	 * @param formId The id of the form
+	 *
+	 * @return the form
+	 */
+	protected  Form<T> createForm(String formId) {
+		return new Form<>(formId);
 	}
 
 	@Override
