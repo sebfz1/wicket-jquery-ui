@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.interaction.sortable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	 * The {@link Sortable} that requested to be connected to this {@link Sortable}<br>
 	 * In other words, the {@link Sortable} that called {@link #connectWith(Sortable)}
 	 */
-	private Sortable<T> connectedSortable = null;
+	private List<Sortable<T>> connectedSortable = new ArrayList<Sortable<T>>();
 
 	/**
 	 * Constructor
@@ -99,7 +100,6 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	public Sortable(String id, IModel<List<T>> model, Options options)
 	{
 		super(id, model);
-
 		this.options = Args.notNull(options, "options");
 	}
 
@@ -109,7 +109,6 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	protected void onInitialize()
 	{
 		super.onInitialize();
-
 		this.add(this.newListView(this.getModel()));
 	}
 
@@ -146,7 +145,15 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 		this.modelChanged();
 
 		// broadcast to the connected sortable for removing the item
-		this.send(this.connectedSortable, Broadcast.EXACT, item);
+		for (Sortable<T> connected : this.connectedSortable)
+		{
+			List<T> list = connected.getModelObject();
+			if (list.contains(item))
+			{
+				this.send(connected, Broadcast.EXACT, item);
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -168,7 +175,8 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	@Override
 	public boolean isOnRemoveEnabled()
 	{
-		return false; // 'remove' will be handled after 'receive' by the event bus because there is a risk the item is removed before being received (leading to a NPE)
+		return false; // 'remove' will be handled after 'receive' by the event bus because there is a risk the item is removed before being received
+						// (leading to a NPE)
 	}
 
 	// Methods //
@@ -185,8 +193,9 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 		Args.notNull(sortable, "sortable");
 
 		sortable.connect(this); // eq. to sortable.connectedSortable = this;
+		this.connect(sortable);
 
-		return this.connectWith(JQueryWidget.getSelector(sortable));
+		return this.connectAll();
 	}
 
 	/**
@@ -195,12 +204,6 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	 * @param selector the html selector
 	 * @return this, for chaining
 	 */
-	private Sortable<T> connectWith(String selector)
-	{
-		this.options.set("connectWith", Options.asString(selector));
-
-		return this;
-	}
 
 	/**
 	 * Sets the connected {@link Sortable} reference.<br>
@@ -211,7 +214,20 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 	 */
 	private void connect(Sortable<T> sortable)
 	{
-		this.connectedSortable = sortable;
+		this.connectedSortable.add(sortable);
+	}
+
+	private Sortable<T> connectAll()
+	{
+		List<String> selectors = new ArrayList<>();
+		for (Sortable<T> connection : this.connectedSortable)
+		{
+			selectors.add(JQueryWidget.getSelector(connection));
+		}
+
+		this.options.set("connectWith", Options.asString(selectors));
+
+		return this;
 	}
 
 	/**
@@ -244,14 +260,21 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 			}
 
 			@Override
+			@Deprecated
 			protected List<T> getConnectedList()
 			{
-				if (Sortable.this.connectedSortable != null)
+				if (Sortable.this.connectedSortable.size() > 0)
 				{
-					return Sortable.this.connectedSortable.getModelObject();
+					return Sortable.this.connectedSortable.get(0).getModelObject();
 				}
 
 				return Collections.emptyList();
+			}
+
+			@Override
+			protected List<List<T>> getConnectedLists()
+			{
+				return Sortable.this.getConnectedLists();
 			}
 
 			@Override
@@ -260,6 +283,16 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 				return Sortable.this.findItem(id, list);
 			}
 		};
+	}
+
+	protected List<List<T>> getConnectedLists()
+	{
+		List<List<T>> connectedLists = new ArrayList<>();
+		for (Sortable<T> connected : this.connectedSortable)
+		{
+			connectedLists.add(connected.getModelObject());
+		}
+		return connectedLists;
 	}
 
 	/**
@@ -315,7 +348,6 @@ public abstract class Sortable<T> extends JQueryGenericContainer<List<T>> implem
 		protected void onBeginPopulateItem(ListItem<T> item)
 		{
 			super.onBeginPopulateItem(item);
-
 			item.add(AttributeModifier.replace("data-hash", item.getModelObject().hashCode()));
 		}
 	}
