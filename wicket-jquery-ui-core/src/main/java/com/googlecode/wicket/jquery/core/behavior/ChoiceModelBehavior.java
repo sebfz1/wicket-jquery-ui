@@ -37,6 +37,9 @@ import com.googlecode.wicket.jquery.core.utils.ListUtils;
 public abstract class ChoiceModelBehavior<T> extends AjaxCallbackBehavior implements IChoiceProvider<T>
 {
 	private static final long serialVersionUID = 1L;
+	
+	/** url param for server-side filtering */
+	protected static final String FILTER_VALUE = "filter[filters][0][value]";
 
 	protected final ITextRenderer<? super T> renderer;
 	protected final IJQueryTemplate template;
@@ -46,7 +49,7 @@ public abstract class ChoiceModelBehavior<T> extends AjaxCallbackBehavior implem
 	 * 
 	 * @param renderer the {@link ITextRenderer}
 	 */
-	public ChoiceModelBehavior(ITextRenderer<? super T> renderer)
+	protected ChoiceModelBehavior(ITextRenderer<? super T> renderer)
 	{
 		this(renderer, null);
 	}
@@ -59,7 +62,7 @@ public abstract class ChoiceModelBehavior<T> extends AjaxCallbackBehavior implem
 	 * @param renderer the {@link ITextRenderer}
 	 * @param template the {@link IJQueryTemplate}
 	 */
-	public ChoiceModelBehavior(ITextRenderer<? super T> renderer, IJQueryTemplate template)
+	protected ChoiceModelBehavior(ITextRenderer<? super T> renderer, IJQueryTemplate template)
 	{
 		this.renderer = renderer;
 		this.template = template;
