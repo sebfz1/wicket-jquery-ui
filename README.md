@@ -48,6 +48,7 @@ If the version you specified is *snapshot*, you might define this repository:
 
 <table>
 <tr><th>wicket-jquery-ui</th><th>Wicket</th><th>jQuery UI</th></tr>
+<tr><td>8.14.0</td><td>8.14.0</td><td>1.13.2</td></tr>
 <tr><td>8.13.0</td><td>8.13.0</td><td>1.13.1</td></tr>
 <tr><td>8.12.0</td><td>8.12.0</td><td>1.12.1</td></tr>
 <tr><td>8.11.0</td><td>8.11.0</td><td>1.12.1</td></tr>
@@ -101,7 +102,7 @@ To use wicket-jquery-ui with a standard theme, just add the corresponding theme 
 <dependency>
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-jquery-ui-theme-uilightness</artifactId>
-	<version>8.13.0</version>
+	<version>8.14.0</version>
 </dependency>
 ```
 
@@ -117,7 +118,7 @@ To use wicket-kendo-ui with a standard theme, just add the corresponding theme d
 <dependency>
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>wicket-kendo-ui-theme-default</artifactId>
-	<version>8.13.0</version>
+	<version>8.14.0</version>
 </dependency>
 ```
 
