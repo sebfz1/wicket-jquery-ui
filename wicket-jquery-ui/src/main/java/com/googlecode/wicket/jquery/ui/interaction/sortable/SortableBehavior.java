@@ -72,7 +72,6 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	public SortableBehavior(String selector, Options options, ISortableListener<T> listener)
 	{
 		super(selector, METHOD, options);
-		
 		this.listener = Args.notNull(listener, "listener");
 	}
 
@@ -87,11 +86,22 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 	protected abstract List<T> getItemList();
 
 	/**
-	 * Gets the list of the connected sortable
+	 * Gets the list of the connected sortable.
 	 *
 	 * @return null by default
 	 */
+	@Deprecated
 	protected List<T> getConnectedList()
+	{
+		return Collections.emptyList();
+	}
+
+	/**
+	 * Gets the lists of the connected sortable
+	 *
+	 * @return null by default
+	 */
+	protected List<List<T>> getConnectedLists()
 	{
 		return Collections.emptyList();
 	}
@@ -183,11 +193,15 @@ public abstract class SortableBehavior<T> extends JQueryUIBehavior implements IJ
 
 			if (event instanceof ReceiveEvent)
 			{
-				List<T> list = this.getConnectedList();
+				List<List<T>> connectedLists = this.getConnectedLists();
 
-				if (!list.isEmpty())
+				for (List<T> connected : connectedLists)
 				{
-					this.listener.onReceive(target, findItem(hash, list), index);
+					if (findItem(hash, connected) != null)
+					{
+						this.listener.onReceive(target, findItem(hash, connected), index);
+						break;
+					}
 				}
 			}
 
