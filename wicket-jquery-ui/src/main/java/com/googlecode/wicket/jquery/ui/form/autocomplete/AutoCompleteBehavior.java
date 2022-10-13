@@ -176,4 +176,8 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 			return this.index;
 		}
 	}
+
+	public JQueryAjaxBehavior getOnSelectAjaxBehavior() {
+		return onSelectAjaxBehavior;
+	}
 }

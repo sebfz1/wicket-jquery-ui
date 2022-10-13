@@ -20,10 +20,16 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 
+import com.googlecode.wicket.jquery.core.Options;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.util.convert.IConverter;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
@@ -44,6 +50,8 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 {
 	private static final long serialVersionUID = 1L;
 
+	private static final JavaScriptResourceReference JS = new JavaScriptResourceReference(AutoCompleteTextField.class, "AutoCompleteTextField.js");
+
 	/**
 	 * Behavior that will be called when the user enters an input
 	 */
@@ -59,6 +67,15 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 * Cache of current choices, needed to retrieve the user selected object
 	 */
 	private List<T> choices;
+
+
+	/**
+	 * Setting this flag to true adds some extra protection at client side
+	 * preventing users to be able to select stale elements.
+	 */
+	private boolean preventSelectWhileQueryIsRunning = false;
+
+	private AutoCompleteBehavior autoCompleteBehavior;
 
 	/**
 	 * Constructor
@@ -297,7 +314,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new AutoCompleteBehavior(selector, this) { // NOSONAR
+		return autoCompleteBehavior = new AutoCompleteBehavior(selector, this) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -323,8 +340,41 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 				return super.$();
 			}
+
+			@Override
+			public void onConfigure(Component component) {
+				super.onConfigure(component);
+				if (preventSelectWhileQueryIsRunning) {
+					// we define special functions in for handling select and fetch data
+					this.setOption("select", "function(request, response) {\n" + getVarName() + ".select(request, response); \n}");
+					if (this.isEnabled(component))
+					{
+						this.setOption("source",  "function(event, ui) {\n" + getVarName() + ".fetchItems(event, ui); \n}");
+					}
+				}
+			}
 		};
 	}
+
+	public void renderHead(IHeaderResponse response) {
+		if (preventSelectWhileQueryIsRunning) {
+			response.render(JavaScriptHeaderItem.forReference(JS));
+			// we create a prototype with the data we need
+			response.render(OnDomReadyHeaderItem.forScript(getVarName() + " = new WJQUI.AutoComplete('"
+					+ getMarkupId() + "','" + choiceModelBehavior.getCallbackUrl()
+					+ "', '" + autoCompleteBehavior.getOnSelectAjaxBehavior().getCallbackUrl() + "');"));
+		}
+	}
+
+	private String getVarName() {
+		return "window.aut_" + getMarkupId();
+	}
+
+	public AutoCompleteTextField<T> setPreventSelectWhileQueryIsRunning(boolean preventSelectWhileQueryIsRunning) {
+		this.preventSelectWhileQueryIsRunning = preventSelectWhileQueryIsRunning;
+		return this;
+	}
+
 
 	// Factories //
 
