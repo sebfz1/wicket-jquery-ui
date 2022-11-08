@@ -33,18 +33,22 @@ import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  */
-abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
+abstract class AutoCompleteChoiceModelBehavior<T, I> extends ChoiceModelBehavior<T>
 {
 	private static final long serialVersionUID = 1L;
 
-	public AutoCompleteChoiceModelBehavior(ITextRenderer<? super T> renderer)
+	private final IAutoCompleteHandler<T, I> handler;
+
+	public AutoCompleteChoiceModelBehavior(ITextRenderer<? super T> renderer, IAutoCompleteHandler<T, I> handler)
 	{
 		super(renderer);
+		this.handler = handler;
 	}
 
-	public AutoCompleteChoiceModelBehavior(ITextRenderer<? super T> renderer, IJQueryTemplate template)
+	public AutoCompleteChoiceModelBehavior(ITextRenderer<? super T> renderer, IJQueryTemplate template, IAutoCompleteHandler<T, I> handler)
 	{
 		super(renderer, template);
+		this.handler = handler;
 	}
 
 	@Override
@@ -61,7 +65,8 @@ abstract class AutoCompleteChoiceModelBehavior<T> extends ChoiceModelBehavior<T>
 
 				// ITextRenderer //
 				final JSONObject object = this.renderer.render(choice);
-				object.put("id", Integer.toString(index)); /* 'id' is a reserved word */
+				object.put("id", handler.getId(choice, index)); /* 'id' is a reserved word */
+				object.put("index", Integer.toString(index)); /* 'id' is a reserved word */
 				object.put("value", this.renderer.getText(choice)); /* 'value' is a reserved word */
 
 				// Additional properties (like template properties) //

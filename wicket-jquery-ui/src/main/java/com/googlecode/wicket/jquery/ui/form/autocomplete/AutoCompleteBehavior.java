@@ -33,13 +33,13 @@ import com.googlecode.wicket.jquery.ui.JQueryUIBehavior;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements IJQueryAjaxAware
+public abstract class AutoCompleteBehavior<I> extends JQueryUIBehavior implements IJQueryAjaxAware
 {
 	private static final long serialVersionUID = 1L;
 	public static final String METHOD = "autocomplete";
 
 	/** event listener */
-	private final IAutoCompleteListener listener;
+	private final IAutoCompleteListener<I> listener;
 
 	private JQueryAjaxBehavior onSelectAjaxBehavior = null;
 
@@ -49,7 +49,7 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 	 * @param selector the html selector (ie: "#myId")
 	 * @param listener the {@link IAutoCompleteListener}
 	 */
-	public AutoCompleteBehavior(String selector, IAutoCompleteListener listener)
+	public AutoCompleteBehavior(String selector, IAutoCompleteListener<I> listener)
 	{
 		this(selector, new Options(), listener);
 	}
@@ -61,7 +61,7 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 	 * @param options the {@link Options}
 	 * @param listener the {@link IAutoCompleteListener}
 	 */
-	public AutoCompleteBehavior(String selector, Options options, IAutoCompleteListener listener)
+	public AutoCompleteBehavior(String selector, Options options, IAutoCompleteListener<I> listener)
 	{
 		super(selector, METHOD, options);
 
@@ -111,9 +111,11 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 	{
 		if (event instanceof SelectEvent)
 		{
-			this.listener.onSelect(target, ((SelectEvent) event).getIndex());
+			this.listener.onSelect(target, indexToId(((SelectEvent) event).getIndex()));
 		}
 	}
+
+	protected abstract I indexToId(String index);
 
 	// Factories //
 
@@ -164,14 +166,14 @@ public abstract class AutoCompleteBehavior extends JQueryUIBehavior implements I
 	 */
 	protected static class SelectEvent extends JQueryEvent
 	{
-		private final int index;
+		private final String index;
 
 		public SelectEvent()
 		{
-			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(0);
+			this.index = RequestCycleUtils.getQueryParameterValue("index").toString(null);
 		}
 
-		public int getIndex()
+		public String getIndex()
 		{
 			return this.index;
 		}

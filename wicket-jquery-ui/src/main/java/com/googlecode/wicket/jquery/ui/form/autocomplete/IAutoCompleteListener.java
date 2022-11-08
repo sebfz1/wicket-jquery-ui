@@ -25,7 +25,7 @@ import org.apache.wicket.util.io.IClusterable;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public interface IAutoCompleteListener extends IClusterable
+public interface IAutoCompleteListener<I> extends IClusterable
 {
 	/**
 	 * Triggered when a selection has been made
@@ -33,5 +33,5 @@ public interface IAutoCompleteListener extends IClusterable
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the index of the selected item
 	 */
-	void onSelect(AjaxRequestTarget target, int index);
+	void onSelect(AjaxRequestTarget target, I index);
 }
