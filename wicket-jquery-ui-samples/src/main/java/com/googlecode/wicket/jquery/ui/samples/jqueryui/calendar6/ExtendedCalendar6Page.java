@@ -1,4 +1,4 @@
-package com.googlecode.wicket.jquery.ui.samples.jqueryui.calendar;
+package com.googlecode.wicket.jquery.ui.samples.jqueryui.calendar6;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -9,22 +9,22 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.ui.calendar.Calendar;
-import com.googlecode.wicket.jquery.ui.calendar.CalendarView;
+import com.googlecode.wicket.jquery.ui.calendar6.Calendar;
+import com.googlecode.wicket.jquery.ui.calendar6.CalendarView;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
-import com.googlecode.wicket.jquery.ui.samples.component.DemoCalendarDialog;
-import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent;
-import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarModel;
-import com.googlecode.wicket.jquery.ui.samples.data.dao.CalendarDAO;
+import com.googlecode.wicket.jquery.ui.samples.component.DemoCalendar6Dialog;
+import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendar6Event;
+import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendar6Model;
+import com.googlecode.wicket.jquery.ui.samples.data.dao.Calendar6DAO;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 
-public class ExtendedCalendarPage extends AbstractCalendarPage // NOSONAR
+public class ExtendedCalendar6Page extends AbstractCalendar6Page // NOSONAR
 {
 	private static final long serialVersionUID = 1L;
 
 	private Calendar calendar;
 
-	public ExtendedCalendarPage()
+	public ExtendedCalendar6Page()
 	{
 		// Form //
 		final Form<Date> form = new Form<Date>("form");
@@ -35,19 +35,19 @@ public class ExtendedCalendarPage extends AbstractCalendarPage // NOSONAR
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Dialog //
-		final DemoCalendarDialog dialog = new DemoCalendarDialog("dialog", "Event details") { // NOSONAR
+		final DemoCalendar6Dialog dialog = new DemoCalendar6Dialog("dialog", "Event details") { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onSubmit(AjaxRequestTarget target, DialogButton button)
 			{
-				DemoCalendarEvent event = this.getModelObject();
+				DemoCalendar6Event event = this.getModelObject();
 
 				// new event //
-				if (CalendarDAO.isNew(event))
+				if (Calendar6DAO.isNew(event))
 				{
-					CalendarDAO.addEvent(event);
+					Calendar6DAO.addEvent(event);
 				}
 
 				calendar.refresh(target); // use calendar.refresh(target) instead of target.add(calendar)
@@ -57,11 +57,11 @@ public class ExtendedCalendarPage extends AbstractCalendarPage // NOSONAR
 		this.add(dialog);
 
 		// Calendar //
-		Options options = new Options();
-		options.set("theme", true);
-		options.set("header", "{ left: 'title', right: 'month,agendaWeek,agendaDay, today, prev,next' }");
+		Options options = new Options()
+				.set("headerToolbar", "{ left: 'title', right: 'dayGridMonth,timeGridWeek,timeGridDay, today, prev,next' }")
+				.set("timeZone", Options.asString("UTC"));
 
-		this.calendar = new Calendar("calendar", new DemoCalendarModel(), options) { // NOSONAR
+		this.calendar = new Calendar("calendar", new DemoCalendar6Model(), options) { // NOSONAR
 
 			private static final long serialVersionUID = 1L;
 
@@ -72,7 +72,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage // NOSONAR
 			}
 
 			@Override
-			public boolean isDayClickEnabled()
+			public boolean isDateClickEnabled()
 			{
 				return true;
 			}
@@ -104,7 +104,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage // NOSONAR
 			@Override
 			public void onDateClick(AjaxRequestTarget target, CalendarView view, LocalDateTime date, boolean allDay)
 			{
-				DemoCalendarEvent event = CalendarDAO.newEvent(date);
+				DemoCalendar6Event event = Calendar6DAO.newEvent(date);
 
 				dialog.setModelObject(event);
 				dialog.open(target);
@@ -113,7 +113,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage // NOSONAR
 			@Override
 			public void onSelect(AjaxRequestTarget target, CalendarView view, LocalDateTime start, LocalDateTime end, boolean allDay)
 			{
-				DemoCalendarEvent event = CalendarDAO.newEvent(start, end);
+				DemoCalendar6Event event = Calendar6DAO.newEvent(start, end);
 				event.setAllDay(allDay);
 
 				dialog.setModelObject(event);
@@ -123,7 +123,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage // NOSONAR
 			@Override
 			public void onEventClick(AjaxRequestTarget target, CalendarView view, String eventId)
 			{
-				DemoCalendarEvent event = CalendarDAO.getEvent(eventId);
+				DemoCalendar6Event event = Calendar6DAO.getEvent(eventId);
 
 				if (event != null)
 				{
@@ -135,7 +135,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage // NOSONAR
 			@Override
 			public void onEventDrop(AjaxRequestTarget target, String eventId, long delta, boolean allDay)
 			{
-				DemoCalendarEvent event = CalendarDAO.getEvent(eventId);
+				DemoCalendar6Event event = Calendar6DAO.getEvent(eventId);
 
 				if (event != null)
 				{
@@ -151,7 +151,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage // NOSONAR
 			@Override
 			public void onEventResize(AjaxRequestTarget target, String eventId, long delta)
 			{
-				DemoCalendarEvent event = CalendarDAO.getEvent(eventId);
+				DemoCalendar6Event event = Calendar6DAO.getEvent(eventId);
 
 				if (event != null)
 				{
