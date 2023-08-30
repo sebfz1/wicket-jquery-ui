@@ -253,8 +253,6 @@ public class Calendar extends WebMarkupContainer implements ICalendarListener
 		// noop
 	}
 
-	// IJQueryWidget //
-
 	// Factory methods //
 
 	/**
