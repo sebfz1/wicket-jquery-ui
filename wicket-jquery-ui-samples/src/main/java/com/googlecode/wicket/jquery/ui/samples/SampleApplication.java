@@ -10,6 +10,7 @@ import com.googlecode.wicket.jquery.ui.samples.jqueryui.accordion.DefaultAccordi
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.autocomplete.DefaultAutoCompletePage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.button.DefaultButtonPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.calendar.DefaultCalendarPage;
+import com.googlecode.wicket.jquery.ui.samples.jqueryui.calendar6.DefaultCalendar6Page;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.datepicker.DefaultDatePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.dialog.MessageDialogPage;
 import com.googlecode.wicket.jquery.ui.samples.jqueryui.draggable.DefaultDraggablePage;
@@ -142,6 +143,9 @@ public class SampleApplication extends WebApplication
 
 		// Calendar //
 		this.mountPackage("/calendar", DefaultCalendarPage.class);
+
+		// Calendar v6 //
+		this.mountPackage("/calendar6", DefaultCalendar6Page.class);
 
 		// Plugins //
 		this.mountPackage("/plugins", FontSizePage.class);
