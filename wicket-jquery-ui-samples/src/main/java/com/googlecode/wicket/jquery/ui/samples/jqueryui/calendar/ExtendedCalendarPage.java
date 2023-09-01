@@ -96,13 +96,13 @@ public class ExtendedCalendarPage extends AbstractCalendarPage // NOSONAR
 			}
 
 			@Override
-			public boolean isViewDidMountEnabled()
+			public boolean isViewRenderEnabled()
 			{
 				return true;
 			}
 
 			@Override
-			public void onDateClick(AjaxRequestTarget target, CalendarView view, LocalDateTime date, boolean allDay)
+			public void onDayClick(AjaxRequestTarget target, CalendarView view, LocalDateTime date, boolean allDay)
 			{
 				DemoCalendarEvent event = CalendarDAO.newEvent(date);
 
